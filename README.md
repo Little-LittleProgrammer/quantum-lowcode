@@ -1,81 +1,25 @@
-# Turborepo starter
+# 功能
+1. 设计平台架构：首先需要确定平台的基本架构，包括前端和后端的分离、数据模型和视图层的分离、插件化和模块化等等。这些设计需要考虑到平台的可扩展性、可维护性和性能等方面。
+2. 定义数据模型：低代码平台的核心是数据模型，需要定义好数据模型的结构和语法，支持多种数据源和数据类型，并且需要考虑数据的安全性、一致性和可靠性等方面。
+3. 实现视图层：视图层是平台的 UI 部分，需要设计好组件库和模板库，支持多种布局和样式，并且需要考虑到不同设备和屏幕大小的适配。
+4. 实现交互层：交互层是平台的逻辑部分，需要设计好交互流程和交互逻辑，支持多种交互方式和事件处理，并且需要考虑到用户体验和性能等方面。
+5. 实现插件化：低代码平台需要支持插件化开发，可以通过插件来扩展平台的功能和组件库，提高平台的灵活性和可扩展性，方便未来拓展到移动端与活动页。
+6. 实现模块化：低代码平台需要支持模块化开发，可以将平台的功能拆分成多个模块，每个模块都有自己的职责和接口，通过模块化可以提高平台的可维护性和可复用性。
+7. 实现智能化应用：通过引入人工智能等技术，实现智能化应用，可以提高平台的创新性和竞争力，例如智能推荐、智能客服、智能决策等等
+8. 实现自动化部署：通过自动化部署工具和流程，可以提高平台的可维护性和可扩展性，例如自动化测试、自动化构建、自动化部署等等。
 
-This is an official starter Turborepo.
+# 技术栈
+1. vue
+2. vite
+3. unocss
+4. ts
+5. koa
+6. monaco-edit
 
-## Using this example
+# 模块
 
-Run the following command:
-
-```sh
-npx create-turbo@latest
-```
-
-## What's inside?
-
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `ui`: a stub React component library shared by both `web` and `docs` applications
-- `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `tsconfig`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm build
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm dev
-```
-
-### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+1. UI：视图层，存放组件组件库、模版库、样式布局、物料组件
+2. core：数据模型(scheams)、文件模型、数据绑定、渲染器、I/O
+3. edit：可视化编辑器模块， 包括物料，画布，配置，拖拽节点
+4. utils:：工具层
+5. sandbox: 用于预览渲染结果

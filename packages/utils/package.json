@@ -1,0 +1,15 @@
+{
+  "name": "@qimao/quantum-utils",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@q-front-npm/utils": "~1.2.0-beta.2"  
+  }
+}

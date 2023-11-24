@@ -4,7 +4,11 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "outputs": ["dist/**", ".next/**"]
+    },
+    "build:playground": {
+      "dependsOn": ["^build", "^build:playground"],
+      "outputs": ["dist/**", ".next/**"]
     },
     "lint": {},
     "dev": {

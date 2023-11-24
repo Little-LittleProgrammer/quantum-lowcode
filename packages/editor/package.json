@@ -1,0 +1,31 @@
+{
+  "name": "@qimao/quantum-editor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@q-front-npm/utils": "~1.2.0-beta.2",
+    "@qimao/quantum-sandbox": "workspace:*",
+    "@qimao/quantum-utils": "workspace:*",
+    "@qimao/quantum-ui": "workspace:*",
+    "@qimao/quantum-core": "workspace:*",
+    "lodash-es": "^4.17.21",
+    "monaco-editor": "^0.44.0"
+  },
+  "devDependencies": {
+    "@types/lodash-es": "^4.17.6",
+    "@q-front-npm/types": "~1.2.0-beta.1",
+    "sass": "^1.63.3",
+    "vue": "~3.3.4",
+    "@ant-design/icons-vue": "^6.1.0",
+    "ant-design-vue": "^4.0.1",
+    "vue-types": "^3.0.2",
+    "csstype": "~3.1.2"
+  }
+}

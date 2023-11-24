@@ -1,0 +1,30 @@
+{
+    "name": "@qimao/quantum-render-vue3",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "dev": "vite --config dev.vite.config.ts",
+      "build": "vite build --config build.vite.config.ts --mode page",
+      "build:playground": "vite build --config build.vite.config.ts --mode playground"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@qimao/quantum-core": "workspace:*",
+        "@qimao/quantum-sandbox": "workspace:*",
+        "@qimao/quantum-utils": "workspace:*",
+        "@q-front-npm/vue3-antd-pc-ui": "1.2.0-beta.3",
+        "axios": "^0.27.2",
+        "vue": "^3.3.4"
+    },
+    "devDependencies": {
+        "vite": "~4.4.9",
+        "@vitejs/plugin-vue": "^4.3.4",
+        "@vitejs/plugin-vue-jsx": "^3.0.2",
+        "rollup": "^3.29.4"
+    }
+  }
+  

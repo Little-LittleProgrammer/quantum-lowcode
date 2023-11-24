@@ -1,0 +1,16 @@
+{
+    "extends": "@q-front-npm-configs/tsconfig/vue.json",
+    "compilerOptions": {
+        "target": "ES2020",
+        "module": "ESNext"
+    },
+    "include": [
+        "docs/**/*.ts",
+        "docs/**/*.d.ts",
+        "docs/**/*.tsx",
+        "docs/**/*.vue",
+        "node_modules/@q-front-npm/types/**/*.d.ts"  ],
+    "exclude": [
+        "dist"
+    ]
+}
