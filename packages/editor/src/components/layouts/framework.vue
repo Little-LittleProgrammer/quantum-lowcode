@@ -15,7 +15,7 @@
             </template>
             <template #right>
                 <slot v-if="showSrc">
-                    <q-code-editor class="q-editor-content" :init-values="root" :options="codeOptions" @save="save_code"></q-code-editor>
+                    <q-code-editor class="q-editor-content" :init-values="getDealRoot" :options="codeOptions" @save="save_code"></q-code-editor>
                 </slot>
             </template>
         </split-view>
@@ -23,27 +23,38 @@
 </template>
 
 <script lang='ts' setup>
-import { computed, inject, reactive } from 'vue'
+import { computed, inject } from 'vue';
 import splitView from '../base/split-view.vue';
 import { editorService } from '../../services/editor-service';
 import { uiService } from '../../services/ui-service';
-import {QCodeEditor} from '@qimao/quantum-ui'
-import {get_config} from '../../utils'
+import {QCodeEditor} from '@qimao/quantum-ui';
+import {getConfig} from '../../utils';
 import { Empty } from 'ant-design-vue';
+import { serialize_to_string } from '@qimao/quantum-utils';
 defineOptions({
-     name: 'QEditorFramework'
-})
+    name: 'QEditorFramework',
+});
 
-const codeOptions = inject('codeOptions', {})
+const codeOptions = inject('codeOptions', {});
 const root = computed(() => editorService?.get('root'));
 const pageLength = computed(() => editorService?.get('pageLength') || 0);
 const showSrc = computed(() => uiService?.get('showSrc'));
 
+const getDealRoot = computed(() => {
+    return `export const _schemas: ISchemasRoot=${serialize_to_string(root.value).replace(/"(\w+)":\s/g, '$1: ')}`;
+});
+
+function dealRoot(code: string): string {
+    const index = code.indexOf('=');
+    return code.slice(index + 1);
+}
+
 function save_code(code: string) {
     try {
-        const parse = get_config('parseSchemas');
-        console.log(code,  parse(code))
-        editorService?.set('root', parse(code));
+        const parse = getConfig('parseSchemas');
+        const finCode = dealRoot(code);
+        console.log(parse(`(${finCode})`));
+        editorService?.set('root', finCode ? parse(`(${finCode})`) : '');
     } catch (e: any) {
         console.error(e);
     }

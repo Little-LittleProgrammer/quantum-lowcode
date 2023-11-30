@@ -1,7 +1,7 @@
 import { ISchemasRoot } from '@qimao/quantum-core';
 import { IEditorProps } from 'src/props';
 import { IServices } from 'src/types';
-import { onUnmounted, toRaw, watch } from 'vue';
+import { nextTick, onUnmounted, toRaw, watch } from 'vue';
 
 export function useServicesInit(
     props: IEditorProps,
@@ -13,15 +13,14 @@ export function useServicesInit(
 ) {
     function initServiceState() {
         watch(() => props.value, (val) => {
-            editorService.set('root', val || null);
+            console.log('editorService', editorService);
+            nextTick(() => {
+                editorService.set('root', val || null);
+            });
         }, {immediate: true});
         watch(() => props.boxRect, (val) => {
             val && uiService.set('sandboxRect', val);
-        },
-        {
-            immediate: true
-        }
-        );
+        }, {immediate: true});
     }
     function initServiceEvents() {
         async function root_change_handler(value: ISchemasRoot, preValue: ISchemasRoot) {

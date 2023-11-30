@@ -1,5 +1,6 @@
 import { IInstallOptions } from './src/types';
-import { set_config } from './src/utils';
+import { setConfig } from './src/utils';
+import { parseSchemas } from '@qimao/quantum-utils';
 
 export * from './src/hooks';
 export * from './src/types';
@@ -8,8 +9,7 @@ export * from './src/utils';
 export {default as QuantumEditor} from './src/editor.vue';
 
 const defaultInstallOpt: IInstallOptions = {
-    // eslint-disable-next-line no-eval
-    parseSchemas: (dsl: string) => eval(dsl)
+    parseSchemas,
 };
 
-set_config(defaultInstallOpt);
+setConfig(defaultInstallOpt);

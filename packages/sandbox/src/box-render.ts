@@ -103,7 +103,7 @@ export class BoxRender extends Subscribe {
         onRuntimeReady: (runtime: IRuntime) => {
             this.runtime = runtime;
             // 赋值 runtime
-            globalThis.runtime = runtime;
+            (globalThis as any).runtime = runtime;
             // 触发 运行时ready 事件
             this.emit('runtime-ready', runtime);
         }

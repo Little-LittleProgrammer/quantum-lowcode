@@ -82,7 +82,7 @@ function create_permission_route(router: Router) { // 是否包含权限管理
             },
             {
                 path: '/backend',
-                redirect: '/backend/data-modules', // 默认初始页面
+                redirect: '/backend/manage', // 默认初始页面
                 name: 'home',
                 meta: {
                     title: '初始页面',

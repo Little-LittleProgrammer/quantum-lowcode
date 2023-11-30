@@ -4,9 +4,11 @@ import { redirectRoute } from './modules/reload';
 import { flat_multi_level_routes } from './utils';
 import { App } from 'vue';
 import { editorRoute } from './modules/editor';
+import { manageRoute } from './modules/manage';
 
 let routerData = [
-    editorRoute
+    editorRoute,
+    manageRoute
 ];
 
 // 添加error路由数据

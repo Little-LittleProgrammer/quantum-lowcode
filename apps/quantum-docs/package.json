@@ -7,7 +7,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "vitepress dev docs",
-    "build": "vitepress build docs",
+    "build:1": "vitepress build docs",
     "preview": "vitepress preview docs"
   },
   "keywords": [],
@@ -15,13 +15,11 @@
   "license": "ISC",
   "dependencies": {
     "@ant-design/icons-vue": "^6.1.0",
-    "@q-front-npm/shared": "workspace:*",
     "ant-design-vue": "^4.0.6",
     "pinia": "^2.1.6",
     "vue": "~3.3.4"
   },
   "devDependencies": {
-    "@q-front-npm/types": "workspace:*",
     "highlight.js": "^11.4.0",
     "vitepress": "1.0.0-rc.20",
     "less": "^4.1.3",

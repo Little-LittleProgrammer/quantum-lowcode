@@ -2,14 +2,21 @@
   "name": "@qimao/quantum-utils",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
+  "main": "dist/quantum-utils.cjs.min.js",
+  "module": "dist/quantum-utils.esm.min.js",
+  "typings": "dist/types/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rollup -c --environment TYPES:true"
   },
+  "files": ["dist"],
   "keywords": [],
-  "author": "",
+  "author": "Evan Wu",
   "license": "ISC",
   "dependencies": {
-    "@q-front-npm/utils": "~1.2.0-beta.2"  
-  }
+    "@q-front-npm/utils": "~1.2.1-beta.0"  
+  },
+  "devDependencies": {
+    "rollup": "^3.29.4",
+    "@q-front-npm-configs/rollup": "1.2.0"
+  } 
 }

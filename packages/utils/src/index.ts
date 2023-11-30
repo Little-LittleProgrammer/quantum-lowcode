@@ -1,4 +1,4 @@
-import { js_is_base, js_is_function, js_is_reg_exp } from '@q-front-npm/utils';
+import { js_is_base, js_is_function, js_is_reg_exp, js_is_string } from '@q-front-npm/utils';
 
 export function get_host(url: string) {
     return url.match(/\/\/([^/]+)/)?.[1];
@@ -60,8 +60,12 @@ export const get_url_param = (param: string, url?: string) => {
 };
 
 export function serialize_to_string<T>(value: T): string {
+    if (js_is_string(value)) {
+        return value;
+    }
     function deal_special(val: any): string {
-        return val.toString();
+        // 压缩方法
+        return val.toString().replace(/\n/g, ';').replace(/\s/g, '');
     }
     // 判断引用类型的temp
     function check_temp(target:any) {
@@ -93,4 +97,45 @@ export function serialize_to_string<T>(value: T): string {
     }
     serializeObj = dfs(value);
     return JSON.stringify(serializeObj, null, 4);
+}
+
+export function parseSchemas(schema: string) {
+    if (!schema.startsWith('(')) {
+        schema = `(${schema}`;
+    }
+    if (!schema.endsWith(')')) {
+        schema = `${schema})`;
+    }
+    // eslint-disable-next-line no-eval
+    const firstDeal = eval(schema);
+
+    // 判断引用类型的temp
+    function check_temp(target:any) {
+        const _c = target.constructor;
+        return new _c();
+    }
+    function dfs(target: any, map = new Map()) {
+        if (js_is_string(target) && (target.includes('function') || target.includes('=>'))) {
+            // eslint-disable-next-line no-eval
+            return eval(`(${target})`); // 字符串转方法
+            // return new Function(`return ${target}`)(); // 字符串转方法
+        }
+        if (js_is_base(target) || js_is_reg_exp(target) || js_is_function(target)) {
+            return target;
+        }
+        const _temp = check_temp(target);
+        // 防止循环引用
+        if (map.get(target)) {
+            return map.get(target);
+        }
+        map.set(target, _temp);
+        // 处理数组和对象
+        for (const key in target) {
+        // 递归
+            _temp[key] = dfs(target[key], map);
+        }
+        return _temp;
+    }
+    const result = dfs(firstDeal);
+    return result;
 }

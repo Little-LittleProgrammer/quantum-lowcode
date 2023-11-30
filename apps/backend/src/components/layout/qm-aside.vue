@@ -233,6 +233,7 @@ const show_hide_aside = () => {
     width: $aside-width !important;
     min-width: $aside-width !important;
     max-width: $aside-width !important;
+    transition: all .2s;
     &:before {
         content: "";
         position: absolute;

@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "baseUrl": ".",
+    "declaration": true,
+    "declarationDir": "./dist/types",
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist/types",
+    "paths": {
+      "@/*": ["src/*"],
+    },
+  },
+  "include": [
+    "src"
+],
+}

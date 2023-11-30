@@ -3,11 +3,8 @@
     <div class="q-code-editor">
         <Teleport to="body" :disabled="!fullScreen">
             <div class="q-code-editor-wrapper" :class="`${fullScreen ? 'full-screen' : ''}`">
-                <a-button class="code-edit-full-screen-button" type="link" @click="full_screen_handler">
-                    <template #icon>
-                        <ExpandOutlined />
-                    </template>
-                </a-button>
+                <svg v-if="!fullScreen" t="1701256882326" class="code-edit-full-screen-button" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2319" width="200" height="200" @click="full_screen_handler"><path d="M344 64H120c-30.9 0-56 25.1-56 56v224c0 30.9 25.1 56 56 56s56-25.1 56-56V175.9l168 0.1c30.9 0 56-25.1 56-56s-25.1-56-56-56zM344 848l-168 0.1V680c0-30.9-25.1-56-56-56s-56 25.1-56 56v224c0 30.9 25.1 56 56 56h224c30.9 0 56-25.1 56-56s-25.1-56-56-56zM904 624c-30.9 0-56 25.1-56 56l0.1 168H680c-30.9 0-56 25.1-56 56s25.1 56 56 56h224c30.9 0 56-25.1 56-56V680c0-30.9-25.1-56-56-56zM904 64H680c-30.9 0-56 25.1-56 56s25.1 56 56 56h168.1l-0.1 168c0 30.9 25.1 56 56 56s56-25.1 56-56V120c0-30.9-25.1-56-56-56z" fill="#8a8a8a" p-id="2320"></path></svg>
+                <svg v-if="fullScreen" t="1701256780086" class="code-edit-full-screen-button" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4736" width="200" height="200" @click="full_screen_handler"><path d="M358.4 921.6h-76.8v-179.2H102.4v-76.8h256v256z m307.2 0h76.8v-179.2h179.2v-76.8H665.6v256z m25.6-844.8h76.8v179.2h179.2v76.8H691.2V76.8zM332.8 76.8h-76.8v179.2H76.8v76.8h256V76.8z" p-id="4737" fill="#8a8a8a"></path></svg>
                 <div ref="codeEditor" class="q-code-editor-content"></div>
             </div>
         </Teleport>
@@ -16,8 +13,6 @@
 
 <script lang='ts' setup>
 import { onMounted, onUnmounted, ref, watch } from 'vue';
-import {Button as AButton} from 'ant-design-vue';
-import {ExpandOutlined} from '@ant-design/icons-vue'
 import * as monaco from 'monaco-editor'
 import {serialize_to_string} from '@qimao/quantum-utils'
 defineOptions({
@@ -64,8 +59,7 @@ function full_screen_handler() {
 }
 
 const get_editor_value = () => {
-    console.log('vsval', vsEditor?.getValue())
-    return vsEditor?.getValue() || ''
+    return to_string(vsEditor?.getValue() || '')
 }
 
 watch(
@@ -120,7 +114,7 @@ async function init_editor() {
     resizeObserver.observe(codeEditor.value);
 }
 
-function to_string(v: string | any, language: string) {
+function to_string(v: string | any, language: string = props.language.toLocaleLowerCase()) {
     let value = '';
     if (typeof v !== 'string') {
         if (language === 'json') {
@@ -169,7 +163,7 @@ defineExpose({
 });
 
 </script>
-<style lang='scss' scoped>
+<style lang='scss'>
 .q-code-editor {
     width: 100%;
 }
@@ -184,9 +178,12 @@ defineExpose({
         left: 0;
     }
     .code-edit-full-screen-button {
+        cursor: pointer;
+        height: 18px;
+        width: 18px;
         position: absolute;
         top: 5px;
-        right: 0;
+        right: 10px;
         z-index: 11;
     }
     .q-code-editor-content {

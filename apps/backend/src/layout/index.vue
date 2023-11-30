@@ -214,5 +214,6 @@ watch(() => getBreadCrumb.value, (val) => {
     position: relative;
     padding-top: 10px;
     padding-left: 10px;
+    box-sizing: border-box;
 }
 </style>

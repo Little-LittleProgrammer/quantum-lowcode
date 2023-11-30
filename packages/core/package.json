@@ -2,14 +2,22 @@
   "name": "@qimao/quantum-core",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
+  "main": "dist/quantum-core.cjs.min.js",
+  "module": "dist/quantum-core.esm.min.js",
+  "typings": "dist/types/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rollup -c --environment TYPES:true"
   },
+  "files": ["dist"],
   "keywords": [],
-  "author": "",
+  "author": "Evan Wu",
   "license": "ISC",
   "dependencies": {
     "@qimao/quantum-utils": "workspace:*"
+  },
+  "devDependencies": {
+    "@q-front-npm-configs/rollup": "1.2.0",
+    "rollup": "^3.29.4",
+    "@rollup/plugin-alias": "5.1.0"
   }
 }

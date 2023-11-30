@@ -13,17 +13,17 @@ let timeId: TimeoutHandle;
 
 const ls = {
     get() {
-        return ''
+        return '';
     },
     set() {
-        
+
     }
 };
 
 // state
 const createState = () => {
     const state = {
-        systemName: '七猫广告',
+        systemName: '七猫低代码平台',
         theme: ls.get('themeMode') || 'light' as 'light' | 'dark',
         date: new Date(),
         dataLoading: false,

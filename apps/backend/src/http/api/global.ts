@@ -1,4 +1,12 @@
 import { defHttp } from '../axios';
+
+export interface IPageData {
+    current: number;
+    pageSize: number;
+    total: number;
+    [property: string]: any;
+}
+
 enum Api {
     GetEnv= '/check/env',
     upload= '/common/file/upload',

@@ -20,10 +20,10 @@
 </template>
 
 <script lang='ts' setup>
-import { computed } from 'vue'
+import { computed } from 'vue';
 defineOptions({
-    name: 'QEditorSplitView'
-})
+    name: 'QEditorSplitView',
+});
 const props = withDefaults(
     defineProps<{
         left?: number,
@@ -33,29 +33,28 @@ const props = withDefaults(
     {
         left: 0,
         center: 400,
-        right: 1
+        right: 1,
     }
-)
+);
 
 const getLeftStyle = computed(() => {
     if (props.left === 1) {
-        return { flex: 1 }
+        return { flex: 1, };
     }
-    return {width: props.left + 'px'}
-})
+    return {width: props.left + 'px',};
+});
 const getCenterStyle = computed(() => {
     if (props.center === 1) {
-        return { flex: 1 }
+        return { flex: 1, };
     }
-    return {width: props.center + 'px'}
-})
+    return {width: props.center + 'px',};
+});
 const getRightStyle = computed(() => {
     if (props.right === 1) {
-        return { flex: 1, width:'800px' }
+        return { flex: 1, width: '800px', };
     }
-    return {width: props.right + 'px'}
-})
-
+    return {width: props.right + 'px',};
+});
 
 </script>
 <style lang='scss' scoped>

@@ -4,7 +4,7 @@
         <div class="workspace-header">
             <breadcrumb>
                 <breadcrumb-item v-for="(item) in path" :key="item.field">
-                    {{ item.field }}    
+                    {{ item.field }}
                 </breadcrumb-item>
             </breadcrumb>
         </div>
@@ -21,14 +21,14 @@
 
 <script lang='ts' setup>
 import { inject, computed } from 'vue';
-import {Breadcrumb, BreadcrumbItem} from 'ant-design-vue'
+import {Breadcrumb, BreadcrumbItem} from 'ant-design-vue';
 import { IServices } from '../../types';
 import EditorSandbox from './sandbox.vue';
 import pageBar from './page-bar.vue';
 import { get_node_path } from '@qimao/quantum-utils';
 defineOptions({
-    name: 'QEditorWokrspace'
-})
+    name: 'QEditorWokrspace',
+});
 
 const services = inject<IServices>('services');
 
@@ -37,7 +37,6 @@ const node = computed(() => services?.editorService?.get('node'));
 const root = computed(() => services?.editorService?.get('root'));
 const path = computed(() => get_node_path(node.value?.field || '', root.value?.children || []));
 
-
 </script>
 <style lang='scss' scoped>
 .q-editor-workspace {
@@ -45,11 +44,11 @@ const path = computed(() => get_node_path(node.value?.field || '', root.value?.c
     width: 100%;
     position: relative;
     .workspace-header {
-        height: 32px;
+        padding: 0 10px;
     }
 
     .workspace-content {
-        height: calc(100% - 64px);
+        height: calc(100% - 32px);
     }
     .workspace-footer {
         height: 32px;

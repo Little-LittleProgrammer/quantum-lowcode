@@ -74,7 +74,7 @@ export default defineComponent({
             } else {
                 const _res = import('@/menus/index');
                 const _list = (await _res).default;
-                sysStore.initMenuData = '/backend/editor/editor-page';
+                sysStore.initMenuData = '/backend/manage/h5-manage';
                 sysStore.set_format_route_list(_list);
                 sysStore.menuDataLoadingEnd = true;
                 getSearchButton.value && get_net_router(sysStore.mainMenuData as Required<IMenuData>[]);

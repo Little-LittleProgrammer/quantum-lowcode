@@ -10,6 +10,9 @@ import { setup_project_conf } from '@q-front-npm/vue3-antd-pc-ui';
 import setting from './enums/projectEnum';
 import {install_monaco} from './monaco';
 
+import '@qimao/quantum-editor/dist/style.css';
+import '@qimao/quantum-ui/dist/es/style/index.css';
+
 // 时间组件中文
 // dayjs.locale('zh-cn');
 
@@ -33,7 +36,7 @@ if (import.meta.env.VITE_USE_SENTRY === 'true') {
             'ResizeObserver loop limit exceeded', // ant 官方建议
             'validate error'
         ],
-        environment: import.meta.env.VITE_GLOB_ENV
+        environment: import.meta.env.VITE_GLOB_ENV,
     });
 }
 

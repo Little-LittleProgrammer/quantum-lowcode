@@ -1,7 +1,7 @@
 <!--  -->
 <template>
-    <a-tabs size="small" type="card" :active-key="page && page.field" @change="switch_page">
-        <tab-pane 
+    <a-tabs size="small" type="card" :active-key="(page && page.field) as string" @change="switch_page">
+        <tab-pane
             v-for="item in (root && root.children) || []"
             :key="item.field"
             :tab="item.field"
@@ -11,11 +11,11 @@
 
 <script lang='ts' setup>
 import { IServices } from '../../types';
-import { computed, inject } from 'vue'
-import {Tabs as ATabs, TabPane} from 'ant-design-vue'
+import { computed, inject } from 'vue';
+import {Tabs as ATabs, TabPane} from 'ant-design-vue';
 defineOptions({
-     name: 'QEditorPageBar'
-})
+    name: 'QEditorPageBar',
+});
 
 const services = inject<IServices>('services');
 const editorService = services?.editorService;

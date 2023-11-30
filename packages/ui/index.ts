@@ -7,7 +7,7 @@ export default {
         Object.keys(components).forEach(key => {
             if ((components as any)[key] && (components as any)[key].__name) {
                 const component = components[key as keyof typeof components];
-                if (component.install) {
+                if ((component as any).install) {
                     app.use(component);
                 }
             }

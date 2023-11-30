@@ -2,15 +2,23 @@
   "name": "@qimao/quantum-sandbox",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/quantum-sandbox.cjs.min.js",
+  "module": "dist/quantum-sandbox.esm.min.js",
+  "typings": "dist/types/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rollup -c --environment TYPES:true"
   },
+  "files": ["dist"],
   "keywords": [],
-  "author": "",
+  "author": "Evan Wu",
   "license": "ISC",
   "dependencies": {
     "@qimao/quantum-utils": "workspace:*",
     "@qimao/quantum-core": "workspace:*"
-  }   
+  },
+  "devDependencies": {
+    "rollup": "^3.29.4",
+    "@q-front-npm-configs/rollup": "1.2.0",
+    "@rollup/plugin-alias": "5.1.0"
+  }
 }

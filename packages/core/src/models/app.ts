@@ -1,6 +1,6 @@
 // 核心实例对象, 接收配置, 文件以及node信息\
 import { Subscribe, fillBackgroundImage, js_is_number, js_is_string, style2Obj } from "@qimao/quantum-utils";
-import { IRequestFunction, ISchemasRoot, Id } from "../type";
+import { Fn, IRequestFunction, ISchemasRoot, Id } from "../type";
 import {LowCodePage} from './page'
 import {Env} from './env'
 
@@ -79,7 +79,8 @@ export class LowCodeRoot extends Subscribe {
         }
 
         this.page = new LowCodePage({config: pageConfig, root: this});
-        this.emit('page-change', this.page)
+        this.emit('page-change', this.page);
+        this.bindEvents();
     }
     
     /**
@@ -92,6 +93,10 @@ export class LowCodeRoot extends Subscribe {
         if (this.page?.data.field === field) {
             return this.page;
         }
+    }
+
+    public deletePage() {
+        this.page = undefined;
     }
 
 
@@ -167,6 +172,13 @@ export class LowCodeRoot extends Subscribe {
         const { width } = document.documentElement.getBoundingClientRect();
         const fontSize = width / (this.designWidth / 100);
         document.documentElement.style.fontSize = `${fontSize}px`;
+    }
+
+    /**
+     * 事件绑定
+     */
+    public bindEvents() {
+        
     }
 
     /**

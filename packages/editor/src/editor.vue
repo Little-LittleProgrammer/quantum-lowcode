@@ -22,34 +22,34 @@ import { IEditorProps, defaultEditorProps } from './props';
 import { ISchemasRoot } from '@qimao/quantum-core';
 import { useServicesInit } from './hooks/use-service';
 defineOptions({
-    name: 'QEditor'
-})
+    name: 'QEditor',
+});
 
-const props = withDefaults(defineProps<IEditorProps>(), defaultEditorProps)
-const emit =  defineEmits<{
-  'update:value': [value: ISchemasRoot | null];
+const props = withDefaults(defineProps<IEditorProps>(), defaultEditorProps);
+const emit = defineEmits<{
+    'update:value': [value: ISchemasRoot | null];
 }>();
 
 const services: IServices = {
     uiService,
-    editorService
-}
+    editorService,
+};
 
 const sandboxOptions = reactive({
-    runtimeUrl: props.runtimeUrl
-})
+    runtimeUrl: props.runtimeUrl,
+});
 
-const {initServiceEvents, initServiceState} = useServicesInit(props, emit, services)
-initServiceState()
+const {initServiceEvents, initServiceState, } = useServicesInit(props, emit, services);
+initServiceState();
 initServiceEvents();
 
 provide('services', services);
 
 provide('codeOptions', props.codeOptions);
 
-provide('sandboxOptions', sandboxOptions)
+provide('sandboxOptions', sandboxOptions);
 
-defineExpose(services)
+defineExpose(services);
 </script>
 <style lang='scss' scoped>
 </style>

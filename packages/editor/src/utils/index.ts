@@ -1,10 +1,10 @@
 import { IInstallOptions } from '../types';
 
 let Options: IInstallOptions = {} as any;
-export function get_config<K extends keyof IInstallOptions>(key: K) {
+export function getConfig<K extends keyof IInstallOptions>(key: K) {
     return Options[key];
 }
 
-export function set_config(options: IInstallOptions) {
+export function setConfig(options: IInstallOptions) {
     Options = options;
 }

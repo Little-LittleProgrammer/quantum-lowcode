@@ -1,4 +1,4 @@
-import { component_with_install } from '@q-front-npm/utils';
+import { component_with_install } from '@qimao/quantum-utils';
 import CodeEditor from './src/code-editor.vue';
 
 export type {
