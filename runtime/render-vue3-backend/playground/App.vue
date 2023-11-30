@@ -7,7 +7,7 @@ import { computed, defineComponent, inject, nextTick, ref } from 'vue';
 
 import type { Id, ISchemasRoot, LowCodeRoot, ISchemasPage } from '@qimao/quantum-core';
 import { IQuantum} from '@qimao/quantum-sandbox';
-import Page from '../src/page/index.vue'
+import Page from '../src/page/index.vue';
 
 declare global {
     interface Window {
@@ -18,7 +18,7 @@ declare global {
 
 export default defineComponent({
     components: {
-        page: Page
+        page: Page,
     },
     setup() {
         const app = inject<LowCodeRoot | undefined>('app');
@@ -28,7 +28,7 @@ export default defineComponent({
         const selectedId = ref<Id>();
 
         const pageConfig = computed(
-            () => root.value?.children?.find((item: ISchemasPage) => item.field === curPageId.value) || root.value?.children?.[0],
+            () => root.value?.children?.find((item: ISchemasPage) => item.field === curPageId.value) || root.value?.children?.[0]
         );
 
         // watch(pageConfig, async () => {
@@ -75,6 +75,16 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+html,body {margin: 0; padding: 0}
+
+.quantum-ui-page {
+    height: 100%;
+    overflow: auto;
+}
+
+::-webkit-scrollbar {
+    width: 0 !important;
+}
 
 html,
 body,
@@ -86,13 +96,5 @@ body,
 #app {
     position: relative;
     overflow: auto;
-}
-
-.quantum-ui-container {
-    background-color: rgba(136, 136, 136, 0.5);
-}
-
-.action-area {
-    background-color: rgba(51, 153, 255, 0.5) !important;   
 }
 </style>

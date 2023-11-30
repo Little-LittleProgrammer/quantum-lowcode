@@ -20,7 +20,8 @@ import path from 'path';
 
 import { defineConfig } from 'vite';
 // import legacy from '@vitejs/plugin-legacy';
-import vue from '@vitejs/plugin-vue2';
+import vue from '@vitejs/plugin-vue';
+import vueJsx from '@vitejs/plugin-vue-jsx';
 import externalGlobals from 'rollup-plugin-external-globals';
 
 export default defineConfig(({ mode, }) => {
@@ -28,6 +29,7 @@ export default defineConfig(({ mode, }) => {
         return {
             plugins: [
                 vue(),
+                vueJsx(),
                 // legacy({
                 //     targets: ['defaults', 'not IE 11'],
                 // }),
@@ -38,12 +40,12 @@ export default defineConfig(({ mode, }) => {
 
             publicDir: '../public',
 
-            base: `/quantum-editor/runtime/vue2/${mode}`,
+            base: `/quantum-editor/runtime/vue3/${mode}`,
 
             build: {
                 emptyOutDir: true,
                 sourcemap: true,
-                outDir: path.resolve(process.cwd(), `../../apps/backend/public/runtime/vue2/${mode}`),
+                outDir: path.resolve(process.cwd(), `../../apps/backend/public/runtime/vue3/${mode}`),
             },
         };
     }

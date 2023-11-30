@@ -23,7 +23,6 @@ export const getLocalConfig = (): ISchemasRoot[] => {
     const configStr = localStorage.getItem('lowCodeSchemas');
     if (!configStr) return [];
     try {
-    // eslint-disable-next-line no-eval
         return [parseSchemas(`(${configStr})`)];
     } catch (err) {
         return [];

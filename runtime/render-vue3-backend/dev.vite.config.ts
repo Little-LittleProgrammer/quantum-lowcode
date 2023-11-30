@@ -17,15 +17,15 @@
  */
 
 import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue2';
+import vue from '@vitejs/plugin-vue';
+import vueJsx from '@vitejs/plugin-vue-jsx';
 import {resolve} from 'path';
 
 function pathResolve(dir: string) {
     return resolve(process.cwd(), '.', dir);
 }
-
 export default defineConfig({
-    plugins: [vue()],
+    plugins: [vue(), vueJsx()],
 
     resolve: {
         alias: process.env.NODE_ENV === 'production' ? [] : [
@@ -38,11 +38,11 @@ export default defineConfig({
 
     root: './',
 
-    base: '/quantum-editor/runtime/vue2/',
+    base: '/quantum-editor/runtime/vue3/',
 
     server: {
         host: true,
-        port: 8078,
+        port: 8079,
         strictPort: true,
     },
 

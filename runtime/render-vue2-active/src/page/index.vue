@@ -2,6 +2,7 @@
     <div
       :id="config.field"
       ref="refRuntimePage"
+      class="quantum-ui-page quantum-ui-container"
       :style="style"
     >
       <slot></slot>
@@ -15,7 +16,7 @@
   import type { ISchemasPage } from '@qimao/quantum-core';
   
   import Component from '../component/index.vue';
-  import {useApp} from '../hooks/use-app';
+//   import {useApp} from '../hooks/use-app';
   import {js_is_function} from '@qimao/quantum-utils'
 
   export default defineComponent({
@@ -29,14 +30,12 @@
         },
     },
     setup(props) {
-        const {app} = useApp(props)
         const refRuntimePage= ref();
         const getStyle = computed(() => {
             if (js_is_function(props.config.style)) {
-                props.config.style(refRuntimePage.value?.$el)
-                return {}
+                return props.config.style(refRuntimePage.value?.$el)
             }
-            return app?.transformStyle(props.config.style || {})
+            return props.config.style
         })
         return {
             style: getStyle,

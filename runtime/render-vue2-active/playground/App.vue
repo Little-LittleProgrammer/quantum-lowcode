@@ -1,5 +1,8 @@
 <template>
-    <page v-if="pageConfig" :config="pageConfig" :key="pageConfig.field"></page>
+    <div id="app">
+        <page v-if="pageConfig" :config="pageConfig" :key="pageConfig.field"></page>
+    </div>
+    
 </template>
 
 <script lang="ts">
@@ -49,6 +52,7 @@ export default defineComponent({
 
             updatePageId(id: Id) {
                 curPageId.value = id;
+                console.log(id)
                 app?.setPage(id);
             },
 
@@ -75,6 +79,16 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+html,body {margin: 0; padding: 0}
+
+.quantum-ui-page {
+    height: 100%;
+    overflow: auto;
+}
+
+::-webkit-scrollbar {
+    width: 0 !important;
+}
 
 html,
 body,
@@ -86,13 +100,5 @@ body,
 #app {
     position: relative;
     overflow: auto;
-}
-
-.quantum-ui-container {
-    background-color: rgba(136, 136, 136, 0.5);
-}
-
-.action-area {
-    background-color: rgba(51, 153, 255, 0.5) !important;   
 }
 </style>

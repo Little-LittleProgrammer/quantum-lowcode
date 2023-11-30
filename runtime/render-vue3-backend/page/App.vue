@@ -1,7 +1,5 @@
 <template>
-    <div id="app">
-        <page v-if="pageConfig" :config="pageConfig" :key="pageConfig.field"></page>
-    </div>
+    <page v-if="pageConfig" :config="pageConfig" :key="pageConfig.field"></page>
 </template>
 
 <script lang="ts">

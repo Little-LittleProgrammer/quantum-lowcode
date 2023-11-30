@@ -6,7 +6,8 @@
       :id="config.field"
       :style="style"
       :config="config"
-      v-bind="config.componentProps"
+      v-bind="propsBind"
+      v-on="propsOn"
     ></component>
   </template>
   
@@ -15,7 +16,7 @@ import { computed, defineComponent, PropType, ref,markRaw } from 'vue';
 
 import type {ISchemasNode} from '@qimao/quantum-core';
 import {useApp} from '../hooks/use-app'
-import {js_is_function} from '@qimao/quantum-utils'
+import {js_is_function, js_is_object} from '@qimao/quantum-utils'
 
 // @ts-ignore
 export default defineComponent({
@@ -28,13 +29,13 @@ export default defineComponent({
     setup(props) {
         const {app}= useApp(props);
         const tagName: any = computed(() => {
-            // if (props.config.type === 'container') {
-            //     return markRaw(Container)
-            // }
-            return app && app.resolveComponent(props.config.component)
+            return app && app.resolveComponent(props.config.component || props.config.type)
         });
         const ifShow = computed(() => {
             if (props.config.ifShow) {
+                if(js_is_function(props.config.ifShow)) {
+                    return props.config.ifShow(app)
+                }
                 return props.config.ifShow
             }
             return true
@@ -47,10 +48,37 @@ export default defineComponent({
             }
             return app?.transformStyle(props.config.style || {})
         })
+        const propsBind = computed(() => {
+            const obj: Record<string, any> = {};
+            if (props.config.componentProps && js_is_object(props.config.componentProps)) {
+                for (let [key, val] of Object.entries(props.config.componentProps)) {
+                    if (!key.includes('on')) {
+                        obj[key] = val
+                    }
+                }
+            }
+            console.log('bind', obj)
+            return obj
+        })
+        const propsOn = computed(() => {
+            const obj: Record<string, any> = {};
+            if (props.config.componentProps && js_is_object(props.config.componentProps)) {
+                for (let [key, val] of Object.entries(props.config.componentProps)) {
+                    if (key.includes('on')) {
+                        const _subKey = key.slice(2).toLowerCase()
+                        obj[_subKey] = val
+                    }
+                }
+            }
+            console.log('propsOn', obj)
+            return obj
+        })
         return {
             tagName: tagName,
             style: getStyle,
             display: ifShow,
+            propsBind,
+            propsOn
         };
     }
 });

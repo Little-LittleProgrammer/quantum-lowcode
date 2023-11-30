@@ -1,11 +1,14 @@
 import { LowCodeRoot } from '@qimao/quantum-core';
 import Vue from 'vue';
 import App from './App.vue';
+import Container from '../src/container/index.vue';
 // import * as components from '@q-front-npm/vue2-active-ui'
 
 const app = new LowCodeRoot({});
 const components:any = {
-    'button': 'div'
+    'img': 'img',
+    'button': 'button',
+    container: Container,
 };
 Object.keys(components).forEach((type: string) => app.registerComponent(type, components[type]));
 
@@ -15,7 +18,7 @@ window.appInstance = app;
 new Vue({
     render: (h) => h(App),
     provide: {
-        app
+        app,
     },
-    el: '#app'
+    el: '#app',
 });

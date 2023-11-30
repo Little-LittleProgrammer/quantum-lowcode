@@ -6,7 +6,7 @@
       :id="config.field"
       :style="style"
       :config="config"
-      v-bind="config"
+      v-bind="config.componentProps"
     ></component>
   </template>
   
@@ -28,13 +28,13 @@ export default defineComponent({
     setup(props) {
         const {app}= useApp(props);
         const tagName: any = computed(() => {
-            // if (props.config.type === 'container') {
-            //     return markRaw(Container)
-            // }
-            return app && app.resolveComponent(props.config.component)
+            return app && app.resolveComponent(props.config.component || props.config.type)
         });
         const ifShow = computed(() => {
             if (props.config.ifShow) {
+                if(js_is_function(props.config.ifShow)) {
+                    return props.config.ifShow(app)
+                }
                 return props.config.ifShow
             }
             return true
