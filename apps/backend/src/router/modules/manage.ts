@@ -10,7 +10,7 @@ export const manageRoute: RouteRecordRaw = {
         // hideBreadcrumb: true,
         // hideMenu: true,
         id: 'manage',
-        pid: '0'
+        pid: '0',
     },
     redirect: '/backend/manage/h5-manage',
     children: [
@@ -21,8 +21,8 @@ export const manageRoute: RouteRecordRaw = {
             meta: {
                 title: 'h5项目管理',
                 id: 'h5Manage',
-                pid: 'manage'
-            }
+                pid: 'manage',
+            },
         },
         {
             path: 'backend-manage',
@@ -31,8 +31,8 @@ export const manageRoute: RouteRecordRaw = {
             meta: {
                 title: '后台项目管理',
                 id: 'BackendManage',
-                pid: 'manage'
-            }
+                pid: 'manage',
+            },
         }
-    ]
+    ],
 };

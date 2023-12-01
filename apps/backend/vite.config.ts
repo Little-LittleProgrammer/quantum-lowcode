@@ -11,6 +11,7 @@ export default ({ command, mode, }: ConfigEnv):UserConfig => {
     const _common = vite_common_vue_config({ command, mode, });
     return {
         ..._common,
+        base: '/quantum-editor/',
         define: {
             cssData: antdCssData,
         },
@@ -32,13 +33,13 @@ export default ({ command, mode, }: ConfigEnv):UserConfig => {
                 { find: /^@qiamo\/quantum-sandbox/, replacement: pathResolve('../sandbox/src/index.ts'), }
             ],
         },
-        optimizeDeps: {
-            esbuildOptions: {
-                define: {
-                    global: 'globalThis',
-                },
-            },
-        },
+        // optimizeDeps: {
+        //     esbuildOptions: {
+        //         define: {
+        //             global: 'globalThis',
+        //         },
+        //     },
+        // },
         server: {
             host: '0.0.0.0',
             port: 8098,
@@ -61,7 +62,7 @@ export default ({ command, mode, }: ConfigEnv):UserConfig => {
                     secure: false,
                 },
             },
-            open: '',
+            open: '/quantum-editor/',
         },
     };
 };

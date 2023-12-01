@@ -30,7 +30,7 @@ import { uiService } from '../../services/ui-service';
 import {QCodeEditor} from '@qimao/quantum-ui';
 import {getConfig} from '../../utils';
 import { Empty } from 'ant-design-vue';
-import { serialize_to_string } from '@qimao/quantum-utils';
+import { serializeToString } from '@qimao/quantum-utils';
 defineOptions({
     name: 'QEditorFramework',
 });
@@ -41,7 +41,7 @@ const pageLength = computed(() => editorService?.get('pageLength') || 0);
 const showSrc = computed(() => uiService?.get('showSrc'));
 
 const getDealRoot = computed(() => {
-    return `export const _schemas: ISchemasRoot=${serialize_to_string(root.value).replace(/"(\w+)":\s/g, '$1: ')}`;
+    return `export const _schemas: ISchemasRoot=${serializeToString(root.value).replace(/"(\w+)":\s/g, '$1: ')}`;
 });
 
 function dealRoot(code: string): string {

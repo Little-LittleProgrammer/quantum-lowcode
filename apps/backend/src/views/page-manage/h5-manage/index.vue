@@ -18,7 +18,7 @@
 <script lang='ts' setup>
 import { useGo } from '@q-front-npm/hooks/vue/use-page';
 import {ActionItem, useTable} from '@q-front-npm/vue3-antd-pc-ui'
-import {apiGetH5ManageList} from '@/http/api/manage/h5-manage'
+import {apiGetH5ManageList, apiPreviewH5ManageProject} from '@/http/api/manage/h5-manage'
 import { IH5ManageList } from '@/http/api/manage/h5-manage/interface';
 import Add from './components/add.vue'
 import { ref } from 'vue';
@@ -51,6 +51,13 @@ function createTableActions(record: IH5ManageList):ActionItem[] {
                     id: record.id
                 }
             })
+        }
+    }, {
+        label: '预览',
+        onClick: async() => {
+            const _res = await apiPreviewH5ManageProject({id: record.id});
+            console.log(_res)
+            if (_res.code === 200) {}
         }
     }]
 }

@@ -48,6 +48,10 @@ export interface ISchemasNode{
      * 是否展示
      */
     ifShow?: boolean | Fn;
+    /**
+     * 子节点
+     */
+    children: (ISchemasNode | ISchemasContainer)[]
 }
 
 /**
@@ -56,10 +60,6 @@ export interface ISchemasNode{
 export interface ISchemasContainer extends SelectPartial<ISchemasNode, 'field'>{
     // 默认container
     type?: NodeType.CONTAINER | string;
-    /**
-     * 子节点
-     */
-    children: (ISchemasNode | ISchemasContainer)[]
 }
 
 /**
@@ -149,7 +149,7 @@ declare interface ISchemasNode{
     /**
      * 是否展示
      */
-    ifShow?: boolean | Fn;
+    ifShow?: boolean | Fn | string;
 }
 
 /**

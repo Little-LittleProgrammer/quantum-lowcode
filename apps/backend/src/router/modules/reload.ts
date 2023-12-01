@@ -10,7 +10,7 @@ export const redirectRoute: RouteRecordRaw = {
         hideBreadcrumb: true,
         hideMenu: true,
         id: 'redirect',
-        pid: '0'
+        pid: '0',
     },
     children: [
         {
@@ -21,8 +21,8 @@ export const redirectRoute: RouteRecordRaw = {
                 title: 'Redirect',
                 hideBreadcrumb: true,
                 id: 'redirectPage',
-                pid: 'redirect'
-            }
+                pid: 'redirect',
+            },
         }
-    ]
+    ],
 };

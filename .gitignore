@@ -60,3 +60,5 @@ cache
 .nuxt
 .nitro
 .cache
+
+.VSCodeCounter/**

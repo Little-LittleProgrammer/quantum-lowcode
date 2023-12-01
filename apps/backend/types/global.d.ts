@@ -49,7 +49,7 @@ declare global {
     }
 
     interface Window {
-        lowCodeSchemas: ISchemasRoot[];
+        PAGE_JSON: ISchemasRoot[];
         MonacoEnvironment: {
             getWorker:Fn
         }

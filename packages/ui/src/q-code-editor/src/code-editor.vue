@@ -14,7 +14,7 @@
 <script lang='ts' setup>
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import * as monaco from 'monaco-editor'
-import {serialize_to_string} from '@qimao/quantum-utils'
+import {serializeToString} from '@qimao/quantum-utils'
 defineOptions({
      name: 'code-editor'
 })
@@ -120,7 +120,7 @@ function to_string(v: string | any, language: string = props.language.toLocaleLo
         if (language === 'json') {
             value = JSON.stringify(v, null, 4);
         } else {
-            value = serialize_to_string(v).replace(/"(\w+)":\s/g, '$1: ');
+            value = serializeToString(v).replace(/"(\w+)":\s/g, '$1: ');
         }
     } else {
         value = v;

@@ -59,7 +59,7 @@ export const get_url_param = (param: string, url?: string) => {
     return '';
 };
 
-export function serialize_to_string<T>(value: T): string {
+export function serializeToString<T>(value: T): string {
     if (js_is_string(value)) {
         return value;
     }

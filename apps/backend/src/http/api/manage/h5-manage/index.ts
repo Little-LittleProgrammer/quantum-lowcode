@@ -31,3 +31,10 @@ export function apiPutH5ManageProject(params: Record<'id', string>) {
         params,
     });
 }
+// 发布
+export function apiPreviewH5ManageProject(params: Record<'id', string>) {
+    return defHttp.get<Result>({
+        url: '/low-code/priview',
+        params,
+    });
+}

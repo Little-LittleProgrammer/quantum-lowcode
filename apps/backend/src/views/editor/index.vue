@@ -19,15 +19,15 @@
 </template>
 
 <script lang='ts' setup>
-import { computed, reactive, ref, toRaw } from 'vue'
+import { computed, reactive, ref, toRaw, watch } from 'vue'
 import {QuantumEditor} from '@qimao/quantum-editor'
 import { ISchemasRoot } from '@qimao/quantum-core';
-import { serialize_to_string, parseSchemas } from '@qimao/quantum-utils';
+import { serializeToString, parseSchemas } from '@qimao/quantum-utils';
 import { testSchemas } from './init-schemas';
 import { RUNTIME_PATH } from '@/enums/runtimeEnum';
 import { useRoute } from 'vue-router';
 import {useMessage} from '@q-front-npm/hooks/vue/use-message'
-import { apiGetH5ManageDetail, apiSaveH5ManageProject } from '@/http/api/manage/h5-manage';
+import { apiGetH5ManageDetail, apiPutH5ManageProject, apiSaveH5ManageProject } from '@/http/api/manage/h5-manage';
 import Preview from '@/components/pagePreview/preview.vue'
 defineOptions({ 
      name: 'Editor'
@@ -58,7 +58,9 @@ async function initData() {
         if (_res.code === 200) {
             const _json = _res.data.pageJson && parseSchemas(_res.data.pageJson);
             _json.name = _res.data.title;
-            schemas.value = _json
+            schemas.value = _json;
+            save();
+            preSchemasStr = schemasStr
         }
     } else {
         id = null
@@ -76,11 +78,12 @@ const sandboxRect = reactive({
 // const {createConfirm} = useMessage()
 
 function openPreviewModal() {
+    save()
     if (schemasStr !== preSchemasStr) {
         createConfirm({
             title: '有修改未保存，是否先保存再预览',
             onOk: () => {
-                save();
+                saveToNet();
                 previewVisible.value = true
             }
         })
@@ -91,24 +94,33 @@ function openPreviewModal() {
 
 function saveProject() {
     save();
+    saveToNet();
 }
 
-function publishProject() {
+async function publishProject() {
     if (schemasStr !== preSchemasStr){
         createMessage.error('有修改未保存，请先保存再发布');
         return;
     }
+    const _res = await apiPutH5ManageProject({id});
+    if (_res.code === 200) {
+        createMessage.success('发布成功')
+    }
 }
 
-async function save() {
-    schemasStr = serialize_to_string(toRaw(schemas.value))
-    localStorage.setItem('lowCodeSchemas', schemasStr)
+function save() {
+    schemasStr = serializeToString(toRaw(schemas.value))
+    localStorage.setItem('PAGE_JSON', schemasStr)
+}
+
+async function saveToNet() {
     const _res = await apiSaveH5ManageProject({
         id,
         title: schemas.value.name,
         pageJson: schemasStr
     });
     if (_res.code === 200) {
+        createMessage.success('保存成功')
         preSchemasStr = schemasStr;
     }
 }

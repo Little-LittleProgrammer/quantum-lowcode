@@ -20,7 +20,7 @@ import { ISchemasRoot } from '@qimao/quantum-core';
 import { parseSchemas } from '@qimao/quantum-utils';
 
 export const getLocalConfig = (): ISchemasRoot[] => {
-    const configStr = localStorage.getItem('lowCodeSchemas');
+    const configStr = localStorage.getItem('PAGE_JSON');
     if (!configStr) return [];
     try {
         return [parseSchemas(`(${configStr})`)];

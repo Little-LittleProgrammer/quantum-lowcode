@@ -15,7 +15,7 @@ const components: Record<string, any> = {
 };
 const app = new LowCodeRoot({
     ua: window.navigator.userAgent,
-    config: ((get_url_param('localPreview') ? getLocalConfig() : window.lowCodeSchemas) || [])[0] || {},
+    config: ((get_url_param('localPreview') ? getLocalConfig() : window.PAGE_JSON) || [])[0] || {},
     curPage: get_url_param('page'),
     request: requestFn,
 });

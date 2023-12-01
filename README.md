@@ -100,7 +100,7 @@
     <title><%= title %></title>
     <!-- 注入以下schemas, 注入到所有资源文件的最上面 -->
     <script type="module"> 
-        window.lowCodeSchemas = {xxx}
+        window.PAGE_JSON = {xxx}
     </script>
     <script type="module"></script>
     <link rel="modulepreload" as="script" crossorigin="" href="xxx">

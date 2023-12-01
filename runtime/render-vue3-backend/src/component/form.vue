@@ -4,25 +4,27 @@
 </template>
 
 <script lang='ts' setup>
-import { computed } from 'vue'
+import { computed, inject } from 'vue';
 import {QAntdForm, useForm, FormSchema} from '@q-front-npm/vue3-antd-pc-ui';
 
 import { ISchemasNode } from '@qimao/quantum-core';
 defineOptions({
-    name: 'EditorForm'
-})
+    name: 'EditorForm',
+});
 const props = defineProps<{
     config: ISchemasNode;
 }>();
 
-const schemas = computed<FormSchema[]>(() => {
-    return (props.config.children as any)
-})
+const app = inject('app');
 
-const [registerForm] =useForm({
+const schemas = computed<FormSchema[]>(() => {
+    return (props.config.children as any);
+});
+
+const [registerForm] = useForm({
     ...props.config.componentProps,
     schemas,
-})
+});
 
 </script>
 <style lang='scss' scoped>

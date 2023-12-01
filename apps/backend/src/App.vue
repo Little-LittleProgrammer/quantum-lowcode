@@ -1,7 +1,7 @@
 <template>
     <a-config-provider :locale="locale" :theme="getThemeMode">
         <div id="app" >
-            <router-view v-if="sysStore.menuDataLoadingEnd"></router-view>
+            <router-view></router-view>
             <component v-if="dynamicComponent" :is="dynamicComponent"></component>
         </div>
     </a-config-provider>

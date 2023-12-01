@@ -21,9 +21,9 @@ declare module 'vue' {
     QmAuthority: typeof import('./src/components/qm-authority/index.vue')['default']
     QmHeader: typeof import('./src/components/layout/qm-header.vue')['default']
     QmReloadPrompt: typeof import('./src/components/layout/qm-reload-prompt.vue')['default']
-    QTableAction: typeof import('@q-front-npm/vue3-pc-ui/es')['QTableAction']
     QThemeModeButton: typeof import('@q-front-npm/vue3-pc-ui/es')['QThemeModeButton']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Src: typeof import('./src/components/json-viewer/src/index.vue')['default']
   }
 }

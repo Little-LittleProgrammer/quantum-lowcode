@@ -8,7 +8,7 @@ import App from './App.vue';
 const app = new LowCodeRoot({});
 const components = {
     form: Form,
-    container: Conatiner
+    container: Conatiner,
 };
 Object.keys(components).forEach((type: string) => app.registerComponent(type, components[type]));
 

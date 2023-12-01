@@ -15,7 +15,7 @@ export class BoxRender extends Subscribe {
     public iframe?: HTMLIFrameElement; // iframe
 
     private runtimeUrl?: string // iframe 的 src
-    constructor({runtimeUrl}:IBoxCoreConfig) {
+    constructor({runtimeUrl, }:IBoxCoreConfig) {
         super();
         this.runtimeUrl = runtimeUrl!;
 
@@ -106,7 +106,7 @@ export class BoxRender extends Subscribe {
             (globalThis as any).runtime = runtime;
             // 触发 运行时ready 事件
             this.emit('runtime-ready', runtime);
-        }
+        },
     });
 
     private postQuantumRuntimeReady() {
@@ -116,7 +116,7 @@ export class BoxRender extends Subscribe {
 
         this.contentWindow.postMessage(
             {
-                quantumRuntimeReady: true
+                quantumRuntimeReady: true,
             },
             '*'
         );
