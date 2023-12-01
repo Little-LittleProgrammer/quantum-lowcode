@@ -55,7 +55,7 @@ export class LowCodeRoot extends Subscribe {
             curPage = config.children[0].field
         }
 
-        this.setPage(curPage || this.page?.data?.id);
+        this.setPage(curPage || this.page?.data?.field);
     }
 
     /**
