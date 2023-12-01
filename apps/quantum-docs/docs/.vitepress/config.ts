@@ -24,7 +24,7 @@ export default defineConfig({
     },
     themeConfig: {
         logo: '/logo.png',
-        siteTitle: '七猫',
+        siteTitle: 'Quantum',
         nav: createNav(),
         sidebar: createSidebar(),
         lastUpdatedText: '最后更新时间',
@@ -69,15 +69,25 @@ function createNav(): DefaultTheme.NavItem[] {
     return [
         {
             text: '开发手册',
-            link: '/help-code/standard/',
+            link: '/help-code/guide/',
             items: [
                 {
-                    text: '规范',
-                    link: '/help-code/standard/publish',
+                    text: '指南',
+                    link: '/help-code/guide/',
                 },
                 {
-                    text: '开发',
+                    text: '进阶指南',
                     link: '/help-code/develop/docs',
+                }
+            ],
+        },
+        {
+            text: 'api',
+            link: '/api/schema/',
+            items: [
+                {
+                    text: 'schemas协议',
+                    link: '/api/schema/',
                 }
             ],
         }
@@ -90,22 +100,25 @@ function createSidebar(): DefaultTheme.Sidebar {
             text: '指南',
             items: [{
                 text: '介绍',
-                link: '/help-code/start/introduction.md'
+                link: '/help-code/guide/introduction.md'
+            }, {
+                text: '快速开始',
+                link: '/help-code/guide/index.md'
+            }, {
+                text: '基础概念',
+                link: '/help-code/guide/conception.md'
+            }, {
+                text: '组件开发',
+                link: '/help-code/guide/component.md'
             }]
         }, {
-            text: '规范',
+            text: '进阶指南',
             items: [{
-                text: 'commit规范',
-                link: '/help-code/standard/commit'
+                text: '原理介绍',
+                link: '/help-code/upgrade/index.md'
             }, {
-                text: '* 版本与发版',
-                link: '/help-code/standard/publish'
-            }, {
-                text: '代码规范',
-                link: '/help-code/standard/lint'
-            }, {
-                text: '单元测试',
-                link: '/help-code/standard/vitest'
+                text: '二次开发',
+                link: '/help-code/upgrade/sec.md'
             }]
         }, {
             text: '开发',
@@ -118,6 +131,16 @@ function createSidebar(): DefaultTheme.Sidebar {
             }, {
                 text: '云效流水线',
                 link: '/help-code/develop/flow'
+            }]
+        }],
+        '/api/': [{
+            text: 'schemas协议',
+            items: [{
+                text: '协议',
+                link: '/api/schema/index.md'
+            }, {
+                text: 'app实例',
+                link: '/api/schema/app.md'
             }]
         }]
     }
