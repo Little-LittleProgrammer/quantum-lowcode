@@ -46,7 +46,6 @@ export default defineConfig(({ mode, }) => {
                 emptyOutDir: true,
                 outDir: path.resolve(process.cwd(), `../../apps/quantum-backend/public/runtime/vue3/${mode}`),
                 rollupOptions: {
-                    external: ['vue'],
                     output: {
                         manualChunks: {
                             'library': ['@q-front-npm/vue3-antd-pc-ui'],
