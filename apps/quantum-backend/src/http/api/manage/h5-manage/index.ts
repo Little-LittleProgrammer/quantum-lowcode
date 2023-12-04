@@ -1,5 +1,14 @@
 import { defHttp } from '@/http/axios';
-import { IH5ManageData, IH5ManageList } from './interface';
+import { IGlobalSelect, IH5ManageData, IH5ManageList } from './interface';
+
+export function apiGetAppList() {
+    return defHttp.get<Result<IGlobalSelect>>({
+        url: '/global/select',
+        params: {
+            select: 'projectOptions',
+        },
+    });
+}
 
 // 列表
 export function apiGetH5ManageList() {

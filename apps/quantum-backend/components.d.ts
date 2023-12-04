@@ -25,5 +25,6 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Src: typeof import('./src/components/json-viewer/src/index.vue')['default']
+    ViewModal: typeof import('./src/components/json-viewer/src/view-modal.vue')['default']
   }
 }

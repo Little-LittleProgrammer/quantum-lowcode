@@ -1,5 +1,7 @@
 import { IPageData } from '../../global';
 
+export type IGlobalSelect = ISelectList<'projectOptions'>
+
 export interface IH5ManageData {
     list: IH5ManageList[];
     page_data: IPageData;

@@ -8,7 +8,7 @@ export function useServicesInit(
     emit: ((event: 'update:value', value: ISchemasRoot | null) => void),
     {
         editorService,
-        uiService
+        uiService,
     }: IServices
 ) {
     function initServiceState() {
@@ -17,10 +17,10 @@ export function useServicesInit(
             nextTick(() => {
                 editorService.set('root', val || null);
             });
-        }, {immediate: true});
+        }, {immediate: true, });
         watch(() => props.boxRect, (val) => {
             val && uiService.set('sandboxRect', val);
-        }, {immediate: true});
+        }, {immediate: true, });
     }
     function initServiceEvents() {
         async function root_change_handler(value: ISchemasRoot, preValue: ISchemasRoot) {
@@ -43,6 +43,6 @@ export function useServicesInit(
     });
     return {
         initServiceState,
-        initServiceEvents
+        initServiceEvents,
     };
 }

@@ -116,7 +116,6 @@ function save() {
 async function saveToNet() {
     const _res = await apiSaveH5ManageProject({
         id,
-        title: schemas.value.name,
         pageJson: schemasStr
     });
     if (_res.code === 200) {

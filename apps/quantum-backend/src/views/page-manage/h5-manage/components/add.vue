@@ -7,7 +7,7 @@
 
 <script lang='ts' setup>
 import { apiSaveH5ManageProject } from '@/http/api/manage/h5-manage';
-import { IH5ManageList } from '@/http/api/manage/h5-manage/interface';
+import { IGlobalSelect, IH5ManageList } from '@/http/api/manage/h5-manage/interface';
 import { defaultSchemas } from '@/views/editor/init-schemas';
 import { useMessage } from '@q-front-npm/hooks/vue/use-message';
 import { FormSchema, useForm } from '@q-front-npm/vue3-antd-pc-ui';
@@ -19,8 +19,9 @@ defineOptions({
 
 const props = withDefaults(defineProps<{
     visible: boolean;
+    selectObj: IGlobalSelect
 }>(), {
-    visible: false,
+    visible: false
 })
 
 const emit = defineEmits(['ok', 'cancel'])
@@ -38,12 +39,16 @@ const schemas = computed<FormSchema<IH5ManageList>[]>(() => [{
 }, {
     label: '所属项目',
     field: 'projectNameEn',
-    component: 'Input'
+    component: 'Select',
+    componentProps: {
+        options: props.selectObj.projectOptions
+    }
 }])
 
 const [registerForm, {getFieldsValue, resetFields}] = useForm({
     schemas,
     showActionButtonGroup: false,
+    labelWidth:130,
     baseColProps: {
         span: 20
     }
