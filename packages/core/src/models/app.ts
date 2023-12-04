@@ -102,7 +102,12 @@ export class LowCodeRoot extends Subscribe {
 
     public setDesignWidth(width: number) {
         this.designWidth = width;
-        this.calcFontsize()
+        // 根据屏幕大小计算出跟节点的font-size，用于rem样式的适配
+        if (this.isH5()) {
+            this.calcFontsize()
+            globalThis.removeEventListener('resize', this.calcFontsize);
+            globalThis.addEventListener('resize', this.calcFontsize); 
+        }
     }
 
     /**
@@ -133,7 +138,7 @@ export class LowCodeRoot extends Subscribe {
             } else if (key === 'transform' && typeof value !== 'string') {
               results[key] = this.getTransform(value);
             } else if (!whiteList.includes(key) && value && /^[-]?[0-9]*[.]?[0-9]*$/.test(value)) {
-              results[key] = isHippy ? value : `${value / 100}rem`;
+              results[key] = !isHippy ? value : `${value / this.designWidth * 10}rem`;
             } else {
               results[key] = value;
             }
@@ -170,8 +175,19 @@ export class LowCodeRoot extends Subscribe {
 
     private calcFontsize() {
         const { width } = document.documentElement.getBoundingClientRect();
-        const fontSize = width / (this.designWidth / 100);
+        const dpr = globalThis?.devicePixelRatio || 1
+        this.setBodyFontSize(dpr);
+        const fontSize = width / 10;
         document.documentElement.style.fontSize = `${fontSize}px`;
+    }
+
+    // 设置body字体大小
+    private setBodyFontSize(dpr: number = 1) {
+        if (document.body) {
+            document.body.style.fontSize = (12 * dpr) + 'px'
+        } else {
+            document.addEventListener('DOMContentLoaded', () => this.setBodyFontSize(dpr))
+        }
     }
 
     /**
@@ -202,6 +218,9 @@ export class LowCodeRoot extends Subscribe {
     public destroy() {
         this.clear()
         this.page = undefined;
+        if (this.isH5()) {
+            globalThis.removeEventListener('resize', this.calcFontsize);
+        }
     }
     
 }

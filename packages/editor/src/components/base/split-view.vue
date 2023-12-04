@@ -32,7 +32,7 @@ const props = withDefaults(
     }>(),
     {
         left: 0,
-        center: 400,
+        center: 500,
         right: 1,
     }
 );
@@ -41,19 +41,19 @@ const getLeftStyle = computed(() => {
     if (props.left === 1) {
         return { flex: 1, };
     }
-    return {width: props.left + 'px',};
+    return {width: props.left + 'px', };
 });
 const getCenterStyle = computed(() => {
     if (props.center === 1) {
         return { flex: 1, };
     }
-    return {width: props.center + 'px',};
+    return {width: props.center + 'px', };
 });
 const getRightStyle = computed(() => {
     if (props.right === 1) {
         return { flex: 1, width: '800px', };
     }
-    return {width: props.right + 'px',};
+    return {width: props.right + 'px', };
 });
 
 </script>

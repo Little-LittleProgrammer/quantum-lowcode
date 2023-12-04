@@ -114,6 +114,12 @@ importers:
       '@q-front-npm/types':
         specifier: 1.2.1-beta.0
         version: 1.2.1-beta.0
+      '@qimao/quantum-render-active':
+        specifier: workspace:*
+        version: link:../../runtime/render-vue2-active
+      '@qimao/quantum-render-vue3':
+        specifier: workspace:*
+        version: link:../../runtime/render-vue3-backend
       '@sentry/vue':
         specifier: ^7.66.0
         version: registry.npmmirror.com/@sentry/vue@7.66.0(vue@3.3.4)

@@ -25,7 +25,9 @@ function pathResolve(dir: string) {
 }
 
 export default defineConfig({
-    plugins: [vue()],
+    plugins: [
+        vue()
+    ],
 
     resolve: {
         alias: process.env.NODE_ENV === 'production' ? [] : [
