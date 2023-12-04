@@ -42,8 +42,10 @@ export default defineConfig(({ mode, }) => {
 
             build: {
                 emptyOutDir: true,
-                sourcemap: true,
                 outDir: path.resolve(process.cwd(), `../../apps/quantum-backend/public/runtime/vue2/${mode}`),
+                rollupOptions: {
+                    external: ['vue'],
+                },
             },
         };
     }
