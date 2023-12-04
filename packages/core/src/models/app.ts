@@ -128,9 +128,10 @@ export class LowCodeRoot extends Subscribe {
         }
 
         const isHippy = this.isH5()
-
+        
         const whiteList = ['zIndex', 'opacity', 'fontWeight'];
         Object.entries(styleObj).forEach(([key, value]) => {
+            console.log(key ,value)
             if (key === 'scale' && !results.transform && isHippy) {
               results.transform = [{ scale: value }];
             } else if (key === 'backgroundImage' && !isHippy) {

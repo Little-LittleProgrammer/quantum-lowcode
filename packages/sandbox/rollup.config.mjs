@@ -13,8 +13,8 @@ const result = rollup_commpn_lib_config('quantum-sandbox', {
     external: ['@qimao/quantum-utils', '@qimao/quantum-core'],
     plugins: [alias({
         entries: process.env.NODE_ENV === 'production' ? [] : [
-            { find: /^@qiamo\/quantum-utils/, replacement: pathResolve('../utils/src/index.ts'), },
-            { find: /^@qiamo\/quantum-core/, replacement: pathResolve('../core/src/index.ts'), }
+            { find: /^@qimao\/quantum-utils/, replacement: pathResolve('../utils/index.ts'), },
+            { find: /^@qimao\/quantum-core/, replacement: pathResolve('../core/index.ts'), }
         ],
     })],
 }, pkg.version);

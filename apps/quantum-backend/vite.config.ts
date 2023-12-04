@@ -4,6 +4,7 @@ import { antdCssData, baseScssFile } from './config/antd';
 import { resolve } from 'path';
 
 function pathResolve(dir: string) {
+    console.log(process.cwd());
     return resolve(process.cwd(), '.', dir);
 }
 
@@ -27,10 +28,12 @@ export default ({ command, mode, }: ConfigEnv):UserConfig => {
                 { find: /^@\//, replacement: pathResolve('./src/') + '/', }
             ] : [
                 { find: /^@\//, replacement: pathResolve('./src/') + '/', },
-                { find: /^@qiamo\/quantum-utils/, replacement: pathResolve('../utils/src/index.ts'), },
-                { find: /^@qiamo\/quantum-editor/, replacement: pathResolve('../editor/src/index.ts'), },
-                { find: /^@qiamo\/quantum-core/, replacement: pathResolve('../core/src/index.ts'), },
-                { find: /^@qiamo\/quantum-sandbox/, replacement: pathResolve('../sandbox/src/index.ts'), }
+                { find: /^@qimao\/quantum-editor\/dist\/style.css/, replacement: pathResolve('../../packages/editor/dist/style.css'), },
+                { find: /^@qimao\/quantum-ui\/dist\/es\/style.css/, replacement: pathResolve('../../packages/ui/dist/es/style/index.css'), },
+                { find: /^@qimao\/quantum-utils/, replacement: pathResolve('../../packages/utils/index.ts'), },
+                { find: /^@qimao\/quantum-editor/, replacement: pathResolve('../../packages/editor/index.ts'), },
+                { find: /^@qimao\/quantum-core/, replacement: pathResolve('../../packages/core/index.ts'), },
+                { find: /^@qimao\/quantum-sandbox/, replacement: pathResolve('../../packages/sandbox/index.ts'), }
             ],
         },
         // optimizeDeps: {

@@ -30,9 +30,9 @@ export default defineConfig({
     resolve: {
         alias: process.env.NODE_ENV === 'production' ? [] : [
             { find: /^@\//, replacement: pathResolve('./src/'), },
-            { find: /^@qiamo\/quantum-utils/, replacement: pathResolve('../utils/src/index.ts'), },
-            { find: /^@qiamo\/quantum-core/, replacement: pathResolve('../core/src/index.ts'), },
-            { find: /^@qiamo\/quantum-sandbox/, replacement: pathResolve('../sandbox/src/index.ts'), }
+            { find: /^@qimao\/quantum-utils/, replacement: pathResolve('../../packages/utils/index.ts'), },
+            { find: /^@qimao\/quantum-core/, replacement: pathResolve('../../packages/core/index.ts'), },
+            { find: /^@qimao\/quantum-sandbox/, replacement: pathResolve('../../packages/sandbox/index.ts'), }
         ],
     },
 

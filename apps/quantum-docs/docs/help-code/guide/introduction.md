@@ -16,9 +16,9 @@ Quantum可视化低代码平台 是一个前端低代码解决方案, 意在帮�
 - **源码编辑器**: 右侧展示了当前项目各个页面组件的`JSON`配置, 可编辑进行实时渲染
 
 ## 核心库
-- `@qiamo/quantum-core`: 对组件进行跨框架管理与一些通用复杂逻辑的实现。
-- `@qiamo/quantum-sandbox`: 实现在编辑器与渲染器之间的通讯
-- `@qiamo/quantum-editor`: 实现一个可视化编辑器
-- `@qiamo/quantum-ui`: 提供一些vue3基础组件
+- `@qimao/quantum-core`: 对组件进行跨框架管理与一些通用复杂逻辑的实现。
+- `@qimao/quantum-sandbox`: 实现在编辑器与渲染器之间的通讯
+- `@qimao/quantum-editor`: 实现一个可视化编辑器
+- `@qimao/quantum-ui`: 提供一些vue3基础组件
 - `runtime`: 实现在编辑器中对使用不同框架的组件的渲染
 
