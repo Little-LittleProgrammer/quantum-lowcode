@@ -64,7 +64,7 @@ function createTableActions(record: IH5ManageList):ActionItem[] {
     }, {
         label: '预览',
         onClick: async() => {
-            window.open(`/api/low-code/preview?id=${record.id}`)
+            window.open(`https://front-ssg-platform.qmniu.com/api/low-code/preview?id=${record.id}`)
         }
     }]
 }
