@@ -25,6 +25,9 @@ import externalGlobals from 'rollup-plugin-external-globals';
 import postCssPxtorem from 'postcss-pxtorem';
 
 export default defineConfig(({ mode, }) => {
+    // 阿里云自带环境
+    const isDeclaration =
+    !(process.env.PIPELINE_NAME?.includes('生产') || process.env.PIPELINE_TAGS?.includes('生产') || process.env.PIPELINE_NAME?.includes('测试') || process.env.PIPELINE_TAGS?.includes('测试'));
     if (['page', 'playground'].includes(mode)) {
         return {
             plugins: [
@@ -47,7 +50,7 @@ export default defineConfig(({ mode, }) => {
 
             publicDir: '../public',
 
-            base: `/quantum-editor/runtime/vue2/${mode}`,
+            base: isDeclaration ? `/quantum-editor/runtime/vue2/${mode}` : `https://ssg-front.qmniu.com/allocation/lowCode`,
 
             build: {
                 emptyOutDir: true,
