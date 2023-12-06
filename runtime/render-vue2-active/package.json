@@ -4,27 +4,28 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "dev": "vite --config dev.vite.config.ts",
-      "build": "pnpm build:page && pnpm build:playground",
-      "build:page": "vite build --config build.vite.config.ts --mode page",
-      "build:playground": "vite build --config build.vite.config.ts --mode playground"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "vite --config dev.vite.config.ts",
+        "build": "pnpm build:page && pnpm build:playground",
+        "build:page": "vite build --config build.vite.config.ts --mode page",
+        "build:playground": "vite build --config build.vite.config.ts --mode playground"
     },
     "keywords": [],
     "author": "Evan Wu",
     "license": "ISC",
     "dependencies": {
+        "@q-front-npm/http": "^1.2.1-beta.0",
+        "@q-front-npm/vue2-active-ui": "1.0.1-beta.0",
         "@qimao/quantum-core": "workspace:*",
         "@qimao/quantum-sandbox": "workspace:*",
         "@qimao/quantum-utils": "workspace:*",
-        "@q-front-npm/http": "^1.2.1-beta.0",
         "axios": "^0.27.2",
         "vue": "^2.7.4"
     },
     "devDependencies": {
-        "@vitejs/plugin-vue2": "^2.2.0",
         "@q-front-npm/shared": "1.2.1-beta.0",
+        "@vitejs/plugin-vue2": "^2.2.0",
+        "postcss-pxtorem": "^6.0.0",
         "rollup-plugin-external-globals": "^0.6.1"
     }
-  }
-  
+}

@@ -333,6 +333,9 @@ importers:
       '@q-front-npm/http':
         specifier: ^1.2.1-beta.0
         version: 1.2.1-beta.0
+      '@q-front-npm/vue2-active-ui':
+        specifier: 1.0.1-beta.0
+        version: 1.0.1-beta.0(postcss-pxtorem@6.0.0)(vue@2.7.4)
       '@qimao/quantum-core':
         specifier: workspace:*
         version: link:../../packages/core
@@ -355,6 +358,9 @@ importers:
       '@vitejs/plugin-vue2':
         specifier: ^2.2.0
         version: registry.npmmirror.com/@vitejs/plugin-vue2@2.2.0(vite@4.4.11)(vue@2.7.4)
+      postcss-pxtorem:
+        specifier: ^6.0.0
+        version: registry.npmmirror.com/postcss-pxtorem@6.0.0(postcss@8.4.31)
       rollup-plugin-external-globals:
         specifier: ^0.6.1
         version: registry.npmmirror.com/rollup-plugin-external-globals@0.6.1(rollup@2.79.1)
@@ -515,6 +521,15 @@ packages:
       vue-router: registry.npmmirror.com/vue-router@4.2.4(vue@3.3.4)
     dev: false
 
+  /@q-front-npm/http-active@1.0.1-beta.0:
+    resolution: {integrity: sha512-dV8wG9Nw9I1iN6qdLLvrsCisZN7ZAEhCytgNtc9OPYS1Ha6rnlGmI2ev/RdqksYelFveIxkJGlV9ohvJegOQDA==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/http-active/-/@q-front-npm/http-active-1.0.1-beta.0.tgz}
+    dependencies:
+      axios: registry.npmmirror.com/axios@0.25.0
+      qs: registry.npmmirror.com/qs@6.11.0
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
   /@q-front-npm/http@1.2.1-beta.0:
     resolution: {integrity: sha512-4YTN88zcb/FkfdqVCfQYVSWyQAwfXF5FIxSZdlmYrYfHM1ij77aYJJJqmnAb9PwC/6xJpQW6P3OUTYlFP4cuxg==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/http/-/@q-front-npm/http-1.2.1-beta.0.tgz}
     dependencies:
@@ -534,10 +549,30 @@ packages:
   /@q-front-npm/types@1.2.1-beta.0:
     resolution: {integrity: sha512-npgdOz4+sNXc21JWWcIL3MjlOckTJ9hPasbdbJy0ZsCGVJDOEbsP37KG5KJP/zK+/6H9/iWClwbkXPbIgLwAgQ==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/types/-/@q-front-npm/types-1.2.1-beta.0.tgz}
 
+  /@q-front-npm/utils-active@1.0.1-beta.0:
+    resolution: {integrity: sha512-ILQoRKqJQ2OJvK7IKXZJR9bo1vSJolJZxrthLe55ZHbcS5qiEpzgQ5bopZR+uS0XC8Vc8adxV9hrAEu6f/02pw==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/utils-active/-/@q-front-npm/utils-active-1.0.1-beta.0.tgz}
+    dependencies:
+      md5: registry.npmmirror.com/md5@2.3.0
+    dev: false
+
   /@q-front-npm/utils@1.2.1-beta.0:
     resolution: {integrity: sha512-lv+lmM7sJHH0YCRXj5v8jViVk2KNXBGYTo6NJYlcNE9Lf7JCNHB8sAwHrV1sfLckDlmMNjqoHPobfbFUXNxyKQ==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/utils/-/@q-front-npm/utils-1.2.1-beta.0.tgz}
     dependencies:
       '@q-front-npm/shared': 1.2.1-beta.0
+
+  /@q-front-npm/vue2-active-ui@1.0.1-beta.0(postcss-pxtorem@6.0.0)(vue@2.7.4):
+    resolution: {integrity: sha512-CLwyV5Ro8u/ESt/1cj/nbGODOtwEhAqwlPZ8OjP4//HU93lCa2mFYIESELCAX2CZ2+FjXFWAD0Cffs8875foiQ==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/vue2-active-ui/-/@q-front-npm/vue2-active-ui-1.0.1-beta.0.tgz}
+    peerDependencies:
+      postcss-pxtorem: ^6.0.0
+      vue: ^2.6.11
+    dependencies:
+      '@q-front-npm/http-active': 1.0.1-beta.0
+      '@q-front-npm/utils-active': 1.0.1-beta.0
+      postcss-pxtorem: registry.npmmirror.com/postcss-pxtorem@6.0.0(postcss@8.4.31)
+      vue: registry.npmmirror.com/vue@2.7.4
+    transitivePeerDependencies:
+      - debug
+    dev: false
 
   /@q-front-npm/vue3-antd-pc-ui@1.2.1-beta.0(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.6)(pinia@2.1.6)(vue-router@4.2.4)(vue@3.3.4):
     resolution: {integrity: sha512-HmVELBXIjtTB140FPtgwC+TrRvWzRtIT9kpQSBHpLvBxz1g7fXGhVLbN2eRM+pXeasc/k0Y2HFxby756RTRUiA==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/vue3-antd-pc-ui/-/@q-front-npm/vue3-antd-pc-ui-1.2.1-beta.0.tgz}
@@ -671,6 +706,10 @@ packages:
 
   /concat-map@0.0.1:
     resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
+
+  /crypt@0.0.2:
+    resolution: {integrity: sha1-iNf/fsDfuG9xPch7u0LQRNPmxBs=}
+    dev: false
 
   /cssesc@3.0.0:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
@@ -910,6 +949,10 @@ packages:
     dependencies:
       call-bind: registry.npmmirror.com/call-bind@1.0.5
       has-tostringtag: 1.0.0
+
+  /is-buffer@1.1.6:
+    resolution: {integrity: sha512-NcdALwpXkTm5Zvvbk7owOUSvVvBKDgKP5/ewfXEznmQFfs4ZRmanOeKBTjRVjka3QFoN6XJ+9F3USqfHqTaU5w==}
+    dev: false
 
   /is-date-object@1.0.5:
     resolution: {integrity: sha512-9YQaSxsAiSwcvS33MBk3wTCVnWK+HhF8VZR2jRxehM16QcVOdHqPn4VPHmRK4lSr38n9JriurInLcP90xsYNfQ==}
@@ -4567,6 +4610,16 @@ packages:
     version: 1.0.0
     engines: {node: '>= 4.0.0'}
 
+  registry.npmmirror.com/axios@0.25.0:
+    resolution: {integrity: sha512-cD8FOb0tRH3uuEe6+evtAbgJtfxr7ly3fQjYcMcuPlgkwVS9xboaVIpcDV+cYQe+yGykgwZCs1pzjntcGa6l5g==, registry: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/, tarball: https://registry.npmmirror.com/axios/-/axios-0.25.0.tgz}
+    name: axios
+    version: 0.25.0
+    dependencies:
+      follow-redirects: registry.npmmirror.com/follow-redirects@1.15.3
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
   registry.npmmirror.com/axios@0.27.2:
     resolution: {integrity: sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==, registry: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/, tarball: https://registry.npmmirror.com/axios/-/axios-0.27.2.tgz}
     name: axios
@@ -4720,6 +4773,12 @@ packages:
     dependencies:
       ansi-styles: registry.npmmirror.com/ansi-styles@4.3.0
       supports-color: registry.npmmirror.com/supports-color@7.2.0
+
+  registry.npmmirror.com/charenc@0.0.2:
+    resolution: {integrity: sha512-yrLQ/yVUFXkzg7EDQsPieE/53+0RlaWTs+wBrvW36cyilJ2SaDWfl4Yj7MtLTXleV9uEKefbAGUPv2/iWSooRA==, registry: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/, tarball: https://registry.npmmirror.com/charenc/-/charenc-0.0.2.tgz}
+    name: charenc
+    version: 0.0.2
+    dev: false
 
   registry.npmmirror.com/chokidar@3.5.3:
     resolution: {integrity: sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==, registry: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/, tarball: https://registry.npmmirror.com/chokidar/-/chokidar-3.5.3.tgz}
@@ -5855,6 +5914,16 @@ packages:
     name: mark.js
     version: 8.11.1
     dev: true
+
+  registry.npmmirror.com/md5@2.3.0:
+    resolution: {integrity: sha512-T1GITYmFaKuO91vxyoQMFETst+O71VUPEU3ze5GNzDm0OWdP8v1ziTaAEPUr/3kLsY3Sftgz242A1SetQiDL7g==, registry: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/, tarball: https://registry.npmmirror.com/md5/-/md5-2.3.0.tgz}
+    name: md5
+    version: 2.3.0
+    dependencies:
+      charenc: registry.npmmirror.com/charenc@0.0.2
+      crypt: 0.0.2
+      is-buffer: 1.1.6
+    dev: false
 
   registry.npmmirror.com/micromatch@4.0.5:
     resolution: {integrity: sha512-DMy+ERcEW2q8Z2Po+WNXuw3c5YaUSFjAO5GsJqfEl7UjvtIuFKO6ZrKvcItdy98dwFI2N1tg3zNIdKaQT+aNdA==, registry: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/, tarball: https://registry.npmmirror.com/micromatch/-/micromatch-4.0.5.tgz}

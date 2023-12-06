@@ -18,7 +18,7 @@ export class LowCodeRoot extends Subscribe {
     public env: Env = new Env();;
     public schemasRoot?: ISchemasRoot;
     public page?: LowCodePage;
-    public designWidth = 375;
+    public designWidth = 750;
     public components = new Map();
     public request?: IRequestFunction;
     constructor(options: IAppOptionsConfig) {
@@ -139,7 +139,7 @@ export class LowCodeRoot extends Subscribe {
             } else if (key === 'transform' && typeof value !== 'string') {
               results[key] = this.getTransform(value);
             } else if (!whiteList.includes(key) && value && /^[-]?[0-9]*[.]?[0-9]*$/.test(value)) {
-              results[key] = !isHippy ? value : `${value / this.designWidth * 10}rem`;
+              results[key] = !isHippy || value.includes('%')  ? value : `${parseInt(value) / this.designWidth * 10}rem`;
             } else {
               results[key] = value;
             }

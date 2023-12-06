@@ -5,11 +5,15 @@ import App from './App.vue';
 import { getLocalConfig } from './utils';
 import { requestFn } from './utils/http';
 import Container from '../src/container/index.vue';
+import * as component from '@q-front-npm/vue2-active-ui';
+// import * as components from '@q-front-npm/vue2-active-ui'
+import '@q-front-npm/vue2-active-ui/dist/components.css';
 
 const components:any = {
     'button': 'button',
     img: 'img',
     container: Container,
+    ...component,
 };
 
 const app = new LowCodeRoot({

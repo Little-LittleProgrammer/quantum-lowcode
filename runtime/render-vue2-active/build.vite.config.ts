@@ -22,6 +22,7 @@ import { defineConfig } from 'vite';
 // import legacy from '@vitejs/plugin-legacy';
 import vue from '@vitejs/plugin-vue2';
 import externalGlobals from 'rollup-plugin-external-globals';
+import postCssPxtorem from 'postcss-pxtorem';
 
 export default defineConfig(({ mode, }) => {
     if (['page', 'playground'].includes(mode)) {
@@ -31,7 +32,11 @@ export default defineConfig(({ mode, }) => {
                 // legacy({
                 //     targets: ['defaults', 'not IE 11'],
                 // }),
-                externalGlobals({ vue: 'Vue', }, { exclude: [`./${mode}/index.html`], })
+                externalGlobals({ vue: 'Vue', }, { exclude: [`./${mode}/index.html`], }),
+                postCssPxtorem({
+                    rootValue: 750,
+                    propList: ['*'],
+                })
             ],
 
             root: `./${mode}/`,

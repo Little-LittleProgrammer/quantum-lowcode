@@ -19,6 +19,7 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue2';
 import {resolve} from 'path';
+import postCssPxtorem from 'postcss-pxtorem';
 
 function pathResolve(dir: string) {
     return resolve(process.cwd(), '.', dir);
@@ -26,7 +27,11 @@ function pathResolve(dir: string) {
 
 export default defineConfig({
     plugins: [
-        vue()
+        vue(),
+        postCssPxtorem({
+            rootValue: 750,
+            propList: ['*'],
+        })
     ],
 
     resolve: {
