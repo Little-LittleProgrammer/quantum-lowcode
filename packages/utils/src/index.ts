@@ -1,4 +1,4 @@
-import { js_is_base, js_is_function, js_is_reg_exp, js_is_string } from '@q-front-npm/utils';
+import { js_is_base, js_is_function, js_is_object, js_is_reg_exp, js_is_string } from '@q-front-npm/utils';
 
 export function get_host(url: string) {
     return url.match(/\/\/([^/]+)/)?.[1];
@@ -99,15 +99,20 @@ export function serializeToString<T>(value: T): string {
     return JSON.stringify(serializeObj, null, 4);
 }
 
-export function parseSchemas(schema: string) {
-    if (!schema.startsWith('(')) {
-        schema = `(${schema}`;
+export function parseSchemas(schema: string | Record<string, any>) {
+    let firstDeal: Record<string, any> = {};
+    if (!js_is_object(schema)) {
+        if (!schema.startsWith('(')) {
+            schema = `(${schema}`;
+        }
+        if (!schema.endsWith(')')) {
+            schema = `${schema})`;
+        }
+        // eslint-disable-next-line no-eval
+        firstDeal = eval(schema);
+    } else {
+        firstDeal = schema;
     }
-    if (!schema.endsWith(')')) {
-        schema = `${schema})`;
-    }
-    // eslint-disable-next-line no-eval
-    const firstDeal = eval(schema);
 
     // 判断引用类型的temp
     function check_temp(target:any) {

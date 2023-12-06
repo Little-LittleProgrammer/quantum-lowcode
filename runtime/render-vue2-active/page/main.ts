@@ -18,7 +18,7 @@ const components:any = {
 
 const app = new LowCodeRoot({
     ua: window.navigator.userAgent,
-    config: ((get_url_param('localPreview') ? getLocalConfig() : js_is_string(window.PAGE_JSON) ? parseSchemas(window.PAGE_JSON) : window.PAGE_JSON) || [])[0] || {},
+    config: ((get_url_param('localPreview') ? getLocalConfig() : [parseSchemas(window.PAGE_JSON)]) || [])[0] || {},
     curPage: get_url_param('page'),
     request: requestFn,
 });
