@@ -4,11 +4,18 @@ type Callback = (...data: any) => void
 
 export class Subscribe<T = string> {
     cache: Map<T, Callback[]>;
+    cacheOnce: Map<T, Callback[]>;
     constructor() {
         this.cache = new Map();
+        this.cacheOnce = new Map();
     }
     // 订阅消息
     on(eventName: T, callBack: Callback) {
+        const _inOnce = this.cacheOnce.get(eventName);
+        if (_inOnce) {
+            console.error('此事件已经在单次订阅中注册, 无法再次注册');
+            return;
+        }
         const _fns = this.cache.get(eventName);
         if (_fns) {
             const isSubscribed = _fns.some(fn => fn.toString() === callBack.toString());
@@ -20,11 +27,39 @@ export class Subscribe<T = string> {
         }
         this.cache.set(eventName, [callBack]);
     }
+    // 单次订阅
+    once(eventName: T, callBack: Callback) {
+        const _inOn = this.cache.get(eventName);
+        if (_inOn) {
+            console.error('此事件已经在长期订阅中注册, 无法再次注册');
+            return;
+        }
+        const _fns = this.cacheOnce.get(eventName);
+        if (_fns) {
+            const isSubscribed = _fns.some(fn => fn.toString() === callBack.toString());
+            if (isSubscribed) { // 监测是否重复订阅
+                return;
+            }
+            this.cacheOnce.set(eventName, _fns.concat(callBack));
+            return;
+        }
+        this.cacheOnce.set(eventName, [callBack]);
+    }
     // 发布消息
     emit(eventName: T, ...args: any) {
+        if (!eventName) return;
         const _fns = this.cache.get(eventName);
-        if (!eventName || !_fns) return;
-        _fns.forEach((fn) => {
+        const _fnsOnce = this.cacheOnce.get(eventName);
+        if (_fns) {
+            this.executeFn(eventName, _fns, ...args);
+        } else if (_fnsOnce) {
+            this.executeFn(eventName, _fnsOnce, ...args);
+            this.remove(eventName); // 单次订阅, 执行完移除
+        }
+    }
+    // 执行
+    private executeFn(eventName: T, fns:Callback[], ...args: any) {
+        fns.forEach((fn) => {
             native_try_catch(
                 () => { fn(...args); },
                 (e: Error) => {
@@ -39,11 +74,15 @@ export class Subscribe<T = string> {
     // 清空订阅事件
     clear() {
         this.cache.clear();
+        this.cacheOnce.clear();
     }
     // 移除订阅事件
     remove(eventName: T) {
         if (this.cache.has(eventName)) {
             this.cache.delete(eventName);
+        }
+        if (this.cacheOnce.has(eventName)) {
+            this.cacheOnce.delete(eventName);
         }
     }
 }
