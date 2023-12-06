@@ -82,7 +82,7 @@ onUnmounted(() => {
     height: calc(100% - 44px);
     display: flex;
     justify-content: center;
-    overflow: hidden;
+    overflow: auto;
     .q-sandbox-container {
         width: 100%;
         height: 100%;
