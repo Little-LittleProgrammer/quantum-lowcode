@@ -32,12 +32,16 @@ export default defineConfig(({ mode, }) => {
                 // legacy({
                 //     targets: ['defaults', 'not IE 11'],
                 // }),
-                externalGlobals({ vue: 'Vue', }, { exclude: [`./${mode}/index.html`], }),
-                postCssPxtorem({
-                    rootValue: 750,
-                    propList: ['*'],
-                })
+                externalGlobals({ vue: 'Vue', }, { exclude: [`./${mode}/index.html`], })
             ],
+            css: {
+                postcss: {
+                    plugins: [postCssPxtorem({
+                        rootValue: 75,
+                        propList: ['*'],
+                    })],
+                },
+            },
 
             root: `./${mode}/`,
 
