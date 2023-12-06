@@ -23,6 +23,7 @@ export class LowCodeRoot extends Subscribe {
     public platform = 'mobile';
     public components = new Map();
     public request?: IRequestFunction;
+    // public dataSourceManager?: 
     constructor(options: IAppOptionsConfig) {
         super();
 

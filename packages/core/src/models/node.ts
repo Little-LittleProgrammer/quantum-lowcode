@@ -32,4 +32,9 @@ export class LowCodeNode extends Subscribe {
     public destroy() {
         this.clear()
     }
+
+    // 生命周期
+    private listenLifeSafe() {
+        
+    }
 }
