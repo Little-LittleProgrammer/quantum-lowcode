@@ -27,11 +27,7 @@ function pathResolve(dir: string) {
 
 export default defineConfig({
     plugins: [
-        vue(),
-        postCssPxtorem({
-            rootValue: 750,
-            propList: ['*'],
-        })
+        vue()
     ],
 
     resolve: {
@@ -41,6 +37,15 @@ export default defineConfig({
             { find: /^@qimao\/quantum-core/, replacement: pathResolve('../../packages/core/index.ts'), },
             { find: /^@qimao\/quantum-sandbox/, replacement: pathResolve('../../packages/sandbox/index.ts'), }
         ],
+    },
+
+    css: {
+        postcss: {
+            plugins: [postCssPxtorem({
+                rootValue: 75,
+                propList: ['*'],
+            })],
+        },
     },
 
     root: './',

@@ -9,6 +9,7 @@ interface IAppOptionsConfig {
     designWidth?: number;
     ua?: string;
     curPage?: Id;
+    platform?: 'mobile' | 'pc';
     transformStyle?: (style: Record<string, any>) => Record<string, any>; 
     request?: IRequestFunction;
   }
@@ -19,12 +20,14 @@ export class LowCodeRoot extends Subscribe {
     public schemasRoot?: ISchemasRoot;
     public page?: LowCodePage;
     public designWidth = 750;
+    public platform = 'mobile';
     public components = new Map();
     public request?: IRequestFunction;
     constructor(options: IAppOptionsConfig) {
         super();
 
         this.setEnv(options.ua);
+        options.platform && (this.platform = options.platform);
         if (typeof options.designWidth !== 'undefined') {
             this.setDesignWidth(options.designWidth);
         }
@@ -131,17 +134,16 @@ export class LowCodeRoot extends Subscribe {
         
         const whiteList = ['zIndex', 'opacity', 'fontWeight'];
         Object.entries(styleObj).forEach(([key, value]) => {
-            console.log(key ,value)
             if (key === 'scale' && !results.transform && isHippy) {
-              results.transform = [{ scale: value }];
+                results.transform = [{ scale: value }];
             } else if (key === 'backgroundImage' && !isHippy) {
-              value && (results[key] = fillBackgroundImage(value));
+                value && (results[key] = fillBackgroundImage(value));
             } else if (key === 'transform' && typeof value !== 'string') {
-              results[key] = this.getTransform(value);
+                results[key] = this.getTransform(value);
             } else if (!whiteList.includes(key) && value && /^[-]?[0-9]*[.]?[0-9]*$/.test(value)) {
-              results[key] = !isHippy || value.includes('%')  ? value : `${parseInt(value) / this.designWidth * 10}rem`;
+                results[key] = !isHippy  ? value : `${parseInt(value) / this.designWidth * 10}rem`;
             } else {
-              results[key] = value;
+                results[key] = value;
             }
         });
     
@@ -150,7 +152,7 @@ export class LowCodeRoot extends Subscribe {
     }
 
     public isH5() {
-        return this.env.isAndroid || this.env.isAndroidPad || this.env.isIos || this.env.isIpad || this.env.isIphone || this.env.isWechat
+        return this.platform === 'mobile' || this.env.isAndroid || this.env.isAndroidPad || this.env.isIos || this.env.isIpad || this.env.isIphone || this.env.isWechat
     }
 
     private getTransform(value: Record<string, string>) {
