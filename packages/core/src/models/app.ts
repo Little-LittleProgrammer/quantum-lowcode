@@ -109,8 +109,8 @@ export class LowCodeRoot extends Subscribe {
         // 根据屏幕大小计算出跟节点的font-size，用于rem样式的适配
         if (this.isH5()) {
             this.calcFontsize()
-            globalThis.removeEventListener('resize', this.calcFontsize);
-            globalThis.addEventListener('resize', this.calcFontsize); 
+            globalThis.removeEventListener('resize', this.calcFontsize.bind(this));
+            globalThis.addEventListener('resize', this.calcFontsize.bind(this)); 
         }
     }
 
@@ -178,6 +178,7 @@ export class LowCodeRoot extends Subscribe {
       }
 
     private calcFontsize() {
+        console.log('resize')
         const { width } = document.documentElement.getBoundingClientRect();
         const dpr = globalThis?.devicePixelRatio || 1
         this.setBodyFontSize(dpr);
@@ -223,7 +224,7 @@ export class LowCodeRoot extends Subscribe {
         this.clear()
         this.page = undefined;
         if (this.isH5()) {
-            globalThis.removeEventListener('resize', this.calcFontsize);
+            globalThis.removeEventListener('resize', this.calcFontsize.bind(this));
         }
     }
     
