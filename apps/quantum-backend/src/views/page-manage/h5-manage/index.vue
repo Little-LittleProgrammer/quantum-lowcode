@@ -71,8 +71,8 @@ function createTableActions(record: IH5ManageList):ActionItem[] {
 
 function openPreviewModal(record: IH5ManageList) {
     previewVisible.value = true;
-    // TODA change
-    previewData.value = record.pageJson ? (parseSchemas(record.pageJson).children?.[0]?.children[0]?.children || {}) : {}
+    // TODO change
+    previewData.value = record.pageJson ? (record.pageJson?.children?.[0]?.children[0]?.children || {}) : {}
 }
 
 async function initSelect() {
