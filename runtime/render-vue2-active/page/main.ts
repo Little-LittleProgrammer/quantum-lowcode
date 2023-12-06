@@ -1,5 +1,5 @@
 import { LowCodeRoot } from '@qimao/quantum-core';
-import { get_url_param } from '@qimao/quantum-utils';
+import { get_url_param, js_is_string, parseSchemas } from '@qimao/quantum-utils';
 import Vue from 'vue';
 import App from './App.vue';
 import { getLocalConfig } from './utils';
@@ -18,7 +18,7 @@ const components:any = {
 
 const app = new LowCodeRoot({
     ua: window.navigator.userAgent,
-    config: ((get_url_param('localPreview') ? getLocalConfig() : window.PAGE_JSON) || [])[0] || {},
+    config: ((get_url_param('localPreview') ? getLocalConfig() : js_is_string(window.PAGE_JSON) ? parseSchemas(window.PAGE_JSON) : window.PAGE_JSON) || [])[0] || {},
     curPage: get_url_param('page'),
     request: requestFn,
 });
