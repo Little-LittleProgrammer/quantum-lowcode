@@ -82,41 +82,41 @@ export interface ISchemasRoot {
 /**
  * 文件类型枚举
  */
-export enum FileType {
-    // js 文件
-    Module = 'module',
-    StoreEntryModule = 'storeEntryModule',
-    RouteModule = 'routeModule',
-    BlockEntryModule = 'blockEntryModule',
-    ServiceModule = 'serviceModule',
-    StoreModule = 'storeModule',
+// export enum FileType {
+//     // js 文件
+//     Module = 'module',
+//     StoreEntryModule = 'storeEntryModule',
+//     RouteModule = 'routeModule',
+//     BlockEntryModule = 'blockEntryModule',
+//     ServiceModule = 'serviceModule',
+//     StoreModule = 'storeModule',
 
-    JsxViewModule = 'jsxViewModule',
-    JsonViewModule = 'jsonViewModule',
+//     JsxViewModule = 'jsxViewModule',
+//     JsonViewModule = 'jsonViewModule',
 
-    // 非 js 文件
-    PackageJson = 'packageJson',
-    TangoConfigJson = 'tangoConfigJson',
-    AppJson = 'appJson',
-    File = 'file',
-    Json = 'json',
-    Scss = 'scss',
-}
+//     // 非 js 文件
+//     PackageJson = 'packageJson',
+//     TangoConfigJson = 'tangoConfigJson',
+//     AppJson = 'appJson',
+//     File = 'file',
+//     Json = 'json',
+//     Scss = 'scss',
+// }
 
-export interface IFileConfig {
-    /**
-     * 文件名, 支持路径
-     */
-    filename: string;
-    /**
-     * 原始代码
-     */
-    code: string;
-    /**
-     * 文件类型
-     */
-    type?: FileType;
-}
+// export interface IFileConfig {
+//     /**
+//      * 文件名, 支持路径
+//      */
+//     filename: string;
+//     /**
+//      * 原始代码
+//      */
+//     code: string;
+//     /**
+//      * 文件类型
+//      */
+//     type?: FileType;
+// }
 
 export const schemasRootType = `
 declare type Id = string

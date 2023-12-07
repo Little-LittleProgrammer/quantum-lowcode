@@ -4,7 +4,6 @@ import { ISchemasNode, ISchemasPage, Id, NodeType } from '@qimao/quantum-schemas
 import { get_node_path, js_is_array, js_is_object, Subscribe } from '@qimao/quantum-utils';
 import { isString } from 'lodash-es';
 import { BoxCore } from '@qimao/quantum-sandbox';
-import { setSchemasRoot } from '../utils';
 
 class EditorService extends Subscribe {
     public state = reactive<any>({
@@ -31,11 +30,6 @@ class EditorService extends Subscribe {
         }
 
         if (key === 'root') {
-            // TODO delete 为了一期简化用户输入, 后续会删除;
-            const _value = setSchemasRoot(value);
-            if (_value) {
-                value = _value as any;
-            }
             if (js_is_array(value)) {
                 throw new Error('root 不能为数组');
             }
