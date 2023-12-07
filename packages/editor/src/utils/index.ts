@@ -1,6 +1,6 @@
 import { js_is_array, js_is_object } from '@qimao/quantum-utils';
 import { IInstallOptions } from '../types';
-import { ISchemasRoot, NodeType } from '@qimao/quantum-core';
+import { ISchemasRoot, NodeType } from '@qimao/quantum-schemas';
 
 let Options: IInstallOptions = {} as any;
 export function getConfig<K extends keyof IInstallOptions>(key: K) {

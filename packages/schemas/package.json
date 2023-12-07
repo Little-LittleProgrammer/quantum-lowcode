@@ -1,9 +1,9 @@
 {
-  "name": "@qimao/quantum-core",
+  "name": "@qimao/quantum-schemas",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/quantum-core.cjs.min.js",
-  "module": "dist/quantum-core.esm.min.js",
+  "main": "dist/quantum-schemas.cjs.min.js",
+  "module": "dist/quantum-schemas.esm.min.js",
   "typings": "dist/types/index.d.ts",
   "scripts": {
     "build": "rollup -c --environment TYPES:true"
@@ -13,12 +13,9 @@
   "author": "Evan Wu",
   "license": "ISC",
   "dependencies": {
-    "@qimao/quantum-utils": "workspace:*",
-    "@qimao/quantum-schemas": "workspace:*"
   },
   "devDependencies": {
     "@q-front-npm-configs/rollup": "1.2.0",
-    "rollup": "^3.29.4",
-    "@rollup/plugin-alias": "5.1.0"
+    "rollup": "^3.29.4"
   }
 }

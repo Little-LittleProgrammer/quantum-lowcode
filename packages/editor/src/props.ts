@@ -1,4 +1,4 @@
-import { ISchemasRoot } from '@qimao/quantum-core';
+import { ISchemasRoot } from '@qimao/quantum-schemas';
 import { ISandboxRect } from './types';
 
 export interface IEditorProps {
@@ -11,5 +11,5 @@ export interface IEditorProps {
 }
 
 export const defaultEditorProps = {
-    codeOptions: () => ({})
+    codeOptions: () => ({}),
 };

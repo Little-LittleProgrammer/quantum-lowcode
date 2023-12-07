@@ -1,13 +1,13 @@
 import { reactive } from 'vue';
 import { IEditorNodeInfo, IStoreState, IStoreStateKey } from '../types';
-import { ISchemasNode, ISchemasPage, Id, NodeType } from '@qimao/quantum-core';
+import { ISchemasNode, ISchemasPage, Id, NodeType } from '@qimao/quantum-schemas';
 import { get_node_path, js_is_array, js_is_object, Subscribe } from '@qimao/quantum-utils';
 import { isString } from 'lodash-es';
 import { BoxCore } from '@qimao/quantum-sandbox';
 import { setSchemasRoot } from '../utils';
 
 class EditorService extends Subscribe {
-    public state = reactive<IStoreState>({
+    public state = reactive<any>({
         root: null,
         sandbox: null,
         page: null,
@@ -66,7 +66,7 @@ class EditorService extends Subscribe {
         };
         if (!root) return info;
         if (field === root.type) {
-            info.node = root;
+            info.node = root as any;
             return info;
         }
         const path = get_node_path(field, root.children);

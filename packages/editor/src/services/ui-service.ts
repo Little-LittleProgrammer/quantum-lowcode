@@ -5,8 +5,8 @@ const state = reactive<IUiState>({
     showSrc: true,
     sandboxRect: {
         width: 375,
-        height: 817
-    }
+        height: 817,
+    },
 });
 
 class UiService {

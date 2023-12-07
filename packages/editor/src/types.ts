@@ -1,7 +1,7 @@
 import type { BoxCore } from '@qimao/quantum-sandbox';
 import type { EditorService } from './services/editor-service';
 import type { UiService } from './services/ui-service';
-import { ISchemasRoot, ISchemasPage, ISchemasContainer, ISchemasNode, Id } from '@qimao/quantum-core';
+import { ISchemasRoot, ISchemasPage, ISchemasContainer, ISchemasNode, Id } from '@qimao/quantum-schemas';
 
 export interface IStoreState {
     root: ISchemasRoot | null;

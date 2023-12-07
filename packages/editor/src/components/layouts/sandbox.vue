@@ -11,6 +11,7 @@ import { BoxCore, IBoxCoreConfig } from '@qimao/quantum-sandbox';
 import { IServices } from '../../types';
 import { IRuntime } from '@qimao/quantum-sandbox/src/types';
 import { cloneDeep } from 'lodash-es';
+import { ISchemasRoot } from '@qimao/quantum-schemas';
 
 defineOptions({
     name: 'QEditorSandBox',
@@ -23,7 +24,7 @@ let runtime: IRuntime | null = null;
 
 const services = inject<IServices>('services');
 const sandboxOptions = inject<IBoxCoreConfig>('sandboxOptions');
-const root = computed(() => services?.editorService.get('root'));
+const root = computed(() => services?.editorService.get('root') as ISchemasRoot);
 const page = computed(() => services?.editorService.get('page'));
 const boxRect = computed(() => services?.uiService.get('sandboxRect'));
 

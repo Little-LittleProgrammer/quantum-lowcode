@@ -1,8 +1,8 @@
 // 核心实例对象, 接收配置, 文件以及node信息\
-import { Subscribe, fillBackgroundImage, js_is_number, js_is_string, style2Obj } from "@qimao/quantum-utils";
-import { Fn, IRequestFunction, ISchemasRoot, Id } from "../type";
-import {LowCodePage} from './page'
-import {Env} from './env'
+import { Subscribe, fillBackgroundImage, js_is_number, js_is_string, style2Obj } from '@qimao/quantum-utils';
+import { Fn, IRequestFunction, ISchemasRoot, Id } from '@qimao/quantum-schemas';
+import {LowCodePage} from './page';
+import {Env} from './env';
 
 interface IAppOptionsConfig {
     config?: ISchemasRoot;
@@ -10,10 +10,9 @@ interface IAppOptionsConfig {
     ua?: string;
     curPage?: Id;
     platform?: 'mobile' | 'pc';
-    transformStyle?: (style: Record<string, any>) => Record<string, any>; 
+    transformStyle?: (style: Record<string, any>) => Record<string, any>;
     request?: IRequestFunction;
-  }
-  
+}
 
 export class LowCodeRoot extends Subscribe {
     public env: Env = new Env();;
@@ -23,7 +22,7 @@ export class LowCodeRoot extends Subscribe {
     public platform = 'mobile';
     public components = new Map();
     public request?: IRequestFunction;
-    // public dataSourceManager?: 
+    // public dataSourceManager?:
     constructor(options: IAppOptionsConfig) {
         super();
 
@@ -33,18 +32,18 @@ export class LowCodeRoot extends Subscribe {
             this.setDesignWidth(options.designWidth);
         }
         if (options.config) {
-            this.setConfig(options.config, options.curPage)
+            this.setConfig(options.config, options.curPage);
         }
         if (options.request) {
             this.request = options.request;
         }
         if (options.transformStyle) {
-            this.transformStyle = options.transformStyle
+            this.transformStyle = options.transformStyle;
         }
     }
 
     public setEnv(ua?: string) {
-        this.env = new Env(ua)
+        this.env = new Env(ua);
     }
 
     /**
@@ -56,7 +55,7 @@ export class LowCodeRoot extends Subscribe {
         this.schemasRoot = config;
 
         if (!curPage && config.children.length) {
-            curPage = config.children[0].field
+            curPage = config.children[0].field;
         }
 
         this.setPage(curPage || this.page?.data?.field);
@@ -70,10 +69,10 @@ export class LowCodeRoot extends Subscribe {
         if (!pageConfig) {
             if (this.page) {
                 this.page.destroy();
-                this.page = undefined
+                this.page = undefined;
             }
             this.emit('page-change');
-            return
+            return;
         }
 
         if (pageConfig === this.page?.data) return;
@@ -82,11 +81,11 @@ export class LowCodeRoot extends Subscribe {
             this.page.destroy();
         }
 
-        this.page = new LowCodePage({config: pageConfig, root: this});
+        this.page = new LowCodePage({config: pageConfig, root: this, });
         this.emit('page-change', this.page);
         this.bindEvents();
     }
-    
+
     /**
      * 查询页面
      * @param id 节点id
@@ -103,14 +102,13 @@ export class LowCodeRoot extends Subscribe {
         this.page = undefined;
     }
 
-
     public setDesignWidth(width: number) {
         this.designWidth = width;
         // 根据屏幕大小计算出跟节点的font-size，用于rem样式的适配
         if (this.isH5()) {
-            this.calcFontsize()
+            this.calcFontsize();
             globalThis.removeEventListener('resize', this.calcFontsize.bind(this));
-            globalThis.addEventListener('resize', this.calcFontsize.bind(this)); 
+            globalThis.addEventListener('resize', this.calcFontsize.bind(this));
         }
     }
 
@@ -119,79 +117,78 @@ export class LowCodeRoot extends Subscribe {
      * @param style Object
      * @returns Object
      */
-    public transformStyle(style: Record<string, any> | string | Fn ) {
+    public transformStyle(style: Record<string, any> | string | Fn) {
         if (!style) return {};
 
         let styleObj: Record<string, any> = {};
         const results: Record<string, any> = {};
 
         if (js_is_string(style)) {
-            styleObj = style2Obj(style)
+            styleObj = style2Obj(style);
         } else {
-            styleObj = {...style }
+            styleObj = {...style, };
         }
 
-        const isHippy = this.isH5()
-        
+        const isHippy = this.isH5();
+
         const whiteList = ['zIndex', 'opacity', 'fontWeight'];
         Object.entries(styleObj).forEach(([key, value]) => {
             if (key === 'scale' && !results.transform && isHippy) {
-                results.transform = [{ scale: value }];
+                results.transform = [{ scale: value, }];
             } else if (key === 'backgroundImage' && !isHippy) {
                 value && (results[key] = fillBackgroundImage(value));
             } else if (key === 'transform' && typeof value !== 'string') {
                 results[key] = this.getTransform(value);
             } else if (!whiteList.includes(key) && value && /^[-]?[0-9]*[.]?[0-9]*$/.test(value)) {
-                results[key] = !isHippy  ? value : `${parseInt(value) / this.designWidth * 10}rem`;
+                results[key] = !isHippy ? value : `${parseInt(value) / this.designWidth * 10}rem`;
             } else {
                 results[key] = value;
             }
         });
-    
-        return results;
 
+        return results;
     }
 
     public isH5() {
-        return this.platform === 'mobile' || this.env.isAndroid || this.env.isAndroidPad || this.env.isIos || this.env.isIpad || this.env.isIphone || this.env.isWechat
+        return this.platform === 'mobile' || this.env.isAndroid || this.env.isAndroidPad || this.env.isIos || this.env.isIpad || this.env.isIphone || this.env.isWechat;
     }
 
     private getTransform(value: Record<string, string>) {
         if (!value) return [];
 
-        const isH5 = this.isH5()
-    
+        const isH5 = this.isH5();
+
         const transform = Object.entries(value).map(([transformKey, transformValue]) => {
             if (!transformValue.trim()) return '';
             if (transformKey === 'rotate' && js_is_number(transformValue)) {
                 transformValue = `${transformValue}deg`;
             }
-        
-            return !isH5 ? `${transformKey}(${transformValue})` : { [transformKey]: transformValue };
+
+            return !isH5 ? `${transformKey}(${transformValue})` : { [transformKey]: transformValue, };
         });
-    
+
         if (isH5) {
             return transform;
         }
         const values = transform.join(' ');
         return !values.trim() ? 'none' : values;
-      }
+    }
 
     private calcFontsize() {
-        console.log('resize')
-        const { width } = document.documentElement.getBoundingClientRect();
-        const dpr = globalThis?.devicePixelRatio || 1
+        console.log('resize');
+        const { width, } = document.documentElement.getBoundingClientRect();
+        const dpr = globalThis?.devicePixelRatio || 1;
         this.setBodyFontSize(dpr);
         const fontSize = width / 10;
         document.documentElement.style.fontSize = `${fontSize}px`;
     }
 
     // 设置body字体大小
-    private setBodyFontSize(dpr: number = 1) {
+    private setBodyFontSize(dpr = 1) {
         if (document.body) {
-            document.body.style.fontSize = (12 * dpr) + 'px'
+            document.body.style.fontSize = (12 * dpr) + 'px';
         } else {
-            document.addEventListener('DOMContentLoaded', () => this.setBodyFontSize(dpr))
+            document.addEventListener('DOMContentLoaded', () => this.setBodyFontSize(dpr));
         }
     }
 
@@ -199,7 +196,7 @@ export class LowCodeRoot extends Subscribe {
      * 事件绑定
      */
     public bindEvents() {
-        
+
     }
 
     /**
@@ -221,11 +218,10 @@ export class LowCodeRoot extends Subscribe {
     }
 
     public destroy() {
-        this.clear()
+        this.clear();
         this.page = undefined;
         if (this.isH5()) {
             globalThis.removeEventListener('resize', this.calcFontsize.bind(this));
         }
     }
-    
 }

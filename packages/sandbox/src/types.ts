@@ -1,5 +1,5 @@
 import type {LowCodeRoot} from '@qimao/quantum-core';
-import type {ISchemasRoot, Id} from '@qimao/quantum-core';
+import type {ISchemasRoot, Id} from '@qimao/quantum-schemas';
 
 export interface IRuntime {
     getApp?: () => LowCodeRoot | undefined;

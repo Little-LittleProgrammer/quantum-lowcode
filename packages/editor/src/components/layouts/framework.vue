@@ -31,12 +31,13 @@ import {QCodeEditor} from '@qimao/quantum-ui';
 import {getConfig, getSchemasRootToNeed, setSchemasRoot} from '../../utils';
 import { Empty } from 'ant-design-vue';
 import { serializeToString } from '@qimao/quantum-utils';
+import { ISchemasRoot } from '@qimao/quantum-schemas';
 defineOptions({
     name: 'QEditorFramework',
 });
 
 const codeOptions = inject('codeOptions', {});
-const root = computed(() => editorService?.get('root'));
+const root = computed(() => editorService?.get('root') as ISchemasRoot);
 const pageLength = computed(() => editorService?.get('pageLength') || 0);
 const showSrc = computed(() => uiService?.get('showSrc'));
 

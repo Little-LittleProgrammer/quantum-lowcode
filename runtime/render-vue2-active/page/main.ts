@@ -1,5 +1,5 @@
 import { LowCodeRoot } from '@qimao/quantum-core';
-import { get_url_param, js_is_string, parseSchemas } from '@qimao/quantum-utils';
+import { get_url_param, parseSchemas } from '@qimao/quantum-utils';
 import Vue from 'vue';
 import App from './App.vue';
 import { getLocalConfig } from './utils';

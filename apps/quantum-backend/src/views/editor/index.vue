@@ -21,7 +21,7 @@
 <script lang='ts' setup>
 import { computed, reactive, ref, toRaw, watch } from 'vue'
 import {QuantumEditor} from '@qimao/quantum-editor'
-import { ISchemasRoot } from '@qimao/quantum-core';
+import { ISchemasRoot } from '@qimao/quantum-schemas';
 import { serializeToString, parseSchemas } from '@qimao/quantum-utils';
 import { testSchemas } from './init-schemas';
 import { RUNTIME_PATH } from '@/enums/runtimeEnum';

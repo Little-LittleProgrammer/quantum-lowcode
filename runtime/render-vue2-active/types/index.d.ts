@@ -1,4 +1,4 @@
-import { ISchemasRoot } from '@qimao/quantum-core';
+import { ISchemasRoot } from '@qimao/quantum-schemas';
 
 declare global {
     interface Window {

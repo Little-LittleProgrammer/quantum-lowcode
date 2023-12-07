@@ -1,24 +1,24 @@
 <template>
     <div
-      :id="config.field"
-      ref="refRuntimePage"
-      :style="style"
+        :id="config.field"
+        ref="refRuntimePage"
+        :style="style"
     >
-      <slot></slot>
-      <runtime-component v-for="item in config.children" :key="item.field" :config="item"></runtime-component>
+        <slot></slot>
+        <runtime-component v-for="item in config.children" :key="item.field" :config="item"></runtime-component>
     </div>
-  </template>
-  
-  <script lang="ts">
-  import { computed, defineComponent, PropType, ref } from 'vue';
-  
-  import type { ISchemasPage } from '@qimao/quantum-core';
-  
-  import Component from '../component/index.vue';
-//   import {useApp} from '../hooks/use-app';
-  import {js_is_function} from '@qimao/quantum-utils'
+</template>
 
-  export default defineComponent({
+<script lang="ts">
+import { computed, defineComponent, PropType, ref } from 'vue';
+
+import type { ISchemasPage } from '@qimao/quantum-schemas';
+
+import Component from '../component/index.vue';
+//   import {useApp} from '../hooks/use-app';
+import {js_is_function} from '@qimao/quantum-utils';
+
+export default defineComponent({
     components: {
         'runtime-component': Component,
     },
@@ -29,17 +29,17 @@
         },
     },
     setup(props) {
-        const refRuntimePage= ref();
+        const refRuntimePage = ref();
         const getStyle = computed(() => {
             if (js_is_function(props.config.style)) {
-                return props.config.style(refRuntimePage.value?.$el)
+                return props.config.style(refRuntimePage.value?.$el);
             }
-            return props.config.style
-        })
+            return props.config.style;
+        });
         return {
             style: getStyle,
         };
     },
-  });
-  </script>
-  
+});
+</script>
+

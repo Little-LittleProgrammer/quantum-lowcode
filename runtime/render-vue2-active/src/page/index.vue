@@ -13,7 +13,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType, ref } from 'vue';
 
-import type { ISchemasPage } from '@qimao/quantum-core';
+import type { ISchemasPage } from '@qimao/quantum-schemas';
 
 import Component from '../component/index.vue';
 //   import {useApp} from '../hooks/use-app';

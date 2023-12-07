@@ -14,7 +14,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType, ref } from 'vue';
 
-import type { ISchemasPage } from '@qimao/quantum-core';
+import type { ISchemasPage } from '@qimao/quantum-schemas';
 
 import Component from '../component/index.vue';
 import { js_is_function } from '@qimao/quantum-utils';
@@ -32,27 +32,27 @@ export default defineComponent({
         },
     },
     setup(props) {
-        const {app}= useApp(props);
+        const {app, } = useApp(props);
         const ifShow = computed(() => {
             if (props.config.ifShow) {
-                return props.config.ifShow
+                return props.config.ifShow;
             }
-            return true
+            return true;
         });
-        const refRuntimeContainer= ref();
+        const refRuntimeContainer = ref();
         const getStyle = computed(() => {
             if (js_is_function(props.config.style)) {
-                props.config.style(refRuntimeContainer.value?.$el)
-                return {}
+                props.config.style(refRuntimeContainer.value?.$el);
+                return {};
             }
-            return app?.transformStyle(props.config.style || {})
-        })
-        
+            return app?.transformStyle(props.config.style || {});
+        });
+
         return {
             style: getStyle,
             display: ifShow,
         };
-    }
+    },
 });
-  </script>
-  
+</script>
+

@@ -14,7 +14,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType, ref, markRaw } from 'vue';
 
-import type {ISchemasNode} from '@qimao/quantum-core';
+import type {ISchemasNode} from '@qimao/quantum-schemas';
 import {useApp} from '../hooks/use-app';
 import {js_is_function, js_is_object} from '@qimao/quantum-utils';
 

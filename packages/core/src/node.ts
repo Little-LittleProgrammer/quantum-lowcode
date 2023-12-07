@@ -1,14 +1,14 @@
-import { ISchemasContainer, ISchemasNode, ISchemasPage } from "../type";
-import { LowCodeRoot } from "./app";
-import { LowCodePage } from "./page";
-import { Subscribe } from '@qimao/quantum-utils'
+import { ISchemasContainer, ISchemasNode, ISchemasPage } from '@qimao/quantum-schemas';
+import { LowCodeRoot } from './app';
+import { LowCodePage } from './page';
+import { Subscribe } from '@qimao/quantum-utils';
 
 interface INodeOptions {
     config: ISchemasNode | ISchemasContainer;
     page?: LowCodePage;
     parent?: LowCodeNode;
     root: LowCodeRoot;
-  }
+}
 
 export class LowCodeNode extends Subscribe {
     public data:ISchemasNode | ISchemasContainer | ISchemasPage;
@@ -17,7 +17,7 @@ export class LowCodeNode extends Subscribe {
     public root: LowCodeRoot;
 
     constructor(options: INodeOptions) {
-        super()
+        super();
         this.page = options.page;
         this.parent = options.parent;
         this.root = options.root;
@@ -26,15 +26,15 @@ export class LowCodeNode extends Subscribe {
 
     public setData(data: ISchemasNode | ISchemasContainer | ISchemasPage) {
         this.data = data;
-        this.emit('updata-data')
+        this.emit('updata-data');
     }
 
     public destroy() {
-        this.clear()
+        this.clear();
     }
 
     // 生命周期
     private listenLifeSafe() {
-        
+
     }
 }

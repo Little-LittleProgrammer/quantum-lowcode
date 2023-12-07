@@ -2,15 +2,16 @@
     <div id="app">
         <page v-if="pageConfig" :config="pageConfig" :key="pageConfig.field"></page>
     </div>
-    
+
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, inject, nextTick, ref } from 'vue';
 
-import type { Id, ISchemasRoot, LowCodeRoot, ISchemasPage } from '@qimao/quantum-core';
+import type { Id, ISchemasRoot, ISchemasPage } from '@qimao/quantum-schemas';
+import type { LowCodeRoot } from '@qimao/quantum-core';
 import { IQuantum} from '@qimao/quantum-sandbox';
-import Page from '../src/page/index.vue'
+import Page from '../src/page/index.vue';
 
 declare global {
     interface Window {
@@ -21,7 +22,7 @@ declare global {
 
 export default defineComponent({
     components: {
-        page: Page
+        page: Page,
     },
     setup() {
         const app = inject<LowCodeRoot | undefined>('app');
@@ -31,7 +32,7 @@ export default defineComponent({
         const selectedId = ref<Id>();
 
         const pageConfig = computed(
-            () => root.value?.children?.find((item: ISchemasPage) => item.field === curPageId.value) || root.value?.children?.[0],
+            () => root.value?.children?.find((item: ISchemasPage) => item.field === curPageId.value) || root.value?.children?.[0]
         );
 
         // watch(pageConfig, async () => {
@@ -52,7 +53,7 @@ export default defineComponent({
 
             updatePageId(id: Id) {
                 curPageId.value = id;
-                console.log(id)
+                console.log(id);
                 app?.setPage(id);
             },
 

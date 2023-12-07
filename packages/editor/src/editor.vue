@@ -19,7 +19,7 @@ import { IServices } from './types';
 import { uiService } from './services/ui-service';
 import { editorService } from './services/editor-service';
 import { IEditorProps, defaultEditorProps } from './props';
-import { ISchemasRoot } from '@qimao/quantum-core';
+import { ISchemasRoot } from '@qimao/quantum-schemas';
 import { useServicesInit } from './hooks/use-service';
 defineOptions({
     name: 'QEditor',

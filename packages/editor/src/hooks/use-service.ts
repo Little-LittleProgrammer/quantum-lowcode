@@ -1,4 +1,4 @@
-import { ISchemasRoot } from '@qimao/quantum-core';
+import { ISchemasPage, ISchemasRoot } from '@qimao/quantum-schemas';
 import { IEditorProps } from 'src/props';
 import { IServices } from 'src/types';
 import { nextTick, onUnmounted, toRaw, watch } from 'vue';
@@ -26,7 +26,7 @@ export function useServicesInit(
         async function root_change_handler(value: ISchemasRoot, preValue: ISchemasRoot) {
             if (value?.children?.length) {
                 if (preValue?.children?.length && value.children.length <= preValue.children.length && editorService.get('page')) {
-                    editorService.select(editorService.get('page')!);
+                    editorService.select(editorService.get('page')! as ISchemasPage);
                 } else {
                     editorService.select(value.children[0]);
                 }

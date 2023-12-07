@@ -2,7 +2,7 @@
 
 import { Subscribe, get_host, is_same_domain } from '@qimao/quantum-utils';
 import { IBoxCoreConfig, IRuntime, IRuntimeWindow } from './types';
-import { Id } from '@qimao/quantum-core';
+import { Id } from '@qimao/quantum-schemas';
 
 /**
  * 画布渲染器, 生成iframe, 并提供暴露出去的发布器(主要用于更新IRuntime schemas)供外部调用

@@ -14,7 +14,8 @@
   "license": "ISC",
   "dependencies": {
     "@qimao/quantum-utils": "workspace:*",
-    "@qimao/quantum-core": "workspace:*"
+    "@qimao/quantum-core": "workspace:*",
+    "@qimao/quantum-schemas": "workspace:*"
   },
   "devDependencies": {
     "rollup": "^3.29.4",

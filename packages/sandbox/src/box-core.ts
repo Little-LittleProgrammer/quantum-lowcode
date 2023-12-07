@@ -7,7 +7,7 @@
 import { Subscribe } from '@qimao/quantum-utils';
 import { BoxRender } from './box-render';
 import { IBoxCoreConfig, IRuntime } from './types';
-import { Id } from '@qimao/quantum-core';
+import { Id } from '@qimao/quantum-schemas';
 
 /**
  * 负责管理画布, 管理renderer, 并负责统一对外通信，包括提供接口和抛事件
@@ -19,7 +19,7 @@ export class BoxCore extends Subscribe {
     constructor(config: IBoxCoreConfig){
         super();
         this.renderer = new BoxRender({
-            runtimeUrl: config.runtimeUrl
+            runtimeUrl: config.runtimeUrl,
         });
         this.initRenderEvent();
     }

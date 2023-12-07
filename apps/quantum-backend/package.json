@@ -13,6 +13,7 @@
   "dependencies": {
     "@qimao/quantum-utils": "workspace:*",
     "@qimao/quantum-core": "workspace:*",
+    "@qimao/quantum-schemas": "workspace:*",
     "@qimao/quantum-editor": "workspace:*",
     "@qimao/quantum-sandbox": "workspace:*",
     "@qimao/quantum-ui": "workspace:*",

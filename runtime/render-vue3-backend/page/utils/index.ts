@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-import { ISchemasRoot } from '@qimao/quantum-core';
+import { ISchemasRoot } from '@qimao/quantum-schemas';
 import { parseSchemas } from '@qimao/quantum-utils';
 
 export const getLocalConfig = (): ISchemasRoot[] => {

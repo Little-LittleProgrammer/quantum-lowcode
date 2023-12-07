@@ -1,5 +1,5 @@
 // 数组节点模型
-import { NodeType } from "./const";
+import { NodeType } from './const';
 type SelectPartial<T, V extends keyof T> = Partial<Omit<T, V>> & Required<Pick<T, V>>
 export type Id = string
 export interface Fn<T = any, R = T> {
@@ -19,7 +19,7 @@ export interface IHttpOptions {
     /** 请求方法 GET/POST */
     method?: Method;
     [key: string]: any;
-  }
+}
 export type IRequestFunction = (options: IHttpOptions) => Promise<any>;
 
 /**
@@ -90,10 +90,10 @@ export enum FileType {
     BlockEntryModule = 'blockEntryModule',
     ServiceModule = 'serviceModule',
     StoreModule = 'storeModule',
-  
+
     JsxViewModule = 'jsxViewModule',
     JsonViewModule = 'jsonViewModule',
-  
+
     // 非 js 文件
     PackageJson = 'packageJson',
     TangoConfigJson = 'tangoConfigJson',
@@ -180,4 +180,4 @@ declare interface ISchemasRoot {
     name: string
     // dataSources?: DataSourceSchema[]; // 管理数据
 }
-`
+`;

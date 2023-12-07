@@ -7,7 +7,7 @@
 import { computed, inject } from 'vue';
 import {QAntdForm, useForm, FormSchema} from '@q-front-npm/vue3-antd-pc-ui';
 
-import { ISchemasNode } from '@qimao/quantum-core';
+import { ISchemasNode } from '@qimao/quantum-schemas';
 defineOptions({
     name: 'EditorForm',
 });

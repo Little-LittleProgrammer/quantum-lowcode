@@ -5,7 +5,8 @@
 <script lang="ts">
 import { computed, defineComponent, inject, nextTick, ref } from 'vue';
 
-import type { Id, ISchemasRoot, LowCodeRoot, ISchemasPage } from '@qimao/quantum-core';
+import type { LowCodeRoot } from '@qimao/quantum-core';
+import type { Id, ISchemasRoot, ISchemasPage } from '@qimao/quantum-schemas';
 import { IQuantum} from '@qimao/quantum-sandbox';
 import Page from '../src/page/index.vue';
 
