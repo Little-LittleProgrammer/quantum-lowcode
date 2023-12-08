@@ -7,6 +7,7 @@
                     {{ item.field }}
                 </breadcrumb-item>
             </breadcrumb>
+            <slot name="workspace-header"></slot>
         </div>
         <div class="workspace-content">
             <slot name="sandbox">
@@ -44,6 +45,8 @@ const path = computed(() => get_node_path(node.value?.field || '', root.value?.c
     width: 100%;
     position: relative;
     .workspace-header {
+        display: flex;
+        justify-content: space-between;
         padding: 0 10px;
     }
 

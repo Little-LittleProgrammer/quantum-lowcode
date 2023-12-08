@@ -13,13 +13,20 @@
             :boxRect="sandboxRect"
             :runtime-url="runtimeUrl"
         >
+            <template #workspace-header="{editorService}">
+                <a-radio-group size="small" v-model:value="sandboxDev" button-style="solid" @change="(e) => changeSandboxDev(e, editorService)">
+                    <a-radio-button value="phone">Phone</a-radio-button>
+                    <a-radio-button value="pad">Pad</a-radio-button>
+                    <a-radio-button value="pc">PC</a-radio-button>
+                </a-radio-group>
+            </template>
         </quantum-editor>
         <preview v-model:previewVisible="previewVisible" :previewUrl="previewUrl" :sandboxRect="sandboxRect"></preview>
     </div>
 </template>
 
 <script lang='ts' setup>
-import { computed, reactive, ref, toRaw, watch } from 'vue'
+import { computed, nextTick, reactive, ref, toRaw, watch } from 'vue'
 import {QuantumEditor} from '@qimao/quantum-editor'
 import { ISchemasRoot } from '@qimao/quantum-schemas';
 import { serializeToString, parseSchemas } from '@qimao/quantum-utils';
@@ -29,6 +36,8 @@ import { useRoute } from 'vue-router';
 import {useMessage} from '@q-front-npm/hooks/vue/use-message'
 import { apiGetH5ManageDetail, apiPutH5ManageProject, apiSaveH5ManageProject } from '@/http/api/manage/h5-manage';
 import Preview from '@/components/pagePreview/preview.vue'
+import { DEV_RECT, UA_MAP } from '@/enums/projectEnum';
+import { EditorService } from '@qimao/quantum-editor';
 defineOptions({ 
      name: 'Editor'
 })
@@ -44,6 +53,7 @@ const schemas = ref<ISchemasRoot>(testSchemas);
 let preSchemasStr = ''
 let schemasStr = '';
 let id = null;
+
 
 const previewVisible=ref(false)
 
@@ -70,12 +80,27 @@ initData()
 
 const {createConfirm, createMessage} = useMessage()
 
-const sandboxRect = reactive({
-    width: 375,
-    height: 817
-})
+const sandboxRect = ref(DEV_RECT.phone)
+const sandboxDev = ref('phone')
 
-// const {createConfirm} = useMessage()
+// 更改画布大小
+async function changeSandboxDev(e: ChangeEvent, editorService: EditorService) {
+    sandboxRect.value = DEV_RECT[e.target.value as 'phone'];
+    await nextTick();
+    calcFontsize(DEV_RECT[e.target.value as 'phone'].width, editorService);
+}
+
+// 设置px => rem
+function calcFontsize(width: number, editorService: EditorService) {
+    const iframe = editorService.get('sandbox')?.renderer.iframe;
+    if (!iframe?.contentWindow) return;
+
+    const app = (iframe.contentWindow as any).appInstance;
+
+    app.setEnv(UA_MAP[sandboxDev.value as 'phone']);
+
+    app.setDesignWidth(width);
+}
 
 function openPreviewModal() {
     save()

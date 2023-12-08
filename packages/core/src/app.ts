@@ -130,7 +130,7 @@ export class LowCodeRoot extends Subscribe {
         }
 
         const isHippy = this.isH5();
-
+        console.log('style', isHippy);
         const whiteList = ['zIndex', 'opacity', 'fontWeight'];
         Object.entries(styleObj).forEach(([key, value]) => {
             if (key === 'scale' && !results.transform && isHippy) {
@@ -150,7 +150,7 @@ export class LowCodeRoot extends Subscribe {
     }
 
     public isH5() {
-        return this.platform === 'mobile' || this.env.isAndroid || this.env.isAndroidPad || this.env.isIos || this.env.isIpad || this.env.isIphone || this.env.isWechat;
+        return this.env.isAndroid || this.env.isAndroidPad || this.env.isIos || this.env.isIpad || this.env.isIphone || this.env.isWechat;
     }
 
     private getTransform(value: Record<string, string>) {

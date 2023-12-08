@@ -6,7 +6,7 @@ const setting: IProjectConfig = {
         // 是否展示主题切换按钮
         showDarkModeToggle: true,
         // 是否开启网站灰色模式，悼念的日期开启(4.4, 4.5, 12.13)
-        grayMode: false
+        grayMode: false,
     },
     // 功能配置
     func: {
@@ -21,7 +21,7 @@ const setting: IProjectConfig = {
         // 切换界面的时候是否取消已经发送但是未响应的http请求, openKeepAlive为true是失效
         removeAllHttpPending: true,
         // 是否显示刷新按钮
-        showReloadButton: true
+        showReloadButton: true,
     },
     cacheTabsSetting: {
         // 是否展示
@@ -33,7 +33,7 @@ const setting: IProjectConfig = {
         // 是否可以拖拽
         canDrag: true,
         // 刷新后是否保留已经打开的标签页
-        cache: false
+        cache: false,
     },
     // 动画配置
     transition: {
@@ -42,9 +42,30 @@ const setting: IProjectConfig = {
         // 是否打开页面切换loading
         openPageLoading: true,
         // 是否打开页面切换顶部进度条
-        openNProgress: true
-    }
+        openNProgress: true,
+    },
 
+};
+
+export enum DEVICE_TYPE {
+    Phone = 'phone',
+    Pad = 'pad',
+    PC = 'pc',
+}
+
+export const DEV_RECT = {
+    [DEVICE_TYPE.Phone]: {height: 817, width: 375, },
+    [DEVICE_TYPE.Pad]: {height: 1024, width: 768, },
+    [DEVICE_TYPE.PC]: {height: 900, width: 1600, },
+};
+
+export const UA_MAP = {
+    [DEVICE_TYPE.Phone]:
+      'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1',
+    [DEVICE_TYPE.Pad]:
+      'Mozilla/5.0 (iPad; CPU OS 11_0 like Mac OS X) AppleWebKit/604.1.34 (KHTML, like Gecko) Version/11.0 Mobile/15A5341f Safari/604.1',
+    [DEVICE_TYPE.PC]:
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
 };
 
 export default setting;

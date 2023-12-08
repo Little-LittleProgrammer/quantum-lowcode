@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@types/lodash-es": "^4.17.6",
-    "@q-front-npm/types": "~1.2.1-beta.0",
+    "@q-front-npm/types": "~1.2.1",
     "sass": "^1.63.3",
     "@ant-design/icons-vue": "^6.1.0",
     "ant-design-vue": "^4.0.1",

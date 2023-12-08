@@ -46,8 +46,8 @@
     "vue": "~3.3.4"
   },    
   "devDependencies": {
-    "@q-front-npm-configs/vite": "~1.2.1-beta.0",
-    "@q-front-npm/types": "~1.2.1-beta.0",
+    "@q-front-npm-configs/vite": "~1.2.1",
+    "@q-front-npm/types": "~1.2.1",
     "sass": "^1.63.3",
     "@ant-design/icons-vue": "^6.1.0",
     "vue-types": "^3.0.2",

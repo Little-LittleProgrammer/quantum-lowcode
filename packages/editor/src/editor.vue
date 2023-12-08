@@ -5,6 +5,7 @@
             <slot name="workspace" :editorService="editorService">
                 <workspace >
                     <template #sandbox><slot name="sandbox"></slot></template>
+                    <template #workspace-header><slot name="workspace-header" :editorService="editorService"></slot></template>
                 </workspace>
             </slot>
         </template>

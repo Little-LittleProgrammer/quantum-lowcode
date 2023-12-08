@@ -23,6 +23,8 @@ Object.keys(components).forEach((type: string) => app.registerComponent(type, co
 
 app.setDesignWidth(window.document.documentElement.getBoundingClientRect().width);
 
+window.appInstance = app;
+
 const appVue = createApp(App);
 
 appVue.provide('app', app);

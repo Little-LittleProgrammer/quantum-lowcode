@@ -81,10 +81,9 @@ onUnmounted(() => {
 .q-editor-sandbox {
     padding: 6px;
     height: calc(100% - 44px);
-    display: flex;
-    justify-content: center;
     overflow: auto;
     .q-sandbox-container {
+        margin: auto;
         width: 100%;
         height: 100%;
         z-index: 0;

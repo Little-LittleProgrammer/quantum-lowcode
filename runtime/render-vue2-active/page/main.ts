@@ -26,7 +26,7 @@ const app = new LowCodeRoot({
 Object.keys(components).forEach((type: string) => app.registerComponent(type, components[type]));
 
 app.setDesignWidth(window.document.documentElement.getBoundingClientRect().width);
-
+window.appInstance = app;
 new Vue({
     render: (h) => h(App),
     provide: {

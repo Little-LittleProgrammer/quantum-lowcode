@@ -16,5 +16,7 @@ app.setDesignWidth(window.document.documentElement.getBoundingClientRect().width
 
 const appVue = createApp(App);
 
+window.appInstance = app;
+
 appVue.provide('app', app);
 appVue.mount('#app');

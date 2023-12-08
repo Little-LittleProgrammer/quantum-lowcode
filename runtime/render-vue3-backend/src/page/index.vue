@@ -15,7 +15,7 @@ import { computed, defineComponent, PropType, ref } from 'vue';
 import type { ISchemasPage } from '@qimao/quantum-schemas';
 
 import Component from '../component/index.vue';
-//   import {useApp} from '../hooks/use-app';
+import {useApp} from '../hooks/use-app';
 import {js_is_function} from '@qimao/quantum-utils';
 
 export default defineComponent({
@@ -29,12 +29,14 @@ export default defineComponent({
         },
     },
     setup(props) {
+        const {app, } = useApp(props);
         const refRuntimePage = ref();
         const getStyle = computed(() => {
             if (js_is_function(props.config.style)) {
-                return props.config.style(refRuntimePage.value?.$el);
+                (props.config.style as any)(refRuntimePage.value?.$el);
+                return {};
             }
-            return props.config.style;
+            return app?.transformStyle(props.config.style || {});
         });
         return {
             style: getStyle,
