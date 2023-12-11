@@ -8,7 +8,7 @@ hero:
         src: /loading.png
     actions:
         - text: 快速开始 →
-          link: /help-code/standard/
+          link: /help-code/guide/introduction.md
           theme: brand
         - text: Github 🔗
           link: https://codeup.aliyun.com/qimao/front/q-front-npm

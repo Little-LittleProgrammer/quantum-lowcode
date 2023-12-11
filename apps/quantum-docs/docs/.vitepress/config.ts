@@ -69,15 +69,15 @@ function createNav(): DefaultTheme.NavItem[] {
     return [
         {
             text: '开发手册',
-            link: '/help-code/guide/',
+            link: '/help-code/guide/introduction.md',
             items: [
                 {
                     text: '指南',
-                    link: '/help-code/guide/',
+                    link: '/help-code/guide/introduction.md',
                 },
                 {
                     text: '进阶指南',
-                    link: '/help-code/develop/docs',
+                    link: '/help-code/upgrade/introduction.md',
                 }
             ],
         },
@@ -115,7 +115,7 @@ function createSidebar(): DefaultTheme.Sidebar {
             text: '进阶指南',
             items: [{
                 text: '原理介绍',
-                link: '/help-code/upgrade/index.md'
+                link: '/help-code/upgrade/introduction.md'
             }, {
                 text: '二次开发',
                 link: '/help-code/upgrade/sec.md'
