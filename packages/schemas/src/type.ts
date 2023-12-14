@@ -69,6 +69,11 @@ export interface ISchemasPage extends ISchemasContainer{
     type: NodeType.PAGE
 }
 
+export interface IMetaDes {
+    keywords: string[];
+    description: string[];
+}
+
 /**
  * 根节点
  */
@@ -76,6 +81,7 @@ export interface ISchemasRoot {
     type: NodeType.ROOT;
     children: ISchemasPage[];
     name: string;
+    description?: IMetaDes;
     // dataSources?: DataSourceSchema[]; // 管理数据
 }
 

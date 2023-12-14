@@ -14,7 +14,8 @@ const result = rollup_commpn_lib_config('quantum-core', {
     external: ['@qimao/quantum-utils', 'lodash-es'],
     plugins: [alias({
         entries: process.env.NODE_ENV === 'production' ? [] : [
-            { find: /^@qimao\/quantum-utils/, replacement: pathResolve('../utils/index.ts'), }
+            { find: /^@qimao\/quantum-utils/, replacement: pathResolve('../utils/index.ts'), },
+            { find: /^@qimao\/quantum-schemas/, replacement: pathResolve('../schemas/index.ts'), }
         ],
     })],
 }, pkg.version);

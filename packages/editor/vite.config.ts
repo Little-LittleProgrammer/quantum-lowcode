@@ -34,7 +34,8 @@ export default defineConfig({
             { find: /^@\//, replacement: pathResolve('./src/'), },
             { find: /^@qimao\/quantum-utils/, replacement: pathResolve('../utils/index.ts'), },
             { find: /^@qimao\/quantum-core/, replacement: pathResolve('../core/index.ts'), },
-            { find: /^@qimao\/quantum-sandbox/, replacement: pathResolve('../sandbox/index.ts'), }
+            { find: /^@qimao\/quantum-sandbox/, replacement: pathResolve('../sandbox/index.ts'), },
+            { find: /^@qimao\/quantum-schemas/, replacement: pathResolve('../schemas/index.ts'), }
         ],
     },
 

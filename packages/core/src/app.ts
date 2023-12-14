@@ -1,6 +1,6 @@
 // 核心实例对象, 接收配置, 文件以及node信息\
 import { Subscribe, fillBackgroundImage, js_is_number, js_is_string, style2Obj } from '@qimao/quantum-utils';
-import { Fn, IRequestFunction, ISchemasRoot, Id } from '@qimao/quantum-schemas';
+import { Fn, IRequestFunction, ISchemasRoot, Id, IMetaDes } from '@qimao/quantum-schemas';
 import {LowCodePage} from './page';
 import {Env} from './env';
 
@@ -59,6 +59,34 @@ export class LowCodeRoot extends Subscribe {
         }
 
         this.setPage(curPage || this.page?.data?.field);
+
+        this.dealDescribe(config);
+    }
+
+    private dealDescribe(config: ISchemasRoot) {
+        if (globalThis && globalThis.document) {
+            globalThis.document.title = config.name;
+            const metaTags = globalThis.document.getElementsByTagName('meta');
+            while (metaTags.length > 0) {
+                metaTags[0].parentNode!.removeChild(metaTags[0]);
+            }
+            if (config.describe) {
+                config.describe.keywords && this.setDescribe(config.describe, 'keywords');
+                config.describe.description && this.setDescribe(config.describe, 'description');
+            }
+        }
+    }
+
+    private setDescribe(describe: IMetaDes, key: 'keywords' | 'description') {
+        const header = globalThis.document.getElementsByTagName('head')[0];
+        if (describe && describe[key].length > 0) {
+            for (const str of describe[key]) {
+                const metaTags = globalThis.document.createElement('meta');
+                metaTags.name = key;
+                metaTags.content = str;
+                header.insertBefore(metaTags, header.firstChild);
+            }
+        }
     }
 
     /**
