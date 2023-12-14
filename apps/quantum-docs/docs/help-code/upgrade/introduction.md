@@ -1,4 +1,24 @@
-# 原理介绍
+# 介绍
+## 目录结构
+```
+├── apps
+│   ├── quantum-backend // 低代码后台
+│   ├── quantum-docs // 文档
+│── packages
+│   ├── core // 核心库, 对节点操作、全局事件、数据进行统一管理
+│   ├── data-source // 数据源
+│   ├── editor // 编辑器
+│   ├── sandbox // 画布
+│   ├── schemas // 低代码schema声明协议
+│   ├── utils // 工具库
+│   ├── ui // 组件库
+│── runtime // 运行时
+│   ├── render-vue2 // 运行时渲染器 vue2
+│   ├── render-vue3 // 运行时渲染器 vue3
+│── package.json
+```
+
+## 原理介绍
 
 ## schema解析渲染
 通过载入保存的 `lowcodeSchema`配置, 通过渲染器渲染页面, 容器和组件在配置中呈树状结构, 所以渲染页面时, 渲染器会递归配置, 从而渲染出页面所有组件

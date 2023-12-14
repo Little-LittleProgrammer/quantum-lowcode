@@ -6,7 +6,7 @@
   "module": "dist/quantum-sandbox.esm.min.js",
   "typings": "dist/types/index.d.ts",
   "scripts": {
-    "build": "rollup -c --environment TYPES:true"
+    "build": "rm -rf dist && rollup -c --environment TYPES:true"
   },
   "files": ["dist"],
   "keywords": [],

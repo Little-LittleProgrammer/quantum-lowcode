@@ -17,7 +17,7 @@ export interface IQuantum {
     /** 当前页面的根节点变化时调用该方法，编辑器会同步该el和stage的大小
      * 同步mask和el的大小
      * 该方法由stage注入到iframe.contentWindow中 */
-    // onPageElUpdate: (el: HTMLElement) => void;
+    onPageElUpdate: (el: HTMLElement) => void;
 
     onRuntimeReady: (runtime: IRuntime) => void;
 }

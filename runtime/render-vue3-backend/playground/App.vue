@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject, nextTick, ref } from 'vue';
+import { computed, defineComponent, inject, nextTick, ref, watch } from 'vue';
 
 import type { LowCodeRoot } from '@qimao/quantum-core';
 import type { Id, ISchemasRoot, ISchemasPage } from '@qimao/quantum-schemas';
@@ -32,11 +32,12 @@ export default defineComponent({
             () => root.value?.children?.find((item: ISchemasPage) => item.field === curPageId.value) || root.value?.children?.[0]
         );
 
-        // watch(pageConfig, async () => {
-        //     await nextTick();
-        //     const page = document.querySelector<HTMLElement>('.quantum-ui-page');
-        //     page && window.quantum.onPageElUpdate(page);
-        // });
+        watch(pageConfig, async() => {
+            console.log('aaaa');
+            await nextTick();
+            const page = document.querySelector<HTMLElement>('.quantum-ui-page');
+            page && window.quantum.onPageElUpdate(page);
+        });
 
         window.quantum?.onRuntimeReady({
             getApp() {

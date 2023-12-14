@@ -30,6 +30,11 @@ export class BoxCore extends Subscribe {
         this.renderer.on('runtime-ready', (runtime:IRuntime) => {
             this.emit('runtime-ready', runtime);
         });
+        this.renderer.on('page-el-update', (el: HTMLElement) => {
+            // 画布 与 mask 同步
+            // this.mask?.observe(el);
+            // this.observePageResize(el);
+        });
     }
 
     // 根据 field和id绑定获取选中的节点

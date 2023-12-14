@@ -99,7 +99,7 @@ export class BoxRender extends Subscribe {
     }
 
     public getQuantumApi = () => ({
-        // onPageElUpdate: (el: HTMLElement) => this.emit('page-el-update', el),
+        onPageElUpdate: (el: HTMLElement) => this.emit('page-el-update', el),
         onRuntimeReady: (runtime: IRuntime) => {
             this.runtime = runtime;
             // 赋值 runtime
