@@ -144,3 +144,21 @@ export function parseSchemas(schema: string | Record<string, any>) {
     const result = dfs(firstDeal);
     return result;
 }
+/**
+ * 对象转成 q-form的schemas格式
+ * @param obj 转化对象
+ * @param config 配置
+ */
+export function objectToFormScheam(obj: Record<string, any>, config: Record<string, any>) {
+    const baseKeyToV = {
+        name: '名称',
+        description: '描述',
+        
+    }
+    const _obj = {};
+    for (const [key, value] of Object.entries(obj)) {
+        const schema = {
+            label: 
+        }
+    }
+}

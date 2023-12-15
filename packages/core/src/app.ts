@@ -1,6 +1,6 @@
 // 核心实例对象, 接收配置, 文件以及node信息\
 import { Subscribe, fillBackgroundImage, js_is_number, js_is_string, style2Obj } from '@qimao/quantum-utils';
-import { Fn, IRequestFunction, ISchemasRoot, Id, IMetaDes } from '@qimao/quantum-schemas';
+import { Fn, IRequestFunction, ISchemasRoot, Id, IMetaDes, ILowCodeRoot } from '@qimao/quantum-schemas';
 import {LowCodePage} from './page';
 import {Env} from './env';
 
@@ -14,7 +14,7 @@ interface IAppOptionsConfig {
     request?: IRequestFunction;
 }
 
-export class LowCodeRoot extends Subscribe {
+export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
     public env: Env = new Env();;
     public schemasRoot?: ISchemasRoot;
     public page?: LowCodePage;
@@ -22,7 +22,7 @@ export class LowCodeRoot extends Subscribe {
     public platform = 'mobile';
     public components = new Map();
     public request?: IRequestFunction;
-    // public dataSourceManager?:
+    public dataSourceManager?: DataSourceManager
     constructor(options: IAppOptionsConfig) {
         super();
 
