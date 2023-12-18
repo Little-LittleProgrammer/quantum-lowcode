@@ -108,7 +108,7 @@ export interface IDataSourceSchema {
     /** 方法列表 */
     methods: ICodeBlockContent[];
     /** mock数据 */
-    mocks?: IMockSchema[];
+    mocks?: IMockSchema;
 }
 
 export interface IDataSchema {

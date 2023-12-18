@@ -144,21 +144,58 @@ export function parseSchemas(schema: string | Record<string, any>) {
     const result = dfs(firstDeal);
     return result;
 }
-/**
- * 对象转成 q-form的schemas格式
- * @param obj 转化对象
- * @param config 配置
- */
-export function objectToFormScheam(obj: Record<string, any>, config: Record<string, any>) {
-    const baseKeyToV = {
-        name: '名称',
-        description: '描述',
-        
-    }
-    const _obj = {};
-    for (const [key, value] of Object.entries(obj)) {
-        const schema = {
-            label: 
+
+// 获取默认值
+export function getDefaultValueFromFields(obj: Record<string, any>) {
+    const data: Record<string, any> = {};
+
+    const defaultValue: Record<string, any> = {
+        string: '',
+        object: {},
+        array: [],
+        boolean: false,
+        number: 0,
+        null: null,
+        any: undefined,
+    };
+
+    obj.forEach((field) => {
+        if (typeof field.defaultValue !== 'undefined') {
+            if (field.type === 'array' && !Array.isArray(field.defaultValue)) {
+                data[field.name] = defaultValue.array;
+                return;
+            }
+
+            if (field.type === 'object' && !js_is_object(field.defaultValue)) {
+                if (typeof field.defaultValue === 'string') {
+                    try {
+                        data[field.name] = JSON.parse(field.defaultValue);
+                    } catch (e) {
+                        data[field.name] = defaultValue.object;
+                    }
+                    return;
+                }
+
+                data[field.name] = defaultValue.object;
+                return;
+            }
+
+            data[field.name] = field.defaultValue;
+            return;
         }
-    }
+
+        if (field.type === 'object') {
+            data[field.name] = field.fields ? getDefaultValueFromFields(field.fields) : defaultValue.object;
+            return;
+        }
+
+        if (field.type) {
+            data[field.name] = defaultValue[field.type];
+            return;
+        }
+
+        data[field.name] = undefined;
+    });
+
+    return data;
 }
