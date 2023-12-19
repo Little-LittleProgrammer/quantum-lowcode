@@ -1,5 +1,6 @@
 // 数组节点模型
 import { NodeType } from './const';
+import { IDataSourceSchema } from './event';
 type SelectPartial<T, V extends keyof T> = Partial<Omit<T, V>> & Required<Pick<T, V>>
 export type Id = string
 export interface Fn<T = any, R = T> {
@@ -25,6 +26,7 @@ export type IRequestFunction = (options: IHttpOptions) => Promise<any>;
 export interface ILowCodeRoot {
     schemasRoot?: ISchemasRoot;
     request?: IRequestFunction;
+    registerMethods?: Fn;
     [key: string]: any;
 }
 
@@ -94,71 +96,7 @@ export interface ISchemasRoot {
 /**
  * 数据源
  */
-export interface IDataSourceSchema {
-    /** 数据源类型，根据类型来实例化；例如http则使用new HttpDataSource */
-    type: 'base' | 'http';
-    /** 实体ID */
-    id: string
-    /** 实体名称，用于关联时展示 */
-    title?: string;
-    /** 实体描述，鼠标hover时展示 */
-    description?: string;
-    /** 字段列表 */
-    fields: IDataSchema[];
-    /** 方法列表 */
-    methods: ICodeBlockContent[];
-    /** mock数据 */
-    mocks?: IMockSchema;
-}
 
-export interface IDataSchema {
-    type?: 'null' | 'boolean' | 'object' | 'array' | 'number' | 'string' | 'any';
-    /** 键名 */
-    name: string;
-    /** 展示名称 */
-    title?: string;
-    /** 实体描述，鼠标hover时展示 */
-    description?: string;
-    /** 默认值 */
-    defaultValue?: any;
-    /** type === 'object' || type === 'array' */
-    fields?: IDataSchema[];
-}
-
-export interface ICodeBlockContent {
-    /** 代码块名称 */
-    name: string;
-    /** 代码块内容 */
-    content: ((...args: any[]) => any) | string;
-    /** 参数定义 */
-    params: ICodeParam[] | [];
-    /** 注释 */
-    desc?: string;
-    /** 扩展字段 */
-    [propName: string]: any;
-}
-
-export interface ICodeParam {
-    /** 参数名称 */
-    name: string;
-    /** 参数类型 */
-    type: string;
-    /** 参数描述 */
-    desc?: string;
-    /** 默认值 */
-    defaultValue?: any;
-    /** 扩展字段 */
-    [propName: string]: any;
-}
-
-export interface IMockSchema {
-    /** 名称 */
-    title: string;
-    /** 详细描述 */
-    description?: string;
-    /** mock数据 */
-    data: Record<string | number, any>;
-}
 
 export const schemasRootType = `
 declare type Id = string

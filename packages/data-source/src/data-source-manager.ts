@@ -18,6 +18,45 @@ export class DataSourceManager extends Subscribe {
         app.schemasRoot?.dataSources?.forEach((config) => {
             this.addDataSource(config);
         });
+
+        Promise.all(Array.from(this.dataSourceMap).map(async ([, ds]) => this.init(ds)));
+    }
+
+    public async init(ds: DataSource) {
+        if (ds.isInit) {
+            return;
+        }
+         // 处理初始化数据逻辑
+         const beforeInit: ((...args: any[]) => any)[] = [];
+         const afterInit: ((...args: any[]) => any)[] = [];
+ 
+         ds.methods.forEach((method) => {
+             if (!js_is_function(method.content)) return;
+             
+             // 注册全局事件, 放在此处注册, 优化性能
+             this.app.registerMethods(`${ds.id}:${method.name}`, method.content, ds);
+             switch (method.timing) {
+                 case 'beforeInit':
+                     beforeInit.push(method.content as (...args: any[]) => any);
+                     break;
+                 case 'afterInit':
+                     afterInit.push(method.content as (...args: any[]) => any);
+             }
+         });
+ 
+         for (const method of beforeInit) {
+             await method({ dataSource: ds, app: this.app, });
+         }
+ 
+         await ds.init();
+ 
+         for (const method of afterInit) {
+             await method({ dataSource: ds, app: this.app, });
+         }
+    }
+
+    public get(id: string) {
+        return this.dataSourceMap.get(id);
     }
 
     public async addDataSource(config?: IDataSourceSchema) {
@@ -47,32 +86,8 @@ export class DataSourceManager extends Subscribe {
 
         this.data[ds.id] = ds.data;
 
-        ds.emit('change', () => this.setData(ds));
-
-        // 处理初始化数据逻辑
-        const beforeInit: ((...args: any[]) => any)[] = [];
-        const afterInit: ((...args: any[]) => any)[] = [];
-
-        ds.methods.forEach((method) => {
-            if (!js_is_function(method.content)) return;
-            switch (method.timing) {
-                case 'beforeInit':
-                    beforeInit.push(method.content as (...args: any[]) => any);
-                    break;
-                case 'afterInit':
-                    afterInit.push(method.content as (...args: any[]) => any);
-            }
-        });
-
-        for (const method of beforeInit) {
-            await method({ params: {}, dataSource: ds, app: this.app, });
-        }
-
-        await ds.init();
-
-        for (const method of afterInit) {
-            await method({ params: {}, dataSource: ds, app: this.app, });
-        }
+        ds.emit('change', () => this.setData(ds))
+       
     }
 
     public setData(ds: DataSource) {
@@ -90,6 +105,10 @@ export class DataSourceManager extends Subscribe {
             this.removeDataSource(schema.id);
 
             this.addDataSource(schema);
+            const newDs = this.get(schema.id);
+            if (newDs) {
+                this.init(newDs);
+            }
         });
     }
 

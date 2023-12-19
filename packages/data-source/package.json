@@ -2,8 +2,8 @@
   "name": "@qimao/quantum-data",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/quantum-core.cjs.min.js",
-  "module": "dist/quantum-core.esm.min.js",
+  "main": "dist/quantum-data.cjs.min.js",
+  "module": "dist/quantum-data.esm.min.js",
   "typings": "dist/types/index.d.ts",
   "scripts": {
     "build1": "rollup -c --environment TYPES:true"

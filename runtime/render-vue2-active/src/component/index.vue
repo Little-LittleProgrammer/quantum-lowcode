@@ -51,7 +51,7 @@ export default defineComponent({
             const obj: Record<string, any> = {};
             if (props.config.componentProps && js_is_object(props.config.componentProps)) {
                 for (const [key, val] of Object.entries(props.config.componentProps)) {
-                    if (!key.includes('on')) {
+                    if (!key.startsWith('on')) {
                         obj[key] = val;
                     }
                 }
@@ -63,7 +63,7 @@ export default defineComponent({
             const obj: Record<string, any> = {};
             if (props.config.componentProps && js_is_object(props.config.componentProps)) {
                 for (const [key, val] of Object.entries(props.config.componentProps)) {
-                    if (key.includes('on')) {
+                    if (key.startsWith('on')) {
                         const _subKey = key.slice(2).toLowerCase();
                         obj[_subKey] = val;
                     }

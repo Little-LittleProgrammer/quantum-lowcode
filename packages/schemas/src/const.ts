@@ -12,5 +12,6 @@ export enum EventType {
 
 export enum ActionType {
     COMP = 'comp',
-    FUNC = 'func'
+    /** 数据源 */
+    DATA_SOURCE = 'data-source',
 }

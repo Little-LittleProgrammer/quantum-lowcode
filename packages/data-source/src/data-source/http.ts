@@ -123,7 +123,7 @@ export class HttpDataSource extends DataSource {
             let res = this.mockData ? this.mockData : await this.#fetch?.(reqOptions);
 
             for (const method of this.#afterRequest) {
-                await method({ res, options: reqOptions, params: {}, dataSource: this, app: this.app, });
+                await method({ res, options: reqOptions, dataSource: this, app: this.app, });
             }
 
             if (typeof this.schema.afterResponse === 'function') {

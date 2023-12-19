@@ -1,8 +1,9 @@
 // 核心实例对象, 接收配置, 文件以及node信息\
-import { Subscribe, fillBackgroundImage, js_is_number, js_is_string, style2Obj } from '@qimao/quantum-utils';
+import { Subscribe, fillBackgroundImage, js_is_array, js_is_function, js_is_number, js_is_string, style2Obj } from '@qimao/quantum-utils';
 import { Fn, IRequestFunction, ISchemasRoot, Id, IMetaDes, ILowCodeRoot } from '@qimao/quantum-schemas';
 import {LowCodePage} from './page';
 import {Env} from './env';
+import { DataSource, DataSourceManager, createDataSourceManager } from '@qimao/quantum-data';
 
 interface IAppOptionsConfig {
     config?: ISchemasRoot;
@@ -12,6 +13,7 @@ interface IAppOptionsConfig {
     platform?: 'mobile' | 'pc';
     transformStyle?: (style: Record<string, any>) => Record<string, any>;
     request?: IRequestFunction;
+    useMock?: boolean
 }
 
 export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
@@ -23,6 +25,10 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
     public components = new Map();
     public request?: IRequestFunction;
     public dataSourceManager?: DataSourceManager
+    public useMock = false
+
+    private eventMap = new Map();
+
     constructor(options: IAppOptionsConfig) {
         super();
 
@@ -58,6 +64,12 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
             curPage = config.children[0].field;
         }
 
+        if (this.dataSourceManager) {
+            this.dataSourceManager.destroy();
+        }
+    
+        this.dataSourceManager = createDataSourceManager(this, this.useMock);
+
         this.setPage(curPage || this.page?.data?.field);
 
         this.dealDescribe(config);
@@ -70,9 +82,9 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
             while (metaTags.length > 0) {
                 metaTags[0].parentNode!.removeChild(metaTags[0]);
             }
-            if (config.describe) {
-                config.describe.keywords && this.setDescribe(config.describe, 'keywords');
-                config.describe.description && this.setDescribe(config.describe, 'description');
+            if (config.description) {
+                config.description.keywords && this.setDescribe(config.description, 'keywords');
+                config.description.description && this.setDescribe(config.description, 'description');
             }
         }
     }
@@ -111,7 +123,7 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
 
         this.page = new LowCodePage({config: pageConfig, root: this, });
         this.emit('page-change', this.page);
-        this.bindEvents();
+        // this.bindEvents();
     }
 
     /**
@@ -220,11 +232,44 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
         }
     }
 
+
+
+    // 将事件注册为全局事件
+    public registerMethods(key: string, fn: Fn, ds: DataSource) {
+        const eventHanlder = (...args: any[]) => {
+            fn({ app: this, dataSource:ds }, ...args)
+        }
+        // 先清空
+        if(this.cache.has(key)) {
+            this.remove(key)
+        }
+        this.on(key, eventHanlder )
+    }
+
+    // public async dataSourceActionHandler() {
+    // }
+
     /**
      * 事件绑定
      */
     public bindEvents() {
+        // 先移除所有事件
+        Array.from(this.eventMap.keys()).forEach((key) => {
+            const events = this.eventMap.get(key);
+            events && this.remove(key)
+        });
+        this.eventMap.clear();
 
+        if (!this.page) return
+
+        // 再绑定事件
+
+    }
+    /**
+     * 事件联动处理函数
+     */
+    private async eventHandler() {
+        
     }
 
     /**
