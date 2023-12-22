@@ -1,7 +1,7 @@
 import { ISchemasContainer, ISchemasNode, ISchemasPage } from '@qimao/quantum-schemas';
 import { LowCodeRoot } from './app';
 import { LowCodePage } from './page';
-import { Subscribe, js_is_object } from '@qimao/quantum-utils';
+import { Subscribe, js_is_function, js_is_object } from '@qimao/quantum-utils';
 
 interface INodeOptions {
     config: ISchemasNode | ISchemasContainer;
@@ -21,13 +21,16 @@ export class LowCodeNode extends Subscribe {
         this.page = options.page;
         this.parent = options.parent;
         this.root = options.root;
-        this.data = options.config;
-        this.setEvents(options.config);
+        this.setData(options.config);
     }
 
     public setData(data: ISchemasNode | ISchemasContainer | ISchemasPage) {
         this.data = data;
+        this.setEvents(data);
         this.emit('updata-data');
+    }
+
+    public addEvent(event: string, fn: Fn) {
     }
 
     public setEvents(config: ISchemasNode | ISchemasContainer) {
@@ -38,7 +41,8 @@ export class LowCodeNode extends Subscribe {
                  * 事件绑定
                  * onClick: (app, e) => {app.emit('datasourceId:funcName', e)}
                  *  */ 
-                if (key.startsWith('on')) {
+                // if (key.startsWith('on') || key.endsWith('Func')) {
+                if (js_is_function(val)) {
                     const fn = (...args: any[]) => {
                         val(this.root, ...args)
                     }

@@ -382,6 +382,9 @@ importers:
       '@qimao/quantum-core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@qimao/quantum-data':
+        specifier: workspace:*
+        version: link:../../packages/data-source
       '@qimao/quantum-sandbox':
         specifier: workspace:*
         version: link:../../packages/sandbox
@@ -422,6 +425,9 @@ importers:
       '@qimao/quantum-core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@qimao/quantum-data':
+        specifier: workspace:*
+        version: link:../../packages/data-source
       '@qimao/quantum-sandbox':
         specifier: workspace:*
         version: link:../../packages/sandbox

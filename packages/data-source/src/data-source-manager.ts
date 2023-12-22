@@ -34,7 +34,7 @@ export class DataSourceManager extends Subscribe {
              if (!js_is_function(method.content)) return;
              
              // 注册全局事件, 放在此处注册, 优化性能
-             this.app.registerMethods(`${ds.id}:${method.name}`, method.content, ds);
+             this.app.registerMethods && this.app.registerMethods(`${ds.id}:${method.name}`, method.content, ds);
              switch (method.timing) {
                  case 'beforeInit':
                      beforeInit.push(method.content as (...args: any[]) => any);

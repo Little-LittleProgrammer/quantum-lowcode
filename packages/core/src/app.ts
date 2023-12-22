@@ -243,6 +243,7 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
         if(this.cache.has(key)) {
             this.remove(key)
         }
+        console.log(key)
         this.on(key, eventHanlder )
     }
 
