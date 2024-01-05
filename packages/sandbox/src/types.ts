@@ -28,5 +28,7 @@ export interface IRuntimeWindow extends Window {
 
 export interface IBoxCoreConfig {
     // HTML地址，可以是一个HTTP地址，如果和编辑器不同域，需要设置跨域，也可以是一个相对或绝对路径
-    runtimeUrl?: string
+    runtimeUrl?: string;
+    // 画布缩放
+    zoom?: number;
 }

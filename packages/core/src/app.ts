@@ -1,5 +1,5 @@
 // 核心实例对象, 接收配置, 文件以及node信息\
-import { Subscribe, fillBackgroundImage, js_is_array, js_is_function, js_is_number, js_is_string, style2Obj } from '@qimao/quantum-utils';
+import { Subscribe, fillBackgroundImage, js_is_number, js_is_string, style2Obj } from '@qimao/quantum-utils';
 import { Fn, IRequestFunction, ISchemasRoot, Id, IMetaDes, ILowCodeRoot } from '@qimao/quantum-schemas';
 import {LowCodePage} from './page';
 import {Env} from './env';
@@ -18,7 +18,7 @@ interface IAppOptionsConfig {
 
 export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
     public env: Env = new Env();;
-    public schemasRoot?: ISchemasRoot;
+    public schemasRoot?: ISchemasRoot; // dsl
     public page?: LowCodePage;
     public designWidth = 750;
     public platform = 'mobile';
@@ -67,7 +67,7 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
         if (this.dataSourceManager) {
             this.dataSourceManager.destroy();
         }
-    
+
         this.dataSourceManager = createDataSourceManager(this, this.useMock);
 
         this.setPage(curPage || this.page?.data?.field);
@@ -133,7 +133,7 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
      */
     public getPage(field?: Id) {
         if (!field) return this.page;
-        if (this.page?.data.field === field) {
+        if (this.page?.data?.field === field) {
             return this.page;
         }
     }
@@ -232,19 +232,17 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
         }
     }
 
-
-
     // 将事件注册为全局事件
     public registerMethods(key: string, fn: Fn, ds: DataSource) {
         const eventHanlder = (...args: any[]) => {
-            fn({ app: this, dataSource:ds }, ...args)
-        }
+            fn({ app: this, dataSource: ds, }, ...args);
+        };
         // 先清空
-        if(this.cache.has(key)) {
-            this.remove(key)
+        if (this.cache.has(key)) {
+            this.remove(key);
         }
-        console.log(key)
-        this.on(key, eventHanlder )
+        console.log(key);
+        this.on(key, eventHanlder);
     }
 
     // public async dataSourceActionHandler() {
@@ -257,21 +255,20 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
         // 先移除所有事件
         Array.from(this.eventMap.keys()).forEach((key) => {
             const events = this.eventMap.get(key);
-            events && this.remove(key)
+            events && this.remove(key);
         });
         this.eventMap.clear();
 
-        if (!this.page) return
+        if (!this.page) return;
 
         // 再绑定事件
-
     }
     /**
      * 事件联动处理函数
      */
-    private async eventHandler() {
-        
-    }
+    // private async eventHandler() {
+
+    // }
 
     /**
      * 注册组件

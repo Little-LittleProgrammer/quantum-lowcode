@@ -2,7 +2,6 @@ import { ConfigEnv } from 'vite';
 import { UserConfig } from 'vite';
 import {vite_common_lib_config} from '@q-front-npm-configs/vite';
 import {resolve} from 'path';
-import pkg from './package.json';
 
 function pathResolve(dir: string) {
     return resolve(process.cwd(), '.', dir);

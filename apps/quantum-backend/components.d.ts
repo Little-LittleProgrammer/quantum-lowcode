@@ -16,6 +16,7 @@ declare module 'vue' {
     QAntdTable: typeof import('@q-front-npm/vue3-antd-pc-ui/es')['QAntdTable']
     QAntdTableAction: typeof import('@q-front-npm/vue3-antd-pc-ui/es')['QAntdTableAction']
     QBreadcrumb: typeof import('@q-front-npm/vue3-pc-ui/es')['QBreadcrumb']
+    QIcon: typeof import('@q-front-npm/vue3-pc-ui/es')['QIcon']
     QLoading: typeof import('@q-front-npm/vue3-pc-ui/es')['QLoading']
     QmAside: typeof import('./src/components/layout/qm-aside.vue')['default']
     QmAuthority: typeof import('./src/components/qm-authority/index.vue')['default']

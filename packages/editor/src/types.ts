@@ -27,9 +27,9 @@ export interface IUiState {
     /** 是否显示源码编辑器， true: 显示， false: 不显示，默认为false */
     showSrc: boolean;
     /** 画布显示放大倍数，默认为 1 */
-    // zoom: number;
+    zoom: number;
     /** 画布容器的宽高 */
-    // sandboxContainerRect: ISandboxRect;
+    sandboxContainerRect: ISandboxRect;
     /** 画布顶层div的宽高，可用于改变画布的大小 */
     sandboxRect: ISandboxRect;
     /** 用于控制该属性配置表单内组件的尺寸 */
@@ -53,3 +53,29 @@ export interface IInstallOptions {
     parseSchemas: <T = any>(schemas: string) => T;
     [key: string]: any;
 }
+
+export interface IMenuButton {
+    type: 'button' | 'text' | 'divider';
+    icon?: string;
+    text?: string;
+    disabled?: boolean | (() => boolean);
+    tooltip?: string;
+    className?: string
+    onClick?: () => void;
+}
+
+export type IMenuItem =
+  | '/'
+  | 'delete'
+  | 'undo'
+  | 'redo'
+  | 'zoom'
+  | 'zoom-in'
+  | 'zoom-out'
+  | 'guides'
+  | 'rule'
+  | 'scale-to-original'
+  | 'scale-to-fit'
+  | IMenuButton
+  //   | MenuComponent
+  | string;

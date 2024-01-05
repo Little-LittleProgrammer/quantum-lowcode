@@ -1,12 +1,12 @@
 <!-- 画布 -->
 <template>
-    <div class="q-editor-sandbox">
+    <div ref="sandboxWrap" class="q-editor-sandbox">
         <div ref="boxContainer" class="q-sandbox-container" :style="getBoxStyle"></div>
     </div>
 </template>
 
 <script lang='ts' setup>
-import { watchEffect, toRaw, inject, computed, markRaw, ref, watch, onUnmounted, nextTick } from 'vue';
+import { watchEffect, toRaw, inject, computed, markRaw, ref, watch, onUnmounted, nextTick, onMounted } from 'vue';
 import { BoxCore, IBoxCoreConfig } from '@qimao/quantum-sandbox';
 import { IServices } from '../../types';
 import { IRuntime } from '@qimao/quantum-sandbox/src/types';
@@ -24,8 +24,12 @@ let runtime: IRuntime | null = null;
 
 const services = inject<IServices>('services');
 const sandboxOptions = inject<IBoxCoreConfig>('sandboxOptions');
+
+const sandboxWrap = ref<HTMLDivElement>();
+
 const root = computed(() => services?.editorService.get('root') as ISchemasRoot);
 const page = computed(() => services?.editorService.get('page'));
+const zoom = computed(() => services?.uiService.get('zoom') || 1);
 const boxRect = computed(() => services?.uiService.get('sandboxRect'));
 
 const boxContainer = ref<HTMLDivElement | null>();
@@ -49,10 +53,16 @@ watchEffect(() => {
 });
 
 const getBoxStyle = computed(() => {
-    return `
-        width: ${boxRect.value?.width || 0}px;
-        height: ${boxRect.value?.height || 0}px
-    `;
+    return {
+        width: `${boxRect.value?.width || 0}px`,
+        height: `${boxRect.value?.height || 0}px`,
+        transform: `scale(${zoom.value})`,
+    };
+});
+
+watch(zoom, (zoom) => {
+    if (!sandbox || !zoom) return;
+    sandbox.setZoom(zoom);
 });
 
 watch(root, (root) => {
@@ -68,6 +78,24 @@ watch(page, (page) => {
         nextTick(() => {
             sandbox?.select(page.field);
         });
+    }
+});
+
+const resizeObserver = new ResizeObserver((entries) => {
+    for (const { contentRect, } of entries) {
+        console.log(contentRect);
+        services?.uiService.set('sandboxContainerRect', {
+            width: contentRect.width,
+            height: contentRect.height,
+        });
+    }
+});
+
+onMounted(() => {
+    if (sandboxWrap.value) {
+        console.log(sandboxWrap.value);
+        resizeObserver.observe(sandboxWrap.value);
+        // services?.keybindingService.registerEl(KeyBindingContainerKey.STAGE, sandboxWrap.value.container);
     }
 });
 

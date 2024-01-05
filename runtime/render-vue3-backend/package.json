@@ -19,7 +19,7 @@
         "@qimao/quantum-schemas": "workspace:*",
         "@qimao/quantum-sandbox": "workspace:*",
         "@qimao/quantum-utils": "workspace:*",
-        "@q-front-npm/vue3-antd-pc-ui": "1.2.1",
+        "@q-front-npm/vue3-antd-pc-ui": "~1.2.1",
         "@q-front-npm/http": "^1.2.1",
         "axios": "^0.27.2",
         "vue": "^3.3.4"

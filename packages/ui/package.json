@@ -53,6 +53,7 @@
     "vue-types": "^3.0.2",
     "csstype": "~3.1.2",
     "prettier": "~3.1.0",
-    "vue": "~3.3.4"
+    "vue": "~3.3.4",
+    "vite-plugin-dts": "3.6.4"
   }
 }

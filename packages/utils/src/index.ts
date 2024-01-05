@@ -199,3 +199,24 @@ export function getDefaultValueFromFields(obj: Record<string, any>) {
 
     return data;
 }
+
+export const calculatePercentage = (value: number, percentageStr: string) => {
+    const percentage = globalThis.parseFloat(percentageStr) / 100; // 先将百分比字符串转换为浮点数，并除以100转换为小数
+    const result = value * percentage;
+    return result;
+};
+
+export const isPercentage = (value: number | string) => /^(\d+)(\.\d+)?%$/.test(`${value}`);
+
+export const convertToNumber = (value: number | string, parentValue = 0) => {
+    if (typeof value === 'number') {
+        return value;
+    }
+
+    if (typeof value === 'string' && isPercentage(value)) {
+        return calculatePercentage(parentValue, value);
+    }
+
+    return parseFloat(value);
+};
+

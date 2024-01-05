@@ -3,6 +3,7 @@
 import { Subscribe, get_host, is_same_domain } from '@qimao/quantum-utils';
 import { IBoxCoreConfig, IRuntime, IRuntimeWindow } from './types';
 import { Id } from '@qimao/quantum-schemas';
+import { DEFAULT_ZOOM } from './const';
 
 /**
  * 画布渲染器, 生成iframe, 并提供暴露出去的发布器(主要用于更新IRuntime schemas)供外部调用
@@ -15,9 +16,12 @@ export class BoxRender extends Subscribe {
     public iframe?: HTMLIFrameElement; // iframe
 
     private runtimeUrl?: string // iframe 的 src
-    constructor({runtimeUrl, }:IBoxCoreConfig) {
+    private zoom = DEFAULT_ZOOM;
+    constructor({runtimeUrl, zoom, }:IBoxCoreConfig) {
         super();
         this.runtimeUrl = runtimeUrl!;
+
+        this.setZoom(zoom);
 
         this.iframe = globalThis.document.createElement('iframe');
         // 同源, 直接加载
@@ -62,6 +66,10 @@ export class BoxRender extends Subscribe {
         for (const el of els) {
             await runtime?.select?.(el.id);
         }
+    }
+
+    public setZoom(zoom: number = DEFAULT_ZOOM): void {
+        this.zoom = zoom;
     }
 
     /**
