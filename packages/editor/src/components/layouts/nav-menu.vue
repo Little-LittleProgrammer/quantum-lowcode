@@ -58,7 +58,6 @@ function get_config(item: IMenuItem) {
     if (typeof item !== 'string') {
         return [item];
     }
-    console.log(item);
     const config:IMenuButton[] = [];
     switch (item) {
         case '/':
