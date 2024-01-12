@@ -1,4 +1,5 @@
 import { js_is_base, js_is_function, js_is_object, js_is_reg_exp, js_is_string } from '@q-front-npm/utils';
+import { ISchemasNode, Id } from '@qimao/quantum-schemas';
 
 export function get_host(url: string) {
     return url.match(/\/\/([^/]+)/)?.[1];
@@ -220,3 +221,19 @@ export const convertToNumber = (value: number | string, parentValue = 0) => {
     return parseFloat(value);
 };
 
+/**
+ * 编译节点, 将节点编译成可用dsl
+ * @param compile
+ * @param node
+ * @param sourceId
+ */
+function compiledNode(
+    compile: (value: any) => any,
+    node: ISchemasNode,
+    sourceId?: Id
+) {
+    let keys: string[] = [];
+    if (!sourceId) {
+        keys = get;
+    }
+}

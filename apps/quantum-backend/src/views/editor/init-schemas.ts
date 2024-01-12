@@ -15,6 +15,41 @@ export const defaultSchemas: ISchemasRoot = {
 export const testSchemas: ISchemasRoot = {
     type: 'root',
     name: 'test',
+    dataSources: [
+        {
+            type: 'base',
+            id: 'base1',
+            title: '基础方法1',
+            description: '基础方法1, 快使用',
+            fields: [
+                {
+                    name: 'a1',
+                    type: 'string',
+                    title: 'a1',
+                    description: 'a1',
+                }
+            ],
+            methods: [
+                {
+                    name: 'test1',
+                    description: '方法1',
+                    params: [
+                        {
+                            name: 'a1',
+                            type: 'boolean',
+                        }
+                    ],
+                    content: (...params)=>{;console.log(params);;},
+                },
+                {
+                    name: 'test2',
+                    description: '方法2',
+                    params: [],
+                    content: ({app,dataSource},params)=>{dataSource.data.a1=params},
+                }
+            ],
+        }
+    ],
     children: [
         {
             type: 'page',
@@ -49,7 +84,17 @@ export const testSchemas: ISchemasRoot = {
                                     component: 'Select',
                                     label: '选择题',
                                     componentProps: {
-                                        options: [{label: 'yes', value: 1, }, {label: 'no', value: 2, }],
+                                        options: [
+                                            {
+                                                label: 'yes',
+                                                value: 1,
+                                            },
+                                            {
+                                                label: 'no',
+                                                value: 2,
+                                            }
+                                        ],
+                                        onChange: (app, e) => { console.log(app); app.emit('base1:test1', e); },
                                     },
                                 },
                                 {
@@ -57,6 +102,9 @@ export const testSchemas: ISchemasRoot = {
                                     component: 'Input',
                                     label: '你好',
                                     ifShow: ({values, }) => values.a === 1,
+                                    componentProps: {
+                                        onChange: (app, e) => { app.emit('base1:test2', e.target.value); },
+                                    },
                                 },
                                 {
                                     component: 'Divider',
@@ -68,7 +116,16 @@ export const testSchemas: ISchemasRoot = {
                                     component: 'Select',
                                     label: '选择题2',
                                     componentProps: {
-                                        options: [{label: 'yes', value: 1, }, {label: 'no', value: 2, }],
+                                        options: [
+                                            {
+                                                label: 'yes',
+                                                value: 1,
+                                            },
+                                            {
+                                                label: 'no',
+                                                value: 2,
+                                            }
+                                        ],
                                     },
                                 },
                                 {
@@ -105,7 +162,7 @@ export const testSchemas: ISchemasRoot = {
                             component: 'button',
                             field: 'button2',
                             componentProps: {
-                                onClick: (e) => { alert(e); },
+                                onClick: '(e)=>{;alert(e);;}',
                             },
                         },
                         {

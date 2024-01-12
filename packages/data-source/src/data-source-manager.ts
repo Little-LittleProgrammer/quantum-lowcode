@@ -1,4 +1,4 @@
-import { IDataSourceSchema, ILowCodeRoot } from '@qimao/quantum-schemas';
+import { IDataSourceSchema, ILowCodeRoot, ISchemasNode, Id } from '@qimao/quantum-schemas';
 import { Subscribe, js_is_function } from '@qimao/quantum-utils';
 import { IDataSourceManagerData, IDataSourceManagerOptions, IHttpDataSourceSchema } from './types';
 import { DataSource } from './data-source/base';
@@ -19,40 +19,41 @@ export class DataSourceManager extends Subscribe {
             this.addDataSource(config);
         });
 
-        Promise.all(Array.from(this.dataSourceMap).map(async ([, ds]) => this.init(ds)));
+        Promise.all(Array.from(this.dataSourceMap).map(async([, ds]) => this.init(ds)));
     }
 
     public async init(ds: DataSource) {
         if (ds.isInit) {
             return;
         }
-         // 处理初始化数据逻辑
-         const beforeInit: ((...args: any[]) => any)[] = [];
-         const afterInit: ((...args: any[]) => any)[] = [];
- 
-         ds.methods.forEach((method) => {
-             if (!js_is_function(method.content)) return;
-             
-             // 注册全局事件, 放在此处注册, 优化性能
-             this.app.registerMethods && this.app.registerMethods(`${ds.id}:${method.name}`, method.content, ds);
-             switch (method.timing) {
-                 case 'beforeInit':
-                     beforeInit.push(method.content as (...args: any[]) => any);
-                     break;
-                 case 'afterInit':
-                     afterInit.push(method.content as (...args: any[]) => any);
-             }
-         });
- 
-         for (const method of beforeInit) {
-             await method({ dataSource: ds, app: this.app, });
-         }
- 
-         await ds.init();
- 
-         for (const method of afterInit) {
-             await method({ dataSource: ds, app: this.app, });
-         }
+        // 处理初始化数据逻辑
+        const beforeInit: ((...args: any[]) => any)[] = [];
+        const afterInit: ((...args: any[]) => any)[] = [];
+
+        ds.methods.forEach((method) => {
+            if (!js_is_function(method.content)) return;
+
+            // 注册全局事件, 放在此处注册, 优化性能
+            console.log('registerMethods', this.app.registerMethods);
+            this.app.registerMethods && this.app.registerMethods(`${ds.id}:${method.name}`, method.content, ds);
+            switch (method.timing) {
+                case 'beforeInit':
+                    beforeInit.push(method.content as (...args: any[]) => any);
+                    break;
+                case 'afterInit':
+                    afterInit.push(method.content as (...args: any[]) => any);
+            }
+        });
+
+        for (const method of beforeInit) {
+            await method({ dataSource: ds, app: this.app, });
+        }
+
+        await ds.init();
+
+        for (const method of afterInit) {
+            await method({ dataSource: ds, app: this.app, });
+        }
     }
 
     public get(id: string) {
@@ -86,8 +87,7 @@ export class DataSourceManager extends Subscribe {
 
         this.data[ds.id] = ds.data;
 
-        ds.emit('change', () => this.setData(ds))
-       
+        ds.emit('change', () => this.setData(ds));
     }
 
     public setData(ds: DataSource) {
@@ -119,6 +119,12 @@ export class DataSourceManager extends Subscribe {
         this.dataSourceMap.delete(id);
         delete this.data[id];
     }
+
+    // public compiledNode(node: ISchemasNode, sourceId?: Id) {
+    //     if (node.ifShow === false) return node;
+
+    //     return com
+    // }
 
     public destroy() {
         this.clear();

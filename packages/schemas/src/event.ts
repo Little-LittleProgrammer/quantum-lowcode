@@ -1,5 +1,5 @@
-import { ActionType } from "./const";
-import { Id } from "./type";
+import { ActionType } from './const';
+import { Id } from './type';
 
 export interface IDataSourceSchema {
     /** 数据源类型，根据类型来实例化；例如http则使用new HttpDataSource */
@@ -82,7 +82,7 @@ export interface ICompItemConfig {
     /** 触发事件后执行被选中组件的方法 */
     method: string;
 }
-  
+
 export interface IDataSourceItemConfig {
     /** 动作类型 */
     actionType: ActionType;

@@ -83,7 +83,6 @@ watch(page, (page) => {
 
 const resizeObserver = new ResizeObserver((entries) => {
     for (const { contentRect, } of entries) {
-        console.log(contentRect);
         services?.uiService.set('sandboxContainerRect', {
             width: contentRect.width,
             height: contentRect.height,
@@ -93,7 +92,6 @@ const resizeObserver = new ResizeObserver((entries) => {
 
 onMounted(() => {
     if (sandboxWrap.value) {
-        console.log(sandboxWrap.value);
         resizeObserver.observe(sandboxWrap.value);
         // services?.keybindingService.registerEl(KeyBindingContainerKey.STAGE, sandboxWrap.value.container);
     }

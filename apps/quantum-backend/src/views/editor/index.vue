@@ -26,7 +26,7 @@
 </template>
 
 <script lang='ts' setup>
-import { computed, nextTick, reactive, ref, toRaw, watch } from 'vue'
+import { computed, nextTick, ref, toRaw } from 'vue'
 import {QuantumEditor} from '@qimao/quantum-editor'
 import { ISchemasRoot } from '@qimao/quantum-schemas';
 import { serializeToString, parseSchemas } from '@qimao/quantum-utils';
@@ -52,7 +52,7 @@ const editor = ref<InstanceType<typeof QuantumEditor>>();
 const schemas = ref<ISchemasRoot>(testSchemas);
 let preSchemasStr = ''
 let schemasStr = '';
-let id = null;
+let id: string | null = null;
 
 
 const previewVisible=ref(false)
@@ -63,7 +63,7 @@ const previewUrl = computed(
 
 async function initData() {
     if (route.query.id) {
-        id = route.query.id
+        id = route.query.id as string
         const _res = await apiGetH5ManageDetail({id: route.query.id as string});
         if (_res.code === 200) {
             const _json = _res.data.pageJson && parseSchemas(_res.data.pageJson);
@@ -127,7 +127,7 @@ async function publishProject() {
         createMessage.error('有修改未保存，请先保存再发布');
         return;
     }
-    const _res = await apiPutH5ManageProject({id});
+    const _res = await apiPutH5ManageProject({id: id!});
     if (_res.code === 200) {
         createMessage.success('发布成功')
     }
@@ -140,7 +140,7 @@ function save() {
 
 async function saveToNet() {
     const _res = await apiSaveH5ManageProject({
-        id,
+        id: id!,
         pageJson: schemasStr
     });
     if (_res.code === 200) {

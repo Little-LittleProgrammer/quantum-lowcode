@@ -97,7 +97,6 @@ export interface ISchemasRoot {
  * 数据源
  */
 
-
 export const schemasRootType = `
 declare interface IDataSourceSchema {
     /** 数据源类型，根据类型来实例化；例如http则使用new HttpDataSource */

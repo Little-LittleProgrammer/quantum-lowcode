@@ -57,138 +57,88 @@ export interface ISchemasPage extends ISchemasContainer{
 /**
  * 根节点
  */
-export interface ISchemasRoot { 
+export interface ISchemasRoot {
     type: NodeType.ROOT;
     children: ISchemasPage[];
     name: string;
-    // dataSources?: DataSourceSchema[]; // 管理数据
+    description?: IMetaDes;
+    dataSources?: IDataSourceSchema[]; // 管理数据
+}
+
+export interface IDataSourceSchema {
+    /** 数据源类型，根据类型来实例化；例如http则使用new HttpDataSource */
+    type: 'base' | 'http';
+    /** 实体ID */
+    id: string
+    /** 实体名称，用于关联时展示 */
+    title?: string;
+    /** 实体描述，鼠标hover时展示 */
+    description?: string;
+    /** 字段列表 */
+    fields: IDataSchema[];
+    /** 方法列表 */
+    methods: ICodeBlockContent[];
+    /** mock数据 */
+    mocks?: IMockSchema;
 }
 ```
 
 ## 例子
 ```
 {
-    type: "root",
-    name: "test",
+    type: 'root',
+    name: 'test',
+    dataSources: [{
+        type: 'base',
+        id: 'base1',
+        title: '基础方法1',
+        description: '基础方法1, 快使用',
+        fields: [],
+        methods: [
+            {
+                name: 'test1',
+                description: '方法1',
+                params: [{name: 'a1', type: 'boolean', }],
+                content: (...params) => {
+                    console.log(params);
+                },
+            }
+        ],
+    }],
     children: [
         {
-            type: "page",
-            field: "page1",
-            style: {
-                padding: "10px"
-            },
+            type: 'page',
+            field: 'page2',
             children: [
                 {
-                    type: "container",
-                    field: "contaainer1",
+                    type: 'container',
+                    field: 'contaainer1',
                     children: [
                         {
-                            component: "form",
-                            field: "form1",
-                            componentProps: {
-                                actionColOptions: {
-                                    span: 24
-                                },
-                                baseColProps: {
-                                    span: 24
-                                }
-                            },
-                            children: [
-                                {
-                                    component: "Divider",
-                                    label: "标题1",
-                                    field: "Divider"
-                                },
-                                {
-                                    field: "a",
-                                    component: "Select",
-                                    label: "选择题",
-                                    componentProps: {
-                                        options: [
-                                            {
-                                                label: "yes",
-                                                value: 1
-                                            },
-                                            {
-                                                label: "no",
-                                                value: 2
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    field: "name1",
-                                    component: "Input",
-                                    label: "你好",
-                                    ifShow: "({values})=>values.a===1"
-                                },
-                                {
-                                    component: "Divider",
-                                    label: "标题2",
-                                    field: "Divider"
-                                },
-                                {
-                                    field: "a2",
-                                    component: "Select",
-                                    label: "选择题2",
-                                    componentProps: {
-                                        options: [
-                                            {
-                                                label: "yes",
-                                                value: 1
-                                            },
-                                            {
-                                                label: "no",
-                                                value: 2
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    field: "name2",
-                                    component: "Input",
-                                    label: "你好2",
-                                    ifShow: "({values})=>values.a2===1"
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            type: "page",
-            field: "page2",
-            children: [
-                {
-                    type: "container",
-                    field: "contaainer1",
-                    children: [
-                        {
-                            component: "img",
-                            field: "img1",
+                            component: 'img',
+                            field: 'img1',
                             style: {
-                                width: "100%"
+                                width: '100%',
                             },
                             componentProps: {
-                                src: "https://cn.vitejs.dev/logo-with-shadow.png"
-                            }
+                                src: 'https://cn.vitejs.dev/logo-with-shadow.png',
+                            },
                         },
                         {
-                            component: "button",
-                            field: "button2",
+                            component: 'button',
+                            field: 'button2',
                             componentProps: {
-                                onClick: "(e)=>{;alert(e);;}"
-                            }
+                                onClick: (app, e) => { alert(e); app.emit('base1:test1', e);},
+                            },
                         },
                         {
-                            component: "button",
-                            field: "button23333"
+                            component: 'button',
+                            field: 'button23333',
                         }
-                    ]
+                    ],
                 }
-            ]
+            ],
         }
-    ]
+    ],
 }
 ```
