@@ -45,16 +45,16 @@ export default ({ command, mode, }: ConfigEnv):UserConfig => {
         // },
         server: {
             host: '0.0.0.0',
-            port: 8098,
+            port: 8198,
             strictPort: true,
             proxy: {
                 '^/quantum-editor/runtime/vue2': {
-                    target: 'http://127.0.0.1:8078',
+                    target: 'http://127.0.0.1:8178',
                     changeOrigin: true,
                     prependPath: false,
                 },
                 '^/quantum-editor/runtime/vue3': {
-                    target: 'http://127.0.0.1:8079',
+                    target: 'http://127.0.0.1:8179',
                     changeOrigin: true,
                     prependPath: false,
                 },
