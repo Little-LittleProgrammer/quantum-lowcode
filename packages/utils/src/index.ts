@@ -1,4 +1,4 @@
-import { js_is_base, js_is_function, js_is_object, js_is_reg_exp, js_is_string } from '@q-front-npm/utils';
+import { js_is_array, js_is_base, js_is_function, js_is_object, js_is_reg_exp, js_is_string, js_utils_edit_attr, js_utils_find_attr } from '@q-front-npm/utils';
 import { ISchemasNode, Id } from '@qimao/quantum-schemas';
 
 export function get_host(url: string) {
@@ -222,18 +222,76 @@ export const convertToNumber = (value: number | string, parentValue = 0) => {
 };
 
 /**
+ * 将新节点更新到data或者parentId对应的节点的子节点中
+ * @param newNode 新节点
+ * @param data 需要修改的数据
+ * @param parentId 父节点 id
+ */
+export const replaceChildNode = (newNode: ISchemasNode, data?: ISchemasNode[], parentId?: Id) => {
+    const path = get_node_path(newNode.field, data!);
+    const node:ISchemasNode = path.pop();
+    let parent:ISchemasNode = path.pop();
+
+    if (parentId) {
+        parent = get_node_path(parentId, data!).pop();
+    }
+
+    if (!node) throw new Error('未找到目标节点');
+    if (!parent) throw new Error('未找到父节点');
+
+    const index = parent.children?.findIndex((child: ISchemasNode) => child.field === node.field);
+    parent.children.splice(index, 1, newNode);
+};
+
+export const getNeedKey = (node: ISchemasNode) => {
+    const keys: string[] = [];
+    function dfs(obj: Record<string, any>, path = '') {
+        for (const key in obj) {
+            if (js_is_object(obj[key])) {
+                dfs(obj[key], `${path}${key}.`);
+            } else {
+                if (js_is_string(obj[key]) && obj[key].includes('${') && obj[key].includes('}')) {
+                    keys.push(`${path}${key}`);
+                }
+            }
+        }
+    }
+    dfs(node);
+    return keys;
+};
+
+/**
  * 编译节点, 将节点编译成可用dsl
  * @param compile
  * @param node
  * @param sourceId
  */
-function compiledNode(
-    compile: (value: any) => any,
+export function compiledNode(
     node: ISchemasNode,
+    compile?: (value: any) => any,
     sourceId?: Id
 ) {
     let keys: string[] = [];
     if (!sourceId) {
-        keys = get;
+        keys = getNeedKey(node);
+    } else {
+        keys = [sourceId];
     }
+
+    keys.forEach(key => {
+        const value = js_utils_find_attr(node, key);
+        let newValue;
+        try {
+            newValue = compile ? compile(value) : value;
+        } catch (e) {
+            console.error(e);
+            newValue = '';
+        }
+        js_utils_edit_attr(key, newValue, node);
+    });
+
+    if (js_is_array(node.children)) {
+        node.children.forEach(item => compiledNode(item as ISchemasNode, compile, sourceId));
+    }
+    return node;
 }

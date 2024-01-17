@@ -27,6 +27,7 @@ export const testSchemas: ISchemasRoot = {
                     type: 'string',
                     title: 'a1',
                     description: 'a1',
+                    defaultValue: '标题1',
                 }
             ],
             methods: [
@@ -39,13 +40,13 @@ export const testSchemas: ISchemasRoot = {
                             type: 'boolean',
                         }
                     ],
-                    content: (...params)=>{;console.log(params);;},
+                    content: '(...params)=>{;;;console.log(params);;;;}',
                 },
                 {
                     name: 'test2',
                     description: '方法2',
                     params: [],
-                    content: ({app,dataSource},params)=>{dataSource.data.a1=params},
+                    content: '({app,dataSource},params)=>{;dataSource.data.a1=params;;}',
                 }
             ],
         }
@@ -76,7 +77,7 @@ export const testSchemas: ISchemasRoot = {
                             children: [
                                 {
                                     component: 'Divider',
-                                    label: '标题1',
+                                    label: '${base1.a1}',
                                     field: 'Divider',
                                 },
                                 {
@@ -94,16 +95,16 @@ export const testSchemas: ISchemasRoot = {
                                                 value: 2,
                                             }
                                         ],
-                                        onChange: (app, e) => { console.log(app); app.emit('base1:test1', e); },
+                                        onChange: '(app,e)=>{;console.log(app);;app.emit("base1:test1",e);;}',
                                     },
                                 },
                                 {
                                     field: 'name1',
                                     component: 'Input',
                                     label: '你好',
-                                    ifShow: ({values, }) => values.a === 1,
+                                    ifShow: '({values})=>values.a===1',
                                     componentProps: {
-                                        onChange: (app, e) => { app.emit('base1:test2', e.target.value); },
+                                        onChange: '(app,e)=>{;app.emit("base1:test2",e.target.value);;}',
                                     },
                                 },
                                 {
@@ -132,7 +133,7 @@ export const testSchemas: ISchemasRoot = {
                                     field: 'name2',
                                     component: 'Input',
                                     label: '你好2',
-                                    ifShow: ({values, }) => values.a2 === 1,
+                                    ifShow: '({values})=>values.a2===1',
                                 }
                             ],
                         }

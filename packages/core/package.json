@@ -15,7 +15,8 @@
   "dependencies": {
     "@qimao/quantum-utils": "workspace:*",
     "@qimao/quantum-data": "workspace:*",
-    "@qimao/quantum-schemas": "workspace:*"
+    "@qimao/quantum-schemas": "workspace:*",
+    "lodash-es": "^4.17.21"
   },
   "devDependencies": {
     "@q-front-npm-configs/rollup": "1.2.0",

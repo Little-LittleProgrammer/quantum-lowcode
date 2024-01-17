@@ -1,7 +1,8 @@
 import { ISchemasContainer, ISchemasNode, ISchemasPage } from '@qimao/quantum-schemas';
 import { LowCodeRoot } from './app';
 import { LowCodePage } from './page';
-import { Subscribe, js_is_function, js_is_object } from '@qimao/quantum-utils';
+import { Subscribe, js_is_function, js_is_object, compiledNode } from '@qimao/quantum-utils';
+import {template} from 'lodash-es';
 
 interface INodeOptions {
     config: ISchemasNode | ISchemasContainer;
@@ -25,9 +26,17 @@ export class LowCodeNode extends Subscribe {
     }
 
     public setData(data: ISchemasNode | ISchemasContainer | ISchemasPage) {
-        this.data = data;
+        this.data = this.compileNode(data);
         this.setEvents(data);
         this.emit('updata-data');
+    }
+
+    public compileNode(data: ISchemasNode | ISchemasContainer | ISchemasPage) {
+        return compiledNode(data as ISchemasNode, (value) => {
+            if (typeof value === 'string') {
+                return template(value)(this.root.dataSourceManager?.data);
+            }
+        });
     }
 
     // TODO

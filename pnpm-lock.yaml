@@ -205,6 +205,9 @@ importers:
       '@qimao/quantum-utils':
         specifier: workspace:*
         version: link:../utils
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
     devDependencies:
       '@q-front-npm-configs/rollup':
         specifier: 1.2.0
