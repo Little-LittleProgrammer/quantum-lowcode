@@ -13,7 +13,7 @@
   "author": "Evan Wu",
   "license": "ISC",
   "dependencies": {
-    "@q-front-npm/utils": "~1.2.1",
+    "@q-front-npm/utils": "~1.2.4-beta.1",
     "@qimao/quantum-schemas": "workspace:*"
   },
   "devDependencies": {

@@ -1,0 +1,57 @@
+{
+    "name": "@qimao/quantum-ui-vue2",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/lib/index.js",
+    "module": "dist/es/index.js",
+    "typings": "dist/index.d.ts",
+    "scripts": {
+      "build": "vite build"
+    },
+    "files": [
+      "dist"
+    ],
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/es/index.js",
+        "require": "./dist/lib/index.js"
+      },
+      "./es": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/es/index.js"
+      },
+      "./lib": {
+        "types": "./dist/index.d.ts",
+        "require": "./dist/lib/index.js"
+      },
+      "./es/*": {
+        "types": "./dist/src/*.d.ts",
+        "import": "./dist/es/*.js"
+      },
+      "./lib/*": {
+        "types": "./dist/src/*.d.ts",
+        "require": "./dist/lib/*.js"
+      },
+      "./*": "./*"
+    },
+    "dependencies": {
+        "@qimao/quantum-core": "workspace:*",
+        "@qimao/quantum-utils": "workspace:*",
+        "@qimao/quantum-schemas": "workspace:*"
+    },
+    "devDependencies": {
+        "@q-front-npm/shared": "1.2.3-beta.0",
+        "@vitejs/plugin-vue2": "^2.2.0",
+        "@vitejs/plugin-vue2-jsx": "^1.1.0",
+        "@q-front-npm/types": "~1.2.1",
+        "sass": "^1.63.3",
+        "@ant-design/icons-vue": "^6.1.0",
+        "prettier": "~3.1.0",
+        "vue": "^2.7.4",
+        "vite-plugin-dts": "3.6.4"
+    },
+    "peerDependencies": {
+        "vue": "^2.7.4"
+    }
+}

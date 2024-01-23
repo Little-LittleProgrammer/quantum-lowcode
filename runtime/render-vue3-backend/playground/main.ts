@@ -1,16 +1,10 @@
 import { LowCodeRoot } from '@qimao/quantum-core';
 import { createApp } from 'vue';
-import Form from '../src/component/form.vue';
-import Table from '../src/component/table.vue';
-import Conatiner from '../src/container/index.vue';
+import * as components from '@qimao/quantum-ui';
 import App from './App.vue';
 
 const app = new LowCodeRoot({});
-const components = {
-    form: Form,
-    container: Conatiner,
-};
-Object.keys(components).forEach((type: string) => app.registerComponent(type, components[type]));
+Object.keys(components).forEach((type: string) => app.registerComponent(type.toLowerCase(), components[type]));
 
 app.setDesignWidth(window.document.documentElement.getBoundingClientRect().width);
 

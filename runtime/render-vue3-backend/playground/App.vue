@@ -8,7 +8,7 @@ import { computed, defineComponent, inject, nextTick, ref, watch } from 'vue';
 import type { LowCodeRoot } from '@qimao/quantum-core';
 import type { Id, ISchemasRoot, ISchemasPage } from '@qimao/quantum-schemas';
 import { IQuantum} from '@qimao/quantum-sandbox';
-import Page from '../src/page/index.vue';
+import {Page} from '@qimao/quantum-ui';
 
 declare global {
     interface Window {
@@ -28,17 +28,16 @@ export default defineComponent({
         const curPageId = ref<Id>();
         const selectedId = ref<Id>();
 
-        const pageConfig = computed(
-            () => root.value?.children?.find((item: ISchemasPage) => item.field === curPageId.value) || root.value?.children?.[0]
-        );
+        const pageConfig = computed(() => {
+            console.log(root.value);
+            return root.value?.children?.find((item: ISchemasPage) => item.field === curPageId.value) || root.value?.children?.[0];
+        });
 
         watch(pageConfig, async() => {
-            console.log('aaaa');
             await nextTick();
             const page = document.querySelector<HTMLElement>('.quantum-ui-page');
             page && window.quantum.onPageElUpdate(page);
         });
-
         window.quantum?.onRuntimeReady({
             getApp() {
                 return app;

@@ -9,13 +9,13 @@ function pathResolve(dir: string) {
 
 export default ({ command, mode, }: ConfigEnv):UserConfig => {
     const _common = vite_common_lib_config({
-        entry: './index.ts',
+        entry: ['./index.ts', './src/config.ts'],
         name: 'qmComponents',
         outDir: 'dist',
         isComponentsBuild: true,
         target: 'modules',
         rollupOptions: {
-            external: ['vue', '@qimao/quantum-utils', 'monaco-editor'],
+            external: ['vue', '@qimao/quantum-utils', '@qimao/quantum-core', '@qimao/quantum-schemas', '@q-front-npm/vue3-antd-pc-ui'],
         },
         buildOptions: {
             cssCodeSplit: true,

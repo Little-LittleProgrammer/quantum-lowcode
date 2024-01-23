@@ -27,7 +27,6 @@ import { computed, inject } from 'vue';
 import splitView from '../base/split-view.vue';
 import { editorService } from '../../services/editor-service';
 import { uiService } from '../../services/ui-service';
-import {QCodeEditor} from '@qimao/quantum-ui';
 import {getConfig} from '../../utils';
 import { Empty } from 'ant-design-vue';
 import { serializeToString } from '@qimao/quantum-utils';

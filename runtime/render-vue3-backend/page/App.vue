@@ -7,7 +7,7 @@ import { computed, defineComponent, inject} from 'vue';
 
 import type { LowCodeRoot } from '@qimao/quantum-core';
 import { IQuantum} from '@qimao/quantum-sandbox';
-import Page from '../src/page/index.vue';
+import {Page} from '@qimao/quantum-ui';
 
 declare global {
     interface Window {

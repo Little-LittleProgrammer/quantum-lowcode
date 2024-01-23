@@ -1,25 +1,18 @@
 import { LowCodeRoot } from '@qimao/quantum-core';
 import { createApp } from 'vue';
-import Form from '../src/component/form.vue';
-import Table from '../src/component/table.vue';
-import Container from '../src/container/index.vue';
-import App from './App.vue';
+import * as components from '@qimao/quantum-ui';
 import { requestFn } from './utils/http';
-import { get_url_param } from '@qimao/quantum-utils';
+import { getUrlParam } from '@qimao/quantum-utils';
 import { getLocalConfig } from './utils';
+import App from './App.vue';
 
-const components: Record<string, any> = {
-    form: Form,
-    container: Container,
-    table: Table,
-};
 const app = new LowCodeRoot({
     ua: window.navigator.userAgent,
-    config: ((get_url_param('localPreview') ? getLocalConfig() : window.PAGE_JSON) || [])[0] || {},
-    curPage: get_url_param('page'),
+    config: ((getUrlParam('localPreview') ? getLocalConfig() : window.PAGE_JSON) || [])[0] || {},
+    curPage: getUrlParam('page'),
     request: requestFn,
 });
-Object.keys(components).forEach((type: string) => app.registerComponent(type, components[type]));
+Object.keys(components).forEach((type: string) => app.registerComponent(type.toLowerCase(), components[type]));
 
 app.setDesignWidth(window.document.documentElement.getBoundingClientRect().width);
 

@@ -1,12 +1,12 @@
 import {createAxios} from '@q-front-npm/http';
 import { gContentTypeEnum } from '@q-front-npm/shared/enums';
-import { useViteEnv } from '../../src/hooks/use-vite-env';
-import { IHttpOptions } from '@qimao/quantum-core';
+import { IHttpOptions } from '@qimao/quantum-schemas';
 
 // const _requestNum = 0; // 请求数量
 // const _requestPageUrl = ''; // 请求地址所在页面
 
-const env = useViteEnv();
+const env = {};
+// const env = useViteEnv();
 
 function custom_request(config: any) {
     return config;
@@ -27,23 +27,23 @@ const defHttp = createAxios({
         customRequest: custom_request,
         customRequestError: custom_request_error,
         customResponse: custom_response,
-        customResponseError: custom_response_error
+        customResponseError: custom_response_error,
     },
-    headers: {'Content-Type': gContentTypeEnum.JSON},
+    headers: {'Content-Type': gContentTypeEnum.JSON, },
     requestOptions: {
         // 接口地址
         apiUrl: env.apiUrl,
         // 接口拼接地址
         urlPrefix: env.urlPrefix,
-        uploadUrl: env.uploadUrl
-    }
+        uploadUrl: env.uploadUrl,
+    },
 });
 
 export function requestFn(options: IHttpOptions) {
-    const {method = 'get', headers, url, params} = options;
+    const {method = 'get', headers, url, params, } = options;
     return defHttp[(method.toLowerCase() as 'get')]({
         url,
         params,
-        headers
+        headers,
     });
 }

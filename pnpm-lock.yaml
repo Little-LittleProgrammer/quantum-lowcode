@@ -42,23 +42,23 @@ importers:
         specifier: 6.1.0
         version: 6.1.0(vue@3.3.13)
       '@q-front-npm-configs/vite':
-        specifier: ~1.2.1
-        version: 1.2.3(@types/node@20.2.5)(postcss@8.4.33)(rollup@2.79.1)(typescript@5.1.3)(vite@4.5.1)(vue@3.3.13)(workbox-build@7.0.0)(workbox-window@7.0.0)
+        specifier: ~1.2.4-beta.1
+        version: 1.2.4-beta.1(@types/node@20.2.5)(postcss@8.4.33)(rollup@2.79.1)(typescript@5.1.3)(vite@4.5.1)(vue@3.3.13)(workbox-build@7.0.0)(workbox-window@7.0.0)
       '@q-front-npm/hooks':
-        specifier: ~1.2.1
-        version: 1.2.3(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(vue-router@4.2.5)(vue@3.3.13)
+        specifier: ~1.2.4-beta.1
+        version: 1.2.4-beta.1(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(vue-router@4.2.5)(vue@3.3.13)
       '@q-front-npm/http':
         specifier: ~1.2.1
         version: 1.2.5
       '@q-front-npm/shared':
-        specifier: ~1.2.1
-        version: 1.2.1
+        specifier: ~1.2.3-beta.0
+        version: 1.2.3-beta.0
       '@q-front-npm/vue3-antd-pc-ui':
-        specifier: ~1.2.1
-        version: 1.2.8(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(pinia@2.1.7)(vue-router@4.2.5)(vue@3.3.13)
+        specifier: ~1.2.9-beta.1
+        version: 1.2.9-beta.1(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(pinia@2.1.7)(vue-router@4.2.5)(vue@3.3.13)
       '@q-front-npm/vue3-pc-ui':
-        specifier: ~1.2.1
-        version: 1.2.3(vue-router@4.2.5)(vue@3.3.13)
+        specifier: ~1.2.4-beta.7
+        version: 1.2.4-beta.7(vue-router@4.2.5)(vue@3.3.13)
       '@qimao/quantum-core':
         specifier: workspace:*
         version: link:../../packages/core
@@ -71,9 +71,6 @@ importers:
       '@qimao/quantum-schemas':
         specifier: workspace:*
         version: link:../../packages/schemas
-      '@qimao/quantum-ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
       '@qimao/quantum-utils':
         specifier: workspace:*
         version: link:../../packages/utils
@@ -241,8 +238,11 @@ importers:
   packages/editor:
     dependencies:
       '@q-front-npm/vue3-antd-pc-ui':
-        specifier: ~1.2.1
-        version: 1.2.8(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(pinia@2.1.7)(vue-router@4.2.5)(vue@3.3.13)
+        specifier: ~1.2.9-beta.1
+        version: 1.2.9-beta.1(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(pinia@2.1.7)(vue-router@4.2.5)(vue@3.3.13)
+      '@q-front-npm/vue3-pc-ui':
+        specifier: ~1.2.4-beta.7
+        version: 1.2.4-beta.7(vue-router@4.2.5)(vue@3.3.13)
       '@qimao/quantum-core':
         specifier: workspace:*
         version: link:../core
@@ -332,19 +332,25 @@ importers:
 
   packages/ui:
     dependencies:
+      '@q-front-npm/vue3-antd-pc-ui':
+        specifier: ~1.2.9-beta.1
+        version: 1.2.9-beta.1(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(pinia@2.1.7)(vue-router@4.2.5)(vue@3.3.13)
+      '@qimao/quantum-core':
+        specifier: workspace:*
+        version: link:../core
+      '@qimao/quantum-schemas':
+        specifier: workspace:*
+        version: link:../schemas
       '@qimao/quantum-utils':
         specifier: workspace:*
         version: link:../utils
-      monaco-editor:
-        specifier: ^0.44.0
-        version: 0.44.0
     devDependencies:
       '@ant-design/icons-vue':
         specifier: ^6.1.0
         version: 6.1.0(vue@3.3.13)
       '@q-front-npm-configs/vite':
-        specifier: ~1.2.1
-        version: 1.2.3(@types/node@20.2.5)(postcss@8.4.33)(typescript@5.1.3)(vite@4.5.1)(vue@3.3.13)(workbox-build@7.0.0)(workbox-window@7.0.0)
+        specifier: ~1.2.4-beta.1
+        version: 1.2.4-beta.1(@types/node@20.2.5)(postcss@8.4.33)(typescript@5.1.3)(vite@4.5.1)(vue@3.3.13)(workbox-build@7.0.0)(workbox-window@7.0.0)
       '@q-front-npm/types':
         specifier: ~1.2.1
         version: 1.2.1
@@ -367,11 +373,51 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2(vue@3.3.13)
 
+  packages/ui-vue2:
+    dependencies:
+      '@qimao/quantum-core':
+        specifier: workspace:*
+        version: link:../core
+      '@qimao/quantum-schemas':
+        specifier: workspace:*
+        version: link:../schemas
+      '@qimao/quantum-utils':
+        specifier: workspace:*
+        version: link:../utils
+    devDependencies:
+      '@ant-design/icons-vue':
+        specifier: ^6.1.0
+        version: 6.1.0(vue@2.7.16)
+      '@q-front-npm/shared':
+        specifier: 1.2.3-beta.0
+        version: 1.2.3-beta.0
+      '@q-front-npm/types':
+        specifier: ~1.2.1
+        version: 1.2.1
+      '@vitejs/plugin-vue2':
+        specifier: ^2.2.0
+        version: 2.3.1(vite@4.5.1)(vue@2.7.16)
+      '@vitejs/plugin-vue2-jsx':
+        specifier: ^1.1.0
+        version: 1.1.1(vite@4.5.1)(vue@2.7.16)
+      prettier:
+        specifier: ~3.1.0
+        version: 3.1.1
+      sass:
+        specifier: ^1.63.3
+        version: 1.63.3
+      vite-plugin-dts:
+        specifier: 3.6.4
+        version: 3.6.4(@types/node@20.2.5)(typescript@5.1.3)(vite@4.5.1)
+      vue:
+        specifier: ^2.7.4
+        version: 2.7.16
+
   packages/utils:
     dependencies:
       '@q-front-npm/utils':
-        specifier: ~1.2.1
-        version: 1.2.3
+        specifier: ~1.2.4-beta.1
+        version: 1.2.4-beta.1
       '@qimao/quantum-schemas':
         specifier: workspace:*
         version: link:../schemas
@@ -403,6 +449,9 @@ importers:
       '@qimao/quantum-schemas':
         specifier: workspace:*
         version: link:../../packages/schemas
+      '@qimao/quantum-ui-vue2':
+        specifier: workspace:*
+        version: link:../../packages/ui-vue2
       '@qimao/quantum-utils':
         specifier: workspace:*
         version: link:../../packages/utils
@@ -414,8 +463,8 @@ importers:
         version: 2.7.16
     devDependencies:
       '@q-front-npm/shared':
-        specifier: 1.2.1
-        version: 1.2.1
+        specifier: 1.2.3-beta.0
+        version: 1.2.3-beta.0
       '@vitejs/plugin-vue2':
         specifier: ^2.2.0
         version: 2.3.1(vite@4.5.1)(vue@2.7.16)
@@ -432,8 +481,8 @@ importers:
         specifier: ^1.2.1
         version: 1.2.5
       '@q-front-npm/vue3-antd-pc-ui':
-        specifier: ~1.2.1
-        version: 1.2.8(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(pinia@2.1.7)(vue-router@4.2.5)(vue@3.3.13)
+        specifier: ~1.2.9-beta.1
+        version: 1.2.9-beta.1(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(pinia@2.1.7)(vue-router@4.2.5)(vue@3.3.13)
       '@qimao/quantum-core':
         specifier: workspace:*
         version: link:../../packages/core
@@ -446,6 +495,9 @@ importers:
       '@qimao/quantum-schemas':
         specifier: workspace:*
         version: link:../../packages/schemas
+      '@qimao/quantum-ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
       '@qimao/quantum-utils':
         specifier: workspace:*
         version: link:../../packages/utils
@@ -457,8 +509,8 @@ importers:
         version: 3.3.13(typescript@5.1.3)
     devDependencies:
       '@q-front-npm/shared':
-        specifier: 1.2.1
-        version: 1.2.1
+        specifier: 1.2.3-beta.0
+        version: 1.2.3-beta.0
       '@vitejs/plugin-vue':
         specifier: ^4.3.4
         version: 4.6.2(vite@4.5.1)(vue@3.3.13)
@@ -619,6 +671,16 @@ packages:
 
   /@ant-design/icons-svg@4.3.1:
     resolution: {integrity: sha512-4QBZg8ccyC6LPIRii7A0bZUk3+lEDCLnhB+FVsflGdcWPPmV+j3fire4AwwoqHV/BibgvBmR9ZIo4s867smv+g==, tarball: https://registry.npmmirror.com/@ant-design/icons-svg/-/icons-svg-4.3.1.tgz}
+
+  /@ant-design/icons-vue@6.1.0(vue@2.7.16):
+    resolution: {integrity: sha512-EX6bYm56V+ZrKN7+3MT/ubDkvJ5rK/O2t380WFRflDcVFgsvl3NLH7Wxeau6R8DbrO5jWR6DSTC3B6gYFp77AA==, tarball: https://registry.npmmirror.com/@ant-design/icons-vue/-/icons-vue-6.1.0.tgz}
+    peerDependencies:
+      vue: '>=3.0.3'
+    dependencies:
+      '@ant-design/colors': 6.0.0
+      '@ant-design/icons-svg': 4.3.1
+      vue: 2.7.16
+    dev: true
 
   /@ant-design/icons-vue@6.1.0(vue@3.3.13):
     resolution: {integrity: sha512-EX6bYm56V+ZrKN7+3MT/ubDkvJ5rK/O2t380WFRflDcVFgsvl3NLH7Wxeau6R8DbrO5jWR6DSTC3B6gYFp77AA==, tarball: https://registry.npmmirror.com/@ant-design/icons-vue/-/icons-vue-6.1.0.tgz}
@@ -1126,6 +1188,15 @@ packages:
     dependencies:
       '@babel/core': 7.23.7
       '@babel/helper-plugin-utils': 7.22.5
+
+  /@babel/plugin-syntax-import-meta@7.10.4(@babel/core@7.23.7):
+    resolution: {integrity: sha512-Yqfm+XDx0+Prh3VSeEQCPU81yC+JWZ2pDPFSS4ZdpfZhp4MkFMaDC1UqseovEKwSUpnIL7+vK+Clp7bfh0iD7g==, tarball: https://registry.npmmirror.com/@babel/plugin-syntax-import-meta/-/plugin-syntax-import-meta-7.10.4.tgz}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    dependencies:
+      '@babel/core': 7.23.7
+      '@babel/helper-plugin-utils': 7.22.5
+    dev: true
 
   /@babel/plugin-syntax-json-strings@7.8.3(@babel/core@7.23.7):
     resolution: {integrity: sha512-lY6kdGpWHvjoe2vk4WrAapEuBR69EMxZl+RoGRhrFGNYVK8mOPAW8VfbT/ZgrFbXlDNiiaxQnAtgVCZ6jv30EA==, tarball: https://registry.npmmirror.com/@babel/plugin-syntax-json-strings/-/plugin-syntax-json-strings-7.8.3.tgz}
@@ -2056,14 +2127,14 @@ packages:
     resolution: {integrity: sha512-By7QVBvVkP4FbwWEFhNauT/65UBrQD8drgbKoVzAGshNh+kUDaaRYXTu9tKrrRdbNS7vmi/asKobotsYCY9eag==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm-configs/tsconfig/-/@q-front-npm-configs/tsconfig-1.0.0.tgz}
     dev: true
 
-  /@q-front-npm-configs/vite@1.2.3(@types/node@20.2.5)(postcss@8.4.33)(rollup@2.79.1)(typescript@5.1.3)(vite@4.5.1)(vue@3.3.13)(workbox-build@7.0.0)(workbox-window@7.0.0):
-    resolution: {integrity: sha512-c2SuCIGDxv8NRbQrNZxte1O2iuUD+ohjEW7y0s6WcRm+YE5pHMPNHYFVPIokI6Pc4ZN5I5AT8VCBOu3Mp4CuzA==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm-configs/vite/-/@q-front-npm-configs/vite-1.2.3.tgz}
+  /@q-front-npm-configs/vite@1.2.4-beta.1(@types/node@20.2.5)(postcss@8.4.33)(rollup@2.79.1)(typescript@5.1.3)(vite@4.5.1)(vue@3.3.13)(workbox-build@7.0.0)(workbox-window@7.0.0):
+    resolution: {integrity: sha512-nXxCKadpoSunorpRHwwdRrsWhhb5u9XGyAcVX7WvPe/fH5p1xVhUd7Q3DpEvBDtmWeyy0S81XvoqBnhNp13Lhw==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm-configs/vite/-/@q-front-npm-configs/vite-1.2.4-beta.1.tgz}
     peerDependencies:
       vite: ^4.5.1
       vue: ^3.3.0
     dependencies:
-      '@q-front-npm/shared': 1.2.2
-      '@q-front-npm/utils': 1.2.3
+      '@q-front-npm/shared': 1.2.3-beta.0
+      '@q-front-npm/utils': 1.2.4-beta.1
       '@sentry/vite-plugin': 2.10.2
       '@vitejs/plugin-vue': 4.6.2(vite@4.5.1)(vue@3.3.13)
       '@vitejs/plugin-vue-jsx': 3.1.0(vite@4.5.1)(vue@3.3.13)
@@ -2087,14 +2158,14 @@ packages:
       - workbox-window
     dev: false
 
-  /@q-front-npm-configs/vite@1.2.3(@types/node@20.2.5)(postcss@8.4.33)(typescript@5.1.3)(vite@4.5.1)(vue@3.3.13)(workbox-build@7.0.0)(workbox-window@7.0.0):
-    resolution: {integrity: sha512-c2SuCIGDxv8NRbQrNZxte1O2iuUD+ohjEW7y0s6WcRm+YE5pHMPNHYFVPIokI6Pc4ZN5I5AT8VCBOu3Mp4CuzA==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm-configs/vite/-/@q-front-npm-configs/vite-1.2.3.tgz}
+  /@q-front-npm-configs/vite@1.2.4-beta.1(@types/node@20.2.5)(postcss@8.4.33)(typescript@5.1.3)(vite@4.5.1)(vue@3.3.13)(workbox-build@7.0.0)(workbox-window@7.0.0):
+    resolution: {integrity: sha512-nXxCKadpoSunorpRHwwdRrsWhhb5u9XGyAcVX7WvPe/fH5p1xVhUd7Q3DpEvBDtmWeyy0S81XvoqBnhNp13Lhw==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm-configs/vite/-/@q-front-npm-configs/vite-1.2.4-beta.1.tgz}
     peerDependencies:
       vite: ^4.5.1
       vue: ^3.3.0
     dependencies:
-      '@q-front-npm/shared': 1.2.2
-      '@q-front-npm/utils': 1.2.3
+      '@q-front-npm/shared': 1.2.3-beta.0
+      '@q-front-npm/utils': 1.2.4-beta.1
       '@sentry/vite-plugin': 2.10.2
       '@vitejs/plugin-vue': 4.6.2(vite@4.5.1)(vue@3.3.13)
       '@vitejs/plugin-vue-jsx': 3.1.0(vite@4.5.1)(vue@3.3.13)
@@ -2118,8 +2189,8 @@ packages:
       - workbox-window
     dev: true
 
-  /@q-front-npm/hooks@1.2.3(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(vue-router@4.2.5)(vue@3.3.13):
-    resolution: {integrity: sha512-WXhBg6wdEsxX8gaIDLa3eQiBMsd1CgmjBifIHifjLVqXFZx7P/KGfe3jnnqDgHAqx0vne6aMQveSJUj21h9CvA==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/hooks/-/@q-front-npm/hooks-1.2.3.tgz}
+  /@q-front-npm/hooks@1.2.4-beta.1(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(vue-router@4.2.5)(vue@3.3.13):
+    resolution: {integrity: sha512-AyXyuqcEY/WqDIEsVXtaM6Pt8GtE+DkMyiXqKAEFrXeY2rPqwOaIWXVrSwCOUbk9K5CkNd1srrkebpX5yy3oGw==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/hooks/-/@q-front-npm/hooks-1.2.4-beta.1.tgz}
     peerDependencies:
       '@ant-design/icons-vue': ^6.1.0
       ant-design-vue: ^4.0.6
@@ -2127,9 +2198,9 @@ packages:
       vue-router: ^4.2.4
     dependencies:
       '@ant-design/icons-vue': 6.1.0(vue@3.3.13)
-      '@q-front-npm/shared': 1.2.2
+      '@q-front-npm/shared': 1.2.3-beta.0
       '@q-front-npm/types': 1.2.2
-      '@q-front-npm/utils': 1.2.3
+      '@q-front-npm/utils': 1.2.4-beta.1
       ant-design-vue: 4.0.8(vue@3.3.13)
       vue: 3.3.13(typescript@5.1.3)
       vue-router: 4.2.5(vue@3.3.13)
@@ -2159,9 +2230,14 @@ packages:
 
   /@q-front-npm/shared@1.2.1:
     resolution: {integrity: sha512-G/k6tWkdoSJCLjBq2DzuccG5f6GlAneK3sOAujKN2M3i5vdq1Xuh8Xh3XyXXUrhIeBw0m2RgpC9nTZ2Qw4dD0Q==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/shared/-/@q-front-npm/shared-1.2.1.tgz}
+    dev: false
 
   /@q-front-npm/shared@1.2.2:
     resolution: {integrity: sha512-YNqhUBv82ETtZm31wV2Lawntz/24mQmNNs8uel0LRau2LIA8pOglm1HS6eblTRNNgpXujH5VAhxK5IsKyI229g==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/shared/-/@q-front-npm/shared-1.2.2.tgz}
+    dev: false
+
+  /@q-front-npm/shared@1.2.3-beta.0:
+    resolution: {integrity: sha512-iX3oVgdW9Zkha7/C1b247MgaD6p05cX5KqX4+Y58ZADJQq1hFgRkKAokshTBahp9On8DcTIPYxEbHUcM6JQY3A==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/shared/-/@q-front-npm/shared-1.2.3-beta.0.tgz}
 
   /@q-front-npm/types@1.2.1:
     resolution: {integrity: sha512-wfRwfLmlVL8aERFipMcFhW3yponh06M/N3jxWXnv3IB3A0rehBGP6GJTjIp9bdjOQPv1zvZDbFY1aX+12RjpnQ==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/types/-/@q-front-npm/types-1.2.1.tgz}
@@ -2181,6 +2257,12 @@ packages:
     resolution: {integrity: sha512-vmhajKCBwKf7uyFfrlIAJDHU9ODsB2y72N1kc54opQoGK6RIHx704Jn018oyyFQho+Et93rVV1kGzpNfDsfI1A==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/utils/-/@q-front-npm/utils-1.2.3.tgz}
     dependencies:
       '@q-front-npm/shared': 1.2.2
+    dev: false
+
+  /@q-front-npm/utils@1.2.4-beta.1:
+    resolution: {integrity: sha512-SZIpmp13e0+ZTEq9aX4IzkMZm32LsTguzdF3h0mGNTtVznOIclN+2PU4nMYLKsTU1GjLn4l3fBC9QY3Y4fJkfw==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/utils/-/@q-front-npm/utils-1.2.4-beta.1.tgz}
+    dependencies:
+      '@q-front-npm/shared': 1.2.3-beta.0
 
   /@q-front-npm/vue2-active-ui@1.0.1-beta.0(postcss-pxtorem@6.0.0)(vue@2.7.16):
     resolution: {integrity: sha512-CLwyV5Ro8u/ESt/1cj/nbGODOtwEhAqwlPZ8OjP4//HU93lCa2mFYIESELCAX2CZ2+FjXFWAD0Cffs8875foiQ==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/vue2-active-ui/-/@q-front-npm/vue2-active-ui-1.0.1-beta.0.tgz}
@@ -2196,17 +2278,17 @@ packages:
       - debug
     dev: false
 
-  /@q-front-npm/vue3-antd-pc-ui@1.2.8(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(pinia@2.1.7)(vue-router@4.2.5)(vue@3.3.13):
-    resolution: {integrity: sha512-BHGIjdO9AGPmLWDPPg/4qHa7Am8z5lu7+hW0VivZX3z/6fy7uVwF3EYuLf4XfPlZqLjnVBT0+bfsVSTCROD/Tg==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/vue3-antd-pc-ui/-/@q-front-npm/vue3-antd-pc-ui-1.2.8.tgz}
+  /@q-front-npm/vue3-antd-pc-ui@1.2.9-beta.1(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(pinia@2.1.7)(vue-router@4.2.5)(vue@3.3.13):
+    resolution: {integrity: sha512-TFSIXb24W8I0T1BaCrdS8KOr5l4c7OPVTvbsDaBnRopARbf1YVFJShnkfPjCQGxeHh22aaOoDtyi5Cs8acwrHQ==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/vue3-antd-pc-ui/-/@q-front-npm/vue3-antd-pc-ui-1.2.9-beta.1.tgz}
     peerDependencies:
       pinia: ^2.0.30
       vue: ~3.3.0
       vue-router: ^4.2.4
     dependencies:
-      '@q-front-npm/hooks': 1.2.3(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(vue-router@4.2.5)(vue@3.3.13)
-      '@q-front-npm/shared': 1.2.2
-      '@q-front-npm/utils': 1.2.3
-      '@q-front-npm/vue3-pc-ui': 1.2.3(vue-router@4.2.5)(vue@3.3.13)
+      '@q-front-npm/hooks': 1.2.4-beta.1(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(vue-router@4.2.5)(vue@3.3.13)
+      '@q-front-npm/shared': 1.2.3-beta.0
+      '@q-front-npm/utils': 1.2.4-beta.1
+      '@q-front-npm/vue3-pc-ui': 1.2.4-beta.7(vue-router@4.2.5)(vue@3.3.13)
       lodash-es: 4.17.21
       pinia: 2.1.7(typescript@5.1.3)(vue@3.3.13)
       sortablejs: 1.15.1
@@ -2217,14 +2299,14 @@ packages:
       - ant-design-vue
     dev: false
 
-  /@q-front-npm/vue3-pc-ui@1.2.3(vue-router@4.2.5)(vue@3.3.13):
-    resolution: {integrity: sha512-IWE/rVyE0x1xEjINedsPyTo5T2Snf+1u8PHqRE7TXcOKX3emqhU7f7biGbIf2y88ICT0E3Po8sJ8GfQfCI2uyA==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/vue3-pc-ui/-/@q-front-npm/vue3-pc-ui-1.2.3.tgz}
+  /@q-front-npm/vue3-pc-ui@1.2.4-beta.7(vue-router@4.2.5)(vue@3.3.13):
+    resolution: {integrity: sha512-Fj5mha+UM11OyiiEPxXyF7LeOOf+8EzRTXKb5oLxlwOA6OvxtuBpcrV2cQETnG8D6qqOTE7f/7APdXaC+jPAog==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/vue3-pc-ui/-/@q-front-npm/vue3-pc-ui-1.2.4-beta.7.tgz}
     peerDependencies:
       vue: ~3.3.0
       vue-router: ^4.2.4
     dependencies:
-      '@q-front-npm/shared': 1.2.2
-      '@q-front-npm/utils': 1.2.3
+      '@q-front-npm/shared': 1.2.3-beta.0
+      '@q-front-npm/utils': 1.2.4-beta.1
       vue: 3.3.13(typescript@5.1.3)
       vue-router: 4.2.5(vue@3.3.13)
     dev: false
@@ -2848,6 +2930,25 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
+  /@vitejs/plugin-vue2-jsx@1.1.1(vite@4.5.1)(vue@2.7.16):
+    resolution: {integrity: sha512-r6BjWP2aVg4/uXdjf+wMwLuk0LQEUbPTC9UcRpWMhWsfVl9n/8RhiG6pQPO9g+oab/g3fHoZ2bmJJbKuraqCsw==, tarball: https://registry.npmmirror.com/@vitejs/plugin-vue2-jsx/-/plugin-vue2-jsx-1.1.1.tgz}
+    engines: {node: '>=14.18.0'}
+    peerDependencies:
+      vite: ^2.9.13 || ^3.0.0 || ^4.0.0 || ^5.0.0
+      vue: ^2.7.0
+    dependencies:
+      '@babel/core': 7.23.7
+      '@babel/plugin-syntax-import-meta': 7.10.4(@babel/core@7.23.7)
+      '@babel/plugin-transform-typescript': 7.23.6(@babel/core@7.23.7)
+      '@rollup/pluginutils': 5.1.0(rollup@3.29.4)
+      '@vue/babel-preset-jsx': 1.4.0(@babel/core@7.23.7)(vue@2.7.16)
+      vite: 4.5.1(@types/node@20.2.5)(less@4.1.3)(sass@1.63.3)
+      vue: 2.7.16
+    transitivePeerDependencies:
+      - rollup
+      - supports-color
+    dev: true
+
   /@vitejs/plugin-vue2@2.3.1(vite@4.5.1)(vue@2.7.16):
     resolution: {integrity: sha512-/ksaaz2SRLN11JQhLdEUhDzOn909WEk99q9t9w+N12GjQCljzv7GyvAbD/p20aBUjHkvpGOoQ+FCOkG+mjDF4A==, tarball: https://registry.npmmirror.com/@vitejs/plugin-vue2/-/plugin-vue2-2.3.1.tgz}
     engines: {node: ^14.18.0 || >= 16.0.0}
@@ -2904,6 +3005,10 @@ packages:
       '@volar/language-core': 1.11.1
       path-browserify: 1.0.1
 
+  /@vue/babel-helper-vue-jsx-merge-props@1.4.0:
+    resolution: {integrity: sha512-JkqXfCkUDp4PIlFdDQ0TdXoIejMtTHP67/pvxlgeY+u5k3LEdKuWZ3LK6xkxo52uDoABIVyRwqVkfLQJhk7VBA==, tarball: https://registry.npmmirror.com/@vue/babel-helper-vue-jsx-merge-props/-/babel-helper-vue-jsx-merge-props-1.4.0.tgz}
+    dev: true
+
   /@vue/babel-helper-vue-transform-on@1.1.5:
     resolution: {integrity: sha512-SgUymFpMoAyWeYWLAY+MkCK3QEROsiUnfaw5zxOVD/M64KQs8D/4oK6Q5omVA2hnvEOE0SCkH2TZxs/jnnUj7w==, tarball: https://registry.npmmirror.com/@vue/babel-helper-vue-transform-on/-/babel-helper-vue-transform-on-1.1.5.tgz}
 
@@ -2924,6 +3029,102 @@ packages:
       svg-tags: 1.0.0
     transitivePeerDependencies:
       - supports-color
+
+  /@vue/babel-plugin-transform-vue-jsx@1.4.0(@babel/core@7.23.7):
+    resolution: {integrity: sha512-Fmastxw4MMx0vlgLS4XBX0XiBbUFzoMGeVXuMV08wyOfXdikAFqBTuYPR0tlk+XskL19EzHc39SgjrPGY23JnA==, tarball: https://registry.npmmirror.com/@vue/babel-plugin-transform-vue-jsx/-/babel-plugin-transform-vue-jsx-1.4.0.tgz}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    dependencies:
+      '@babel/core': 7.23.7
+      '@babel/helper-module-imports': 7.22.15
+      '@babel/plugin-syntax-jsx': 7.23.3(@babel/core@7.23.7)
+      '@vue/babel-helper-vue-jsx-merge-props': 1.4.0
+      html-tags: 2.0.0
+      lodash.kebabcase: 4.1.1
+      svg-tags: 1.0.0
+    dev: true
+
+  /@vue/babel-preset-jsx@1.4.0(@babel/core@7.23.7)(vue@2.7.16):
+    resolution: {integrity: sha512-QmfRpssBOPZWL5xw7fOuHNifCQcNQC1PrOo/4fu6xlhlKJJKSA3HqX92Nvgyx8fqHZTUGMPHmFA+IDqwXlqkSA==, tarball: https://registry.npmmirror.com/@vue/babel-preset-jsx/-/babel-preset-jsx-1.4.0.tgz}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+      vue: '*'
+    peerDependenciesMeta:
+      vue:
+        optional: true
+    dependencies:
+      '@babel/core': 7.23.7
+      '@vue/babel-helper-vue-jsx-merge-props': 1.4.0
+      '@vue/babel-plugin-transform-vue-jsx': 1.4.0(@babel/core@7.23.7)
+      '@vue/babel-sugar-composition-api-inject-h': 1.4.0(@babel/core@7.23.7)
+      '@vue/babel-sugar-composition-api-render-instance': 1.4.0(@babel/core@7.23.7)
+      '@vue/babel-sugar-functional-vue': 1.4.0(@babel/core@7.23.7)
+      '@vue/babel-sugar-inject-h': 1.4.0(@babel/core@7.23.7)
+      '@vue/babel-sugar-v-model': 1.4.0(@babel/core@7.23.7)
+      '@vue/babel-sugar-v-on': 1.4.0(@babel/core@7.23.7)
+      vue: 2.7.16
+    dev: true
+
+  /@vue/babel-sugar-composition-api-inject-h@1.4.0(@babel/core@7.23.7):
+    resolution: {integrity: sha512-VQq6zEddJHctnG4w3TfmlVp5FzDavUSut/DwR0xVoe/mJKXyMcsIibL42wPntozITEoY90aBV0/1d2KjxHU52g==, tarball: https://registry.npmmirror.com/@vue/babel-sugar-composition-api-inject-h/-/babel-sugar-composition-api-inject-h-1.4.0.tgz}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    dependencies:
+      '@babel/core': 7.23.7
+      '@babel/plugin-syntax-jsx': 7.23.3(@babel/core@7.23.7)
+    dev: true
+
+  /@vue/babel-sugar-composition-api-render-instance@1.4.0(@babel/core@7.23.7):
+    resolution: {integrity: sha512-6ZDAzcxvy7VcnCjNdHJ59mwK02ZFuP5CnucloidqlZwVQv5CQLijc3lGpR7MD3TWFi78J7+a8J56YxbCtHgT9Q==, tarball: https://registry.npmmirror.com/@vue/babel-sugar-composition-api-render-instance/-/babel-sugar-composition-api-render-instance-1.4.0.tgz}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    dependencies:
+      '@babel/core': 7.23.7
+      '@babel/plugin-syntax-jsx': 7.23.3(@babel/core@7.23.7)
+    dev: true
+
+  /@vue/babel-sugar-functional-vue@1.4.0(@babel/core@7.23.7):
+    resolution: {integrity: sha512-lTEB4WUFNzYt2In6JsoF9sAYVTo84wC4e+PoZWSgM6FUtqRJz7wMylaEhSRgG71YF+wfLD6cc9nqVeXN2rwBvw==, tarball: https://registry.npmmirror.com/@vue/babel-sugar-functional-vue/-/babel-sugar-functional-vue-1.4.0.tgz}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    dependencies:
+      '@babel/core': 7.23.7
+      '@babel/plugin-syntax-jsx': 7.23.3(@babel/core@7.23.7)
+    dev: true
+
+  /@vue/babel-sugar-inject-h@1.4.0(@babel/core@7.23.7):
+    resolution: {integrity: sha512-muwWrPKli77uO2fFM7eA3G1lAGnERuSz2NgAxuOLzrsTlQl8W4G+wwbM4nB6iewlKbwKRae3nL03UaF5ffAPMA==, tarball: https://registry.npmmirror.com/@vue/babel-sugar-inject-h/-/babel-sugar-inject-h-1.4.0.tgz}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    dependencies:
+      '@babel/core': 7.23.7
+      '@babel/plugin-syntax-jsx': 7.23.3(@babel/core@7.23.7)
+    dev: true
+
+  /@vue/babel-sugar-v-model@1.4.0(@babel/core@7.23.7):
+    resolution: {integrity: sha512-0t4HGgXb7WHYLBciZzN5s0Hzqan4Ue+p/3FdQdcaHAb7s5D9WZFGoSxEZHrR1TFVZlAPu1bejTKGeAzaaG3NCQ==, tarball: https://registry.npmmirror.com/@vue/babel-sugar-v-model/-/babel-sugar-v-model-1.4.0.tgz}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    dependencies:
+      '@babel/core': 7.23.7
+      '@babel/plugin-syntax-jsx': 7.23.3(@babel/core@7.23.7)
+      '@vue/babel-helper-vue-jsx-merge-props': 1.4.0
+      '@vue/babel-plugin-transform-vue-jsx': 1.4.0(@babel/core@7.23.7)
+      camelcase: 5.3.1
+      html-tags: 2.0.0
+      svg-tags: 1.0.0
+    dev: true
+
+  /@vue/babel-sugar-v-on@1.4.0(@babel/core@7.23.7):
+    resolution: {integrity: sha512-m+zud4wKLzSKgQrWwhqRObWzmTuyzl6vOP7024lrpeJM4x2UhQtRDLgYjXAw9xBXjCwS0pP9kXjg91F9ZNo9JA==, tarball: https://registry.npmmirror.com/@vue/babel-sugar-v-on/-/babel-sugar-v-on-1.4.0.tgz}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    dependencies:
+      '@babel/core': 7.23.7
+      '@babel/plugin-syntax-jsx': 7.23.3(@babel/core@7.23.7)
+      '@vue/babel-plugin-transform-vue-jsx': 1.4.0(@babel/core@7.23.7)
+      camelcase: 5.3.1
+    dev: true
 
   /@vue/compiler-core@3.3.13:
     resolution: {integrity: sha512-bwi9HShGu7uaZLOErZgsH2+ojsEdsjerbf2cMXPwmvcgZfVPZ2BVZzCVnwZBxTAYd6Mzbmf6izcUNDkWnBBQ6A==, tarball: https://registry.npmmirror.com/@vue/compiler-core/-/compiler-core-3.3.13.tgz}
@@ -3467,6 +3668,11 @@ packages:
 
   /callsites@3.1.0:
     resolution: {integrity: sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==, tarball: https://registry.npmmirror.com/callsites/-/callsites-3.1.0.tgz}
+    engines: {node: '>=6'}
+    dev: true
+
+  /camelcase@5.3.1:
+    resolution: {integrity: sha512-L28STB170nwWS63UjtlEOE3dldQApaJXZkOI1uMFfzf3rRuPegHaHesyee+YxQ+W6SvRDQV6UrdOdRiR153wJg==, tarball: https://registry.npmmirror.com/camelcase/-/camelcase-5.3.1.tgz}
     engines: {node: '>=6'}
     dev: true
 
@@ -4318,6 +4524,11 @@ packages:
     engines: {node: '>=12.0.0'}
     dev: true
 
+  /html-tags@2.0.0:
+    resolution: {integrity: sha1-ELMKOGCF9Dzt41PMj6fLDe7qZos=}
+    engines: {node: '>=4'}
+    dev: true
+
   /html-tags@3.3.1:
     resolution: {integrity: sha512-ztqyC3kLto0e9WbNp0aeP+M3kTt+nbaIveGmUxAtZa+8iFgKLUOD4YKM5j+f3QD89bra7UeumolZHKuOXnTmeQ==, tarball: https://registry.npmmirror.com/html-tags/-/html-tags-3.3.1.tgz}
     engines: {node: '>=8'}
@@ -4694,6 +4905,10 @@ packages:
 
   /lodash.isequal@4.5.0:
     resolution: {integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==, tarball: https://registry.npmmirror.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz}
+
+  /lodash.kebabcase@4.1.1:
+    resolution: {integrity: sha1-hImxyw0p/4gZXM7KRI/21swpXDY=}
+    dev: true
 
   /lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}

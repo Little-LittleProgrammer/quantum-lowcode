@@ -11,7 +11,7 @@ import { computed, defineComponent, inject, nextTick, ref, watch } from 'vue';
 import type { Id, ISchemasRoot, ISchemasPage } from '@qimao/quantum-schemas';
 import type { LowCodeRoot } from '@qimao/quantum-core';
 import { IQuantum} from '@qimao/quantum-sandbox';
-import Page from '../src/page/index.vue';
+import {Page} from '@qimao/quantum-ui-vue2';
 
 declare global {
     interface Window {

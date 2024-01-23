@@ -1,16 +1,16 @@
-import { js_is_array, js_is_base, js_is_function, js_is_object, js_is_reg_exp, js_is_string, js_utils_edit_attr, js_utils_find_attr } from '@q-front-npm/utils';
-import { ISchemasNode, Id } from '@qimao/quantum-schemas';
+import { js_is_array, js_is_base, js_is_function, js_is_object, js_is_reg_exp, js_is_string, js_utils_edit_attr, js_utils_find_attr, serializeToString } from '@q-front-npm/utils';
+import { Fn, ISchemasNode, Id } from '@qimao/quantum-schemas';
 
-export function get_host(url: string) {
+export function getHost(url: string) {
     return url.match(/\/\/([^/]+)/)?.[1];
 }
 
-export function is_same_domain(tu: string, su: string = globalThis.location.host) {
+export function isSameDomain(tu: string, su: string = globalThis.location.host) {
     const _isHttpUrl = /^(http[s]?:)?\/\//.test(tu);
 
     if (!_isHttpUrl) return true;
 
-    return get_host(tu) === su;
+    return getHost(tu) === su;
 }
 
 /**
@@ -18,7 +18,7 @@ export function is_same_domain(tu: string, su: string = globalThis.location.host
  * @param field 唯一值
  * @param data root.children
  */
-export function get_node_path(field: string, data: any[]) {
+export function getNodePath(field: string, data: any[]) {
     const path: any[] = [];
     const track: any[] = [];
     function back_track(field: string, data: any[]) {
@@ -40,10 +40,10 @@ export function get_node_path(field: string, data: any[]) {
     return path;
 }
 
-export const filter_xss = (str: string) =>
+export const filterXss = (str: string) =>
     str.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
 
-export const get_url_param = (param: string, url?: string) => {
+export const getUrlParam = (param: string, url?: string) => {
     const u = url || location.href;
     const reg = new RegExp(`[?&#]${param}=([^&#]+)`, 'gi');
 
@@ -53,52 +53,12 @@ export const get_url_param = (param: string, url?: string) => {
         strArr = matches[matches.length - 1].split('=');
         if (strArr && strArr.length > 1) {
             // 过滤XSS字符
-            return filter_xss(strArr[1]);
+            return filterXss(strArr[1]);
         }
         return '';
     }
     return '';
 };
-
-export function serializeToString<T>(value: T): string {
-    if (js_is_string(value)) {
-        return value;
-    }
-    function deal_special(val: any): string {
-        // 压缩方法
-        return val.toString().replace(/\n/g, ';').replace(/\s/g, '');
-    }
-    // 判断引用类型的temp
-    function check_temp(target:any) {
-        const _c = target.constructor;
-        return new _c();
-    }
-    let serializeObj: Record<string, any> = {};
-    function dfs(target: any, map = new Map()) {
-        if (js_is_base(target)) {
-            return target;
-        }
-        if (js_is_function(target)) {
-            return deal_special(target);
-        }
-        if (js_is_reg_exp(target)) return deal_special(target);
-
-        const _temp = check_temp(target);
-        // 防止循环引用
-        if (map.get(target)) {
-            return map.get(target);
-        }
-        map.set(target, _temp);
-        // 处理数组和对象
-        for (const key in target) {
-        // 递归
-            _temp[key] = dfs(target[key], map);
-        }
-        return _temp;
-    }
-    serializeObj = dfs(value);
-    return JSON.stringify(serializeObj, null, 4);
-}
 
 export function parseSchemas(schema: string | Record<string, any>) {
     let firstDeal: Record<string, any> = {};
@@ -146,6 +106,21 @@ export function parseSchemas(schema: string | Record<string, any>) {
     return result;
 }
 
+export function parseFunction(func: string | Fn, ...agrs: string[]) {
+    let _fn = '';
+    if (js_is_function(func)) {
+        _fn = serializeToString(func);
+    }
+    const _lastIndex = _fn.lastIndexOf('}');
+    if (_lastIndex > 0) {
+        _fn = _fn.slice(0, _lastIndex);
+    }
+    agrs.forEach(item => {
+        _fn += `;${item}`;
+    });
+    return parseSchemas(_fn + '};');
+}
+
 // 获取默认值
 export function getDefaultValueFromFields(obj: Record<string, any>) {
     const data: Record<string, any> = {};
@@ -160,7 +135,7 @@ export function getDefaultValueFromFields(obj: Record<string, any>) {
         any: undefined,
     };
 
-    obj.forEach((field) => {
+    obj.forEach((field: any) => {
         if (typeof field.defaultValue !== 'undefined') {
             if (field.type === 'array' && !Array.isArray(field.defaultValue)) {
                 data[field.name] = defaultValue.array;
@@ -228,12 +203,12 @@ export const convertToNumber = (value: number | string, parentValue = 0) => {
  * @param parentId 父节点 id
  */
 export const replaceChildNode = (newNode: ISchemasNode, data?: ISchemasNode[], parentId?: Id) => {
-    const path = get_node_path(newNode.field, data!);
+    const path = getNodePath(newNode.field, data!);
     const node:ISchemasNode = path.pop();
     let parent:ISchemasNode = path.pop();
 
     if (parentId) {
-        parent = get_node_path(parentId, data!).pop();
+        parent = getNodePath(parentId, data!).pop();
     }
 
     if (!node) throw new Error('未找到目标节点');

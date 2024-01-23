@@ -40,13 +40,15 @@
   "license": "ISC",
   "dependencies": {
     "@qimao/quantum-utils": "workspace:*",
-    "monaco-editor": "^0.44.0"
+    "@qimao/quantum-core": "workspace:*",
+    "@q-front-npm/vue3-antd-pc-ui": "~1.2.9-beta.1",
+    "@qimao/quantum-schemas": "workspace:*"
   },
   "peerDependencies": {
     "vue": "~3.3.4"
   },    
   "devDependencies": {
-    "@q-front-npm-configs/vite": "~1.2.1",
+    "@q-front-npm-configs/vite": "~1.2.4-beta.1",
     "@q-front-npm/types": "~1.2.1",
     "sass": "^1.63.3",
     "@ant-design/icons-vue": "^6.1.0",
