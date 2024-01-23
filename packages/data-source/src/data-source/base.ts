@@ -78,6 +78,7 @@ export class DataSource extends Subscribe {
     }
 
     public async init() {
+        console.log('ds init');
         this.isInit = true;
     }
 }

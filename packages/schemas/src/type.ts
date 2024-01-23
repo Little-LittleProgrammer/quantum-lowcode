@@ -7,6 +7,21 @@ export interface Fn<T = any, R = T> {
     (...arg: T[]): R;
 }
 
+export enum HookType {
+    /** 代码块钩子标识 */
+    CODE = 'code',
+}
+
+export interface HookData {
+    field: Id;
+    params: any;
+}
+
+export interface Hooks {
+    hookType?: HookType;
+    hookData?: HookData[];
+}
+
 export type Method = 'get' | 'GET' | 'delete' | 'DELETE' | 'post' | 'POST' | 'put' | 'PUT';
 export interface IHttpOptions {
     /** 请求链接 */
@@ -26,7 +41,7 @@ export type IRequestFunction = (options: IHttpOptions) => Promise<any>;
 export interface ILowCodeRoot {
     schemasRoot?: ISchemasRoot;
     request?: IRequestFunction;
-    registerMethods?: Fn;
+    registerEvent?: Fn;
     [key: string]: any;
 }
 
@@ -60,6 +75,9 @@ export interface ISchemasNode{
      * 子节点
      */
     children: (ISchemasNode | ISchemasContainer)[]
+    created?: Hooks;
+    mounted?: Hooks
+    [key: string]: any;
 }
 
 /**

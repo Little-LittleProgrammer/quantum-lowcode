@@ -4,6 +4,7 @@ import { Fn, IRequestFunction, ISchemasRoot, Id, IMetaDes, ILowCodeRoot } from '
 import {LowCodePage} from './page';
 import {Env} from './env';
 import { DataSource, DataSourceManager, createDataSourceManager } from '@qimao/quantum-data';
+import { LowCodeNode } from './node';
 
 interface IAppOptionsConfig {
     config?: ISchemasRoot;
@@ -68,6 +69,8 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
             this.dataSourceManager.destroy();
         }
 
+        this.removeEvents();
+
         this.dataSourceManager = createDataSourceManager(this, this.useMock);
 
         this.setPage(curPage || this.page?.data?.field);
@@ -111,7 +114,7 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
                 this.page.destroy();
                 this.page = undefined;
             }
-            this.emit('page-change');
+            super.emit('page-change');
             return;
         }
 
@@ -122,7 +125,7 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
         }
 
         this.page = new LowCodePage({config: pageConfig, root: this, });
-        this.emit('page-change', this.page);
+        super.emit('page-change', this.page);
         // this.bindEvents();
     }
 
@@ -232,16 +235,29 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
         }
     }
 
+    public emit(name: string, ...args: any[]) {
+        const [node, ...otherArgs] = args;
+        // 由于组件可能有很多个, 所以组件事件需要加入id来区分
+        if (node && node instanceof LowCodeNode && node?.data?.field) {
+            super.emit(`${node.data.field}:${name}`, node, ...otherArgs);
+        }
+        super.emit(name, ...args);
+    }
+
     // 将事件注册为全局事件
-    public registerMethods(key: string, fn: Fn, ds: DataSource) {
+    // TODO: 目前是将所有的事件(未使用, 已使用)全部注册, 后续会优化此部分逻辑, 只注册已使用到的, 优化性能
+    public registerEvent(key: string, fn: Fn, ds?: DataSource, node?: LowCodeNode) {
         const eventHanlder = (...args: any[]) => {
-            fn({ app: this, dataSource: ds, }, ...args);
+            fn({ app: this, dataSource: (ds || {}), }, ...args);
         };
         // 先清空
         if (this.cache.has(key)) {
             this.remove(key);
         }
-        console.log(key);
+        if (node) { // 组件事件
+            key = `${node.data.field}:${key}`;
+        }
+        this.eventMap.set(key, eventHanlder);
         this.on(key, eventHanlder);
     }
 
@@ -249,9 +265,9 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
     // }
 
     /**
-     * 事件绑定
+     * 移除所有事件
      */
-    public bindEvents() {
+    public removeEvents() {
         // 先移除所有事件
         Array.from(this.eventMap.keys()).forEach((key) => {
             const events = this.eventMap.get(key);
@@ -260,8 +276,6 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
         this.eventMap.clear();
 
         if (!this.page) return;
-
-        // 再绑定事件
     }
     /**
      * 事件联动处理函数
@@ -273,8 +287,8 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
     /**
      * 注册组件
      */
-    public registerComponent(type: string, Component: any) {
-        this.components.set(type, Component);
+    public registerComponent(type: string, comp: any) {
+        this.components.set(type, comp);
     }
 
     /**

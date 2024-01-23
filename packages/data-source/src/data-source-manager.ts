@@ -18,11 +18,11 @@ export class DataSourceManager extends Subscribe {
         app.schemasRoot?.dataSources?.forEach((config) => {
             this.addDataSource(config);
         });
-
         Promise.all(Array.from(this.dataSourceMap).map(async([, ds]) => this.init(ds)));
     }
 
     public async init(ds: DataSource) {
+        console.log('dataSourceManager', ds);
         if (ds.isInit) {
             return;
         }
@@ -34,8 +34,7 @@ export class DataSourceManager extends Subscribe {
             if (!js_is_function(method.content)) return;
 
             // 注册全局事件, 放在此处注册, 优化性能
-            console.log('registerMethods', this.app.registerMethods);
-            this.app.registerMethods && this.app.registerMethods(`${ds.id}:${method.name}`, method.content, ds);
+            this.app.registerEvent && this.app.registerEvent(`${ds.id}:${method.name}`, method.content, ds);
             switch (method.timing) {
                 case 'beforeInit':
                     beforeInit.push(method.content as (...args: any[]) => any);

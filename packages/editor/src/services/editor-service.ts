@@ -1,7 +1,7 @@
 import { reactive } from 'vue';
 import { IEditorNodeInfo, IStoreState, IStoreStateKey } from '../types';
 import { ISchemasNode, ISchemasPage, Id, NodeType } from '@qimao/quantum-schemas';
-import { get_node_path, js_is_array, js_is_object, Subscribe } from '@qimao/quantum-utils';
+import { getNodePath, js_is_array, js_is_object, Subscribe } from '@qimao/quantum-utils';
 import { isString } from 'lodash-es';
 import { BoxCore } from '@qimao/quantum-sandbox';
 
@@ -63,7 +63,7 @@ class EditorService extends Subscribe {
             info.node = root as any;
             return info;
         }
-        const path = get_node_path(field, root.children);
+        const path = getNodePath(field, root.children);
         console.log('path', path, info);
         if (!path.length) return info;
         // 插入根节点
@@ -95,6 +95,11 @@ class EditorService extends Subscribe {
         // if (page) {
 
         // }
+    }
+
+    // 更新逻辑
+    public update() {
+
     }
 
     public reset() {

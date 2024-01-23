@@ -1,6 +1,6 @@
 // 基于iframe加载传入进来的RuntimeUrl，并支持增删改查组件
 
-import { Subscribe, get_host, is_same_domain } from '@qimao/quantum-utils';
+import { Subscribe, getHost, isSameDomain } from '@qimao/quantum-utils';
 import { IBoxCoreConfig, IRuntime, IRuntimeWindow } from './types';
 import { Id } from '@qimao/quantum-schemas';
 import { DEFAULT_ZOOM } from './const';
@@ -25,7 +25,7 @@ export class BoxRender extends Subscribe {
 
         this.iframe = globalThis.document.createElement('iframe');
         // 同源, 直接加载
-        this.iframe.src = is_same_domain(this.runtimeUrl) ? runtimeUrl! : '';
+        this.iframe.src = isSameDomain(this.runtimeUrl) ? runtimeUrl! : '';
         this.iframe.style.cssText = `
             border: 0;
             width: 100%;
@@ -81,11 +81,11 @@ export class BoxRender extends Subscribe {
             throw Error('mount 失败');
         }
 
-        if (this.runtimeUrl && !is_same_domain(this.runtimeUrl)) {
+        if (this.runtimeUrl && !isSameDomain(this.runtimeUrl)) {
             // 不同域，使用srcdoc发起异步请求，需要目标地址支持跨域
             let _html = await fetch(this.runtimeUrl).then((res) => res.text());
             // 使用base, 解决相对路径或绝对路径的问题
-            const base = `${location.protocol}//${get_host(this.runtimeUrl)}`;
+            const base = `${location.protocol}//${getHost(this.runtimeUrl)}`;
             _html = _html.replace('<head>', `<head>\n<base href="${base}">`);
             this.iframe.srcdoc = _html;
         }
@@ -95,7 +95,7 @@ export class BoxRender extends Subscribe {
         this.postQuantumRuntimeReady();
     }
 
-    private async loadHandler() {
+    private loadHandler= async() => {
         // 如果 contentWindow 未初始化, 返回
         if (!this.contentWindow) return;
 

@@ -29,7 +29,7 @@ import {Breadcrumb, BreadcrumbItem} from 'ant-design-vue';
 import { IMenuButton, IServices } from '../../types';
 import EditorSandbox from './sandbox.vue';
 import pageBar from './page-bar.vue';
-import { get_node_path } from '@qimao/quantum-utils';
+import { getNodePath } from '@qimao/quantum-utils';
 import navMenu from './nav-menu.vue';
 defineOptions({
     name: 'QEditorWokrspace',
@@ -40,7 +40,7 @@ const services = inject<IServices>('services');
 const page = computed(() => services?.editorService.get('page'));
 const node = computed(() => services?.editorService?.get('node'));
 const root = computed(() => services?.editorService?.get('root'));
-const path = computed(() => get_node_path(node.value?.field || '', root.value?.children || []));
+const path = computed(() => getNodePath(node.value?.field || '', root.value?.children || []));
 
 const btnList = ['delete', 'undo', 'redo', 'zoom'];
 

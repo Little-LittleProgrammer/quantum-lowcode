@@ -35,7 +35,7 @@ const boxRect = computed(() => services?.uiService.get('sandboxRect'));
 const boxContainer = ref<HTMLDivElement | null>();
 
 watchEffect(() => {
-    if (sandbox) return;
+    if (sandbox || !page.value) return;
 
     if (!boxContainer.value) return;
     if (!sandboxOptions?.runtimeUrl || !root.value) return;
