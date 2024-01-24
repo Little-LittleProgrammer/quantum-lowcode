@@ -141,6 +141,9 @@ function createSidebar(): DefaultTheme.Sidebar {
             }, {
                 text: 'app实例',
                 link: '/api/schema/app.md'
+            }, {
+                text: '全局数据',
+                link: '/api/schema/datasource.md'
             }]
         }]
     }

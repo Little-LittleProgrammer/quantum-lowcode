@@ -172,18 +172,17 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
             styleObj = {...style, };
         }
 
-        const isHippy = this.isH5();
-        console.log('style', isHippy);
         const whiteList = ['zIndex', 'opacity', 'fontWeight'];
         Object.entries(styleObj).forEach(([key, value]) => {
-            if (key === 'scale' && !results.transform && isHippy) {
+            if (key === 'scale' && !results.transform) {
+            // if (key === 'scale' && !results.transform && isHippy) {
                 results.transform = [{ scale: value, }];
-            } else if (key === 'backgroundImage' && !isHippy) {
+            } else if (key === 'backgroundImage') {
                 value && (results[key] = fillBackgroundImage(value));
             } else if (key === 'transform' && typeof value !== 'string') {
                 results[key] = this.getTransform(value);
             } else if (!whiteList.includes(key) && value && /^[-]?[0-9]*[.]?[0-9]*$/.test(value)) {
-                results[key] = !isHippy ? value : `${parseInt(value) / this.designWidth * 10}rem`;
+                results[key] = `${parseInt(value) / this.designWidth * 10}rem`;
             } else {
                 results[key] = value;
             }

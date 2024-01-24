@@ -66,7 +66,7 @@ export class LowCodeNode extends Subscribe {
                     const fn = () => {
                         for (const item of val) {
                             const { field, params = {}, } = item;
-                            this.root.emit(`${field}`, ...params);
+                            this.root.emit(`${field}`, params);
                         }
                     };
                     config.componentProps[key] = fn;
@@ -120,8 +120,7 @@ export class LowCodeNode extends Subscribe {
         if (this.data[hook]) {
             for (const item of this.data[hook].hookData) {
                 const { field, params = {}, } = item;
-                // 调用方法,
-                this.root.emit(`${field}`, ...params);
+                this.root.emit(`${field}`, params);
             }
         }
     }

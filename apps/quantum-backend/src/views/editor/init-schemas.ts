@@ -74,6 +74,17 @@ export const testSchemas: ISchemasRoot = {
                                     span: 24,
                                 },
                             },
+                            created: {
+                                hookType: 'code',
+                                hookData: [
+                                    {
+                                        field: 'base1:test1',
+                                        params: {
+                                            a: 123123,
+                                        },
+                                    }
+                                ],
+                            },
                             children: [
                                 {
                                     component: 'Divider',

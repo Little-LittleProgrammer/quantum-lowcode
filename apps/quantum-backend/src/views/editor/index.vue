@@ -21,7 +21,7 @@
                 </a-radio-group>
             </template>
         </quantum-editor>
-        <preview v-model:previewVisible="previewVisible" :previewUrl="previewUrl" :sandboxRect="sandboxRect"></preview>
+        <preview :uaInfo="UA_MAP[sandboxDev as 'phone']" v-model:previewVisible="previewVisible" :previewUrl="previewUrl" :sandboxRect="sandboxRect"></preview>
     </div>
 </template>
 

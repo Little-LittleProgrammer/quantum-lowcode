@@ -28,6 +28,7 @@ export default defineComponent({
     setup(props) {
         const {app, } = useApp(props);
         const tagName: any = computed(() => {
+            console.log(props.config.type)
             return app && app.resolveComponent(props.config.component || props.config.type);
         });
         const ifShow = computed(() => {

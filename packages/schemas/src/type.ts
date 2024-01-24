@@ -155,7 +155,7 @@ declare interface ICodeBlockContent {
     /** 参数定义 */
     params: ICodeParam[] | [];
     /** 注释 */
-    desc?: string;
+    description?: string;
     /** 扩展字段 */
     [propName: string]: any;
 }
@@ -166,7 +166,7 @@ declare interface ICodeParam {
     /** 参数类型 */
     type: string;
     /** 参数描述 */
-    desc?: string;
+    description?: string;
     /** 默认值 */
     defaultValue?: any;
     /** 扩展字段 */
@@ -186,6 +186,21 @@ declare type Id = string
 type SelectPartial<T, V extends keyof T> = Partial<Omit<T, V>> & Required<Pick<T, V>>
 declare interface Fn<T = any, R = T> {
     (...arg: T[]): R;
+}
+
+declare enum HookType {
+    /** 代码块钩子标识 */
+    CODE = 'code',
+}
+
+declare interface HookData {
+    field: Id;
+    params: any;
+}
+
+declare interface Hooks {
+    hookType?: HookType;
+    hookData?: HookData[];
 }
 declare interface ISchemasNode{
     /**
@@ -214,6 +229,9 @@ declare interface ISchemasNode{
      * 子节点
      */
     children: (ISchemasNode | ISchemasContainer)[]
+    created?: Hooks;
+    mounted?: Hooks
+    [key: string]: any;
 }
 
 /**

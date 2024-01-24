@@ -40,7 +40,7 @@ export interface ICodeBlockContent {
     /** 参数定义 */
     params: ICodeParam[] | [];
     /** 注释 */
-    desc?: string;
+    description?: string;
     /** 扩展字段 */
     [propName: string]: any;
 }
@@ -51,7 +51,7 @@ export interface ICodeParam {
     /** 参数类型 */
     type: string;
     /** 参数描述 */
-    desc?: string;
+    description?: string;
     /** 默认值 */
     defaultValue?: any;
     /** 扩展字段 */
