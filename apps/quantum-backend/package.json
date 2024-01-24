@@ -6,6 +6,7 @@
   "author": "Evan Wu",
   "scripts": {
     "dev": "vite",
+    "playground": "vite",
     "build": "NODE_OPTIONS=--max-old-space-size=8192 vite build",
     "preview": "vite preview",
     "type:check": "vue-tsc --noEmit --skipLibCheck"
