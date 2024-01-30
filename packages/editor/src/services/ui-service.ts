@@ -1,8 +1,10 @@
 import { ISandboxRect, IUiState } from '../types';
 import { reactive } from 'vue';
-import {convertToNumber} from '@qimao/quantum-utils';
+import { convertToNumber } from '@qimao/quantum-utils';
+import { editorService } from './editor-service';
 
 const state = reactive<IUiState>({
+    uiSelectMode: false,
     showSrc: true,
     sandboxRect: {
         width: 375,
@@ -13,38 +15,66 @@ const state = reactive<IUiState>({
         width: 0,
         height: 0,
     },
+    showGuides: true,
 });
 
 class UiService {
-    public set<K extends keyof IUiState, T extends IUiState[K]>(name: K, value: T) {
+    public set<K extends keyof IUiState, T extends IUiState[K]>(
+        name: K,
+        value: T
+    ) {
         if (name === 'sandboxRect') {
             this.setSandboxRect(value as unknown as ISandboxRect);
             return;
         }
+        const mask = editorService.get('sandbox')?.mask;
+
+        if (name === 'showGuides') {
+            mask?.showGuides(value as unknown as boolean);
+        }
         state[name] = value;
     }
+
     public get<K extends keyof IUiState>(name: K) {
         return state[name];
     }
+
     public async zoom(zoom: number) {
         this.set('zoom', (this.get('zoom') * 100 + zoom * 100) / 100);
         if (this.get('zoom') < 0.1) this.set('zoom', 0.1);
     }
+
     public async calcZoom() {
         const { sandboxRect, sandboxContainerRect, } = state;
         const { height, width, } = sandboxContainerRect;
         if (!width || !height) return 1;
+
         const sWidth = convertToNumber(sandboxRect.width, width);
         const sHeight = convertToNumber(sandboxRect.height, height);
+
         if (width > sWidth && height > sHeight) {
             return 1;
         }
 
         // 60/80是为了不要让画布太过去贴住四周（这样好看些）
-        return Math.min((width - 60) / sWidth || 1, (height - 80) / sHeight || 1);
+        return Math.min(
+            (width - 60) / sWidth || 1,
+            (height - 80) / sHeight || 1
+        );
+    }
+
+    public resetState() {
+        this.set('showSrc', false);
+        this.set('uiSelectMode', false);
+        this.set('zoom', 1);
+        this.set('sandboxContainerRect', {
+            width: 0,
+            height: 0,
+        });
     }
     public destroy() {
         // TODO
+        this.resetState();
     }
     private async setSandboxRect(value: ISandboxRect) {
         state.sandboxRect = {
@@ -55,6 +85,6 @@ class UiService {
     }
 }
 
-export type {UiService};
+export type { UiService };
 
 export const uiService = new UiService();
