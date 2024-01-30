@@ -69,7 +69,7 @@ window.quantum?.onRuntimeReady({
         app?.setConfig(config, curPageId.value);
     },
 
-    updatePageId(id: Id) {
+    updatePageField(id: Id) {
         curPageId.value = id;
         console.log(id);
         app?.setPage(id);
@@ -79,7 +79,7 @@ window.quantum?.onRuntimeReady({
         selectedId.value = id;
 
         if (app?.getPage(id)) {
-            this.updatePageId?.(id);
+            this.updatePageField?.(id);
         }
 
         const el = document.getElementById(`${id}`);

@@ -5,7 +5,7 @@
 2. 尽量不要使用this, 类除外
 
 ## 命名规范
-[点击链接查看](http://wiki.km.com/pages/viewpage.action?pageId=62329239)
+[点击链接查看](http://wiki.km.com/pages/viewpage.action?pageField=62329239)
 
 ## ts开发规范
 1. 类型推测上, 尽量不要使用any
