@@ -2,6 +2,8 @@ import type { BoxCore } from '@qimao/quantum-sandbox';
 import type { EditorService } from './services/editor-service';
 import type { UiService } from './services/ui-service';
 import { ISchemasRoot, ISchemasPage, ISchemasContainer, ISchemasNode, Id } from '@qimao/quantum-schemas';
+import { GuidesOptions, IContainerHighlightType, ICustomizeMoveableOptionsCallbackConfig, UpdateDragEl } from '@qimao/quantum-sandbox/src/types';
+import { UndoRedo } from './utils/undo-redo';
 
 export interface IStoreState {
     root: ISchemasRoot | null;
@@ -13,6 +15,7 @@ export interface IStoreState {
     sandbox: BoxCore | null;
     modifiedNodeIds?: Map<Id, Id>;
     pageLength?: number;
+    disabledMultiSelect: boolean;
 }
 export type IStoreStateKey = keyof IStoreState;
 
@@ -23,7 +26,7 @@ export interface IServices {
 
 export interface IUiState {
     /** 当前点击画布是否触发选中，true: 不触发，false: 触发，默认为false */
-    // uiSelectMode: boolean;
+    uiSelectMode: boolean;
     /** 是否显示源码编辑器， true: 显示， false: 不显示，默认为false */
     showSrc: boolean;
     /** 画布显示放大倍数，默认为 1 */
@@ -36,6 +39,23 @@ export interface IUiState {
     // propsPanelSize: 'large' | 'default' | 'small';
     /** 是否显示新增页面按钮 */
     // showAddPageButton: boolean;
+    /** 是否显示画布参考线，true: 显示，false: 不显示，默认为true */
+    showGuides: boolean;
+}
+
+export interface IBoxOptions {
+    runtimeUrl?: string;
+    autoScrollIntoView?: boolean;
+    containerHighlightClassName?: string;
+    containerHighlightDuration?: number;
+    containerHighlightType?: IContainerHighlightType;
+    disabledDragStart?: boolean;
+    moveableOptions?: MoveableOptions | ((config?: ICustomizeMoveableOptionsCallbackConfig) => MoveableOptions);
+    canSelect?: (el: HTMLElement) => boolean | Promise<boolean>;
+    isContainer?: (el: HTMLElement) => boolean | Promise<boolean>;
+    updateDragEl?: UpdateDragEl;
+    guidesOptions?: Partial<GuidesOptions>;
+    disabledMultiSelect?: boolean;
 }
 
 export interface ISandboxRect {
@@ -64,6 +84,14 @@ export interface IMenuButton {
     onClick?: () => void;
 }
 
+/** 容器布局 */
+export enum ILayout {
+    FLEX = 'flex',
+    FIXED = 'fixed',
+    RELATIVE = 'relative',
+    ABSOLUTE = 'absolute',
+}
+
 export type IMenuItem =
   | '/'
   | 'delete'
@@ -79,3 +107,19 @@ export type IMenuItem =
   | IMenuButton
   //   | MenuComponent
   | string;
+
+/** 当uiService.get('uiSelectMode')为true,点击组件（包括任何形式，组件树/画布）时触发的事件名 */
+export const UI_SELECT_MODE_EVENT_NAME = 'ui-select';
+
+export interface StepValue {
+    data: ISchemasPage;
+    modifiedNodeIds: Map<Id, Id>;
+    nodeField: Id;
+}
+
+export interface IHistoryState {
+    pageField?: Id;
+    pageSteps: Record<Id, UndoRedo<StepValue>>;
+    canRedo: boolean;
+    canUndo: boolean;
+}
