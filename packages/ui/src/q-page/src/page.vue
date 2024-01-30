@@ -2,6 +2,7 @@
     <div
         :id="config.field"
         ref="refRuntimePage"
+        class="quantum-ui-page quantum-ui-container"
         :style="style"
     >
         <slot></slot>

@@ -48,7 +48,7 @@ export default defineComponent({
                 app?.setConfig(config, curPageId.value);
             },
 
-            updatePageId(id: Id) {
+            updatePageField(id: Id) {
                 curPageId.value = id;
                 app?.setPage(id);
             },
@@ -57,7 +57,7 @@ export default defineComponent({
                 selectedId.value = id;
 
                 if (app?.getPage(id)) {
-                    this.updatePageId?.(id);
+                    this.updatePageField?.(id);
                 }
 
                 const el = document.getElementById(`${id}`);

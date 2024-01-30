@@ -2,7 +2,7 @@
     <div
         v-if="display"
         :id="config.field"
-        class="magic-ui-container"
+        class="quantum-ui-container"
         ref="refRuntimeContainer"
         :style="style"
     >
