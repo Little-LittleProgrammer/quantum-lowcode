@@ -48,7 +48,7 @@ watchEffect(() => {
         runtime = rt;
         // toRaw返回的值是一个引用而非快照，需要cloneDeep
         root.value && runtime?.updateRootConfig?.(cloneDeep(toRaw(root.value)));
-        page.value?.field && runtime?.updatePageId?.(page.value.field);
+        page.value?.field && runtime?.updatePageField?.(page.value.field);
     });
 });
 
@@ -74,7 +74,7 @@ watch(root, (root) => {
 watch(page, (page) => {
     if (runtime && page) {
     // 直接更新页面
-        runtime.updatePageId?.(page.field);
+        runtime.updatePageField?.(page.field);
         nextTick(() => {
             sandbox?.select(page.field);
         });
