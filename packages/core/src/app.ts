@@ -1,5 +1,5 @@
 // 核心实例对象, 接收配置, 文件以及node信息\
-import { Subscribe, fillBackgroundImage, js_is_number, js_is_string, style2Obj } from '@qimao/quantum-utils';
+import { Subscribe, fillBackgroundImage, js_is_number, js_is_string, style2Obj, webRequest } from '@qimao/quantum-utils';
 import { Fn, IRequestFunction, ISchemasRoot, Id, IMetaDes, ILowCodeRoot } from '@qimao/quantum-schemas';
 import {LowCodePage} from './page';
 import {Env} from './env';
@@ -24,7 +24,7 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
     public designWidth = 750;
     public platform = 'mobile';
     public components = new Map();
-    public request?: IRequestFunction;
+    public request: IRequestFunction;
     public dataSourceManager?: DataSourceManager
     public useMock = false
 
@@ -43,6 +43,8 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
         }
         if (options.request) {
             this.request = options.request;
+        } else if (typeof globalThis.fetch === 'function') {
+            this.request = webRequest;
         }
         if (options.transformStyle) {
             this.transformStyle = options.transformStyle;

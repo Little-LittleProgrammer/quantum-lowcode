@@ -5,7 +5,10 @@ import { IHttpOptions } from '@qimao/quantum-schemas';
 // const _requestNum = 0; // 请求数量
 // const _requestPageUrl = ''; // 请求地址所在页面
 
-const env = {};
+const env = {
+    apiUrl: 'test',
+    urlPrefix: '/api',
+};
 // const env = useViteEnv();
 
 function custom_request(config: any) {
