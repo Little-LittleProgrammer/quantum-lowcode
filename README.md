@@ -1,3 +1,21 @@
+# 使用
+## 启动项目
+```
+pnpm i && pnpm playground
+```
+
+## 组件开发
+目录: [组件开发目录](packages/ui-vue2)
+### demo 
+目录: [demo](packages/ui-vue2/src/q-demo)
+
+### 组件调试
+直接通过 页面编辑器进行输入
+
+## schemas标准
+查看: [schemas标准](apps/quantum-docs/docs/api/schema/index.md)
+
+
 # 概览
 ## 目的
 1. 实现基本的、可拓展的、可被二次封装的、不依赖于框架的低代码平台
