@@ -1,4 +1,4 @@
-import {getCurrentInstance, inject, onMounted, onUnmounted} from 'vue';
+import {inject, onMounted, onUnmounted} from 'vue';
 import {LowCodeRoot} from '@qimao/quantum-core';
 
 export function useApp(props: any) {
@@ -6,16 +6,18 @@ export function useApp(props: any) {
 
     const node = app?.page?.getNode(props.config.field);
 
-    const vm = getCurrentInstance()?.proxy;
+    const emitData = {
+        ...(props.methods || {}),
+    };
 
-    node?.emit('created', vm);
+    node?.emit('created', emitData);
 
     onMounted(() => {
-        node?.emit('mounted', vm);
+        node?.emit('mounted', emitData);
     });
 
     onUnmounted(() => {
-        node?.emit('destroy', vm);
+        node?.emit('destroy', emitData);
     });
 
     return {app, };

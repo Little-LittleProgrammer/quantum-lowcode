@@ -30,7 +30,13 @@ export default defineComponent({
         },
     },
     setup(props) {
-        const {app, } = useApp(props);
+        const refresh = () => {
+            window.location.reload();
+        };
+        const {app, } = useApp({
+            config: props.config,
+            methods: {refresh}
+        });
         const refRuntimePage = ref();
         const getStyle = computed(() => {
             if (js_is_function(props.config.style)) {

@@ -9,7 +9,6 @@ export function useApp(props: any) {
     };
 
     node?.emit('created', emitData);
-    console.log('emit mounted', props.config.field, emitData);
 
     onMounted(() => {
         node?.emit('mounted', emitData);

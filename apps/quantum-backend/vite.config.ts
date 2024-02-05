@@ -29,7 +29,6 @@ export default ({ command, mode, }: ConfigEnv):UserConfig => {
             ] : [
                 { find: /^@\//, replacement: pathResolve('./src/') + '/', },
                 { find: /^@qimao\/quantum-editor\/dist\/style.css/, replacement: pathResolve('../../packages/editor/dist/style.css'), },
-                { find: /^@qimao\/quantum-ui\/dist\/es\/style.css/, replacement: pathResolve('../../packages/ui/dist/es/style/index.css'), },
                 { find: /^@qimao\/quantum-utils/, replacement: pathResolve('../../packages/utils/index.ts'), },
                 { find: /^@qimao\/quantum-editor/, replacement: pathResolve('../../packages/editor/index.ts'), },
                 { find: /^@qimao\/quantum-core/, replacement: pathResolve('../../packages/core/index.ts'), },
