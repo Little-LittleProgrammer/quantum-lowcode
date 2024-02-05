@@ -12,6 +12,8 @@ const components:any = {
     'button': 'button',
     img: 'img',
     ...component,
+    'container': component.Container,
+    'page': component.Page,
     ...componentExtra,
 };
 

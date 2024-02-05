@@ -82,10 +82,10 @@ export default defineComponent({
 <style lang="scss">
 html,body {margin: 0; padding: 0}
 
-.quantum-ui-page {
-    height: 100%;
-    overflow: auto;
-}
+// .quantum-ui-page {
+//     height: 100%;
+//     overflow: auto;
+// }
 
 ::-webkit-scrollbar {
     width: 0 !important;

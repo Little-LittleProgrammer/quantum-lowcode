@@ -10,6 +10,8 @@ const components:any = {
     'img': 'img',
     'button': 'button',
     ...component,
+    'container': component.Container,
+    'page': component.Page,
     ...componentExtra,
 };
 console.log('components', components);
