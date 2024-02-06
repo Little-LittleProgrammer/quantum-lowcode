@@ -5,7 +5,7 @@ import {
     isFixedParent,
     getScrollParent
 } from '@qimao/quantum-utils';
-import { RuleOptions } from './types';
+import { IRuleOptions } from './types';
 
 const wrapperClassName = 'editor-mask-wrapper';
 function createWrapper(): HTMLDivElement {
@@ -58,7 +58,7 @@ export class BoxMask extends Rule {
     private intersectionObserver: IntersectionObserver | null = null;
     private wrapperResizeObserver: ResizeObserver | null = null;
 
-    constructor(options?: RuleOptions) {
+    constructor(options?: IRuleOptions) {
         const wrapper = createWrapper();
         super(wrapper, options); // TODO, 画布遮罩规则, 扩展
         this.wrapper = wrapper;
@@ -224,7 +224,7 @@ export class BoxMask extends Rule {
         const event = new CustomEvent<{
             scrollLeft: number;
             scrollTop: number;
-        }>('scroll', {
+        }>('customScroll', {
             detail: {
                 scrollLeft: this.scrollLeft,
                 scrollTop: this.scrollTop,
@@ -280,7 +280,7 @@ export class BoxMask extends Rule {
     }
 
     private mouseWheelHandler = (event: WheelEvent) => {
-        console.log(event);
+        event.preventDefault();
         if (!this.page) throw new Error('page 未初始化');
 
         const { deltaY, deltaX, } = event;

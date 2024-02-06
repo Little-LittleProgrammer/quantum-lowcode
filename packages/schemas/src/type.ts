@@ -65,7 +65,8 @@ export interface ISchemasNode{
     /**
      * 样式
      */
-    style?: Partial<CSSStyleDeclaration> | ((el: HTMLElement) => CSSStyleDeclaration)
+    // style?: Partial<CSSStyleDeclaration> | ((el: HTMLElement) => CSSStyleDeclaration)
+    style?: Partial<CSSStyleDeclaration>
 
     /**
      * 是否展示

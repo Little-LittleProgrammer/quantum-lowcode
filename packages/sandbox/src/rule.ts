@@ -1,10 +1,10 @@
 import { Subscribe } from '@qimao/quantum-utils';
-import { RuleOptions } from './types';
+import { IRuleOptions } from './types';
 import { GuidesType } from './const';
 
 // 辅助线,移动线规则
 export class Rule extends Subscribe {
-    constructor(container: HTMLDivElement, options?: RuleOptions) {
+    constructor(container: HTMLDivElement, options?: IRuleOptions) {
         super();
     }
 

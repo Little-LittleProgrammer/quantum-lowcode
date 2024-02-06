@@ -1,5 +1,6 @@
-import { SELECTED_CLASS } from './const';
-import { getParents, js_utils_dom_add_class, js_utils_dom_remove_class } from '@qimao/quantum-utils';
+import { SELECTED_CLASS, ZIndex } from './const';
+import { getParents, js_utils_dom_add_class, js_utils_dom_offset, js_utils_dom_remove_class } from '@qimao/quantum-utils';
+import { ITargetElement } from './types';
 
 export function addSelectedClassName(el: Element, doc: Document) {
     js_utils_dom_add_class(el, SELECTED_CLASS);
@@ -21,4 +22,21 @@ export function removeSelectedClassName(doc: Document) {
             js_utils_dom_remove_class(item, `${SELECTED_CLASS}-parents`);
         });
     }
+}
+
+// 将蒙层占位节点覆盖在原节点上方
+export function getTargetElStyle(el: ITargetElement, zIndex?: ZIndex) {
+    const offset = js_utils_dom_offset(el as HTMLElement);
+    const { transform, border, } = getComputedStyle(el);
+    return `
+      position: absolute;
+      transform: ${transform};
+      left: ${offset.left}px;
+      top: ${offset.top}px;
+      width: ${el.clientWidth}px;
+      height: ${el.clientHeight}px;
+      border: ${border};
+      opacity: 0;
+      ${typeof zIndex !== 'undefined' ? `z-index: ${zIndex};` : ''}
+    `;
 }

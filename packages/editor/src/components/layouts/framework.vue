@@ -2,7 +2,9 @@
 <template>
     <div class="q-editor" ref="refQEditor" style="min-width: 180px">
         <split-view class="q-editor-content">
-            <!-- <template #left></template> -->
+            <template #left>
+                <slot name="left"></slot>
+            </template>
             <template #center>
                 <slot v-if="pageLength > 0" name="workspace"></slot>
                 <slot v-else name="empty">

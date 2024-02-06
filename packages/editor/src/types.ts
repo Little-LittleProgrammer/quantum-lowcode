@@ -2,7 +2,7 @@ import type { BoxCore } from '@qimao/quantum-sandbox';
 import type { EditorService } from './services/editor-service';
 import type { UiService } from './services/ui-service';
 import { ISchemasRoot, ISchemasPage, ISchemasContainer, ISchemasNode, Id } from '@qimao/quantum-schemas';
-import { GuidesOptions, IContainerHighlightType, ICustomizeMoveableOptionsCallbackConfig, UpdateDragEl } from '@qimao/quantum-sandbox/src/types';
+import { IGuidesOptions, IContainerHighlightType, ICustomizeMoveableOptionsCallbackConfig, IUpdateDragEl } from '@qimao/quantum-sandbox/src/types';
 import { UndoRedo } from './utils/undo-redo';
 
 export interface IStoreState {
@@ -53,8 +53,8 @@ export interface IBoxOptions {
     moveableOptions?: MoveableOptions | ((config?: ICustomizeMoveableOptionsCallbackConfig) => MoveableOptions);
     canSelect?: (el: HTMLElement) => boolean | Promise<boolean>;
     isContainer?: (el: HTMLElement) => boolean | Promise<boolean>;
-    updateDragEl?: UpdateDragEl;
-    guidesOptions?: Partial<GuidesOptions>;
+    updateDragEl?: IUpdateDragEl;
+    guidesOptions?: Partial<IGuidesOptions>;
     disabledMultiSelect?: boolean;
 }
 
