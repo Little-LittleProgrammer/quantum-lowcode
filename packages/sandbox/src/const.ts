@@ -9,6 +9,8 @@ export enum GuidesType {
     VERTICAL = 'vertical',
 }
 
+export const PAGE_CLASS = 'quantum-ui-page';
+
 /** 选中节点的class name */
 export const SELECTED_CLASS = 'quantum-sandbox-selected-area';
 
@@ -73,4 +75,13 @@ export enum SelectStatus {
     SELECT = 'select',
     /** 多选 */
     MULTI_SELECT = 'multiSelect',
+}
+
+export enum MouseButton {
+    /** 左键 */
+    LEFT = 0,
+    /** z中健 */
+    MIDDLE = 1,
+    /** 右键 */
+    RIGHT = 2,
 }

@@ -187,3 +187,8 @@ export const up = (
         dist: upEls.length && swapIndex > -1 ? upEls[swapIndex].id : target.id,
     };
 };
+
+export function isMoveableButton(target: Element) {
+    return target.classList.contains('moveable-button') || target.parentElement?.classList.contains('moveable-button');
+}
+

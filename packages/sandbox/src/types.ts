@@ -129,12 +129,6 @@ export interface ISortEventData {
     dist: Id;
     root?: ISchemasRoot;
 }
-
-export interface IPoint {
-    clientX: number;
-    clientY: number;
-}
-
 export interface IGuidesOptions {
     [key: string]: any;
 }
@@ -143,11 +137,27 @@ export interface IRuleOptions {
     guidesOptions?: Partial<IGuidesOptions>;
 }
 
+export interface ITargetShadowConfig {
+    container: HTMLElement;
+    zIndex?: ZIndex;
+    updateDragEl?: IUpdateDragEl;
+    idPrefix?: string;
+}
+
 export interface IBoxDragResizeConfig {
     container: HTMLElement;
     dragResizeHelper: DragResizeHelper;
     moveableOptions?: ICustomizeMoveableOptions;
     disabledDragStart?: boolean;
+    getRootContainer: GetContainer;
+    getRenderDocument: GetRenderDocument;
+    markContainerEnd: GetContainer;
+    delayedMarkContainer: DelayedMarkContainer;
+}
+export interface IBoxMultiDragResizeConfig {
+    container: HTMLElement;
+    dragResizeHelper: DragResizeHelper;
+    moveableOptions?: ICustomizeMoveableOptions;
     getRootContainer: GetContainer;
     getRenderDocument: GetRenderDocument;
     markContainerEnd: GetContainer;
@@ -189,6 +199,12 @@ export interface IUpdateEventData {
     parentEl: HTMLElement | null;
 }
 
+export interface IRemoveEventData {
+    data: {
+        el: HTMLElement;
+    }[];
+}
+
 export interface IBoxHighlightConfig {
     container: HTMLElement;
     updateDragEl?: IUpdateDragEl;
@@ -198,13 +214,6 @@ export interface IBoxHighlightConfig {
 export interface IDragResizeHelperConfig {
     container: HTMLElement;
     updateDragEl?: IUpdateDragEl;
-}
-
-export interface ITargetShadowConfig {
-    container: HTMLElement;
-    zIndex?: ZIndex;
-    updateDragEl?: IUpdateDragEl;
-    idPrefix?: string;
 }
 
 export interface IMoveableManagerConfig {
