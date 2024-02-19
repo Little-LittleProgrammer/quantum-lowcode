@@ -21,6 +21,9 @@ export const DRAG_EL_ID_PREFIX = 'drag_el_';
 /** 高亮时需要在蒙层中创建一个占位节点，该节点的id前缀 */
 export const HIGHLIGHT_EL_ID_PREFIX = 'highlight_el_';
 
+/** 默认容器高亮时类名 */
+export const CONTAINER_HIGHLIGHT_CLASS_NAME = 'quantum-stage-container-highlight';
+
 export enum ZIndex {
     /** 蒙层，用于监听用户操作，需要置于顶层 */
     MASK = '99999',
@@ -39,4 +42,35 @@ export enum Mode {
     FIXED = 'fixed',
     /** 流式布局 */
     SORTABLE = 'sortable',
+}
+
+export enum AbleActionEventType {
+    SELECT_PARENT = 'select-parent',
+    REMOVE = 'remove',
+}
+
+/** 拖动状态 */
+export enum BoxDragStatus {
+    /** 开始拖动 */
+    START = 'start',
+    /** 拖动中 */
+    ING = 'ing',
+    /** 拖动结束 */
+    END = 'end',
+}
+
+/** 将组件添加到容器的方式 */
+export enum ContainerHighlightType {
+    /** 默认方式：组件在容器上方悬停一段时间后加入 */
+    DEFAULT = 'default',
+    /** 按住alt键，并在容器上方悬停一段时间后加入 */
+    ALT = 'alt',
+}
+
+/** 选择状态 */
+export enum SelectStatus {
+    /** 单选 */
+    SELECT = 'select',
+    /** 多选 */
+    MULTI_SELECT = 'multiSelect',
 }
