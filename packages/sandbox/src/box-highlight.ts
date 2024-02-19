@@ -1,6 +1,6 @@
 import { Subscribe } from '@qimao/quantum-utils';
 import Moveable from 'moveable';
-import { TargetShadow } from './taget-shadow';
+import { TargetShadow } from './target-shadow';
 import { GetContainer, IBoxHighlightConfig } from './types';
 import { HIGHLIGHT_EL_ID_PREFIX, ZIndex } from './const';
 

@@ -6,7 +6,8 @@ import type {
     Id
 } from '@qimao/quantum-schemas';
 import type { MoveableOptions } from 'moveable';
-import { ZIndex } from './const';
+import { ContainerHighlightType, ZIndex } from './const';
+import DragResizeHelper from './box-drag-resize-helper';
 
 export interface IRuntime {
     getApp?: () => LowCodeRoot | undefined;
@@ -27,6 +28,20 @@ export interface IQuantum {
     onPageElUpdate: (el: HTMLElement) => void;
 
     onRuntimeReady: (runtime: IRuntime) => void;
+}
+
+export type IRect = {
+    width: number;
+    height: number;
+} & IOffset;
+
+export interface IOffset {
+    left: number;
+    top: number;
+}
+export interface IPoint {
+    clientX: number;
+    clientY: number;
 }
 
 export interface IRuntimeWindow extends Window {
@@ -56,6 +71,10 @@ export type ICanSelect = (
 ) => boolean | Promise<boolean>;
 export type IsContainer = (el: HTMLElement) => boolean | Promise<boolean>;
 export type GetContainer = () => HTMLDivElement | undefined;
+export type GetRenderDocument = () => Document | undefined;
+/** render提供的接口，通过坐标获得坐标下所有HTML元素数组 */
+export type GetElementsFromPoint = (point: IPoint) => HTMLElement[];
+export type DelayedMarkContainer = (event: MouseEvent, exclude: Element[]) => NodeJS.Timeout | undefined;
 export type GetTargetElement = (idOrEl: Id | HTMLElement) => HTMLElement;
 export type IUpdateDragEl = (
     el: ITargetElement,
@@ -124,11 +143,32 @@ export interface IRuleOptions {
     guidesOptions?: Partial<IGuidesOptions>;
 }
 
+export interface IBoxDragResizeConfig {
+    container: HTMLElement;
+    dragResizeHelper: DragResizeHelper;
+    moveableOptions?: ICustomizeMoveableOptions;
+    disabledDragStart?: boolean;
+    getRootContainer: GetContainer;
+    getRenderDocument: GetRenderDocument;
+    markContainerEnd: GetContainer;
+    delayedMarkContainer: DelayedMarkContainer;
+}
+
 export interface IActionManagerConfig {
     container: HTMLElement;
-    updateDragEl?: IUpdateDragEl;
+    containerHighlightClassName?: string;
+    containerHighlightDuration?: number;
+    containerHighlightType?: ContainerHighlightType;
+    moveableOptions?: ICustomizeMoveableOptions;
+    disabledDragStart?: boolean;
+    disabledMultiSelect?: boolean;
+    canSelect?: ICanSelect;
+    isContainer?: IsContainer;
     getRootContainer: GetContainer;
-    getTargetElement: GetTargetElement
+    getRenderDocument: GetRenderDocument;
+    updateDragEl?: IUpdateDragEl;
+    getTargetElement: GetTargetElement;
+    getElementsFromPoint: GetElementsFromPoint;
 }
 
 export interface IUpdateEventData {
@@ -155,6 +195,11 @@ export interface IBoxHighlightConfig {
     getRootContainer: GetContainer;
 }
 
+export interface IDragResizeHelperConfig {
+    container: HTMLElement;
+    updateDragEl?: IUpdateDragEl;
+}
+
 export interface ITargetShadowConfig {
     container: HTMLElement;
     zIndex?: ZIndex;
@@ -162,3 +207,8 @@ export interface ITargetShadowConfig {
     idPrefix?: string;
 }
 
+export interface IMoveableManagerConfig {
+    container: HTMLElement;
+    moveableOptions?: ICustomizeMoveableOptions;
+    getRootContainer: GetContainer;
+}
