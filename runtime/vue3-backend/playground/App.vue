@@ -3,12 +3,13 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject, nextTick, ref, watch } from 'vue';
+import { computed, defineComponent, inject, nextTick, reactive, ref, watch } from 'vue';
 
 import type { LowCodeRoot } from '@qimao/quantum-core';
 import type { Id, ISchemasRoot, ISchemasPage } from '@qimao/quantum-schemas';
-import { IQuantum} from '@qimao/quantum-sandbox';
+import { IQuantum, IUpdateData} from '@qimao/quantum-sandbox';
 import {Page} from '@qimao/quantum-ui';
+import { replaceChildNode } from '@qimao/quantum-utils';
 
 declare global {
     interface Window {
@@ -64,6 +65,17 @@ export default defineComponent({
                 if (el) return el;
                 // 未在当前文档下找到目标元素，可能是还未渲染，等待渲染完成后再尝试获取
                 return nextTick().then(() => document.getElementById(`${id}`) as HTMLElement);
+            },
+
+            update({config, parentId, }: IUpdateData) {
+                if (!root.value || !app) throw new Error('未初始化');
+
+                replaceChildNode(reactive(config), [root.value as any], parentId);
+
+                const nodeInstance = app.page?.getNode(config.field);
+                if (nodeInstance) {
+                    nodeInstance.setData(config);
+                }
             },
 
         });

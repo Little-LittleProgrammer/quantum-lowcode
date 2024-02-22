@@ -10,7 +10,6 @@ import '@q-front-npm/vue2-active-ui/dist/components.css';
 
 const components:any = {
     'button': 'button',
-    img: 'img',
     ...component,
     'container': component.Container,
     'page': component.Page,

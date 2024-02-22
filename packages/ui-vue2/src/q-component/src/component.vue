@@ -70,7 +70,7 @@ export default defineComponent({
                     }
                 }
             }
-            console.log('propsOn', obj);
+            console.log('propsOn', props.config.field, obj);
             return obj;
         });
         return {

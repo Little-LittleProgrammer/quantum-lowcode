@@ -7,7 +7,6 @@ import '@q-front-npm/vue2-active-ui/dist/components.css';
 
 const app = new LowCodeRoot({});
 const components:any = {
-    'img': 'img',
     'button': 'button',
     ...component,
     'container': component.Container,

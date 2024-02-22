@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div @click="handlerClick" @change="handlerChange" >
         <p>hello world</p> 
         <p>{{ api }}  </p> 
         <p>count: {{ number }}  </p> 
@@ -12,6 +12,7 @@ import { computed, defineComponent, PropType, ref } from 'vue';
 import type { ISchemasNode} from '@qimao/quantum-schemas';
 
 import {useApp} from '../../hooks/use-app';
+import { emit } from 'process';
 
 export default defineComponent({
     props: { // 配置要传入的props, 与formSchema.ts配置对应
@@ -24,7 +25,8 @@ export default defineComponent({
             default: ''
         }
     },
-    setup(props) {
+    emits: ['click', 'change'],
+    setup(props,{emit}) {
         const number = ref(0)
         /**
          * 将配置和需要暴露的方法传入
@@ -63,8 +65,17 @@ export default defineComponent({
             }
             
         }
+
+        function handlerClick(e) {
+            emit('click', e)
+        }
+        function handlerChange(e) {
+            emit('change', e)
+        }
         return {
-            number
+            number,
+            handlerClick,
+            handlerChange
         }
     },
 });
