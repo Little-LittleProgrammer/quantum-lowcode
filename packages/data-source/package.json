@@ -6,7 +6,7 @@
   "module": "dist/quantum-data.esm.min.js",
   "typings": "dist/types/index.d.ts",
   "scripts": {
-    "build1": "rollup -c --environment TYPES:true"
+    "build": "rollup -c --environment TYPES:true"
   },
   "files": ["dist"],
   "keywords": [],
