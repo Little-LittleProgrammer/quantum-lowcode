@@ -20,4 +20,11 @@ export class Rule extends Subscribe {
             guides: vLines,
         });
     }
+
+    /**
+     * 清空所有参考线
+     */
+    clearGuides() {
+
+    }
 }

@@ -87,8 +87,7 @@ export class TargetShadow {
         if (isFixed && mode !== Mode.FIXED) {
             el.style.transform = `translate3d(${this.scrollLeft}px, ${this.scrollTop}px, 0)`;
         } else if (!isFixed && mode === Mode.FIXED) {
-            el.style.transform = `translate3d(${-this.scrollLeft}px, ${-this
-                .scrollTop}px, 0)`;
+            el.style.transform = `translate3d(${-this.scrollLeft}px, ${-this.scrollTop}px, 0)`;
         }
 
         if (!globalThis.document.getElementById(el.id)) {

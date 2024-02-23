@@ -5,10 +5,11 @@ import type {
     ISchemasRoot,
     Id
 } from '@qimao/quantum-schemas';
-import type { MoveableOptions } from 'moveable';
-import { ContainerHighlightType, ZIndex } from './const';
+import type { MoveableOptions as GlobalMoveableOptions } from 'moveable';
+import { ContainerHighlightType, GuidesType, ZIndex } from './const';
 import DragResizeHelper from './box-drag-resize-helper';
 
+export type MoveableOptions = GlobalMoveableOptions;
 export interface IRuntime {
     getApp?: () => LowCodeRoot | undefined;
     beforeSelect?: (el: HTMLElement) => Promise<boolean> | boolean;
@@ -43,17 +44,13 @@ export interface IPoint {
     clientX: number;
     clientY: number;
 }
+export interface IGuidesEventData {
+    type: GuidesType;
+    guides: number[];
+}
 
 export interface IRuntimeWindow extends Window {
     quantum: IQuantum;
-}
-
-/** 将组件添加到容器的方式 */
-export enum IContainerHighlightType {
-    /** 默认方式：组件在容器上方悬停一段时间后加入 */
-    DEFAULT = 'default',
-    /** 按住alt键，并在容器上方悬停一段时间后加入 */
-    ALT = 'alt',
 }
 
 export type ITargetElement = HTMLElement | SVGElement;
@@ -92,7 +89,7 @@ export interface IBoxCoreConfig {
     autoScrollIntoView?: boolean;
     containerHighlightClassName?: string;
     containerHighlightDuration?: number;
-    containerHighlightType?: IContainerHighlightType;
+    containerHighlightType?: ContainerHighlightType;
     disabledDragStart?: boolean;
     moveableOptions?: ICustomizeMoveableOptions;
     canSelect?: ICanSelect;

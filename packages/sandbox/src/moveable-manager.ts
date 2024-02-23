@@ -14,6 +14,7 @@ import {
 } from 'moveable';
 import { GetContainer, IMoveableManagerConfig } from './types';
 import { Fn } from '@qimao/quantum-schemas';
+import { moveableMenu } from './moveable-menu';
 
 export class MoveableManager extends Subscribe {
     /** 布局方式：流式布局、绝对定位、固定定位 */
@@ -53,6 +54,7 @@ export class MoveableManager extends Subscribe {
 	 * @param guidelines 参考线坐标数组
 	 */
     public setGuidelines(type: GuidesType, guidelines: number[]): void {
+        console.log('参考线', type, guidelines);
         if (type === GuidesType.HORIZONTAL) {
             this.horizontalGuidelines = guidelines;
         } else if (type === GuidesType.VERTICAL) {
@@ -96,11 +98,11 @@ export class MoveableManager extends Subscribe {
     }
 
     /**
-   * 获取moveable参数
-   * @param isMultiSelect 是否多选模式
-   * @param runtimeOptions 调用时实时传进来的的moveable参数
-   * @returns moveable所需参数
-   */
+     * 获取moveable参数
+     * @param isMultiSelect 是否多选模式
+     * @param runtimeOptions 调用时实时传进来的的moveable参数
+     * @returns moveable所需参数
+     */
     protected getOptions(isMultiSelect: boolean, runtimeOptions: MoveableOptions = {}): MoveableOptions {
         const defaultOptions = this.getDefaultOptions(isMultiSelect);
         const customizedOptions = this.getCustomizeOptions();
@@ -177,8 +179,7 @@ export class MoveableManager extends Subscribe {
             props: {
                 actions: true,
             },
-
-            // ables: [MoveableActionsAble(this.actionHandler.bind(this))],
+            ables: [moveableMenu(this.actionHandler.bind(this))],
         };
     }
 
@@ -198,8 +199,8 @@ export class MoveableManager extends Subscribe {
     }
 
     /**
-   * 这是给selectParentAbles的回调函数，用于触发选中父元素事件
-   */
+     * 这是给selectParentAbles的回调函数，用于触发选中父元素事件
+     */
     private actionHandler(type: AbleActionEventType): void {
         this.emit(type);
     }

@@ -18,6 +18,7 @@ export class BoxHighlight extends Subscribe {
 
         this.targetShadow = new TargetShadow({
             container: this.container,
+            updateDragEl: config.updateDragEl,
             idPrefix: HIGHLIGHT_EL_ID_PREFIX,
             zIndex: ZIndex.HIGHLIGHT_EL,
         });

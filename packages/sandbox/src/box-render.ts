@@ -1,6 +1,6 @@
 // 基于iframe加载传入进来的RuntimeUrl，并支持增删改查组件
 
-import { Subscribe, getHost, isSameDomain } from '@qimao/quantum-utils';
+import { Subscribe, getHost, injectStyle, isSameDomain } from '@qimao/quantum-utils';
 import { IBoxCoreConfig, IDeleteData, IPoint, IRuntime, IRuntimeWindow, IUpdateData } from './types';
 import { Id } from '@qimao/quantum-schemas';
 import { DEFAULT_ZOOM } from './const';
@@ -171,7 +171,24 @@ export class BoxRender extends Subscribe {
         if (!this.contentWindow?.quantum) {
             this.postQuantumRuntimeReady();
         }
-        // this.emit('onload');
+        this.emit('onload');
+        injectStyle(this.contentWindow.document, `
+        .quantum-stage-container-highlight::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: #000;
+            opacity: .1;
+            pointer-events: none;
+          }
+          
+          .quantum-ui-container.quantum-layout-relative {
+            min-height: 50px;
+          }
+        `);
     }
 
     private postQuantumRuntimeReady() {

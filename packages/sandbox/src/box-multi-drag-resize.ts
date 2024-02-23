@@ -50,7 +50,7 @@ export class BoxMultiDragResize extends MoveableManager {
     /**
 	 * 多选
 	 */
-    public mulitSelect(els: HTMLElement[]) {
+    public multiSelect(els: HTMLElement[]) {
         if (!els || els.length === 0) {
             return;
         }

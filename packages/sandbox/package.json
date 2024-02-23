@@ -16,6 +16,7 @@
     "@qimao/quantum-utils": "workspace:*",
     "@qimao/quantum-core": "workspace:*",
     "@qimao/quantum-schemas": "workspace:*",
+    "keycon": "^1.4.0",
     "moveable": "^0.51.1",
     "moveable-helper": "^0.4.0"
   },
