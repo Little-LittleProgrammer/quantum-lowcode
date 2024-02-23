@@ -24,7 +24,7 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
     public designWidth = 750;
     public platform = 'mobile';
     public components = new Map();
-    public request: IRequestFunction;
+    public request?: IRequestFunction;
     public dataSourceManager?: DataSourceManager
     public useMock = false
 

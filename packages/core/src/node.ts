@@ -1,7 +1,7 @@
-import { Fn, ISchemasContainer, ISchemasNode, ISchemasPage } from '@qimao/quantum-schemas';
+import { ISchemasContainer, ISchemasNode, ISchemasPage } from '@qimao/quantum-schemas';
 import { LowCodeRoot } from './app';
 import { LowCodePage } from './page';
-import { Subscribe, js_is_function, js_is_object, compiledNode, js_is_empty, js_is_array } from '@qimao/quantum-utils';
+import { Subscribe, js_is_function, js_is_object, compiledNode, js_is_array } from '@qimao/quantum-utils';
 import {template} from 'lodash-es';
 
 interface INodeOptions {
@@ -36,7 +36,7 @@ export class LowCodeNode extends Subscribe {
     }
 
     public compileNode(data: ISchemasNode | ISchemasContainer | ISchemasPage) {
-        return compiledNode(data as ISchemasNode, (value) => {
+        return compiledNode(data, (value) => {
             if (typeof value === 'string') {
                 return template(value)(this.root.dataSourceManager?.data);
             }
@@ -99,7 +99,6 @@ export class LowCodeNode extends Subscribe {
 
         // 执行配置的生命周期, 并且绑定组件暴露出来的方法
         this.once('mounted', async(instance: any) => {
-            console.log('mounted', instance);
             this.instance = instance;
 
             for (const [key, val] of Object.entries(instance)) {

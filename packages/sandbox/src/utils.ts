@@ -56,12 +56,12 @@ export function getTargetElStyle(el: ITargetElement, zIndex?: ZIndex) {
 }
 
 export function calcValueByFontsize(doc: Document, value: number) {
-    const { fontSize, } = doc.documentElement.style;
+    // const { fontSize, } = doc.documentElement.style;
 
-    if (fontSize) {
-        const times = globalThis.parseFloat(fontSize) / 100;
-        return Number((value / times).toFixed(2));
-    }
+    // if (fontSize) {
+    //     const times = globalThis.parseFloat(fontSize);
+    //     return Number((value / times).toFixed(2));
+    // }
 
     return value;
 }
