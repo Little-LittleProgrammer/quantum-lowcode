@@ -87,11 +87,13 @@ export const testSchemas: ISchemasRoot = {
                             },
                             children: [
                                 {
+                                    type: 'node',
                                     component: 'Divider',
                                     label: '${base1.a1}',
                                     field: 'Divider',
                                 },
                                 {
+                                    type: 'node',
                                     field: 'a',
                                     component: 'Select',
                                     label: '选择题',
@@ -110,20 +112,23 @@ export const testSchemas: ISchemasRoot = {
                                     },
                                 },
                                 {
+                                    type: 'node',
                                     field: 'name1',
                                     component: 'Input',
                                     label: '你好',
-                                    ifShow: '({values})=>values.a===1',
+                                    ifShow: ({values, }) => values.a === 1,
                                     componentProps: {
                                         onChange: (app, e) => { app.emit('base1:test2', e.target.value); },
                                     },
                                 },
                                 {
+                                    type: 'node',
                                     component: 'Divider',
                                     label: '标题2',
                                     field: 'Divider',
                                 },
                                 {
+                                    type: 'node',
                                     field: 'a2',
                                     component: 'Select',
                                     label: '选择题2',
@@ -141,10 +146,11 @@ export const testSchemas: ISchemasRoot = {
                                     },
                                 },
                                 {
+                                    type: 'node',
                                     field: 'name2',
                                     component: 'Input',
                                     label: '你好2',
-                                    ifShow: '({values})=>values.a2===1',
+                                    ifShow: ({values, }) => values.a2 === 1,
                                 }
                             ],
                         }
@@ -161,6 +167,7 @@ export const testSchemas: ISchemasRoot = {
                     field: 'contaainer1',
                     children: [
                         {
+                            type: 'node',
                             component: 'img',
                             field: 'img1',
                             style: {
@@ -171,6 +178,7 @@ export const testSchemas: ISchemasRoot = {
                             },
                         },
                         {
+                            type: 'node',
                             component: 'button',
                             field: 'button2',
                             componentProps: {
@@ -178,6 +186,7 @@ export const testSchemas: ISchemasRoot = {
                             },
                         },
                         {
+                            type: 'node',
                             component: 'button',
                             field: 'button23333',
                         }

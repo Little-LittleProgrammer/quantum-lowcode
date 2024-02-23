@@ -18,7 +18,7 @@ export interface HookData {
 }
 
 export interface Hooks {
-    hookType?: HookType;
+    hookType?: HookType.CODE;
     hookData?: HookData[];
 }
 
@@ -49,6 +49,7 @@ export interface ILowCodeRoot {
  * 数据组件 scheams
  */
 export interface ISchemasNode{
+    type: NodeType.NODE | string
     /**
      * 组件字段, 也为数据节点唯一值id
      */
@@ -56,7 +57,7 @@ export interface ISchemasNode{
     /**
      * 组件名
      */
-    component: string;
+    component?: string;
     /**
      * 组件的属性集合
      */
@@ -75,7 +76,7 @@ export interface ISchemasNode{
     /**
      * 子节点
      */
-    children: (ISchemasNode | ISchemasContainer)[]
+    children?: (ISchemasNode | ISchemasContainer)[]
     created?: Hooks;
     mounted?: Hooks
     [key: string]: any;
@@ -84,9 +85,9 @@ export interface ISchemasNode{
 /**
  * 数据容器 scheams
  */
-export interface ISchemasContainer extends SelectPartial<ISchemasNode, 'field'>{
-    // 默认container
-    type?: NodeType.CONTAINER | string;
+export interface ISchemasContainer extends ISchemasNode{
+    type: NodeType.CONTAINER | string;
+    children: (ISchemasNode | ISchemasContainer)[]
 }
 
 /**
@@ -104,7 +105,7 @@ export interface IMetaDes {
 /**
  * 根节点
  */
-export interface ISchemasRoot {
+export interface ISchemasRoot extends ISchemasNode {
     type: NodeType.ROOT;
     children: ISchemasPage[];
     name: string;
@@ -200,10 +201,11 @@ declare interface HookData {
 }
 
 declare interface Hooks {
-    hookType?: HookType;
+    hookType?: HookType.CODE;
     hookData?: HookData[];
 }
 declare interface ISchemasNode{
+    type: NodeType.NODE | string
     /**
      * 组件字段, 也为数据节点唯一值id
      */
@@ -211,7 +213,7 @@ declare interface ISchemasNode{
     /**
      * 组件名
      */
-    component: string;
+    component?: string;
     /**
      * 组件的属性集合
      */
@@ -229,7 +231,7 @@ declare interface ISchemasNode{
     /**
      * 子节点
      */
-    children: (ISchemasNode | ISchemasContainer)[]
+    children?: (ISchemasNode | ISchemasContainer)[]
     created?: Hooks;
     mounted?: Hooks
     [key: string]: any;
@@ -238,9 +240,9 @@ declare interface ISchemasNode{
 /**
  * 数据容器 scheams
  */
-declare interface ISchemasContainer extends SelectPartial<ISchemasNode, 'field'>{
-    // 默认container
-    type?: NodeType.CONTAINER | string;
+declare interface ISchemasContainer extends ISchemasNode{
+    type: NodeType.CONTAINER | string;
+    children: (ISchemasNode | ISchemasContainer)[]
 }
 
 /**
@@ -258,7 +260,7 @@ declare interface IMetaDes {
 /**
  * 根节点
  */
-declare interface ISchemasRoot {
+declare interface ISchemasRoot extends ISchemasNode {
     type: NodeType.ROOT;
     children: ISchemasPage[];
     name: string;

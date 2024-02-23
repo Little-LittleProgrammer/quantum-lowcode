@@ -266,7 +266,7 @@ export function compiledNode(
     });
 
     if (js_is_array(node.children)) {
-        node.children.forEach(item => compiledNode(item as ISchemasNode, compile, sourceId));
+        node.children.forEach(item => compiledNode(item, compile, sourceId));
     }
     return node;
 }
