@@ -3,22 +3,23 @@ import { reactive } from 'vue';
 import { convertToNumber } from '@qimao/quantum-utils';
 import { editorService } from './editor-service';
 
-const state = reactive<IUiState>({
-    uiSelectMode: false,
-    showSrc: true,
-    sandboxRect: {
-        width: 375,
-        height: 817,
-    },
-    zoom: 1,
-    sandboxContainerRect: {
-        width: 0,
-        height: 0,
-    },
-    showGuides: true,
-});
-
 class UiService {
+    private state = reactive<IUiState>({
+        uiSelectMode: false,
+        showCode: false,
+        sandboxRect: {
+            width: 375,
+            height: 817,
+        },
+        zoom: 1,
+        sandboxContainerRect: {
+            width: 0,
+            height: 0,
+        },
+        showGuides: true,
+        workspaceLeft: 300,
+        workspaceCenter: 600,
+    });
     public set<K extends keyof IUiState, T extends IUiState[K]>(
         name: K,
         value: T
@@ -32,11 +33,11 @@ class UiService {
         if (name === 'showGuides') {
             mask?.showGuides(value as unknown as boolean);
         }
-        state[name] = value;
+        this.state[name] = value;
     }
 
     public get<K extends keyof IUiState>(name: K) {
-        return state[name];
+        return this.state[name];
     }
 
     public async zoom(zoom: number) {
@@ -45,7 +46,7 @@ class UiService {
     }
 
     public async calcZoom() {
-        const { sandboxRect, sandboxContainerRect, } = state;
+        const { sandboxRect, sandboxContainerRect, } = this.state;
         const { height, width, } = sandboxContainerRect;
         if (!width || !height) return 1;
 
@@ -63,8 +64,8 @@ class UiService {
         );
     }
 
-    public resetState() {
-        this.set('showSrc', false);
+    public reset() {
+        this.set('showCode', false);
         this.set('uiSelectMode', false);
         this.set('zoom', 1);
         this.set('sandboxContainerRect', {
@@ -74,14 +75,14 @@ class UiService {
     }
     public destroy() {
         // TODO
-        this.resetState();
+        this.reset();
     }
     private async setSandboxRect(value: ISandboxRect) {
-        state.sandboxRect = {
-            ...state.sandboxRect,
+        this.state.sandboxRect = {
+            ...this.state.sandboxRect,
             ...value,
         };
-        state.zoom = await this.calcZoom();
+        this.state.zoom = await this.calcZoom();
     }
 }
 

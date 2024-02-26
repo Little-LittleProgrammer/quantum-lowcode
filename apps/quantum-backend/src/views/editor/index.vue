@@ -8,6 +8,8 @@
 			:boxRect="sandboxRect"
 			:runtime-url="runtimeUrl"
 			:moveable-options="moveableOptions"
+            :propsConfigs="propsConfigs"
+            :methodsList="methodsList"
 		>
             <template #nav-right="{uiService}">
                 <div class="editor-container-nav-right">
@@ -47,7 +49,7 @@
 	import { computed, nextTick, ref, toRaw } from 'vue';
 	import { QuantumEditor } from '@qimao/quantum-editor';
 	import { ISchemasRoot, NodeType } from '@qimao/quantum-schemas';
-	import { serializeToString, parseSchemas } from '@qimao/quantum-utils';
+	import { serializeToString, parseSchemas, asyncLoadJs } from '@qimao/quantum-utils';
 	import { testSchemas } from './init-schemas';
 	import { RUNTIME_PATH } from '@/enums/runtimeEnum';
 	import { useRoute } from 'vue-router';
@@ -84,13 +86,11 @@
 
 	const previewVisible = ref(false);
 
+    const propsConfigs = ref({})
+    const methodsList = ref({})
+
 	const previewUrl = computed(
-		() =>
-			`${
-				RUNTIME_PATH[runtimePathType as 'vue3']
-			}/page/index.html?localPreview=1&page=${editor.value?.editorService.get(
-				'page'
-			)?.field}`
+		() =>`${RUNTIME_PATH[runtimePathType as 'vue3']}/page/index.html?localPreview=1&page=${editor.value?.editorService.get('page')?.field}`
 	);
 
 	function moveableOptions(config?: ICustomizeMoveableOptionsCallbackConfig) {
@@ -231,6 +231,11 @@
 			preSchemasStr = schemasStr;
 		}
 	}
+
+    asyncLoadJs(`/quantum-editor/entry/${runtimePathType}/config.umd.js`).then(() => {
+        propsConfigs.value = (globalThis as any).quantumCompConfigs.formSchemas;
+        methodsList.value = (globalThis as any).quantumCompConfigs.events;
+    })
 </script>
 <style lang="scss">
 	.editor-container {

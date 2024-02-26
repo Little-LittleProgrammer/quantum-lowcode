@@ -1,15 +1,28 @@
-import page from './q-page/src/formSchema';
-import container from './q-container/src/formSchema';
-import demo from './q-demo/src/formSchema';
-import button from './q-button/src/formSchema';
-import img from './q-img/src/formSchema';
+// config
+import Page from './q-page/src/formSchema';
+import Container from './q-container/src/formSchema';
+import Demo from './q-demo/src/formSchema';
+import Button from './q-button/src/formSchema';
+import Img from './q-img/src/formSchema';
 
-const formSchemas = {
-    'page': page,
-    'container': container,
-    'demo': demo,
-    button,
-    img,
+// events
+import pageEvents from './q-page/src/event';
+import demoEvents from './q-demo/src/event';
+
+const formSchemas = { // 和组件导出名保持一致
+    Page,
+    Container,
+    Demo,
+    Button,
+    Img,
 };
 
-export default formSchemas;
+const events = { // 和组件导出名保持一致
+    'Page': pageEvents,
+    'Demo': demoEvents,
+};
+
+export {
+    formSchemas,
+    events
+};

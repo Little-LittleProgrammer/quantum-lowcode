@@ -1,17 +1,38 @@
 <!-- 画布 -->
 <template>
     <div ref="sandboxWrap" class="q-editor-sandbox">
-        <div ref="boxContainer" class="q-sandbox-container" :style="getBoxStyle"></div>
+        <div
+            ref="boxContainer"
+            class="q-sandbox-container"
+            :style="getBoxStyle"
+            @contextmenu="contextmenuHandler"
+            @drop="dropHandler"
+            @dragover="dragoverHandler"
+        ></div>
     </div>
 </template>
 
-<script lang='ts' setup>
-import { watchEffect, toRaw, inject, computed, markRaw, ref, watch, onUnmounted, nextTick, onMounted } from 'vue';
-import { BoxCore, IBoxCoreConfig } from '@qimao/quantum-sandbox';
-import { IServices } from '../../types';
+<script lang="ts" setup>
+import {
+    watchEffect,
+    toRaw,
+    inject,
+    computed,
+    markRaw,
+    ref,
+    watch,
+    onUnmounted,
+    nextTick,
+    onMounted
+} from 'vue';
+import { BoxCore } from '@qimao/quantum-sandbox';
+import { DragType, IBoxOptions, IServices, Layout } from '../../types';
 import { IRuntime } from '@qimao/quantum-sandbox/src/types';
 import { cloneDeep } from 'lodash-es';
-import { ISchemasRoot } from '@qimao/quantum-schemas';
+import { ISchemasContainer, ISchemasPage, ISchemasRoot } from '@qimao/quantum-schemas';
+import { useBox } from '../../hooks';
+import { js_utils_dom_offset, parseSchemas } from '@qimao/quantum-utils';
+import { calcValueByFontsize } from '@qimao/quantum-sandbox';
 
 defineOptions({
     name: 'QEditorSandBox',
@@ -23,14 +44,18 @@ let sandbox: BoxCore | null = null;
 let runtime: IRuntime | null = null;
 
 const services = inject<IServices>('services');
-const sandboxOptions = inject<IBoxCoreConfig>('sandboxOptions');
+const boxOptions = inject<IBoxOptions>('boxOptions');
 
 const sandboxWrap = ref<HTMLDivElement>();
 
-const root = computed(() => services?.editorService.get('root') as ISchemasRoot);
+const root = computed(
+    () => services?.editorService.get('root') as ISchemasRoot
+);
 const page = computed(() => services?.editorService.get('page'));
 const zoom = computed(() => services?.uiService.get('zoom') || 1);
+const node = computed(() => services?.editorService.get('node'));
 const boxRect = computed(() => services?.uiService.get('sandboxRect'));
+// const menu = ref<InstanceType<typeof ViewerMenu>>();
 
 const boxContainer = ref<HTMLDivElement | null>();
 
@@ -38,8 +63,8 @@ watchEffect(() => {
     if (sandbox || !page.value) return;
 
     if (!boxContainer.value) return;
-    if (!sandboxOptions?.runtimeUrl || !root.value) return;
-    sandbox = new BoxCore(sandboxOptions);
+    if (!boxOptions?.runtimeUrl || !root.value) return;
+    sandbox = useBox(boxOptions);
 
     services?.editorService.set('sandbox', markRaw(sandbox));
 
@@ -47,8 +72,12 @@ watchEffect(() => {
     sandbox.on('runtime-ready', (rt: IRuntime) => {
         runtime = rt;
         // toRaw返回的值是一个引用而非快照，需要cloneDeep
-        root.value && runtime?.updateRootConfig?.(cloneDeep(toRaw(root.value)));
+        root.value &&
+				runtime?.updateRootConfig?.(cloneDeep(toRaw(root.value)));
         page.value?.field && runtime?.updatePageField?.(page.value.field);
+        setTimeout(() => {
+            node.value && sandbox?.select(toRaw(node.value.field));
+        });
     });
 });
 
@@ -73,7 +102,7 @@ watch(root, (root) => {
 
 watch(page, (page) => {
     if (runtime && page) {
-    // 直接更新页面
+        // 直接更新页面
         runtime.updatePageField?.(page.field);
         nextTick(() => {
             sandbox?.select(page.field);
@@ -89,6 +118,74 @@ const resizeObserver = new ResizeObserver((entries) => {
         });
     }
 });
+function contextmenuHandler() {}
+async function dropHandler(e: DragEvent) {
+    if (!e.dataTransfer) return;
+
+    const data = e.dataTransfer.getData('text/json');
+
+    if (!data) return;
+
+    const config = parseSchemas(data);
+
+    if (!config || config.dragType !== DragType.COMPONENT_LIST) return;
+    e.preventDefault();
+
+    const doc = sandbox?.renderer.contentWindow?.document;
+    const parentEl = doc?.querySelector(`.${boxOptions?.containerHighlightClassName}`);
+
+    let parent = page.value;
+    if (parentEl) {
+        parent = services?.editorService.getNodeByField(parentEl.id, false) as ISchemasPage;
+    }
+
+    if (parent && boxContainer.value && sandbox) {
+        const layout = await services?.editorService.getLayout(parent);
+
+        const containerRect = boxContainer.value.getBoundingClientRect();
+        const {scrollTop, scrollLeft, } = sandbox.mask;
+
+        const {style = {}, } = config.data;
+
+        let top = 0;
+        let left = 0;
+        let position = Layout.RELATIVE;
+
+        if (style.position === 'fixed') {
+            position = Layout.FIXED;
+            top = e.clientY - containerRect.top;
+            left = e.clientX - containerRect.left;
+        } else if (layout === Layout.ABSOLUTE) {
+            position = Layout.ABSOLUTE;
+
+            top = e.clientY - containerRect.top + scrollTop;
+            left = e.clientX - containerRect.left + scrollLeft;
+
+            if (parentEl && doc) {
+                const {left: parentLeft, top: parentTop, } = js_utils_dom_offset(parentEl as HTMLElement);
+                left = left - calcValueByFontsize(doc, parentLeft) * zoom.value;
+                top = top - calcValueByFontsize(doc, parentTop) * zoom.value;
+            }
+        }
+
+        config.data.style = {
+            ...style,
+            position,
+            top: top / zoom.value,
+            left: left / zoom.value,
+        };
+
+        config.data.inputEvent = e;
+
+        services?.editorService.add(config.data, parent);
+    }
+}
+
+function dragoverHandler(e: DragEvent) {
+    if (!e.dataTransfer) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+}
 
 onMounted(() => {
     if (sandboxWrap.value) {
@@ -101,24 +198,24 @@ onUnmounted(() => {
     sandbox?.destory();
     services?.editorService.set('sandbox', null);
 });
-
 </script>
-<style lang='scss' scoped>
-.q-editor-sandbox {
-    padding: 6px;
-    height: calc(100% - 44px);
-    overflow: auto;
-    .q-sandbox-container {
-        margin: auto;
-        width: 100%;
-        height: 100%;
-        z-index: 0;
-        position: relative;
-        transition: transform 0.3s;
-        box-sizing: content-box;
-        box-shadow: 4px 7px 7px 6px rgb(0 0 0 / 15%);
-        background-color: #fff;
-    }
-}
-
+<style lang="scss" scoped>
+	.q-editor-sandbox {
+		padding: 6px;
+		height: calc(100% - 36px);
+		overflow: auto;
+		border: 1px solid;
+		@include border-color(border-color);
+		.q-sandbox-container {
+			margin: auto;
+			width: 100%;
+			height: 100%;
+			z-index: 0;
+			position: relative;
+			transition: transform 0.3s;
+			box-sizing: content-box;
+			box-shadow: 4px 7px 7px 6px rgb(0 0 0 / 15%);
+			background-color: #fff;
+		}
+	}
 </style>

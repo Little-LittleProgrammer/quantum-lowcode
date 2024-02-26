@@ -15,6 +15,7 @@ declare global {
     interface Window {
         quantum: IQuantum;
         appInstance: LowCodeRoot;
+        quantumCompConfigs: any
     }
 }
 

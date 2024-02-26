@@ -1,7 +1,7 @@
 import { ISchemasPage, ISchemasRoot } from '@qimao/quantum-schemas';
 import { IEditorProps } from 'src/props';
 import { IServices } from 'src/types';
-import { nextTick, onUnmounted, toRaw, watch } from 'vue';
+import { nextTick, onBeforeUnmount, toRaw, watch } from 'vue';
 
 export function useServicesInit(
     props: IEditorProps,
@@ -9,6 +9,9 @@ export function useServicesInit(
     {
         editorService,
         uiService,
+        componentService,
+        propsService,
+        historyService,
     }: IServices
 ) {
     function initServiceState() {
@@ -21,6 +24,26 @@ export function useServicesInit(
         watch(() => props.boxRect, (val) => {
             val && uiService.set('sandboxRect', val);
         }, {immediate: true, });
+        watch(() => props.componentGroupList, (componentGroupList) => {
+            componentGroupList && componentService.setList(componentGroupList);
+        }, {immediate: true, });
+        watch(() => props.propsValues, (values) => {
+            values && propsService.setPropsValues(values);
+        }, {immediate: true, });
+        watch(() => props.propsConfigs, (val) => {
+            val && propsService.setPropsConfigs(val);
+        });
+        watch(() => props.methodsList, (val) => {
+            val && propsService.setMethodsConfigs(val);
+        });
+
+        onBeforeUnmount(() => {
+            editorService.reset();
+            historyService.reset();
+            propsService.reset();
+            uiService.reset();
+            componentService.reset();
+        });
     }
     function initServiceEvents() {
         async function root_change_handler(value: ISchemasRoot, preValue: ISchemasRoot) {
@@ -37,10 +60,6 @@ export function useServicesInit(
         }
         editorService.on('root-change', root_change_handler);
     }
-    onUnmounted(() => {
-        editorService.reset();
-        editorService.remove('root-change');
-    });
     return {
         initServiceState,
         initServiceEvents,

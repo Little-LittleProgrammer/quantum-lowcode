@@ -10,6 +10,8 @@ import { ContainerHighlightType, GuidesType, ZIndex } from './const';
 import DragResizeHelper from './box-drag-resize-helper';
 
 export type MoveableOptions = GlobalMoveableOptions;
+
+/** 编辑器所需的runtime方法 */
 export interface IRuntime {
     getApp?: () => LowCodeRoot | undefined;
     beforeSelect?: (el: HTMLElement) => Promise<boolean> | boolean;
@@ -22,6 +24,7 @@ export interface IRuntime {
     delete?: (data: IDeleteData) => void;
 }
 
+/** 传给 runtime 的回调 */
 export interface IQuantum {
     /** 当前页面的根节点变化时调用该方法，编辑器会同步该el和stage的大小
 	 * 同步mask和el的大小
@@ -31,24 +34,31 @@ export interface IQuantum {
     onRuntimeReady: (runtime: IRuntime) => void;
 }
 
+/**画布大小 */
 export type IRect = {
     width: number;
     height: number;
 } & IOffset;
 
+/**offset */
 export interface IOffset {
     left: number;
     top: number;
 }
+
+/** 鼠标指针 */
 export interface IPoint {
     clientX: number;
     clientY: number;
 }
+
+/** 画布 辅助线 */
 export interface IGuidesEventData {
     type: GuidesType;
     guides: number[];
 }
 
+/** 画布 windowcontent 对象 */
 export interface IRuntimeWindow extends Window {
     quantum: IQuantum;
 }

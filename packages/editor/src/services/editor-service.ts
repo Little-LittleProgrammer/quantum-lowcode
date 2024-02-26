@@ -1,14 +1,17 @@
 import { reactive, toRaw } from 'vue';
 import {
     IEditorNodeInfo,
-    ILayout,
+    Layout,
     IStoreState,
-    IStoreStateKey
+    IStoreStateKey,
+    StepValue,
+    IAddNode
 } from '../types';
 import {
     ISchemasContainer,
     ISchemasNode,
     ISchemasPage,
+    ISchemasRoot,
     Id,
     NodeType
 } from '@qimao/quantum-schemas';
@@ -21,6 +24,17 @@ import {
 } from '@qimao/quantum-utils';
 import { BoxCore } from '@qimao/quantum-sandbox';
 import { historyService } from './history-service';
+import { cloneDeep, mergeWith, uniq } from 'lodash-es';
+import { isPage } from '../utils';
+import {
+    change2Fixed,
+    fixNodePosition,
+    fixed2Other,
+    getInitPositionStyle,
+    getNodeIndex,
+    setChildrenLayout
+} from '../utils/editor';
+import { propsService } from './props-service';
 
 class EditorService extends Subscribe {
     public state = reactive<IStoreState>({
@@ -34,10 +48,11 @@ class EditorService extends Subscribe {
         highlightNode: null,
         pageLength: 0,
     });
+    private isHistoryStateChange = false;
 
     /**
 	 * 设置当前指点节点配置
-	 * @param name 'root' | 'page' | 'parent' | 'node' | 'highlightNode' | 'nodes' | 'stage' | 'modifiedNodeIds' | 'pageLength'
+	 * @param name 'root' | 'page' | 'parent' | 'node' | 'highlightNode' | 'nodes' | 'sandbox' | 'modifiedNodeFields' | 'pageLength'
 	 * @param value IScheamsNode
 	 */
     public set<K extends IStoreStateKey, V extends IStoreState[K]>(
@@ -70,9 +85,8 @@ class EditorService extends Subscribe {
             this.emit('root-change', value, preValue);
         }
     }
-    public get<K extends IStoreStateKey>(key: K) {
-        console.log('key', this.state);
-        return this.state[key];
+    public get<K extends IStoreStateKey>(key: K): IStoreState[K] {
+        return this.state[key] as IStoreState[K];
     }
     /**
 	 * 根据field和type获取组件、组件的父组件以及组件所属的页面节点
@@ -91,25 +105,22 @@ class EditorService extends Subscribe {
             page: null,
         };
         if (!root) return info;
-        if (field === root.type) {
+        if (field === root.type || field === 'app') {
             info.node = root as any;
             return info;
         }
         const path = getNodePath(field, root.children);
-        console.log('path', path, info);
         if (!path.length) return info;
         // 插入根节点
         path.unshift(root);
         info.node = path[path.length - 1];
         info.parent = path[path.length - 2];
         for (const item of path) {
-            console.log(item);
             if (item.type === NodeType.PAGE) {
                 info.page = item;
                 break;
             }
         }
-        console.log('path', path, info);
         return info;
     }
 
@@ -121,7 +132,7 @@ class EditorService extends Subscribe {
 	 */
     public getNodeByField(id: Id, raw = true): ISchemasNode | null {
         const { node, } = this.getNodeInfo(id, raw);
-        return node as ISchemasNode;
+        return node;
     }
 
     /**
@@ -141,14 +152,14 @@ class EditorService extends Subscribe {
     public async getLayout(
         parent: ISchemasNode,
         node?: ISchemasNode | null
-    ): Promise<ILayout> {
+    ): Promise<Layout> {
         if (
             node &&
 			typeof node !== 'function' &&
 			node.style &&
-			isFixed(node.style!)
+			isFixed(node.style as CSSStyleDeclaration)
         )
-            return ILayout.FIXED;
+            return Layout.FIXED;
 
         if (parent.layout) {
             return parent.layout;
@@ -156,33 +167,36 @@ class EditorService extends Subscribe {
 
         // 如果该节点没有设置position，则认为是流式布局，例如获取root的布局时
         if (js_is_object(parent.style) && !(parent.style as any)?.position) {
-            return ILayout.RELATIVE;
+            return Layout.RELATIVE;
         }
 
-        return ILayout.ABSOLUTE;
+        return Layout.ABSOLUTE;
     }
 
+    /**
+	 * 选中指定节点（将指定节点设置成当前选中状态）
+	 * @param config 指定节点配置或者ID
+	 * @returns 当前选中的节点配置
+	 */
     public async select(config: ISchemasNode | Id | ISchemasPage) {
-        const { node, page, parent, } = this.selectedConfigExceptionHandler(
-            config as ISchemasNode
-        );
-        this.set('nodes', node ? [node as ISchemasNode] : []);
+        const { node, page, parent, } = this.selectedConfigExceptionHandler(config);
+        this.set('nodes', node ? [node] : []);
         this.set('page', page);
         this.set('parent', parent);
 
         if (page) {
             historyService.changePage(toRaw(page));
         } else {
-            historyService.resetState();
+            historyService.reset();
         }
 
-        if ((node as ISchemasNode).field) {
+        if (node?.field) {
             const app = this.get('sandbox')?.renderer?.runtime?.getApp?.();
             app?.page?.emit(
                 'editor:select',
                 { node, page, parent, },
                 getNodePath(
-                    (node as ISchemasNode).field,
+                    (node).field,
                     this.get('root')?.children || []
                 )
             );
@@ -202,11 +216,252 @@ class EditorService extends Subscribe {
         const { node, } = this.selectedConfigExceptionHandler(config);
         const currentHighlightNode = this.get('highlightNode');
         if (currentHighlightNode === node) return;
-        this.set('highlightNode', node as ISchemasNode);
+        this.set('highlightNode', node);
     }
 
-    // 更新逻辑
-    public update() {}
+    /**
+	 * 多选
+	 * @param ids 指定节点ID
+	 * @returns 加入多选的节点配置
+	 */
+    public multiSelect(ids: Id[]): void {
+        const nodes: ISchemasNode[] = [];
+        const idsUnique = uniq(ids);
+        idsUnique.forEach((id) => {
+            const { node, } = this.getNodeInfo(id);
+            if (!node) return;
+            nodes.push(node);
+        });
+        this.set('nodes', nodes);
+    }
+
+    public selectRoot() {
+        const root = this.get('root');
+        if (!root) return;
+
+        this.set('nodes', [root]);
+        this.set('parent', null);
+        this.set('page', null);
+        this.set('sandbox', null);
+        this.set('highlightNode', null);
+    }
+
+    public async deleteHelper() {}
+
+    public async delete(
+        nodeOrNodeList: ISchemasNode | ISchemasNode[]
+    ): Promise<void> {
+        const nodes = js_is_array(nodeOrNodeList)
+            ? nodeOrNodeList
+            : [nodeOrNodeList];
+
+        await Promise.all(nodes.map((node) => this.deleteHelper));
+
+        if (!isPage(nodes[0] as ISchemasPage)) {
+            // 更新历史记录
+            this.pushHistoryState();
+        }
+    }
+
+    public async addHelper(
+        node: ISchemasNode | ISchemasPage,
+        parent: ISchemasContainer
+    ): Promise<ISchemasNode> {
+        const root = this.get('root');
+        if (!root) throw new Error('root为空');
+
+        const curNode = this.get('node');
+        const sandbox = this.get('sandbox');
+
+        if (!curNode) throw new Error('当前选中节点为空');
+
+        if ((parent.type === NodeType.ROOT || curNode?.type === NodeType.ROOT) && !isPage(node as ISchemasPage)) {
+            throw new Error('app下不能添加组件');
+        }
+
+        if (parent.field !== curNode.field && !isPage(node as ISchemasPage)) {
+            const index = parent.children.indexOf(curNode);
+            parent.children?.splice(index + 1, 0, node);
+        } else {
+            // 新增节点添加到配置中
+            parent.children?.push(node);
+        }
+
+        const layout = await this.getLayout(toRaw(parent) as any, node);
+        node.style = getInitPositionStyle(node.style, layout);
+
+        await sandbox?.add({
+            config: cloneDeep(node),
+            parent: cloneDeep(parent),
+            parentId: parent.field,
+            root: cloneDeep(root),
+        });
+
+        const newStyle = fixNodePosition(node, parent, sandbox);
+
+        if (newStyle && (newStyle.top !== node.style?.top || newStyle.left !== node.style?.left)) {
+            node.style = newStyle;
+            await sandbox?.update({ config: cloneDeep(node), parentId: parent.field, root: cloneDeep(root), });
+        }
+
+        this.addModifiedNodeField(node.field);
+
+        return node;
+    }
+
+    public async add(
+        addNode: ISchemasNode[] | IAddNode,
+        parent?: ISchemasContainer | null
+    ) {
+        const sandbox = this.get('sandbox');
+
+        // 新增多个组件只存在于粘贴多个组件,粘贴的是一个完整的config,所以不再需要getPropsValue
+        const addNodes = [];
+        if (js_is_array(addNode)) {
+            addNodes.push(...addNode);
+        } else {
+            const { type, inputEvent: _inputEvent, ...config } = addNode;
+            if (!type) throw new Error('组件类型不能为空');
+            addNodes.push({
+                ...toRaw(await propsService.getInitPropsValue(type, config)),
+            });
+        }
+
+        const newNodes = await Promise.all(
+            addNodes.map((node) => {
+                const root = this.get('root');
+                if (isPage(node) && root) {
+                    return this.addHelper(node, root);
+                }
+                const parentNode =
+					parent && typeof parent !== 'function' ? parent : this.getAddParent(node);
+                if (!parentNode) throw new Error('未找到父元素');
+                return this.addHelper(node, parentNode);
+            })
+        );
+
+        if (newNodes.length > 1) {
+            const newNodeFields = newNodes.map((node) => node.field);
+            // 触发选中样式
+            sandbox?.multiSelect(newNodeFields);
+            await this.multiSelect(newNodeFields);
+        } else {
+            await this.select(newNodes[0]);
+
+            if (isPage(newNodes[0] as ISchemasPage)) {
+                this.state.pageLength += 1;
+            } else {
+                // 新增页面，这个时候页面还有渲染出来，此时select会出错，在runtime-ready的时候回去select
+                sandbox?.select(newNodes[0].field);
+            }
+        }
+
+        if (!isPage(newNodes[0] as ISchemasPage)) {
+            this.pushHistoryState();
+        }
+
+        this.emit('add', newNodes);
+
+        return Array.isArray(addNode) ? newNodes : newNodes[0];
+    }
+
+    public async updateHelper(config: ISchemasNode) {
+        const root = this.get('root');
+        if (!root) throw new Error('root为空');
+        if (!config.field) throw new Error('field 为空');
+
+        const info = this.getNodeInfo(config.field, false);
+
+        if (!info.node) throw new Error(`获取不到field为${config.field}的节点`);
+
+        const node = cloneDeep(toRaw(info.node));
+
+        let newConfig = await this.toggleFixedPosition(
+            toRaw(config),
+            node,
+            root as ISchemasRoot
+        );
+
+        newConfig = mergeWith(cloneDeep(node), newConfig, (objVal, srcVal) => {
+            if (js_is_object(srcVal) && js_is_array(objVal)) {
+                // 原来的配置是数组，新的配置是对象，则直接使用新的值
+                return srcVal;
+            }
+            if (js_is_array(srcVal)) {
+                return srcVal;
+            }
+        });
+
+        if (!(newConfig.type || newConfig.component))
+            throw new Error('配置缺少type值 或 component');
+
+        if (newConfig.type === NodeType.ROOT) {
+            this.set('root', newConfig as ISchemasRoot);
+            return newConfig;
+        }
+
+        const { parent, } = info;
+        if (!parent) throw new Error('获取不到父级节点');
+
+        const parentNodeChildren = parent.children;
+        const index = getNodeIndex(newConfig.field, parent);
+
+        if (!parentNodeChildren || typeof index === 'undefined' || index === -1)
+            throw new Error('更新的节点未找到');
+
+        const newLayout = await this.getLayout(newConfig);
+        const layout = await this.getLayout(node);
+        if (js_is_array(newConfig.children) && newLayout !== layout) {
+            newConfig = setChildrenLayout(newConfig, newLayout);
+        }
+
+        parentNodeChildren[index] = newConfig;
+
+        // 将update后的配置更新到nodes
+        const nodes = this.get('nodes') || [];
+        const targetIndex = nodes?.findIndex(
+            (nodeItem: ISchemasNode) =>
+                `${nodeItem.field}` === `${newConfig.field}`
+        );
+        nodes?.splice(targetIndex, 1, newConfig);
+        this.set('nodes', [...(nodes as any)]);
+
+        this.get('sandbox')?.update({
+            config: cloneDeep(newConfig),
+            parentId: parent.field,
+            root: cloneDeep(root),
+        });
+
+        if (isPage(newConfig as ISchemasPage)) {
+            this.set('page', newConfig as ISchemasPage);
+        }
+
+        this.addModifiedNodeField(newConfig.field);
+
+        return newConfig;
+    }
+
+    /**
+	 * 更新节点
+	 * @param config 新的节点配置，配置中需要有 field信息
+	 * @returns 更新后的节点配置
+	 */
+    public async update(
+        config: ISchemasNode | ISchemasNode[]
+    ): Promise<ISchemasNode | ISchemasNode[]> {
+        const nodes = js_is_array(config) ? config : [config];
+
+        const newNodes = await Promise.all(
+            nodes.map((node) => this.updateHelper(node))
+        );
+
+        if (newNodes[0]?.type !== NodeType.ROOT) {
+            this.pushHistoryState();
+        }
+
+        this.emit('update', newNodes);
+        return js_is_array(config) ? newNodes : newNodes[0];
+    }
 
     public reset() {
         this.set('node', null);
@@ -217,6 +472,83 @@ class EditorService extends Subscribe {
         this.set('pageLength', 0);
         this.set('parent', null);
     }
+
+    public async undo() {
+        const val = historyService.undo();
+        await this.changeHistoryState(val);
+        return val;
+    }
+
+    public async redo() {
+        const val = historyService.redo();
+        await this.changeHistoryState(val);
+        return val;
+    }
+
+    private async pushHistoryState() {
+        const curNode = cloneDeep(toRaw(this.get('node')));
+        const page = this.get('page');
+        if (!this.isHistoryStateChange && curNode && page) {
+            historyService.push({
+                data: cloneDeep(toRaw(page)),
+                modifiedNodeFields: this.get('modifiedNodeFields')!,
+                nodeField: curNode.field,
+            });
+        }
+        this.isHistoryStateChange = false;
+    }
+
+    private async changeHistoryState(val: StepValue | null): Promise<void> {
+        if (!val) return;
+
+        this.isHistoryStateChange = true;
+
+        await this.update(val.data);
+
+        this.set('modifiedNodeFields', val.modifiedNodeFields);
+
+        setTimeout(async() => {
+            if (!val.nodeField) return;
+            await this.select(val.nodeField);
+            this.get('sandbox')?.select(val.nodeField);
+        }, 0);
+        this.emit('history-change', val.data);
+    }
+
+    private async toggleFixedPosition(
+        dist: ISchemasNode,
+        src: ISchemasNode,
+        root: ISchemasRoot
+    ) {
+        const newConfig = cloneDeep(dist);
+
+        if (newConfig.style?.position) {
+            if (
+                isFixed(newConfig.style as CSSStyleDeclaration) &&
+				!isFixed(src.style as CSSStyleDeclaration)
+            ) {
+                newConfig.style = change2Fixed(newConfig, root) as any;
+            } else if (
+                !isFixed(newConfig.style as CSSStyleDeclaration) &&
+				isFixed(src.style as CSSStyleDeclaration)
+            ) {
+                newConfig.style = (await fixed2Other(
+                    newConfig,
+                    root,
+                    this.getLayout
+                )) as any;
+            }
+        }
+
+        return newConfig;
+    }
+
+    private addModifiedNodeField(field: Id) {
+        if (!this.isHistoryStateChange) {
+            this.get('modifiedNodeFields')?.set(field, field);
+        }
+    }
+
     private selectedConfigExceptionHandler(
         config: ISchemasNode | Id
     ): IEditorNodeInfo {
@@ -229,7 +561,6 @@ class EditorService extends Subscribe {
         if (!id) {
             throw new Error('没有ID，无法选中');
         }
-
         const { node, parent, page, } = this.getNodeInfo(id);
         if (!node) throw new Error('获取不到组件信息');
 
@@ -241,6 +572,21 @@ class EditorService extends Subscribe {
             parent,
             page,
         };
+    }
+
+    private getAddParent(node: ISchemasNode | ISchemasPage) {
+        const curNode = this.get('node');
+        let parentNode;
+
+        if (isPage(node as ISchemasPage)) {
+            parentNode = this.get('root');
+        } else if (curNode?.children) {
+            parentNode = curNode as ISchemasContainer;
+        } else if (curNode?.field) {
+            parentNode = this.getParentByField(curNode.field, false);
+        }
+
+        return parentNode;
     }
 }
 export type { EditorService };

@@ -23,11 +23,31 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue2';
 import externalGlobals from 'rollup-plugin-external-globals';
 import postCssPxtorem from 'postcss-pxtorem';
+import {resolve} from 'path';
 
 export default defineConfig(({ mode, }) => {
     // 阿里云自带环境
     const isDeclaration =
     !(process.env.PIPELINE_NAME?.includes('生产') || process.env.PIPELINE_TAGS?.includes('生产') || process.env.PIPELINE_NAME?.includes('测试') || process.env.PIPELINE_TAGS?.includes('测试'));
+    // TODO
+    if (['config'].includes(mode)) {
+        const file = resolve(__dirname, 'node_modules/@qimao/quantum-ui-vue2/dist/es/config.js');
+        return {
+            publicDir: '../public',
+            build: {
+                cssCodeSplit: false,
+                target: 'esnext',
+                outDir: `../../apps/quantum-backend/public/entry/vue2/`,
+                lib: {
+                    entry: file,
+                    name: `quantumCompConfigs`,
+                    fileName: 'config',
+                    formats: ['umd'],
+                },
+            },
+        };
+    }
+
     if (['page', 'playground'].includes(mode)) {
         return {
             plugins: [

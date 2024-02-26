@@ -12,7 +12,6 @@ import { computed, defineComponent, PropType, ref } from 'vue';
 import type { ISchemasNode} from '@qimao/quantum-schemas';
 
 import {useApp} from '../../hooks/use-app';
-import { emit } from 'process';
 
 export default defineComponent({
     props: { // 配置要传入的props, 与formSchema.ts配置对应

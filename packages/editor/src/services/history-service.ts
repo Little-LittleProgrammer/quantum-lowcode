@@ -5,7 +5,7 @@ import { reactive } from 'vue';
 import { ISchemasPage } from '@qimao/quantum-schemas';
 import { UndoRedo } from '../utils/undo-redo';
 
-class History extends Subscribe {
+class HistoryService extends Subscribe {
     public state = reactive<IHistoryState>({
         pageSteps: {},
         pageField: undefined,
@@ -16,7 +16,7 @@ class History extends Subscribe {
     constructor() {
         super();
 
-        this.on('change', this.setCanUndoRedo);
+        this.on('change', () => this.setCanUndoRedo());
     }
 
     public reset() {
@@ -40,7 +40,7 @@ class History extends Subscribe {
 
             undoRedo.pushElement({
                 data: page,
-                modifiedNodeIds: new Map(),
+                modifiedNodeFields: new Map(),
                 nodeField: page.field,
             });
 
@@ -50,10 +50,6 @@ class History extends Subscribe {
         this.setCanUndoRedo();
 
         this.emit('page-change', this.state.pageSteps[this.state.pageField]);
-    }
-
-    public resetState() {
-        this.reset();
     }
 
     public push(state: StepValue): StepValue | null {
@@ -83,7 +79,7 @@ class History extends Subscribe {
     }
 
     public destroy(): void {
-        this.resetState();
+        this.reset();
         this.clear();
     }
 
@@ -93,11 +89,12 @@ class History extends Subscribe {
     }
 
     private setCanUndoRedo(): void {
+        console.log(this);
         const undoRedo = this.getUndoRedo();
         this.state.canRedo = undoRedo?.canRedo() || false;
         this.state.canUndo = undoRedo?.canUndo() || false;
     }
 }
-export type { History };
+export type { HistoryService };
 
-export const historyService = new History();
+export const historyService = new HistoryService();

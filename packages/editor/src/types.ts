@@ -1,9 +1,14 @@
-import type { BoxCore } from '@qimao/quantum-sandbox';
+import type { BoxCore, MoveableOptions, IGuidesOptions, ContainerHighlightType, ICustomizeMoveableOptionsCallbackConfig, IUpdateDragEl} from '@qimao/quantum-sandbox';
 import type { EditorService } from './services/editor-service';
+import type { PropsService } from './services/props-service';
 import type { UiService } from './services/ui-service';
-import { ISchemasRoot, ISchemasPage, ISchemasContainer, ISchemasNode, Id } from '@qimao/quantum-schemas';
-import { IGuidesOptions, IContainerHighlightType, ICustomizeMoveableOptionsCallbackConfig, IUpdateDragEl } from '@qimao/quantum-sandbox/src/types';
+import { ISchemasRoot, ISchemasPage, ISchemasContainer, ISchemasNode, Id, Fn } from '@qimao/quantum-schemas';
 import { UndoRedo } from './utils/undo-redo';
+import { HistoryService } from './services/history-service';
+import type {FormSchema} from '@q-front-npm/vue3-antd-pc-ui';
+import { Component } from 'vue';
+import { ComponentService } from './services/component-service';
+import { DataSourceService } from './services/datasource-service';
 
 export interface IStoreState {
     root: ISchemasRoot | null;
@@ -13,22 +18,26 @@ export interface IStoreState {
     highlightNode?: ISchemasNode | null;
     nodes?: ISchemasNode[];
     sandbox: BoxCore | null;
-    modifiedNodeIds?: Map<Id, Id>;
-    pageLength?: number;
+    modifiedNodeFields?: Map<Id, Id>;
+    pageLength: number;
     disabledMultiSelect: boolean;
 }
 export type IStoreStateKey = keyof IStoreState;
 
 export interface IServices {
     editorService: EditorService;
-    uiService: UiService
+    uiService: UiService;
+    historyService: HistoryService;
+    propsService: PropsService;
+    componentService: ComponentService;
+    dataSourceService: DataSourceService
 }
 
 export interface IUiState {
     /** 当前点击画布是否触发选中，true: 不触发，false: 触发，默认为false */
     uiSelectMode: boolean;
     /** 是否显示源码编辑器， true: 显示， false: 不显示，默认为false */
-    showSrc: boolean;
+    showCode: boolean;
     /** 画布显示放大倍数，默认为 1 */
     zoom: number;
     /** 画布容器的宽高 */
@@ -41,6 +50,16 @@ export interface IUiState {
     // showAddPageButton: boolean;
     /** 是否显示画布参考线，true: 显示，false: 不显示，默认为true */
     showGuides: boolean;
+    workspaceLeft?: number
+    workspaceCenter?: number
+}
+
+export interface IPropsState {
+    tabList: string[],
+    propsConfigMap: Record<string, FormSchema[]>;
+    otherConfigMap: Record<string, any>;
+    propsValueMap: Record<string, Partial<ISchemasNode>>;
+    relateIdMap: Record<Id, Id>;
 }
 
 export interface IBoxOptions {
@@ -48,7 +67,7 @@ export interface IBoxOptions {
     autoScrollIntoView?: boolean;
     containerHighlightClassName?: string;
     containerHighlightDuration?: number;
-    containerHighlightType?: IContainerHighlightType;
+    containerHighlightType?: ContainerHighlightType;
     disabledDragStart?: boolean;
     moveableOptions?: MoveableOptions | ((config?: ICustomizeMoveableOptionsCallbackConfig) => MoveableOptions);
     canSelect?: (el: HTMLElement) => boolean | Promise<boolean>;
@@ -85,11 +104,19 @@ export interface IMenuButton {
 }
 
 /** 容器布局 */
-export enum ILayout {
+export enum Layout {
     FLEX = 'flex',
     FIXED = 'fixed',
     RELATIVE = 'relative',
     ABSOLUTE = 'absolute',
+}
+
+/** 拖拽类型 */
+export enum DragType {
+    /** 从组件列表拖到画布 */
+    COMPONENT_LIST = 'component-list',
+    /** 拖动组件树节点 */
+    LAYER_TREE = 'layer-tree',
 }
 
 export type IMenuItem =
@@ -112,8 +139,8 @@ export type IMenuItem =
 export const UI_SELECT_MODE_EVENT_NAME = 'ui-select';
 
 export interface StepValue {
-    data: ISchemasPage;
-    modifiedNodeIds: Map<Id, Id>;
+    data: ISchemasPage| ISchemasNode;
+    modifiedNodeFields: Map<Id, Id>;
     nodeField: Id;
 }
 
@@ -122,4 +149,43 @@ export interface IHistoryState {
     pageSteps: Record<Id, UndoRedo<StepValue>>;
     canRedo: boolean;
     canUndo: boolean;
+}
+export interface IComponentGroupState {
+    list: IComponentGroup[];
+}
+
+export interface IComponentGroup {
+    /** 显示文案 */
+    text: string;
+    /** 组内列表 */
+    children: IComponentItem[];
+}
+
+export interface IComponentItem {
+    /** 显示文案 */
+    text: string;
+    /** 详情，用于tooltip */
+    desc?: string;
+    /** 组件类型 */
+    component: string;
+    /** Vue组件或url */
+    icon?: string | Component<{}, {}, any>;
+    /** 新增组件时需要透传到组价节点上的数据 */
+    data?: {
+        [key: string]: any;
+    };
+}
+
+export interface IAddNode {
+    type: string;
+    label?: string;
+    inputEvent?: DragEvent;
+    [key: string]: any;
+}
+
+export interface IFormValue {
+    setValue?: Fn,
+    getValue: Fn,
+    reset?: Fn
+    value: Record<string, any>
 }

@@ -1,9 +1,9 @@
-import page from './q-page/src/formSchema';
-import container from './q-container/src/formSchema';
+import Page from './q-page/src/formSchema';
+import Container from './q-container/src/formSchema';
 
 const formSchemas = {
-    'page': page,
-    'container': container,
+    Page,
+    Container,
 };
 
 export default formSchemas;
