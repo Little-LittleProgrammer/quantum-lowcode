@@ -73,8 +73,10 @@ class PropsService extends Subscribe {
 
     public setFinPropsValue = throttle((values:IFormValue[]) => {
         const finValue: any = {};
-        for (const itemObj of values) {
+        for (let i = 0; i < values.length; i++) {
+            const itemObj = values[i];
             const obj = itemObj.getValue();
+            if (i === 0 && !obj.field) return;
             // 单独处理事件
             if (obj.componentProps?.methods) {
                 obj.componentProps = {

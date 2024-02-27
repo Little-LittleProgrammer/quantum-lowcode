@@ -23,10 +23,9 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, inject, nextTick, onBeforeUnmount, onMounted, ref, watch, watchEffect } from 'vue';
+import { computed, inject, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { IFormValue, IServices } from '../../types';
 import { js_is_array } from '@qimao/quantum-utils';
-import { cloneDeep } from 'lodash-es';
 defineOptions({
     name: 'PropsEditor',
 });
@@ -46,7 +45,7 @@ const getTabList = computed(() => {
     return services?.propsService?.getPropsTabsList();
 });
 
-const curFormSchemas = ref({});
+const curFormSchemas = ref<any>({});
 
 const init = async() => {
     if (js_is_array(valuesFn.value)) {
@@ -66,7 +65,7 @@ const init = async() => {
         lifeHooks: services?.propsService.getConfig('lifeHooks'),
     };
     nextTick(() => {
-        formModel.value = node.value;
+        formModel.value = node.value || {};
     });
 };
 

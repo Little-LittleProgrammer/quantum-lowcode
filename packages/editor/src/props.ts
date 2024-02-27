@@ -41,15 +41,15 @@ export const defaultEditorProps = {
             icon: 'SelectOutlined',
         }, {
             'text': '图片',
-            'component': 'Button',
+            'component': 'Img',
             icon: 'SelectOutlined',
         }, {
             'text': '视频',
-            'component': 'Button',
+            'component': 'Video',
             icon: 'SelectOutlined',
         }, {
             'text': '文本',
-            'component': 'Button',
+            'component': 'Text',
             icon: 'SelectOutlined',
         }, {
             'text': '二维码',
