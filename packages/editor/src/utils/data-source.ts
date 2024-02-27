@@ -96,13 +96,13 @@ function formatConfig(config: FormConfig): FormConfig {
             label: '请求拦截器',
             field: 'beforeRequest',
             component: 'CodeEditor',
-            ifShow: ({ model, }) => model.type === 'http',
+            ifShow: ({ values, }) => values.type === 'http',
         },
         {
             label: '响应拦截器',
             field: 'afterResponse',
             component: 'CodeEditor',
-            ifShow: ({ model, }) => model.type === 'http',
+            ifShow: ({ values, }) => values.type === 'http',
         }
     ];
 }
