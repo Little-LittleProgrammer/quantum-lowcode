@@ -78,6 +78,13 @@ const sandboxOptions = reactive<IBoxOptions>({
     runtimeUrl: props.runtimeUrl,
     moveableOptions: props.moveableOptions,
     canSelect: props.canSelect,
+    updateDragEl: props.updateDragEl,
+    isContainer: props.isContainer,
+    containerHighlightClassName: props.containerHighlightClassName,
+    containerHighlightDuration: props.containerHighlightDuration,
+    containerHighlightType: props.containerHighlightType,
+    disabledDragStart: props.disabledDragStart,
+    guidesOptions: props.guidesOptions,
 });
 
 const {initServiceEvents, initServiceState, } = useServicesInit(props, emit, services);
