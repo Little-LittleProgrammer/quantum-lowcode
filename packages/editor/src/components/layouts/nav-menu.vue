@@ -11,20 +11,14 @@
                         <Divider type="vertical"></Divider>
                     </template>
                     <template v-if="item.type === 'button'">
-                        <Tooltip v-if="item.tooltip" :title="item.tooltip">
-                            <Button size="small" type="text" @click="item.onClick">
+                        <Tooltip :title="item.tooltip">
+                            <Button :disabled="js_is_function(item.disabled) ? (item.disabled as Function)?.() : item.disabled" size="small" type="text" @click="item.onClick">
                                 <template #icon >
                                     <q-antd-icon :type="item.icon"></q-antd-icon>
                                 </template>
                                 {{ item.text }}
                             </Button>
                         </Tooltip>
-                        <Button size="small" v-else type="text" @click="item.onClick">
-                            <template #icon >
-                                <q-antd-icon :type="item.icon"></q-antd-icon>
-                            </template>
-                            {{ item.text }}
-                        </Button>
                     </template>
                     <template v-if="item.type === 'text'">
                         <span>{{ item.text }}</span>
@@ -43,6 +37,7 @@ import { IMenuButton, IMenuItem, IServices } from '../../types';
 import { computed, inject } from 'vue';
 import { NodeType } from '@qimao/quantum-schemas';
 import { Divider, Button, Tooltip } from 'ant-design-vue';
+import { js_is_function } from '@qimao/quantum-utils';
 defineOptions({
     name: 'QEditorNavMenu',
 });
@@ -91,7 +86,7 @@ function get_config(item: IMenuItem) {
                 disabled: () => services?.editorService.get('node')?.type === NodeType.PAGE,
                 onClick: () => {
                     const node = services?.editorService.get('node');
-                    node && services?.editorService.remove(node);
+                    node && services?.editorService.delete(node);
                 },
             });
             break;

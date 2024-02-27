@@ -19,6 +19,7 @@ import {
     getNodePath,
     isFixed,
     js_is_array,
+    js_is_number,
     js_is_object,
     Subscribe
 } from '@qimao/quantum-utils';
@@ -449,8 +450,52 @@ class EditorService extends Subscribe {
         return js_is_array(config) ? newNodes : newNodes[0];
     }
 
-    // TODO
-    public async deleteHelper() {}
+    public async deleteHelper(node: ISchemasNode) {
+        const root = this.get('root');
+        if (!root) throw new Error('root为空');
+
+        const {parent, node: curNode, } = this.getNodeInfo(node.field, false);
+
+        if (!parent || !curNode) throw new Error('找不要删除的节点');
+
+        const index = getNodeIndex(curNode.field, parent);
+
+        if (!js_is_number(index) || index < 0) throw new Error('找不要删除的节点');
+
+        parent.children?.splice(index, 1);
+
+        const sandbox = this.get('sandbox');
+        sandbox?.delete({id: node.field, parentId: parent.field, root: cloneDeep(root), });
+
+        const selectDefault = async(pages: ISchemasNode[]) => {
+            if (pages[0]) {
+                await this.select(pages[0]);
+                sandbox?.select(pages[0].field);
+            } else {
+                this.selectRoot();
+
+                historyService.resetPage();
+            }
+        };
+
+        const rootChild = root.children;
+
+        if (isPage(node)) {
+            this.set('pageLength', this.get('pageLength') - 1);
+
+            await selectDefault(rootChild);
+        } else {
+            await this.select(parent);
+            sandbox?.select(parent.field);
+
+            this.addModifiedNodeField(parent.field);
+        }
+
+        if (!rootChild.length) {
+            this.resetModifiedNodeFields();
+            historyService.reset();
+        }
+    }
 
     public async delete(
         nodeOrNodeList: ISchemasNode | ISchemasNode[]
@@ -459,12 +504,13 @@ class EditorService extends Subscribe {
             ? nodeOrNodeList
             : [nodeOrNodeList];
 
-        await Promise.all(nodes.map((node) => this.deleteHelper));
+        await Promise.all(nodes.map((node) => this.deleteHelper(node)));
 
         if (!isPage(nodes[0] as ISchemasPage)) {
             // 更新历史记录
             this.pushHistoryState();
         }
+        this.emit('delete', nodes);
     }
 
     public async sort(field1: Id, field2: Id) {
@@ -517,6 +563,10 @@ class EditorService extends Subscribe {
         const val = historyService.redo();
         await this.changeHistoryState(val);
         return val;
+    }
+
+    public resetModifiedNodeFields() {
+        this.get('modifiedNodeFields')?.clear();
     }
 
     private async pushHistoryState() {
