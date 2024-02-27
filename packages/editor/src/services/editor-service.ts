@@ -383,6 +383,9 @@ class EditorService extends Subscribe {
         );
 
         newConfig = mergeWith(cloneDeep(node), newConfig, (objVal, srcVal) => {
+            if (srcVal?.events) {
+                return srcVal;
+            }
             if (js_is_object(srcVal) && js_is_array(objVal)) {
                 // 原来的配置是数组，新的配置是对象，则直接使用新的值
                 return srcVal;

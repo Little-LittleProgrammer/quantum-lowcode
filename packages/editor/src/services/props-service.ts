@@ -8,7 +8,7 @@ import { reactive } from 'vue';
 import { FormSchema } from '@q-front-npm/vue3-antd-pc-ui';
 import { formatConfig, otherConfigMap } from '../utils/props';
 import { cloneDeep, mergeWith } from 'lodash-es';
-import { ISchemasNode, Id } from '@qimao/quantum-schemas';
+import { ISchemasNode, ISchemasPage, Id } from '@qimao/quantum-schemas';
 import { editorService } from './editor-service';
 import { getCompType } from '../utils';
 import { merge, throttle } from 'lodash-es';
@@ -50,6 +50,7 @@ class PropsService extends Subscribe {
         Object.entries(configs).forEach(([key, val]) => {
             this.state.otherConfigMap.methods[key] = val;
         });
+        console.log('propsState', this.state);
     }
 
     /**
@@ -71,6 +72,29 @@ class PropsService extends Subscribe {
         return cloneDeep(this.state.propsConfigMap[typeFin]);
     }
 
+    public getMethods(node?: ISchemasPage | null) {
+        if (!node) {
+            return [];
+        }
+        const methodsKey = Object.keys(this.getConfig('methods') || {}).map(item => item.toLowerCase());
+        const list:any[] = [];
+        function dfs(node: ISchemasNode) {
+            if (methodsKey.includes((node.component || node.type).toLowerCase())) {
+                list.push({
+                    value: (node.component || node.type) + '&&&' + node.field,
+                    label: (node.label || '') + '-' + node.field,
+                });
+            }
+            if (node.children) {
+                for (const child of node.children) {
+                    dfs(child);
+                }
+            }
+        }
+        dfs(node);
+        return list;
+    }
+
     public setFinPropsValue = throttle((values:IFormValue[]) => {
         const finValue: any = {};
         for (let i = 0; i < values.length; i++) {
@@ -78,12 +102,11 @@ class PropsService extends Subscribe {
             const obj = itemObj.getValue();
             if (i === 0 && !obj.field) return;
             // 单独处理事件
-            if (obj.componentProps?.methods) {
+            if (obj.componentProps?.events) {
                 obj.componentProps = {
                     ...obj.componentProps,
-                    ...obj.componentProps.methods,
+                    ...obj.componentProps.events,
                 };
-                Reflect.deleteProperty(obj.componentProps, 'methods');
             }
             merge(finValue, obj);
         }

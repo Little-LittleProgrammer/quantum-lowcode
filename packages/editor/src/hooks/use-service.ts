@@ -2,6 +2,8 @@ import { ISchemasPage, ISchemasRoot } from '@qimao/quantum-schemas';
 import { IEditorProps } from 'src/props';
 import { IServices } from 'src/types';
 import { nextTick, onBeforeUnmount, toRaw, watch } from 'vue';
+import {useComponentRegister, delComponentRegister} from '@q-front-npm/vue3-antd-pc-ui';
+import EventSelect from '../components/form/event-select.vue';
 
 export function useServicesInit(
     props: IEditorProps,
@@ -15,6 +17,7 @@ export function useServicesInit(
     }: IServices
 ) {
     function initServiceState() {
+        useComponentRegister<'EventSelect'>('EventSelect', EventSelect);
         watch(() => props.value, (val) => {
             console.log('editorService', editorService);
             nextTick(() => {
@@ -38,6 +41,7 @@ export function useServicesInit(
         });
 
         onBeforeUnmount(() => {
+            delComponentRegister('EventSelect');
             editorService.reset();
             historyService.reset();
             propsService.reset();
