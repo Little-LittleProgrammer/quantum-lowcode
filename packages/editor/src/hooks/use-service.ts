@@ -14,6 +14,7 @@ export function useServicesInit(
         componentService,
         propsService,
         historyService,
+        dataSourceService,
     }: IServices
 ) {
     function initServiceState() {
@@ -39,6 +40,10 @@ export function useServicesInit(
         watch(() => props.methodsList, (val) => {
             val && propsService.setMethodsConfigs(val);
         });
+        watch(() => props.datasourceList, (datasourceList) => {
+            datasourceList && dataSourceService.set('datasourceTypeList', datasourceList);
+        }, {immediate: true, }
+        );
 
         onBeforeUnmount(() => {
             delComponentRegister('EventSelect');
@@ -50,19 +55,46 @@ export function useServicesInit(
         });
     }
     function initServiceEvents() {
-        async function root_change_handler(value: ISchemasRoot, preValue: ISchemasRoot) {
+        const getApp = () => {
+            const sandbox = editorService.get('sandbox');
+            return sandbox?.renderer.runtime?.getApp?.();
+        };
+
+        async function rootChangeHandler(value: ISchemasRoot, preValue: ISchemasRoot) {
+            if (!value) return;
+
+            value.dataSources = value.dataSources || [];
+            dataSourceService.set('dataSources', value.dataSources);
+
+            const nodeField = editorService.get('node')?.field || props.defaultSelected;
+            let node;
+            if (nodeField) {
+                node = editorService.getNodeByField(nodeField);
+            }
+
             if (value?.children?.length) {
                 if (preValue?.children?.length && value.children.length <= preValue.children.length && editorService.get('page')) {
                     editorService.select(editorService.get('page')! as ISchemasPage);
                 } else {
                     editorService.select(value.children[0]);
                 }
+            } else if (value.field) {
+                editorService.set('nodes', [value]);
+                editorService.set('parent', null);
+                editorService.set('page', null);
             }
             if (toRaw(value) !== toRaw(preValue)) {
                 emit('update:value', value);
             }
         }
-        editorService.on('root-change', root_change_handler);
+        editorService.on('root-change', rootChangeHandler);
+
+        onBeforeUnmount(() => {
+            editorService.remove('root-change');
+            dataSourceService.remove('add');
+            dataSourceService.remove('update');
+            dataSourceService.remove('remove');
+        });
     }
     return {
         initServiceState,

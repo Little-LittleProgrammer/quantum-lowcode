@@ -1,5 +1,5 @@
-import { ISchemasNode, ISchemasRoot } from '@qimao/quantum-schemas';
-import { IComponentGroup, ISandboxRect } from './types';
+import { ISchemasNode, ISchemasRoot, Id } from '@qimao/quantum-schemas';
+import { IComponentGroup, IDatasourceTypeOption, ISandboxRect } from './types';
 import { CONTAINER_HIGHLIGHT_CLASS_NAME, ContainerHighlightType, ICustomizeMoveableOptionsCallbackConfig, MoveableOptions } from '@qimao/quantum-sandbox';
 import { FormSchema } from '@q-front-npm/vue3-antd-pc-ui';
 
@@ -25,7 +25,9 @@ export interface IEditorProps {
     /** 初始值 */
     propsValues?: Record<string, Partial<ISchemasNode>>;
     propsConfigs?: Record<string, FormSchema[]>;
-    methodsList?: Record<string, any[]>
+    methodsList?: Record<string, any[]>;
+    datasourceList?: IDatasourceTypeOption[]
+    defaultSelected?: Id
 }
 
 export const defaultEditorProps = {
@@ -123,4 +125,5 @@ export const defaultEditorProps = {
     }),
     propsConfigs: () => {},
     methodsList: () => {},
+    datasourceList: () => [],
 };

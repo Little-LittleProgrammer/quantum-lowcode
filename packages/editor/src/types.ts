@@ -2,13 +2,18 @@ import type { BoxCore, MoveableOptions, IGuidesOptions, ContainerHighlightType, 
 import type { EditorService } from './services/editor-service';
 import type { PropsService } from './services/props-service';
 import type { UiService } from './services/ui-service';
-import { ISchemasRoot, ISchemasPage, ISchemasContainer, ISchemasNode, Id, Fn } from '@qimao/quantum-schemas';
+import { ISchemasRoot, ISchemasPage, ISchemasContainer, ISchemasNode, Id, Fn, IDataSourceSchema } from '@qimao/quantum-schemas';
 import { UndoRedo } from './utils/undo-redo';
 import { HistoryService } from './services/history-service';
 import type {FormSchema} from '@q-front-npm/vue3-antd-pc-ui';
 import { Component } from 'vue';
 import { ComponentService } from './services/component-service';
 import { DataSourceService } from './services/datasource-service';
+
+export interface EventOption {
+    label: string;
+    value: string;
+}
 
 export interface IStoreState {
     root: ISchemasRoot | null;
@@ -56,7 +61,7 @@ export interface IUiState {
 
 export interface IPropsState {
     tabList: string[],
-    propsConfigMap: Record<string, FormSchema[]>;
+    propsConfigMap: Record<string, FormConfig>;
     otherConfigMap: Record<string, any>;
     propsValueMap: Record<string, Partial<ISchemasNode>>;
     relateIdMap: Record<Id, Id>;
@@ -189,3 +194,22 @@ export interface IFormValue {
     reset?: Fn
     value: Record<string, any>
 }
+
+export interface IDatasourceTypeOption {
+    /** 数据源类型 */
+    type: string;
+    /** 数据源名称 */
+    text: string;
+}
+export type FormConfig = FormSchema<any, 'DataSourceFields' | 'DataSourceMethods' | 'KeyValue' | 'CodeEditor'>[]
+
+export interface IDataSourceState {
+    datasourceTypeList: IDatasourceTypeOption[]
+    dataSources: IDataSourceSchema[];
+    editable: boolean;
+    configs: Record<string, FormConfig>;
+    values: Record<string, Partial<IDataSourceSchema>>;
+    methods: Record<string, EventOption[]>;
+}
+
+export type IDataSourceStateKey = keyof IDataSourceState

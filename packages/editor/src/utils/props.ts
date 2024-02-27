@@ -4,26 +4,28 @@ const styleSchemas:FormSchema[] = [{
     label: '位置',
     field: 'position',
     component: 'Divider',
+    helpMessage: '填写${dataSourceId:fieldId} 可获取全局参数',
 }, {
     label: 'top',
     field: 'style.top',
-    component: 'InputNumber',
+    component: 'Input',
 }, {
     label: 'left',
     field: 'style.left',
-    component: 'InputNumber',
+    component: 'Input',
 }, {
     label: 'right',
     field: 'style.right',
-    component: 'InputNumber',
+    component: 'Input',
 }, {
     label: 'bottom',
     field: 'style.bottom',
-    component: 'InputNumber',
+    component: 'Input',
 }, {
     label: '盒子',
     field: 'box',
     component: 'Divider',
+    helpMessage: '填写${dataSourceId:fieldId} 可获取全局参数',
 }, {
     label: '宽度',
     field: 'style.width',
@@ -36,6 +38,7 @@ const styleSchemas:FormSchema[] = [{
     label: '边框',
     field: 'box',
     component: 'Divider',
+    helpMessage: '填写${dataSourceId:fieldId} 可获取全局参数',
 }, {
     label: '宽度',
     field: 'style.borderWidth',
@@ -69,6 +72,7 @@ const styleSchemas:FormSchema[] = [{
     label: '背景',
     field: 'background',
     component: 'Divider',
+    helpMessage: '填写${dataSourceId:fieldId} 可获取全局参数',
 }, {
     label: '链接',
     field: 'style.backgroundImage',
@@ -100,6 +104,7 @@ const styleSchemas:FormSchema[] = [{
     label: '字体',
     field: 'font',
     component: 'Divider',
+    helpMessage: '填写${dataSourceId:fieldId} 可获取全局参数',
 }, {
     label: '颜色',
     field: 'style.color',
@@ -132,6 +137,7 @@ const styleSchemas:FormSchema[] = [{
     label: '变形',
     field: 'transform',
     component: 'Divider',
+    helpMessage: '填写${dataSourceId:fieldId} 可获取全局参数',
 }, {
     label: '旋转角度',
     field: 'style.rotate',
@@ -160,10 +166,14 @@ export function formatConfig(config: FormSchema[]): any {
         label: '组件名称',
         component: 'Input',
         field: 'label',
+        helpMessage: '填写${dataSourceId:fieldId} 可获取全局参数',
     }];
 
     config = config.map((item) => {
         item.field = `componentProps.${item.field}`;
+        if (item.component === 'Input') {
+            item.helpMessage = item.helpMessage ? item.helpMessage + '; 填写${dataSourceId:fieldId} 可获取全局参数' : '填写${dataSourceId:fieldId} 可获取全局参数';
+        }
         return item;
     });
 
