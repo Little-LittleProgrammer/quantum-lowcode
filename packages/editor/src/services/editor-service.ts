@@ -81,7 +81,7 @@ class EditorService extends Subscribe {
             } else {
                 this.state.pageLength = 0;
             }
-            // this.root_change_handler(value, preValue);
+            // this.rootChangeHandler(value, preValue);
             this.emit('root-change', value, preValue);
         }
     }
@@ -244,23 +244,6 @@ class EditorService extends Subscribe {
         this.set('page', null);
         this.set('sandbox', null);
         this.set('highlightNode', null);
-    }
-
-    public async deleteHelper() {}
-
-    public async delete(
-        nodeOrNodeList: ISchemasNode | ISchemasNode[]
-    ): Promise<void> {
-        const nodes = js_is_array(nodeOrNodeList)
-            ? nodeOrNodeList
-            : [nodeOrNodeList];
-
-        await Promise.all(nodes.map((node) => this.deleteHelper));
-
-        if (!isPage(nodes[0] as ISchemasPage)) {
-            // 更新历史记录
-            this.pushHistoryState();
-        }
     }
 
     public async addHelper(
@@ -464,6 +447,54 @@ class EditorService extends Subscribe {
 
         this.emit('update', newNodes);
         return js_is_array(config) ? newNodes : newNodes[0];
+    }
+
+    // TODO
+    public async deleteHelper() {}
+
+    public async delete(
+        nodeOrNodeList: ISchemasNode | ISchemasNode[]
+    ): Promise<void> {
+        const nodes = js_is_array(nodeOrNodeList)
+            ? nodeOrNodeList
+            : [nodeOrNodeList];
+
+        await Promise.all(nodes.map((node) => this.deleteHelper));
+
+        if (!isPage(nodes[0] as ISchemasPage)) {
+            // 更新历史记录
+            this.pushHistoryState();
+        }
+    }
+
+    public async sort(field1: Id, field2: Id) {
+        const root = this.get('root');
+        if (!root) throw new Error('root为空');
+
+        const node = this.get('node');
+        if (!node) throw new Error('未获取到节点');
+
+        const parent = cloneDeep(toRaw(this.get('parent')));
+        if (!parent) throw new Error('未找到页面');
+
+        const index2 = parent.children.findIndex((node) => node.field === field2);
+
+        if (index2 < 0) return;
+        const index1 = parent.children.findIndex(node => node.field === field1);
+
+        parent.children.splice(index2, 0, ...parent.children.splice(index1, 1));
+
+        await this.update(parent);
+        await this.select(node);
+
+        this.get('sandbox')?.update({
+            config: cloneDeep(node),
+            parentId: parent.field,
+            root: cloneDeep(root),
+        });
+
+        this.addModifiedNodeField(parent.field);
+        this.pushHistoryState();
     }
 
     public reset() {
