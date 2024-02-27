@@ -1,30 +1,40 @@
 <!-- 画布小工具 -->
 <template>
     <div class="q-editor-nav-menu">
-        <template v-for="item of buttons" :key="item.type">
-            <template v-if="item.type === 'divider'">
-                <Divider type="vertical"></Divider>
-            </template>
-            <template v-if="item.type === 'button'">
-                <Tooltip v-if="item.tooltip" :title="item.tooltip">
-                    <Button size="small" type="text" @click="item.onClick">
-                        <template #icon >
-                            <q-antd-icon :type="item.icon"></q-antd-icon>
-                        </template>
-                        {{ item.text }}
-                    </Button>
-                </Tooltip>
-                <Button size="small" v-else type="text" @click="item.onClick">
-                    <template #icon >
-                        <q-antd-icon :type="item.icon"></q-antd-icon>
+        <div class="q-editor-nav-menu-left" :style="{width: workspaceLeft+ 'px'}">
+            <slot name=left></slot>
+        </div>
+        <div class="q-editor-nav-menu-center">
+            <div class="q-editor-nav-menu-center-btnlist">
+                <template v-for="item of buttons" :key="item.type">
+                    <template v-if="item.type === 'divider'">
+                        <Divider type="vertical"></Divider>
                     </template>
-                    {{ item.text }}
-                </Button>
-            </template>
-            <template v-if="item.type === 'text'">
-                <span>{{ item.text }}</span>
-            </template>
-        </template>
+                    <template v-if="item.type === 'button'">
+                        <Tooltip v-if="item.tooltip" :title="item.tooltip">
+                            <Button size="small" type="text" @click="item.onClick">
+                                <template #icon >
+                                    <q-antd-icon :type="item.icon"></q-antd-icon>
+                                </template>
+                                {{ item.text }}
+                            </Button>
+                        </Tooltip>
+                        <Button size="small" v-else type="text" @click="item.onClick">
+                            <template #icon >
+                                <q-antd-icon :type="item.icon"></q-antd-icon>
+                            </template>
+                            {{ item.text }}
+                        </Button>
+                    </template>
+                    <template v-if="item.type === 'text'">
+                        <span>{{ item.text }}</span>
+                    </template>
+                </template>
+            </div>
+        </div>
+        <div class="q-editor-nav-menu-right">
+            <slot name=right></slot>
+        </div>
     </div>
 </template>
 
@@ -50,6 +60,7 @@ const services = inject<IServices>('services');
 const uiService = services?.uiService;
 
 const zoom = computed((): number => uiService?.get('zoom') ?? 1);
+const workspaceLeft = computed((): number => uiService?.get('workspaceLeft') ?? 0);
 
 const isMac = /mac os x/.test(navigator.userAgent.toLowerCase());
 const ctrl = isMac ? 'Command' : 'Ctrl';
@@ -85,10 +96,23 @@ function get_config(item: IMenuItem) {
             });
             break;
         case 'undo':
-            // TODO
+            config.push({
+                type: 'button',
+                icon: 'ArrowLeftOutlined',
+                tooltip: `后退(${ctrl}+z)`,
+                disabled: () => !services?.historyService.state.canUndo,
+                onClick: () => services?.editorService.undo(),
+            });
             break;
         case 'redo':
-            // TODO
+            config.push({
+                type: 'button',
+                className: 'redo',
+                icon: 'ArrowRightOutlined',
+                tooltip: `前进(${ctrl}+Shift+z)`,
+                disabled: () => !services?.historyService.state.canRedo,
+                onClick: () => services?.editorService.redo(),
+            });
             break;
         case 'zoom-in':
             config.push({
@@ -143,6 +167,22 @@ const buttons = computed(() => {
 </script>
 <style lang='scss' scoped>
 .q-editor-nav-menu {
+    border-bottom: 1px solid #d8dee8;
+    @include border-color(border-color, bottom);
+    padding: 4px 0px;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-box-align: center;
+    align-items: center;
+    &-center{
+        width: 600px;
+        display: flex;
+        justify-content: center;
+    }
+    &-right {
+        flex: 1;
+        text-align: right;
+    }
     :deep(.ant-btn.ant-btn-text) {
         margin-left: 0;
         font-size: 10px

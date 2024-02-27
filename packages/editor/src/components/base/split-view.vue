@@ -1,11 +1,9 @@
 <!-- 画面切割 -->
 <template>
     <div class="q-editor-layout">
-        <template v-if="left">
-            <div class="q-editor-layout-left" :style="getLeftStyle">
-                <slot name="left"></slot>
-            </div>
-        </template>
+        <div class="q-editor-layout-left" :style="getLeftStyle">
+            <slot name="left"></slot>
+        </div>
         <template v-if="center">
             <div class="q-editor-layout-center" :style="getCenterStyle">
                 <slot name="center"></slot>
@@ -32,7 +30,7 @@ const props = withDefaults(
     }>(),
     {
         left: 0,
-        center: 500,
+        center: 600,
         right: 1,
     }
 );
@@ -51,7 +49,7 @@ const getCenterStyle = computed(() => {
 });
 const getRightStyle = computed(() => {
     if (props.right === 1) {
-        return { flex: 1, width: '800px', };
+        return { flex: 1, };
     }
     return {width: props.right + 'px', };
 });
@@ -62,5 +60,9 @@ const getRightStyle = computed(() => {
     width: 100%;
     display: flex;
     justify-self: space-between;
+    &-left {
+        // transition: all .3s;clear
+        overflow-x: hidden;
+    }
 }
 </style>
