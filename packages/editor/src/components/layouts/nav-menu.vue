@@ -162,8 +162,7 @@ const buttons = computed(() => {
 </script>
 <style lang='scss' scoped>
 .q-editor-nav-menu {
-    border-bottom: 1px solid #d8dee8;
-    @include border-color(border-color, bottom);
+    border-bottom: 1px solid #e8e8e8;
     padding: 4px 0px;
     display: flex;
     -webkit-box-pack: justify;
@@ -181,6 +180,11 @@ const buttons = computed(() => {
     :deep(.ant-btn.ant-btn-text) {
         margin-left: 0;
         font-size: 10px
+    }
+}
+[data-theme='dark'] {
+    .q-editor-nav-menu {
+        border-bottom: 1px solid #303030;
     }
 }
 </style>

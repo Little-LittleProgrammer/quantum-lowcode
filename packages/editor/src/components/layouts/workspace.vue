@@ -47,8 +47,7 @@ async function select(node: ISchemasNode) {
 </script>
 <style lang='scss' scoped>
 .q-editor-workspace {
-    border-right: 1px solid #d8dee8;
-    @include border-color(border-color, right);
+    border-right: 1px solid #e8e8e8;
     height: 100%;
     width: 100%;
     position: relative;
@@ -74,6 +73,11 @@ async function select(node: ISchemasNode) {
     }
     :deep(.ant-breadcrumb a) {
         padding: 0;
+    }
+}
+[data-theme='dark'] {
+    .q-editor-workspace  {
+        border-right: 1px solid #303030;
     }
 }
 </style>

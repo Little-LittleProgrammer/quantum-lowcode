@@ -150,8 +150,7 @@ function selectCompEvent(item:any) {
     width: 100%;
     &-content {
         margin: 6px 0;
-        border: 1px solid;
-        @include border-color(border-color);
+        border: 1px solid #e8e8e8;
         border-radius: 5px;
         padding: 0 5px;
         &-title {
@@ -160,14 +159,23 @@ function selectCompEvent(item:any) {
             font-weight: 500;
         }
         &-uni {
-            border: 1px solid;
-            @include border-color(border-color);
+            border: 1px solid #e8e8e8;
             border-radius: 5px;
             padding: 5px;
             &-title {
                 font-weight: 500;
                 display: flex;
                 justify-content: space-between;
+            }
+        }
+    }
+}
+[data-theme='dark'] {
+    .q-editor-event-select {
+        &-content {
+            border: 1px solid #303030;
+            &-uni {
+                border: 1px solid #303030;
             }
         }
     }

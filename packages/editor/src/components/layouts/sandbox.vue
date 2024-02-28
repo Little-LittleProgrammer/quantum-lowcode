@@ -204,8 +204,7 @@ onUnmounted(() => {
 		padding: 6px;
 		height: calc(100% - 36px);
 		overflow: auto;
-		border: 1px solid;
-		@include border-color(border-color);
+        border: 1px solid #e8e8e8;
 		.q-sandbox-container {
 			margin: auto;
 			width: 100%;
@@ -218,4 +217,9 @@ onUnmounted(() => {
 			background-color: #fff;
 		}
 	}
+    [data-theme='dark'] {
+        .q-editor-sandbox  {
+            border: 1px solid #303030;
+        }
+    }
 </style>
