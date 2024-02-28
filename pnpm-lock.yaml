@@ -42,23 +42,23 @@ importers:
         specifier: 6.1.0
         version: 6.1.0(vue@3.3.13)
       '@q-front-npm-configs/vite':
-        specifier: ~1.2.4-beta.1
-        version: 1.2.4-beta.1(@types/node@20.2.5)(postcss@8.4.33)(rollup@2.79.1)(typescript@5.1.3)(vite@4.5.1)(vue@3.3.13)(workbox-build@7.0.0)(workbox-window@7.0.0)
+        specifier: ~1.2.4
+        version: 1.2.4(@types/node@20.2.5)(postcss@8.4.33)(rollup@2.79.1)(typescript@5.1.3)(vite@4.5.1)(vue@3.3.13)(workbox-build@7.0.0)(workbox-window@7.0.0)
       '@q-front-npm/hooks':
-        specifier: ~1.2.4-beta.1
-        version: 1.2.4-beta.1(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(vue-router@4.2.5)(vue@3.3.13)
+        specifier: ~1.2.4
+        version: 1.2.4(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(vue-router@4.2.5)(vue@3.3.13)
       '@q-front-npm/http':
         specifier: ~1.2.1
         version: 1.2.5
       '@q-front-npm/shared':
-        specifier: ~1.2.3-beta.0
-        version: 1.2.3-beta.0
+        specifier: ~1.2.3
+        version: 1.2.3
       '@q-front-npm/vue3-antd-pc-ui':
-        specifier: ~1.2.9-beta.1
-        version: 1.2.9-beta.1(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(pinia@2.1.7)(vue-router@4.2.5)(vue@3.3.13)
+        specifier: ~1.2.9
+        version: 1.2.9(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(pinia@2.1.7)(vue-router@4.2.5)(vue@3.3.13)
       '@q-front-npm/vue3-pc-ui':
-        specifier: ~1.2.4-beta.7
-        version: 1.2.4-beta.7(vue-router@4.2.5)(vue@3.3.13)
+        specifier: ~1.2.4
+        version: 1.2.4(vue-router@4.2.5)(vue@3.3.13)
       '@qimao/quantum-core':
         specifier: workspace:*
         version: link:../../packages/core
@@ -166,8 +166,8 @@ importers:
         specifier: ^6.1.0
         version: 6.1.0(vue@3.3.13)
       '@q-front-npm/shared':
-        specifier: 1.2.1
-        version: 1.2.1
+        specifier: ~1.2.3
+        version: 1.2.3
       ant-design-vue:
         specifier: ^4.0.6
         version: 4.0.8(vue@3.3.13)
@@ -237,12 +237,15 @@ importers:
 
   packages/editor:
     dependencies:
+      '@q-front-npm-configs/vite':
+        specifier: ~1.2.4
+        version: 1.2.4(@types/node@20.2.5)(postcss@8.4.33)(typescript@5.1.3)(vite@4.5.1)(vue@3.3.13)(workbox-build@7.0.0)(workbox-window@7.0.0)
       '@q-front-npm/vue3-antd-pc-ui':
-        specifier: ~1.2.9-beta.1
-        version: 1.2.9-beta.1(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(pinia@2.1.7)(vue-router@4.2.5)(vue@3.3.13)
+        specifier: ~1.2.9
+        version: 1.2.9(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(pinia@2.1.7)(vue-router@4.2.5)(vue@3.3.13)
       '@q-front-npm/vue3-pc-ui':
-        specifier: ~1.2.4-beta.7
-        version: 1.2.4-beta.7(vue-router@4.2.5)(vue@3.3.13)
+        specifier: ~1.2.4
+        version: 1.2.4(vue-router@4.2.5)(vue@3.3.13)
       '@qimao/quantum-core':
         specifier: workspace:*
         version: link:../core
@@ -292,6 +295,9 @@ importers:
       sass:
         specifier: ^1.63.3
         version: 1.63.3
+      unplugin-vue-components:
+        specifier: ^0.25.2
+        version: 0.25.2(vue@3.3.13)
       vue-tsc:
         specifier: 1.8.8
         version: 1.8.8(typescript@5.1.3)
@@ -342,8 +348,8 @@ importers:
   packages/ui:
     dependencies:
       '@q-front-npm/vue3-antd-pc-ui':
-        specifier: ~1.2.9-beta.1
-        version: 1.2.9-beta.1(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(pinia@2.1.7)(vue-router@4.2.5)(vue@3.3.13)
+        specifier: ~1.2.9
+        version: 1.2.9(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(pinia@2.1.7)(vue-router@4.2.5)(vue@3.3.13)
       '@qimao/quantum-core':
         specifier: workspace:*
         version: link:../core
@@ -358,8 +364,8 @@ importers:
         specifier: ^6.1.0
         version: 6.1.0(vue@3.3.13)
       '@q-front-npm-configs/vite':
-        specifier: ~1.2.4-beta.1
-        version: 1.2.4-beta.1(@types/node@20.2.5)(postcss@8.4.33)(typescript@5.1.3)(vite@4.5.1)(vue@3.3.13)(workbox-build@7.0.0)(workbox-window@7.0.0)
+        specifier: ~1.2.4
+        version: 1.2.4(@types/node@20.2.5)(postcss@8.4.33)(typescript@5.1.3)(vite@4.5.1)(vue@3.3.13)(workbox-build@7.0.0)(workbox-window@7.0.0)
       '@q-front-npm/types':
         specifier: ~1.2.1
         version: 1.2.1
@@ -395,8 +401,8 @@ importers:
         version: link:../utils
     devDependencies:
       '@q-front-npm/shared':
-        specifier: 1.2.3-beta.0
-        version: 1.2.3-beta.0
+        specifier: ~1.2.3
+        version: 1.2.3
       '@q-front-npm/types':
         specifier: ~1.2.1
         version: 1.2.1
@@ -422,8 +428,8 @@ importers:
   packages/utils:
     dependencies:
       '@q-front-npm/utils':
-        specifier: ~1.2.4-beta.1
-        version: 1.2.4-beta.1
+        specifier: ~1.2.4
+        version: 1.2.4
       '@qimao/quantum-schemas':
         specifier: workspace:*
         version: link:../schemas
@@ -469,8 +475,8 @@ importers:
         version: 2.7.16
     devDependencies:
       '@q-front-npm/shared':
-        specifier: 1.2.3-beta.0
-        version: 1.2.3-beta.0
+        specifier: ~1.2.3
+        version: 1.2.3
       '@vitejs/plugin-vue2':
         specifier: ^2.2.0
         version: 2.3.1(vite@4.5.1)(vue@2.7.16)
@@ -487,8 +493,8 @@ importers:
         specifier: ^1.2.1
         version: 1.2.5
       '@q-front-npm/vue3-antd-pc-ui':
-        specifier: ~1.2.9-beta.1
-        version: 1.2.9-beta.1(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(pinia@2.1.7)(vue-router@4.2.5)(vue@3.3.13)
+        specifier: ~1.2.9
+        version: 1.2.9(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(pinia@2.1.7)(vue-router@4.2.5)(vue@3.3.13)
       '@qimao/quantum-core':
         specifier: workspace:*
         version: link:../../packages/core
@@ -515,8 +521,8 @@ importers:
         version: 3.3.13(typescript@5.1.3)
     devDependencies:
       '@q-front-npm/shared':
-        specifier: 1.2.3-beta.0
-        version: 1.2.3-beta.0
+        specifier: ~1.2.3
+        version: 1.2.3
       '@vitejs/plugin-vue':
         specifier: ^4.3.4
         version: 4.6.2(vite@4.5.1)(vue@3.3.13)
@@ -2201,14 +2207,14 @@ packages:
     resolution: {integrity: sha512-By7QVBvVkP4FbwWEFhNauT/65UBrQD8drgbKoVzAGshNh+kUDaaRYXTu9tKrrRdbNS7vmi/asKobotsYCY9eag==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm-configs/tsconfig/-/@q-front-npm-configs/tsconfig-1.0.0.tgz}
     dev: true
 
-  /@q-front-npm-configs/vite@1.2.4-beta.1(@types/node@20.2.5)(postcss@8.4.33)(rollup@2.79.1)(typescript@5.1.3)(vite@4.5.1)(vue@3.3.13)(workbox-build@7.0.0)(workbox-window@7.0.0):
-    resolution: {integrity: sha512-nXxCKadpoSunorpRHwwdRrsWhhb5u9XGyAcVX7WvPe/fH5p1xVhUd7Q3DpEvBDtmWeyy0S81XvoqBnhNp13Lhw==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm-configs/vite/-/@q-front-npm-configs/vite-1.2.4-beta.1.tgz}
+  /@q-front-npm-configs/vite@1.2.4(@types/node@20.2.5)(postcss@8.4.33)(rollup@2.79.1)(typescript@5.1.3)(vite@4.5.1)(vue@3.3.13)(workbox-build@7.0.0)(workbox-window@7.0.0):
+    resolution: {integrity: sha512-IA/8jd/9oKkbQ8bjjtwqH4g7ajdblWrD9ypO873wQQczl7155k/8fHtIdpeYJt9VOQ3NYCfyPMctbUNG0AvoRg==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm-configs/vite/-/@q-front-npm-configs/vite-1.2.4.tgz}
     peerDependencies:
       vite: ^4.5.1
       vue: ^3.3.0
     dependencies:
-      '@q-front-npm/shared': 1.2.3-beta.0
-      '@q-front-npm/utils': 1.2.4-beta.1
+      '@q-front-npm/shared': 1.2.3
+      '@q-front-npm/utils': 1.2.4
       '@sentry/vite-plugin': 2.10.2
       '@vitejs/plugin-vue': 4.6.2(vite@4.5.1)(vue@3.3.13)
       '@vitejs/plugin-vue-jsx': 3.1.0(vite@4.5.1)(vue@3.3.13)
@@ -2232,14 +2238,14 @@ packages:
       - workbox-window
     dev: false
 
-  /@q-front-npm-configs/vite@1.2.4-beta.1(@types/node@20.2.5)(postcss@8.4.33)(typescript@5.1.3)(vite@4.5.1)(vue@3.3.13)(workbox-build@7.0.0)(workbox-window@7.0.0):
-    resolution: {integrity: sha512-nXxCKadpoSunorpRHwwdRrsWhhb5u9XGyAcVX7WvPe/fH5p1xVhUd7Q3DpEvBDtmWeyy0S81XvoqBnhNp13Lhw==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm-configs/vite/-/@q-front-npm-configs/vite-1.2.4-beta.1.tgz}
+  /@q-front-npm-configs/vite@1.2.4(@types/node@20.2.5)(postcss@8.4.33)(typescript@5.1.3)(vite@4.5.1)(vue@3.3.13)(workbox-build@7.0.0)(workbox-window@7.0.0):
+    resolution: {integrity: sha512-IA/8jd/9oKkbQ8bjjtwqH4g7ajdblWrD9ypO873wQQczl7155k/8fHtIdpeYJt9VOQ3NYCfyPMctbUNG0AvoRg==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm-configs/vite/-/@q-front-npm-configs/vite-1.2.4.tgz}
     peerDependencies:
       vite: ^4.5.1
       vue: ^3.3.0
     dependencies:
-      '@q-front-npm/shared': 1.2.3-beta.0
-      '@q-front-npm/utils': 1.2.4-beta.1
+      '@q-front-npm/shared': 1.2.3
+      '@q-front-npm/utils': 1.2.4
       '@sentry/vite-plugin': 2.10.2
       '@vitejs/plugin-vue': 4.6.2(vite@4.5.1)(vue@3.3.13)
       '@vitejs/plugin-vue-jsx': 3.1.0(vite@4.5.1)(vue@3.3.13)
@@ -2261,10 +2267,9 @@ packages:
       - typescript
       - workbox-build
       - workbox-window
-    dev: true
 
-  /@q-front-npm/hooks@1.2.4-beta.1(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(vue-router@4.2.5)(vue@3.3.13):
-    resolution: {integrity: sha512-AyXyuqcEY/WqDIEsVXtaM6Pt8GtE+DkMyiXqKAEFrXeY2rPqwOaIWXVrSwCOUbk9K5CkNd1srrkebpX5yy3oGw==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/hooks/-/@q-front-npm/hooks-1.2.4-beta.1.tgz}
+  /@q-front-npm/hooks@1.2.4(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(vue-router@4.2.5)(vue@3.3.13):
+    resolution: {integrity: sha512-Ocplfu8AZJtNXiT7EfHuTU3muC+5nM/K5pCPcEMBmJt97GZkP+TLLP4D4l4wqBb9AVPMGd/VcKMfAnqOqaIl1g==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/hooks/-/@q-front-npm/hooks-1.2.4.tgz}
     peerDependencies:
       '@ant-design/icons-vue': ^6.1.0
       ant-design-vue: ^4.0.6
@@ -2272,9 +2277,9 @@ packages:
       vue-router: ^4.2.4
     dependencies:
       '@ant-design/icons-vue': 6.1.0(vue@3.3.13)
-      '@q-front-npm/shared': 1.2.3-beta.0
+      '@q-front-npm/shared': 1.2.3
       '@q-front-npm/types': 1.2.2
-      '@q-front-npm/utils': 1.2.4-beta.1
+      '@q-front-npm/utils': 1.2.4
       ant-design-vue: 4.0.8(vue@3.3.13)
       vue: 3.3.13(typescript@5.1.3)
       vue-router: 4.2.5(vue@3.3.13)
@@ -2302,16 +2307,12 @@ packages:
       - debug
     dev: false
 
-  /@q-front-npm/shared@1.2.1:
-    resolution: {integrity: sha512-G/k6tWkdoSJCLjBq2DzuccG5f6GlAneK3sOAujKN2M3i5vdq1Xuh8Xh3XyXXUrhIeBw0m2RgpC9nTZ2Qw4dD0Q==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/shared/-/@q-front-npm/shared-1.2.1.tgz}
-    dev: false
-
   /@q-front-npm/shared@1.2.2:
     resolution: {integrity: sha512-YNqhUBv82ETtZm31wV2Lawntz/24mQmNNs8uel0LRau2LIA8pOglm1HS6eblTRNNgpXujH5VAhxK5IsKyI229g==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/shared/-/@q-front-npm/shared-1.2.2.tgz}
     dev: false
 
-  /@q-front-npm/shared@1.2.3-beta.0:
-    resolution: {integrity: sha512-iX3oVgdW9Zkha7/C1b247MgaD6p05cX5KqX4+Y58ZADJQq1hFgRkKAokshTBahp9On8DcTIPYxEbHUcM6JQY3A==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/shared/-/@q-front-npm/shared-1.2.3-beta.0.tgz}
+  /@q-front-npm/shared@1.2.3:
+    resolution: {integrity: sha512-WIc5S0SQQgM/Bz7wi6uOsV/cse6J/0pNluOZlkLTl0LFwjmikzu4C7+lOsAf9qT4ntb8FT1dj0A7/R/nd17IPQ==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/shared/-/@q-front-npm/shared-1.2.3.tgz}
 
   /@q-front-npm/types@1.2.1:
     resolution: {integrity: sha512-wfRwfLmlVL8aERFipMcFhW3yponh06M/N3jxWXnv3IB3A0rehBGP6GJTjIp9bdjOQPv1zvZDbFY1aX+12RjpnQ==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/types/-/@q-front-npm/types-1.2.1.tgz}
@@ -2333,10 +2334,10 @@ packages:
       '@q-front-npm/shared': 1.2.2
     dev: false
 
-  /@q-front-npm/utils@1.2.4-beta.1:
-    resolution: {integrity: sha512-SZIpmp13e0+ZTEq9aX4IzkMZm32LsTguzdF3h0mGNTtVznOIclN+2PU4nMYLKsTU1GjLn4l3fBC9QY3Y4fJkfw==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/utils/-/@q-front-npm/utils-1.2.4-beta.1.tgz}
+  /@q-front-npm/utils@1.2.4:
+    resolution: {integrity: sha512-f23sFx+1OUNqEXuVGeJsPNsgsHGHBpLiWt9usMqrCUYba5YAWBkBaIsyUcexi1BmZxjcAZK7uV9UAmcFW6xdNA==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/utils/-/@q-front-npm/utils-1.2.4.tgz}
     dependencies:
-      '@q-front-npm/shared': 1.2.3-beta.0
+      '@q-front-npm/shared': 1.2.3
 
   /@q-front-npm/vue2-active-ui@1.0.1-beta.0(postcss-pxtorem@6.0.0)(vue@2.7.16):
     resolution: {integrity: sha512-CLwyV5Ro8u/ESt/1cj/nbGODOtwEhAqwlPZ8OjP4//HU93lCa2mFYIESELCAX2CZ2+FjXFWAD0Cffs8875foiQ==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/vue2-active-ui/-/@q-front-npm/vue2-active-ui-1.0.1-beta.0.tgz}
@@ -2352,17 +2353,17 @@ packages:
       - debug
     dev: false
 
-  /@q-front-npm/vue3-antd-pc-ui@1.2.9-beta.1(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(pinia@2.1.7)(vue-router@4.2.5)(vue@3.3.13):
-    resolution: {integrity: sha512-TFSIXb24W8I0T1BaCrdS8KOr5l4c7OPVTvbsDaBnRopARbf1YVFJShnkfPjCQGxeHh22aaOoDtyi5Cs8acwrHQ==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/vue3-antd-pc-ui/-/@q-front-npm/vue3-antd-pc-ui-1.2.9-beta.1.tgz}
+  /@q-front-npm/vue3-antd-pc-ui@1.2.9(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(pinia@2.1.7)(vue-router@4.2.5)(vue@3.3.13):
+    resolution: {integrity: sha512-kgYkZPmEIgd1N9VMdZqxSY3uZxCk92dxAlhKzB1gC1rFiXpyy2MKOR9y72Fm6SAU8dFxS+wq151KXu4PWmsVWA==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/vue3-antd-pc-ui/-/@q-front-npm/vue3-antd-pc-ui-1.2.9.tgz}
     peerDependencies:
       pinia: ^2.0.30
       vue: ~3.3.0
       vue-router: ^4.2.4
     dependencies:
-      '@q-front-npm/hooks': 1.2.4-beta.1(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(vue-router@4.2.5)(vue@3.3.13)
-      '@q-front-npm/shared': 1.2.3-beta.0
-      '@q-front-npm/utils': 1.2.4-beta.1
-      '@q-front-npm/vue3-pc-ui': 1.2.4-beta.7(vue-router@4.2.5)(vue@3.3.13)
+      '@q-front-npm/hooks': 1.2.4(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(vue-router@4.2.5)(vue@3.3.13)
+      '@q-front-npm/shared': 1.2.3
+      '@q-front-npm/utils': 1.2.4
+      '@q-front-npm/vue3-pc-ui': 1.2.4(vue-router@4.2.5)(vue@3.3.13)
       lodash-es: 4.17.21
       pinia: 2.1.7(typescript@5.1.3)(vue@3.3.13)
       sortablejs: 1.15.1
@@ -2373,14 +2374,14 @@ packages:
       - ant-design-vue
     dev: false
 
-  /@q-front-npm/vue3-pc-ui@1.2.4-beta.7(vue-router@4.2.5)(vue@3.3.13):
-    resolution: {integrity: sha512-Fj5mha+UM11OyiiEPxXyF7LeOOf+8EzRTXKb5oLxlwOA6OvxtuBpcrV2cQETnG8D6qqOTE7f/7APdXaC+jPAog==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/vue3-pc-ui/-/@q-front-npm/vue3-pc-ui-1.2.4-beta.7.tgz}
+  /@q-front-npm/vue3-pc-ui@1.2.4(vue-router@4.2.5)(vue@3.3.13):
+    resolution: {integrity: sha512-9Kn9zfC7+sSI+2zfhc9Xb6dWPL97CvY8SzsgKOXF/+TkMnXgLINH0e93unTTeAKVO2ZavcJHkQd0xbJwOEpBCw==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/vue3-pc-ui/-/@q-front-npm/vue3-pc-ui-1.2.4.tgz}
     peerDependencies:
       vue: ~3.3.0
       vue-router: ^4.2.4
     dependencies:
-      '@q-front-npm/shared': 1.2.3-beta.0
-      '@q-front-npm/utils': 1.2.4-beta.1
+      '@q-front-npm/shared': 1.2.3
+      '@q-front-npm/utils': 1.2.4
       vue: 3.3.13(typescript@5.1.3)
       vue-router: 4.2.5(vue@3.3.13)
     dev: false
@@ -2567,7 +2568,6 @@ packages:
       estree-walker: 2.0.2
       picomatch: 2.3.1
       rollup: 3.29.4
-    dev: true
 
   /@rushstack/node-core-library@3.63.0(@types/node@20.2.5):
     resolution: {integrity: sha512-Q7B3dVpBQF1v+mUfxNcNZh5uHVR8ntcnkN5GYjbBLrxUYHBGKbnCM+OdcN+hzCpFlLBH6Ob0dEHhZ0spQwf24A==, tarball: https://registry.npmmirror.com/@rushstack/node-core-library/-/node-core-library-3.63.0.tgz}
@@ -2649,7 +2649,7 @@ packages:
     dev: true
 
   /@sentry/bundler-plugin-core@2.10.2:
-    resolution: {integrity: sha512-7IoekLtROlJZqTxtHQ3IhocBuf9dsEq+JjqlHMyZXoq+QKuvJFvMd/4T+r6KjZ15kMZOIkR+spK3V7duH201hw==, tarball: https://registry.npmmirror.com/@sentry/bundler-plugin-core/-/bundler-plugin-core-2.10.2.tgz}
+    resolution: {integrity: sha512-7IoekLtROlJZqTxtHQ3IhocBuf9dsEq+JjqlHMyZXoq+QKuvJFvMd/4T+r6KjZ15kMZOIkR+spK3V7duH201hw==}
     engines: {node: '>= 14'}
     dependencies:
       '@sentry/cli': 2.23.2
@@ -2720,7 +2720,7 @@ packages:
     optional: true
 
   /@sentry/cli@2.23.2:
-    resolution: {integrity: sha512-coQoJnts6E/yN21uQyI7sqa89kixXQuIRodOPnIymQtYJZG3DAwqxcCBLMS3NZyVQ3HemeuhhDnE/KFd1mS53Q==, tarball: https://registry.npmmirror.com/@sentry/cli/-/cli-2.23.2.tgz}
+    resolution: {integrity: sha512-coQoJnts6E/yN21uQyI7sqa89kixXQuIRodOPnIymQtYJZG3DAwqxcCBLMS3NZyVQ3HemeuhhDnE/KFd1mS53Q==}
     engines: {node: '>= 10'}
     hasBin: true
     requiresBuild: true
@@ -2750,7 +2750,7 @@ packages:
       '@sentry/utils': 7.92.0
 
   /@sentry/node@7.92.0:
-    resolution: {integrity: sha512-LZeQL1r6kikEoOzA9K61OmMl32/lK/6PzmFNDH6z7UYwQopCZgVA6IP+CZuln8K2ys5c9hCyF7ICQMysXfpNJA==, tarball: https://registry.npmmirror.com/@sentry/node/-/node-7.92.0.tgz}
+    resolution: {integrity: sha512-LZeQL1r6kikEoOzA9K61OmMl32/lK/6PzmFNDH6z7UYwQopCZgVA6IP+CZuln8K2ys5c9hCyF7ICQMysXfpNJA==}
     engines: {node: '>=8'}
     dependencies:
       '@sentry-internal/tracing': 7.92.0
@@ -2782,7 +2782,7 @@ packages:
       '@sentry/types': 7.92.0
 
   /@sentry/vite-plugin@2.10.2:
-    resolution: {integrity: sha512-30uu0L8ZCpAKOxAXmtyqwL06sG8UEBXGY5mxUDITyQYDf8pKuiOEf5018KlEDjhYVypfMQH3jq5xXUUka+/ipg==, tarball: https://registry.npmmirror.com/@sentry/vite-plugin/-/vite-plugin-2.10.2.tgz}
+    resolution: {integrity: sha512-30uu0L8ZCpAKOxAXmtyqwL06sG8UEBXGY5mxUDITyQYDf8pKuiOEf5018KlEDjhYVypfMQH3jq5xXUUka+/ipg==}
     engines: {node: '>= 14'}
     dependencies:
       '@sentry/bundler-plugin-core': 2.10.2
@@ -3491,7 +3491,7 @@ packages:
     hasBin: true
 
   /agent-base@6.0.2:
-    resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==, tarball: https://registry.npmmirror.com/agent-base/-/agent-base-6.0.2.tgz}
+    resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
     engines: {node: '>= 6.0.0'}
     dependencies:
       debug: 4.3.4
@@ -4047,7 +4047,7 @@ packages:
     resolution: {integrity: sha512-bvVTQe1lfaUr1oFzZX80ce9KLDlZ3iU+XGNE/bz9HnGdklTieqsbmsLHe+rT2XWqopvL0PckkYqN7ksmm5pe3w==, tarball: https://registry.npmmirror.com/dom-scroll-into-view/-/dom-scroll-into-view-2.0.1.tgz}
 
   /dotenv@16.3.1:
-    resolution: {integrity: sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==, tarball: https://registry.npmmirror.com/dotenv/-/dotenv-16.3.1.tgz}
+    resolution: {integrity: sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==}
     engines: {node: '>=12'}
 
   /ejs@3.1.9:
@@ -4427,7 +4427,7 @@ packages:
       to-regex-range: 5.0.1
 
   /find-up@5.0.0:
-    resolution: {integrity: sha512-78/PXT1wlLLDgTzDs7sjq9hzz0vXD+zn+7wypEe4fXQxCmdmqfGsEPQxmiCSQI3ajFV91bVSsvNtrJRiW6nGng==, tarball: https://registry.npmmirror.com/find-up/-/find-up-5.0.0.tgz}
+    resolution: {integrity: sha512-78/PXT1wlLLDgTzDs7sjq9hzz0vXD+zn+7wypEe4fXQxCmdmqfGsEPQxmiCSQI3ajFV91bVSsvNtrJRiW6nGng==}
     engines: {node: '>=10'}
     dependencies:
       locate-path: 6.0.0
@@ -4590,7 +4590,7 @@ packages:
     dev: true
 
   /glob@9.3.2:
-    resolution: {integrity: sha512-BTv/JhKXFEHsErMte/AnfiSv8yYOLLiyH2lTg8vn02O21zWFgHPTfxtgn1QRe7NRgggUhC8hacR2Re94svHqeA==, tarball: https://registry.npmmirror.com/glob/-/glob-9.3.2.tgz}
+    resolution: {integrity: sha512-BTv/JhKXFEHsErMte/AnfiSv8yYOLLiyH2lTg8vn02O21zWFgHPTfxtgn1QRe7NRgggUhC8hacR2Re94svHqeA==}
     engines: {node: '>=16 || 14 >=14.17'}
     dependencies:
       fs.realpath: 1.0.0
@@ -5070,7 +5070,7 @@ packages:
     engines: {node: '>=14'}
 
   /locate-path@6.0.0:
-    resolution: {integrity: sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==, tarball: https://registry.npmmirror.com/locate-path/-/locate-path-6.0.0.tgz}
+    resolution: {integrity: sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==}
     engines: {node: '>=10'}
     dependencies:
       p-locate: 5.0.0
@@ -5112,7 +5112,7 @@ packages:
       js-tokens: 4.0.0
 
   /lru-cache@10.1.0:
-    resolution: {integrity: sha512-/1clY/ui8CzjKFyjdvwPWJUYKiFVXG2I2cY0ssG7h4+hwk+XOIX7ZSG9Q7TW8TW3Kp3BUSqgFWBLgL4PJ+Blag==, tarball: https://registry.npmmirror.com/lru-cache/-/lru-cache-10.1.0.tgz}
+    resolution: {integrity: sha512-/1clY/ui8CzjKFyjdvwPWJUYKiFVXG2I2cY0ssG7h4+hwk+XOIX7ZSG9Q7TW8TW3Kp3BUSqgFWBLgL4PJ+Blag==}
     engines: {node: 14 || >=16.14}
 
   /lru-cache@5.1.1:
@@ -5132,7 +5132,7 @@ packages:
       sourcemap-codec: 1.4.8
 
   /magic-string@0.27.0:
-    resolution: {integrity: sha512-8UnnX2PeRAPZuN12svgR9j7M1uWMovg/CEnIwIG0LFkXSJJe4PdfUGiTGl8V9bsBHFUtfVINcSyYxd7q+kx9fA==, tarball: https://registry.npmmirror.com/magic-string/-/magic-string-0.27.0.tgz}
+    resolution: {integrity: sha512-8UnnX2PeRAPZuN12svgR9j7M1uWMovg/CEnIwIG0LFkXSJJe4PdfUGiTGl8V9bsBHFUtfVINcSyYxd7q+kx9fA==}
     engines: {node: '>=12'}
     dependencies:
       '@jridgewell/sourcemap-codec': 1.4.15
@@ -5214,7 +5214,7 @@ packages:
       brace-expansion: 2.0.1
 
   /minimatch@7.4.6:
-    resolution: {integrity: sha512-sBz8G/YjVniEz6lKPNpKxXwazJe4c19fEfV2GDMX6AjFz+MX9uDWIZW8XreVhkFW3fkIdTv/gxWr/Kks5FFAVw==, tarball: https://registry.npmmirror.com/minimatch/-/minimatch-7.4.6.tgz}
+    resolution: {integrity: sha512-sBz8G/YjVniEz6lKPNpKxXwazJe4c19fEfV2GDMX6AjFz+MX9uDWIZW8XreVhkFW3fkIdTv/gxWr/Kks5FFAVw==}
     engines: {node: '>=10'}
     dependencies:
       brace-expansion: 2.0.1
@@ -5229,11 +5229,11 @@ packages:
     resolution: {integrity: sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==}
 
   /minipass@4.2.8:
-    resolution: {integrity: sha512-fNzuVyifolSLFL4NzpF+wEF4qrgqaaKX0haXPQEdQ7NKAN+WecoKMHV09YcuL/DHxrUsYQOK3MiuDf7Ip2OXfQ==, tarball: https://registry.npmmirror.com/minipass/-/minipass-4.2.8.tgz}
+    resolution: {integrity: sha512-fNzuVyifolSLFL4NzpF+wEF4qrgqaaKX0haXPQEdQ7NKAN+WecoKMHV09YcuL/DHxrUsYQOK3MiuDf7Ip2OXfQ==}
     engines: {node: '>=8'}
 
   /minipass@7.0.4:
-    resolution: {integrity: sha512-jYofLM5Dam9279rdkWzqHozUo4ybjdZmCsDHePy5V/PbBcVMiSZR97gmAy45aqi8CK1lG2ECd356FU86avfwUQ==, tarball: https://registry.npmmirror.com/minipass/-/minipass-7.0.4.tgz}
+    resolution: {integrity: sha512-jYofLM5Dam9279rdkWzqHozUo4ybjdZmCsDHePy5V/PbBcVMiSZR97gmAy45aqi8CK1lG2ECd356FU86avfwUQ==}
     engines: {node: '>=16 || 14 >=14.17'}
 
   /minisearch@6.3.0:
@@ -5296,7 +5296,7 @@ packages:
     optional: true
 
   /node-fetch@2.7.0:
-    resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==, tarball: https://registry.npmmirror.com/node-fetch/-/node-fetch-2.7.0.tgz}
+    resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
     engines: {node: 4.x || >=6.0.0}
     peerDependencies:
       encoding: ^0.1.0
@@ -5385,7 +5385,7 @@ packages:
       yocto-queue: 0.1.0
 
   /p-locate@5.0.0:
-    resolution: {integrity: sha512-LaNjtRWUBY++zB5nE/NwcaoMylSPk+S+ZHNB1TzdbMJMny6dynpAGt7X/tl/QYq3TIeE6nxHppbo2LGymrG5Pw==, tarball: https://registry.npmmirror.com/p-locate/-/p-locate-5.0.0.tgz}
+    resolution: {integrity: sha512-LaNjtRWUBY++zB5nE/NwcaoMylSPk+S+ZHNB1TzdbMJMny6dynpAGt7X/tl/QYq3TIeE6nxHppbo2LGymrG5Pw==}
     engines: {node: '>=10'}
     dependencies:
       p-limit: 3.1.0
@@ -5421,7 +5421,7 @@ packages:
     resolution: {integrity: sha512-LDJzPVEEEPR+y48z93A0Ed0yXb8pAByGWo/k5YYdYgpY2/2EsOsksJrq7lOHxryrVOn1ejG6oAp8ahvOIQD8sw==, tarball: https://registry.npmmirror.com/path-parse/-/path-parse-1.0.7.tgz}
 
   /path-scurry@1.10.1:
-    resolution: {integrity: sha512-MkhCqzzBEpPvxxQ71Md0b1Kk51W01lrYvlMzSUaIzNsODdd7mqhiimSZlr+VegAz5Z6Vzt9Xg2ttE//XBhH3EQ==, tarball: https://registry.npmmirror.com/path-scurry/-/path-scurry-1.10.1.tgz}
+    resolution: {integrity: sha512-MkhCqzzBEpPvxxQ71Md0b1Kk51W01lrYvlMzSUaIzNsODdd7mqhiimSZlr+VegAz5Z6Vzt9Xg2ttE//XBhH3EQ==}
     engines: {node: '>=16 || 14 >=14.17'}
     dependencies:
       lru-cache: 10.1.0
@@ -5513,7 +5513,7 @@ packages:
     engines: {node: '>=6'}
 
   /pretty-bytes@6.1.1:
-    resolution: {integrity: sha512-mQUvGU6aUFQ+rNvTIAcZuWGRT9a6f6Yrg9bHs4ImKF+HZCEK+plBvnAZYSIQztknZF2qnzNtr6F8s0+IuptdlQ==, tarball: https://registry.npmmirror.com/pretty-bytes/-/pretty-bytes-6.1.1.tgz}
+    resolution: {integrity: sha512-mQUvGU6aUFQ+rNvTIAcZuWGRT9a6f6Yrg9bHs4ImKF+HZCEK+plBvnAZYSIQztknZF2qnzNtr6F8s0+IuptdlQ==}
     engines: {node: ^14.13.1 || >=16.0.0}
 
   /progress@2.0.3:
@@ -6065,7 +6065,7 @@ packages:
       is-number: 7.0.0
 
   /tr46@0.0.3:
-    resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==, tarball: https://registry.npmmirror.com/tr46/-/tr46-0.0.3.tgz}
+    resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
 
   /tr46@1.0.1:
     resolution: {integrity: sha1-qLE/1r/SSJUZZ0zN5VujaTtwbQk=}
@@ -6305,10 +6305,9 @@ packages:
     transitivePeerDependencies:
       - rollup
       - supports-color
-    dev: true
 
   /unplugin@1.0.1:
-    resolution: {integrity: sha512-aqrHaVBWW1JVKBHmGo33T5TxeL0qWzfvjWokObHA9bYmN7eNDkwOxmLjhioHl9878qDFMAaT51XNroRyuz7WxA==, tarball: https://registry.npmmirror.com/unplugin/-/unplugin-1.0.1.tgz}
+    resolution: {integrity: sha512-aqrHaVBWW1JVKBHmGo33T5TxeL0qWzfvjWokObHA9bYmN7eNDkwOxmLjhioHl9878qDFMAaT51XNroRyuz7WxA==}
     dependencies:
       acorn: 8.11.3
       chokidar: 3.5.3
@@ -6355,15 +6354,14 @@ packages:
     engines: {node: '>= 0.10'}
 
   /vite-plugin-compression2@0.10.6:
-    resolution: {integrity: sha512-R6jQNVeutoJAcxbTCiRqH1ESmKdQYQOUlAMJhy2YaTMsmZYjspy0KoVL9DKAJcprRIYG2Z9MlvfY7nX+ADTXmQ==, tarball: https://registry.npmmirror.com/vite-plugin-compression2/-/vite-plugin-compression2-0.10.6.tgz}
+    resolution: {integrity: sha512-R6jQNVeutoJAcxbTCiRqH1ESmKdQYQOUlAMJhy2YaTMsmZYjspy0KoVL9DKAJcprRIYG2Z9MlvfY7nX+ADTXmQ==}
     dependencies:
       '@rollup/pluginutils': 5.1.0(rollup@3.29.4)
     transitivePeerDependencies:
       - rollup
-    dev: true
 
   /vite-plugin-compression2@0.10.6(rollup@2.79.1):
-    resolution: {integrity: sha512-R6jQNVeutoJAcxbTCiRqH1ESmKdQYQOUlAMJhy2YaTMsmZYjspy0KoVL9DKAJcprRIYG2Z9MlvfY7nX+ADTXmQ==, tarball: https://registry.npmmirror.com/vite-plugin-compression2/-/vite-plugin-compression2-0.10.6.tgz}
+    resolution: {integrity: sha512-R6jQNVeutoJAcxbTCiRqH1ESmKdQYQOUlAMJhy2YaTMsmZYjspy0KoVL9DKAJcprRIYG2Z9MlvfY7nX+ADTXmQ==}
     dependencies:
       '@rollup/pluginutils': 5.1.0(rollup@2.79.1)
     transitivePeerDependencies:
@@ -6416,10 +6414,9 @@ packages:
       - '@types/node'
       - rollup
       - supports-color
-    dev: true
 
   /vite-plugin-pwa@0.16.7(vite@4.5.1)(workbox-build@7.0.0)(workbox-window@7.0.0):
-    resolution: {integrity: sha512-4WMA5unuKlHs+koNoykeuCfTcqEGbiTRr8sVYUQMhc6tWxZpSRnv9Ojk4LKmqVhoPGHfBVCdGaMo8t9Qidkc1Q==, tarball: https://registry.npmmirror.com/vite-plugin-pwa/-/vite-plugin-pwa-0.16.7.tgz}
+    resolution: {integrity: sha512-4WMA5unuKlHs+koNoykeuCfTcqEGbiTRr8sVYUQMhc6tWxZpSRnv9Ojk4LKmqVhoPGHfBVCdGaMo8t9Qidkc1Q==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       vite: ^3.1.0 || ^4.0.0 || ^5.0.0-0
@@ -6657,7 +6654,7 @@ packages:
     engines: {node: '>=10.13.0'}
 
   /webpack-virtual-modules@0.5.0:
-    resolution: {integrity: sha512-kyDivFZ7ZM0BVOUteVbDFhlRt7Ah/CSPwJdi8hBpkK7QLumUqdLtVfm/PX/hkcnrvr0i77fO5+TjZ94Pe+C9iw==, tarball: https://registry.npmmirror.com/webpack-virtual-modules/-/webpack-virtual-modules-0.5.0.tgz}
+    resolution: {integrity: sha512-kyDivFZ7ZM0BVOUteVbDFhlRt7Ah/CSPwJdi8hBpkK7QLumUqdLtVfm/PX/hkcnrvr0i77fO5+TjZ94Pe+C9iw==}
 
   /webpack-virtual-modules@0.6.1:
     resolution: {integrity: sha512-poXpCylU7ExuvZK8z+On3kX+S8o/2dQ/SVYueKA0D4WEMXROXgY8Ez50/bQEUmvoSMMrWcrJqCHuhAbsiwg7Dg==, tarball: https://registry.npmmirror.com/webpack-virtual-modules/-/webpack-virtual-modules-0.6.1.tgz}

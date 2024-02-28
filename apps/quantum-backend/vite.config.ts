@@ -35,13 +35,13 @@ export default ({ command, mode, }: ConfigEnv):UserConfig => {
                 { find: /^@qimao\/quantum-sandbox/, replacement: pathResolve('../../packages/sandbox/index.ts'), }
             ],
         },
-        // optimizeDeps: {
-        //     esbuildOptions: {
-        //         define: {
-        //             global: 'globalThis',
-        //         },
-        //     },
-        // },
+        optimizeDeps: {
+            esbuildOptions: {
+                define: {
+                    global: 'globalThis',
+                },
+            },
+        },
         server: {
             host: '0.0.0.0',
             port: 8198,

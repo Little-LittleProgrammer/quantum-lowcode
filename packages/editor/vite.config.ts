@@ -16,62 +16,69 @@
  * limitations under the License.
  */
 
-import { defineConfig } from 'vite';
+import { ConfigEnv, UserConfig, defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 
 import pkg from './package.json';
 import {resolve} from 'path';
-
+import { componentPlugin } from './plugins/component';
 function pathResolve(dir) {
     return resolve(process.cwd(), '.', dir);
 }
 
-export default defineConfig({
-    plugins: [vue()],
+export default ({ command, mode, }: ConfigEnv):UserConfig => {
+    const plugins = [vue(), componentPlugin];
+    return {
+        plugins: plugins,
 
-    resolve: {
-        alias: process.env.NODE_ENV === 'production' ? [] : [
-            { find: /^@\//, replacement: pathResolve('./src/'), },
-            { find: /^@qimao\/quantum-utils/, replacement: pathResolve('../utils/index.ts'), },
-            { find: /^@qimao\/quantum-core/, replacement: pathResolve('../core/index.ts'), },
-            { find: /^@qimao\/quantum-sandbox/, replacement: pathResolve('../sandbox/index.ts'), },
-            { find: /^@qimao\/quantum-schemas/, replacement: pathResolve('../schemas/index.ts'), }
-        ],
-    },
-
-    optimizeDeps: {
-        esbuildOptions: {
-            define: {
-                global: 'globalThis',
-            },
-        },
-    },
-
-    build: {
-        cssCodeSplit: false,
-        sourcemap: false,
-        minify: false,
-        target: 'esnext',
-
-        lib: {
-            entry: './index.ts',
-            name: 'QuantumEditor',
-            fileName: 'quantum-editor',
+        esbuild: {
+            drop: ['console', 'debugger'],
         },
 
-        rollupOptions: {
-            // 确保外部化处理那些你不想打包进库的依赖
-            external(id: string) {
-                return Object.keys(pkg.dependencies).some((k) => new RegExp(`^${k}`).test(id));
-            },
+        resolve: {
+            alias: process.env.NODE_ENV === 'production' ? [] : [
+                { find: /^@\//, replacement: pathResolve('./src/'), },
+                { find: /^@qimao\/quantum-utils/, replacement: pathResolve('../utils/index.ts'), },
+                { find: /^@qimao\/quantum-core/, replacement: pathResolve('../core/index.ts'), },
+                { find: /^@qimao\/quantum-sandbox/, replacement: pathResolve('../sandbox/index.ts'), },
+                { find: /^@qimao\/quantum-schemas/, replacement: pathResolve('../schemas/index.ts'), }
+            ],
+        },
 
-            output: {
-                // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
-                globals: {
-                    vue: 'Vue',
-                    'ant-design-vue': 'AntDeisgnVue',
+        optimizeDeps: {
+            esbuildOptions: {
+                define: {
+                    global: 'globalThis',
                 },
             },
         },
-    },
-});
+
+        build: {
+            cssCodeSplit: false,
+            sourcemap: false,
+            minify: false,
+            target: 'esnext',
+
+            lib: {
+                entry: './index.ts',
+                name: 'QuantumEditor',
+                fileName: 'quantum-editor',
+            },
+
+            rollupOptions: {
+                // 确保外部化处理那些你不想打包进库的依赖
+                external(id: string) {
+                    return Object.keys(pkg.dependencies).some((k) => new RegExp(`^${k}`).test(id));
+                },
+
+                output: {
+                    // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
+                    globals: {
+                        vue: 'Vue',
+                        'ant-design-vue': 'AntDeisgnVue',
+                    },
+                },
+            },
+        },
+    };
+};

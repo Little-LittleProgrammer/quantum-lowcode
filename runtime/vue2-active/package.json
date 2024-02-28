@@ -28,7 +28,7 @@
         "vue": "^2.7.4"
     },
     "devDependencies": {
-        "@q-front-npm/shared": "1.2.3-beta.0",
+        "@q-front-npm/shared": "~1.2.3",
         "@vitejs/plugin-vue2": "^2.2.0",
         "postcss-pxtorem": "^6.0.0",
         "rollup-plugin-external-globals": "^0.6.1"
