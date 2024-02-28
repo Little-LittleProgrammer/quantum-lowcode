@@ -10,6 +10,10 @@ import { setup_project_conf } from '@q-front-npm/vue3-antd-pc-ui';
 import setting from './enums/projectEnum';
 import {install_monaco} from './monaco';
 
+if (import.meta.env.PROD) {
+    import('@qimao/quantum-editor/dist/style.css');
+}
+
 // 时间组件中文
 // dayjs.locale('zh-cn');
 

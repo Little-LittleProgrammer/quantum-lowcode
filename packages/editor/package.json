@@ -19,7 +19,7 @@
     "./*": "./"
   },
   "scripts": {
-    "build": "vite build && npm run build:type",
+    "build": "vite build",
     "build:type": "vue-tsc --declaration --emitDeclarationOnly --project tsconfig.build.json",
     "clear:type": "rimraf ./types"
   },

@@ -23,11 +23,12 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import externalGlobals from 'rollup-plugin-external-globals';
+import {resolve} from 'path';
 
 export default defineConfig(({ mode, }) => {
     // TODO
     if (['config'].includes(mode)) {
-        const file = resolve(__dirname, 'node_modules/@qimao/quantum-ui-vue2/dist/es/config.js');
+        const file = resolve(__dirname, 'node_modules/@qimao/quantum-ui/dist/es/config.js');
         return {
             publicDir: '../public',
             build: {

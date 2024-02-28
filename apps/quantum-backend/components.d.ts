@@ -8,7 +8,6 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Preview: typeof import('./src/components/pagePreview/preview.vue')['default']
-    QAntdDropdown: typeof import('@q-front-npm/vue3-antd-pc-ui/es')['QAntdDropdown']
     QAntdForm: typeof import('@q-front-npm/vue3-antd-pc-ui/es')['QAntdForm']
     QAntdIcon: typeof import('@q-front-npm/vue3-antd-pc-ui/es')['QAntdIcon']
     QAntdKeepAliveTabs: typeof import('@q-front-npm/vue3-antd-pc-ui/es')['QAntdKeepAliveTabs']
@@ -17,8 +16,6 @@ declare module 'vue' {
     QAntdTable: typeof import('@q-front-npm/vue3-antd-pc-ui/es')['QAntdTable']
     QAntdTableAction: typeof import('@q-front-npm/vue3-antd-pc-ui/es')['QAntdTableAction']
     QBreadcrumb: typeof import('@q-front-npm/vue3-pc-ui/es')['QBreadcrumb']
-    QCodeEditor: typeof import('@q-front-npm/vue3-pc-ui/es')['QCodeEditor']
-    QIcon: typeof import('@q-front-npm/vue3-pc-ui/es')['QIcon']
     QLoading: typeof import('@q-front-npm/vue3-pc-ui/es')['QLoading']
     QmAside: typeof import('./src/components/layout/qm-aside.vue')['default']
     QmAuthority: typeof import('./src/components/qm-authority/index.vue')['default']
