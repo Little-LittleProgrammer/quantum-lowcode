@@ -38,26 +38,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-html,body {margin: 0; padding: 0}
 
-// .quantum-ui-page {
-//     height: 100%;
-//     overflow: auto;
-// }
-
-::-webkit-scrollbar {
-    width: 0 !important;
-}
-
-html,
-body,
-#app {
-    width: 100%;
-    height: 100%;
-}
-
-#app {
-    position: relative;
-    overflow: auto;
-}
 </style>

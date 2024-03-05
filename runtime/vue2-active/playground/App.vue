@@ -10,7 +10,7 @@ import { computed, defineComponent, inject, nextTick, reactive, ref, watch } fro
 
 import type { Id, ISchemasRoot, ISchemasPage, ISchemasNode } from '@qimao/quantum-schemas';
 import type { LowCodeRoot } from '@qimao/quantum-core';
-import { IQuantum, IUpdateData} from '@qimao/quantum-sandbox';
+import { IDeleteData, IQuantum, IUpdateData} from '@qimao/quantum-sandbox';
 import {Page} from '@qimao/quantum-ui-vue2';
 import { getNodePath, replaceChildNode } from '@qimao/quantum-utils';
 
@@ -73,6 +73,7 @@ export default defineComponent({
             },
 
             add({ config, parentId, }: IUpdateData) {
+                console.log('runtime.add', config);
                 if (!root.value) throw new Error('error');
                 if (!selectedId.value) throw new Error('error');
                 if (!parentId) throw new Error('error');
@@ -95,6 +96,7 @@ export default defineComponent({
             },
 
             update({config, parentId, }: IUpdateData) {
+                console.log('runtime.update', config);
                 if (!root.value || !app) throw new Error('未初始化');
 
                 replaceChildNode(reactive(config), [root.value as any], parentId);
@@ -103,6 +105,27 @@ export default defineComponent({
                 if (nodeInstance) {
                     nodeInstance.setData(config);
                 }
+            },
+
+            delete({id, parentId, }: IDeleteData) {
+                console.log('runtime.delete');
+                if (!root.value) throw new Error('未初始化');
+
+                const node = getNodePath(id, [root.value]).pop();
+                if (!node) throw new Error('未找到目标元素');
+
+                const parent = getNodePath(parentId, [root.value]).pop();
+                if (!parent) throw new Error('未找到父元素');
+
+                if (node.type === 'page') {
+                    app?.deletePage();
+                } else {
+                    app?.page?.deleteNode(node.field);
+                }
+
+                const index = parent.children?.findIndex((child: ISchemasNode) => child.field === node.field);
+
+                parent.children?.splice(index, 1);
             },
 
         });

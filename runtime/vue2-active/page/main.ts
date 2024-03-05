@@ -7,6 +7,10 @@ import { requestFn } from './utils/http';
 import * as componentExtra from '@q-front-npm/vue2-active-ui';
 import * as component from '@qimao/quantum-ui-vue2';
 import '@q-front-npm/vue2-active-ui/dist/components.css';
+import '../hooks/reset.css';
+if (import.meta.env.PROD) {
+    import('@qimao/quantum-ui-vue2/dist/es/style/index.css');
+}
 
 const components:any = {
     'button': 'button',
@@ -24,7 +28,7 @@ const app = new LowCodeRoot({
 });
 
 Object.keys(components).forEach((type: string) => app.registerComponent(type, components[type]));
-app.setDesignWidth(window.document.documentElement.getBoundingClientRect().width);
+app.setDesignWidth(app.env.isWeb ? window.document.documentElement.getBoundingClientRect().width : 375);
 window.appInstance = app;
 new Vue({
     render: (h) => h(App),

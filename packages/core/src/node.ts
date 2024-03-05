@@ -81,7 +81,6 @@ export class LowCodeNode extends Subscribe {
 
     // 生命周期 + 将 node组件里的事件注册成全局事件
     private listenLifeSafe() {
-        console.log('load node listenLifeSafe');
         this.once('created', async(instance: any) => {
             this.once('destroy', () => {
                 this.instance = null;

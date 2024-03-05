@@ -14,19 +14,18 @@ const styleSchemas:FormSchema[] = [
         ifShow: ({values, }) => values['type'] === 'page' || values['type'] === 'container',
     },
     {
-        field: 'style.position',
+        field: 'layout',
         label: '容器布局',
         component: 'Select',
         ifShow: ({values, }) => {
-            console.log(values);
             return values['type'] === 'page' || values['type'] === 'container';
         },
-        componentProps: {
+        componentProps: ({formModel, }) => ({
             options: [
                 { label: '绝对定位', value: 'absolute', },
                 { label: '流式布局', value: 'relative', }
             ],
-        },
+        }),
     },
     {
         label: '位置',
@@ -168,11 +167,11 @@ const styleSchemas:FormSchema[] = [
         helpMessage: '填写${dataSourceId:fieldId} 可获取全局参数',
     }, {
         label: '旋转角度',
-        field: 'style.rotate',
+        field: 'style.transform.rotate',
         component: 'Input',
     }, {
         label: '缩放',
-        field: 'style.scale',
+        field: 'style.transform.scale',
         component: 'Input',
     }];
 const lifeHookschemas:FormSchema[] = [];

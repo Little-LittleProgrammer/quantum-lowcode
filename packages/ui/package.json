@@ -41,14 +41,14 @@
   "dependencies": {
     "@qimao/quantum-utils": "workspace:*",
     "@qimao/quantum-core": "workspace:*",
-    "@q-front-npm/vue3-antd-pc-ui": "~1.2.9",
+    "@q-front-npm/vue3-antd-pc-ui": "~1.2.10-beta.3",
     "@qimao/quantum-schemas": "workspace:*"
   },
   "peerDependencies": {
     "vue": "~3.3.4"
   },    
   "devDependencies": {
-    "@q-front-npm-configs/vite": "~1.2.4",
+    "@q-front-npm-configs/vite": "~1.2.5-beta.0",
     "@q-front-npm/types": "~1.2.1",
     "sass": "^1.63.3",
     "@ant-design/icons-vue": "^6.1.0",

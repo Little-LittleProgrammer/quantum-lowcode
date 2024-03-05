@@ -62,7 +62,6 @@ function save_code(code: string) {
     try {
         const parse = getConfig('parseSchemas');
         const finCode = dealRoot(code);
-        console.log(parse(`(${finCode})`));
         editorService?.set('root', finCode ? parse(`(${finCode})`) : '');
     } catch (e: any) {
         console.error(e);

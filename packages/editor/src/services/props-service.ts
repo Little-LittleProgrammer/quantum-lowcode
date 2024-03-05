@@ -50,7 +50,6 @@ class PropsService extends Subscribe {
         Object.entries(configs).forEach(([key, val]) => {
             this.state.otherConfigMap.methods[key] = val;
         });
-        console.log('propsState', this.state);
     }
 
     /**
@@ -95,24 +94,6 @@ class PropsService extends Subscribe {
         return list;
     }
 
-    public setFinPropsValue = throttle((values:IFormValue[]) => {
-        const finValue: any = {};
-        for (let i = 0; i < values.length; i++) {
-            const itemObj = values[i];
-            const obj = itemObj.getValue();
-            if (i === 0 && !obj.field) return;
-            // 单独处理事件
-            if (obj.componentProps?.events) {
-                obj.componentProps = {
-                    ...obj.componentProps,
-                    ...obj.componentProps.events,
-                };
-            }
-            merge(finValue, obj);
-        }
-        editorService.update(finValue);
-    }, 500)
-
     public createField(type: string) {
         return `${type}_${js_utils_get_uuid(4)}`;
     }
@@ -121,7 +102,6 @@ class PropsService extends Subscribe {
         Object.keys(values).forEach((type: string) => {
             this.setPropsValue(type, values[type]);
         });
-        console.log('propsState', this.state);
     }
 
     /**
@@ -172,7 +152,7 @@ class PropsService extends Subscribe {
 	 * @param {Boolean} force 是否强制设置新的ID
 	 */
     public setNewField(config: ISchemasNode, force = true) {
-        if (force && editorService.getNodeByField(config.field)) {
+        if (force || editorService.getNodeByField(config.field)) {
             const newField = this.createField(config.component || config.type);
             this.setRelateId(config.field, newField);
             config.field = newField;

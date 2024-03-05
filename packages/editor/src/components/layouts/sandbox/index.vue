@@ -1,14 +1,15 @@
 <!-- 画布 -->
 <template>
     <div ref="sandboxWrap" class="q-editor-sandbox">
-        <div
-            ref="boxContainer"
-            class="q-sandbox-container"
-            :style="getBoxStyle"
-            @contextmenu="contextmenuHandler"
-            @drop="dropHandler"
-            @dragover="dragoverHandler"
-        ></div>
+        <q-antd-dropdown :trigger="['contextmenu']" :dropMenuList="baseDropMenuList" @menuEvent="handleMenuEvent">
+            <div
+                ref="boxContainer"
+                class="q-sandbox-container"
+                :style="getBoxStyle"
+                @drop="dropHandler"
+                @dragover="dragoverHandler"
+            ></div>
+        </q-antd-dropdown>
     </div>
 </template>
 
@@ -26,13 +27,14 @@ import {
     onMounted
 } from 'vue';
 import { BoxCore } from '@qimao/quantum-sandbox';
-import { DragType, IBoxOptions, IServices, Layout } from '../../types';
+import { DragType, IBoxOptions, IServices, Layout } from '../../../types';
 import { IRuntime } from '@qimao/quantum-sandbox/src/types';
 import { cloneDeep } from 'lodash-es';
-import { ISchemasContainer, ISchemasPage, ISchemasRoot } from '@qimao/quantum-schemas';
-import { useBox } from '../../hooks';
+import { ISchemasPage, ISchemasRoot } from '@qimao/quantum-schemas';
+import { useBox } from '../../../hooks';
 import { js_utils_dom_offset, parseSchemas } from '@qimao/quantum-utils';
 import { calcValueByFontsize } from '@qimao/quantum-sandbox';
+import { DropMenu } from '@q-front-npm/vue3-antd-pc-ui';
 
 defineOptions({
     name: 'QEditorSandBox',
@@ -55,9 +57,20 @@ const page = computed(() => services?.editorService.get('page'));
 const zoom = computed(() => services?.uiService.get('zoom') || 1);
 const node = computed(() => services?.editorService.get('node'));
 const boxRect = computed(() => services?.uiService.get('sandboxRect'));
+const baseDropMenuList = computed(() => {
+    if (node.value) {
+        return services?.contentmenuService.getDropMenuList(node.value)
+    }
+    return []
+})
+
 // const menu = ref<InstanceType<typeof ViewerMenu>>();
 
 const boxContainer = ref<HTMLDivElement | null>();
+
+function handleMenuEvent(menu: DropMenu) {
+    services?.contentmenuService.handleMenuEvent(menu)
+}
 
 watchEffect(() => {
     if (sandbox || !page.value) return;
@@ -118,7 +131,6 @@ const resizeObserver = new ResizeObserver((entries) => {
         });
     }
 });
-function contextmenuHandler() {}
 async function dropHandler(e: DragEvent) {
     if (!e.dataTransfer) return;
 

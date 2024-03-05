@@ -74,7 +74,7 @@ const props = defineProps({
         default: () => [],
     },
 });
-const emits = defineEmits(['change', 'update:value']);
+const emits = defineEmits(['change', 'update:value', 'blur']);
 
 const eventKey = ref<string[]>([]);
 const uniOptions = [{label: '组件', value: 'component', }, {label: '数据源', value: 'dataSource', }];
@@ -103,12 +103,12 @@ function addEvent() {
             value[eventName] = props.value[eventName];
         }
     }
-    console.log(value);
     changeHandler(value);
 }
 
 function changeHandler(value: any) {
     emits('change', value);
+    emits('blur', value);
     emits('update:value', value);
 }
 
@@ -132,7 +132,6 @@ function getCompEventSelect(item:any) {
     if (!item) return [];
     const key = item.split('&&&')[0] || '';
     const eventKey = key[0].toUpperCase() + key.slice(1);
-    console.log(eventKey, service?.propsService.getConfig('methods'));
     return service?.propsService.getConfig('methods')[eventKey]?.methods || [];
 }
 

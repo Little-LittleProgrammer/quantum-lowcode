@@ -4,6 +4,7 @@ import Container from './q-container/src/formSchema';
 import Demo from './q-demo/src/formSchema';
 import Button from './q-button/src/formSchema';
 import Img from './q-img/src/formSchema';
+import Text from './q-text/src/formSchema';
 
 // events
 import pageEvents from './q-page/src/event';
@@ -15,6 +16,7 @@ const formSchemas = { // 和组件导出名保持一致
     Demo,
     Button,
     Img,
+    Text,
 };
 
 const events = { // 和组件导出名保持一致

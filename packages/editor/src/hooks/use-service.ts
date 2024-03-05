@@ -1,9 +1,13 @@
-import { ISchemasPage, ISchemasRoot } from '@qimao/quantum-schemas';
+import { IDataSourceSchema, ISchemasPage, ISchemasRoot } from '@qimao/quantum-schemas';
 import { IEditorProps } from 'src/props';
 import { IServices } from 'src/types';
 import { nextTick, onBeforeUnmount, toRaw, watch } from 'vue';
 import {useComponentRegister, delComponentRegister} from '@q-front-npm/vue3-antd-pc-ui';
 import EventSelect from '../components/form/event-select.vue';
+import DataSourceFields from '../components/form/datasource-fields.vue';
+import DataSourceMethods from '../components/form/datasource-methods.vue';
+import KeyValue from '../components/form/event-select.vue';
+import { QCodeEditor, QRichText } from '@q-front-npm/vue3-pc-ui';
 
 export function useServicesInit(
     props: IEditorProps,
@@ -15,12 +19,11 @@ export function useServicesInit(
         propsService,
         historyService,
         dataSourceService,
+        contentmenuService,
     }: IServices
 ) {
     function initServiceState() {
-        useComponentRegister<'EventSelect'>('EventSelect', EventSelect);
         watch(() => props.value, (val) => {
-            console.log('editorService', editorService);
             nextTick(() => {
                 editorService.set('root', val || null);
             });
@@ -42,11 +45,36 @@ export function useServicesInit(
         });
         watch(() => props.datasourceList, (datasourceList) => {
             datasourceList && dataSourceService.set('datasourceTypeList', datasourceList);
-        }, {immediate: true, }
-        );
+        }, {immediate: true, });
+        watch(() => props.boxContextmenuConfigs, (val) => {
+            if (val.dropDownList) {
+                contentmenuService.set('extraDropMenuList', val.dropDownList);
+            }
+            if (val.handleMenuEvent) {
+                contentmenuService.set('extraDropEvent', val.handleMenuEvent);
+            }
+        }, {immediate: true, });
+
+        function registerFormComp() {
+            useComponentRegister<'EventSelect'>('EventSelect', EventSelect);
+            useComponentRegister<'DataSourceFields'>('DataSourceFields', DataSourceFields);
+            useComponentRegister<'DataSourceMethods'>('DataSourceMethods', DataSourceMethods);
+            useComponentRegister<'KeyValue'>('KeyValue', KeyValue);
+            useComponentRegister<'CodeEditor'>('CodeEditor', QCodeEditor);
+            useComponentRegister<'RichText'>('RichText', QRichText);
+        }
+        function unRegisterFormComp() {
+            delComponentRegister('EventSelect');
+            delComponentRegister('DataSourceFields');
+            delComponentRegister('DataSourceMethods');
+            delComponentRegister('KeyValue');
+            delComponentRegister('CodeEditor');
+            delComponentRegister('RichText');
+        }
+        registerFormComp();
 
         onBeforeUnmount(() => {
-            delComponentRegister('EventSelect');
+            unRegisterFormComp();
             editorService.reset();
             historyService.reset();
             propsService.reset();
@@ -66,11 +94,11 @@ export function useServicesInit(
             value.dataSources = value.dataSources || [];
             dataSourceService.set('dataSources', value.dataSources);
 
-            const nodeField = editorService.get('node')?.field || props.defaultSelected;
-            let node;
-            if (nodeField) {
-                node = editorService.getNodeByField(nodeField);
-            }
+            // const nodeField = editorService.get('node')?.field || props.defaultSelected;
+            // let node;
+            // if (nodeField) {
+            //     node = editorService.getNodeByField(nodeField);
+            // }
 
             if (value?.children?.length) {
                 if (preValue?.children?.length && value.children.length <= preValue.children.length && editorService.get('page')) {
@@ -88,6 +116,29 @@ export function useServicesInit(
             }
         }
         editorService.on('root-change', rootChangeHandler);
+
+        function dataSourceAddHandler(config: IDataSourceSchema) {
+            const app = getApp();
+            if (!app) return;
+            app.dataSourceManager?.addDataSource(config);
+        }
+
+        function dataSourceUpdateHandler(config: IDataSourceSchema) {
+            const root = editorService.get('root');
+            if (root?.dataSources) {
+                getApp()?.dataSourceManager?.updateSchema([config]);
+            }
+        }
+
+        function dataSourceRemoveHandler(id: string) {
+            const app = getApp();
+            if (!app) return;
+            app.dataSourceManager?.removeDataSource(id);
+        }
+
+        dataSourceService.on('add', dataSourceAddHandler);
+        dataSourceService.on('update', dataSourceUpdateHandler);
+        dataSourceService.on('remove', dataSourceRemoveHandler);
 
         onBeforeUnmount(() => {
             editorService.remove('root-change');

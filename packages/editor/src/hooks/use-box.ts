@@ -68,7 +68,7 @@ export function useBox(boxOptions: IBoxOptions) {
         console.log('sandbox emit update', ev);
         if (ev.parentEl) {
             for (const data of ev.data) {
-                editorService.moveToContainer({ id: data.el.id, style: data.style, }, ev.parentEl.id);
+                editorService.moveToContainer({ field: data.el.id, style: data.style, }, ev.parentEl.id);
             }
             return;
         }

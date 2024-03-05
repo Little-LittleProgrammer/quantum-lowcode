@@ -3,9 +3,15 @@ import { FormConfig } from '../types';
 
 const baseFormConfig: FormConfig = [
     {
+        field: 'options',
+        label: '基础信息',
+        component: 'Divider',
+    },
+    {
         label: 'id',
         field: 'id',
         component: 'Text',
+        ifShow: ({values, }) => values.id,
     },
     {
         label: '类型',
@@ -17,6 +23,7 @@ const baseFormConfig: FormConfig = [
         label: '名称',
         field: 'title',
         component: 'Input',
+        required: true,
     },
     {
         label: '描述',
@@ -36,6 +43,11 @@ const httpFormConfig: FormConfig = [
         label: '数据路径',
         component: 'Input',
         helpMessage: '服务端返回数据所需数据的层级, 一般情况下是res.data',
+    },
+    {
+        field: 'options',
+        label: '请求设置',
+        component: 'Divider',
     },
     {
         field: 'options.url',
@@ -83,6 +95,11 @@ function formatConfig(config: FormConfig): FormConfig {
         ...baseFormConfig,
         ...config,
         {
+            field: 'options',
+            label: '数据拓展',
+            component: 'Divider',
+        },
+        {
             label: '数据定义',
             field: 'fields',
             component: 'DataSourceFields',
@@ -97,12 +114,18 @@ function formatConfig(config: FormConfig): FormConfig {
             field: 'beforeRequest',
             component: 'CodeEditor',
             ifShow: ({ values, }) => values.type === 'http',
+            componentProps: {
+                style: {height: '500px'}
+            }
         },
         {
             label: '响应拦截器',
             field: 'afterResponse',
             component: 'CodeEditor',
             ifShow: ({ values, }) => values.type === 'http',
+            componentProps: {
+                style: {height: '500px'}
+            }
         }
     ];
 }

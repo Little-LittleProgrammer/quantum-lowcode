@@ -1,7 +1,7 @@
 import { ISchemasNode, ISchemasRoot, Id } from '@qimao/quantum-schemas';
-import { IComponentGroup, IDatasourceTypeOption, ISandboxRect } from './types';
-import { CONTAINER_HIGHLIGHT_CLASS_NAME, ContainerHighlightType, ICustomizeMoveableOptionsCallbackConfig, MoveableOptions } from '@qimao/quantum-sandbox';
-import { FormSchema } from '@q-front-npm/vue3-antd-pc-ui';
+import { IComponentGroup, IDatasourceTypeOption, IEditorNodeInfo, ISandboxRect } from './types';
+import { CONTAINER_HIGHLIGHT_CLASS_NAME, ContainerHighlightType, ICustomizeMoveableOptionsCallbackConfig, IUpdateDragEl, MoveableOptions } from '@qimao/quantum-sandbox';
+import type { DropMenu, FormSchema } from '@q-front-npm/vue3-antd-pc-ui';
 
 export interface IEditorProps {
     // root节点
@@ -12,6 +12,10 @@ export interface IEditorProps {
     codeOptions?: { [key: string]: any };
     /** 用于设置画布上的dom是否可以被选中 */
     canSelect?: (el: HTMLElement) => boolean | Promise<boolean>;
+    /** 用于设置画布上的dom是否可以被拖入其中 */
+    isContainer?: (el: HTMLElement) => boolean | Promise<boolean>;
+    /** 选中时会在画布上复制出一个大小相同的dom，实际拖拽的是这个dom，此方法用于干预这个dom的生成方式 */
+    updateDragEl?: IUpdateDragEl;
     /** 画布中组件选中框的移动范围 */
     moveableOptions?: MoveableOptions | ((config?: ICustomizeMoveableOptionsCallbackConfig) => MoveableOptions);
     /** 左侧面板中的组件类型列表 */
@@ -27,13 +31,27 @@ export interface IEditorProps {
     propsConfigs?: Record<string, FormSchema[]>;
     methodsList?: Record<string, any[]>;
     datasourceList?: IDatasourceTypeOption[]
-    defaultSelected?: Id
+    defaultSelected?: Id;
+    boxContextmenuConfigs: Record<string, {
+        dropDownList: DropMenu;
+        extraDropEvent: (menu: DropMenu, nodeInfo:IEditorNodeInfo) => void;
+    }>;
 }
 
 export const defaultEditorProps = {
     codeOptions: () => ({}),
     canSelect: (el: HTMLElement) => Boolean(el.id), // 带 id 代表这个组件是dsl配置的
+    isContainer: (el: HTMLElement) => el.classList.contains('quantum-ui-container'),
     componentGroupList: [{
+        /** 显示文案 */
+        text: '容器组件',
+        /** 组内列表 */
+        children: [{
+            'text': '容器',
+            'component': 'container',
+            icon: 'FolderOpenOutlined',
+        }],
+    },{
         /** 显示文案 */
         text: '基本组件',
         /** 组内列表 */
@@ -44,15 +62,15 @@ export const defaultEditorProps = {
         }, {
             'text': '图片',
             'component': 'Img',
-            icon: 'SelectOutlined',
+            icon: 'LinkOutlined',
         }, {
             'text': '视频',
             'component': 'Video',
-            icon: 'SelectOutlined',
+            icon: 'PlayCircleOutlined',
         }, {
             'text': '文本',
             'component': 'Text',
-            icon: 'SelectOutlined',
+            icon: 'LineOutlined',
         }, {
             'text': '二维码',
             'component': 'Button',

@@ -22,7 +22,6 @@ export class DataSourceManager extends Subscribe {
     }
 
     public async init(ds: DataSource) {
-        console.log('dataSourceManager', ds);
         if (ds.isInit) {
             return;
         }

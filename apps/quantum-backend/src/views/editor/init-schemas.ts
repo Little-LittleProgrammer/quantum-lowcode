@@ -6,7 +6,11 @@ export const defaultSchemas: ISchemasRoot = {
     children: [
         {
             type: 'page',
-            field: 'page1',
+            field: 'page_abcd',
+            style: {
+                width: '100%',
+                height: '100%',
+            },
             children: [
             ],
         }

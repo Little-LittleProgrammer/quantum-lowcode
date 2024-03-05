@@ -1,5 +1,5 @@
 // 核心实例对象, 接收配置, 文件以及node信息\
-import { Subscribe, fillBackgroundImage, js_is_number, js_is_string, style2Obj, webRequest } from '@qimao/quantum-utils';
+import { Subscribe, fillBackgroundImage, js_is_string, style2Obj, webRequest } from '@qimao/quantum-utils';
 import { Fn, IRequestFunction, ISchemasRoot, Id, IMetaDes, ILowCodeRoot } from '@qimao/quantum-schemas';
 import {LowCodePage} from './page';
 import {Env} from './env';
@@ -38,6 +38,7 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
         if (typeof options.designWidth !== 'undefined') {
             this.setDesignWidth(options.designWidth);
         }
+        console.log('designWidth', this.designWidth);
         if (options.config) {
             this.setConfig(options.config, options.curPage);
         }
@@ -203,23 +204,23 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
         const isH5 = this.isH5();
 
         const transform = Object.entries(value).map(([transformKey, transformValue]) => {
-            if (!transformValue.trim()) return '';
-            if (transformKey === 'rotate' && js_is_number(transformValue)) {
+            if (!transformValue || !transformValue.trim()) return '';
+            if (transformKey === 'rotate' && /^[-]?[0-9]*[.]?[0-9]*$/.test(transformValue)) {
                 transformValue = `${transformValue}deg`;
             }
 
-            return !isH5 ? `${transformKey}(${transformValue})` : { [transformKey]: transformValue, };
+            // return !isH5 ? `${transformKey}(${transformValue})` : { [transformKey]: transformValue, };
+            return `${transformKey}(${transformValue})`;
         });
 
-        if (isH5) {
-            return transform;
-        }
+        // if (isH5) {
+        //     return transform;
+        // }
         const values = transform.join(' ');
         return !values.trim() ? 'none' : values;
     }
 
     private calcFontsize() {
-        console.log('resize');
         const { width, } = document.documentElement.getBoundingClientRect();
         const dpr = globalThis?.devicePixelRatio || 1;
         this.setBodyFontSize(dpr);
@@ -306,8 +307,8 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
     public destroy() {
         this.clear();
         this.page = undefined;
-        if (this.isH5()) {
-            globalThis.removeEventListener('resize', this.calcFontsize.bind(this));
-        }
+        // if (this.isH5()) {
+        globalThis.removeEventListener('resize', this.calcFontsize.bind(this));
+        // }
     }
 }

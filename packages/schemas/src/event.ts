@@ -33,6 +33,7 @@ export interface IDataSchema {
 }
 
 export interface ICodeBlockContent {
+    title?: string;
     /** 代码块名称 */
     name: string;
     /** 代码块内容 */
@@ -41,6 +42,7 @@ export interface ICodeBlockContent {
     params: ICodeParam[] | [];
     /** 注释 */
     description?: string;
+    timing?: 'beforeInit' | 'afterInit' | 'beforeRequest' | 'afterRequest'
     /** 扩展字段 */
     [propName: string]: any;
 }

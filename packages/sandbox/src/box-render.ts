@@ -173,7 +173,7 @@ export class BoxRender extends Subscribe {
         }
         this.emit('onload');
         injectStyle(this.contentWindow.document, `
-        .quantum-stage-container-highlight::after {
+        .quantum-sandbox-container-highlight::after {
             content: '';
             position: absolute;
             width: 100%;

@@ -17,7 +17,7 @@ class UiService {
             height: 0,
         },
         showGuides: true,
-        workspaceLeft: 300,
+        workspaceLeft: 330,
         workspaceCenter: 600,
     });
     public set<K extends keyof IUiState, T extends IUiState[K]>(

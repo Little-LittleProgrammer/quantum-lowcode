@@ -24,8 +24,8 @@
 import { inject, computed } from 'vue';
 import {Breadcrumb, BreadcrumbItem} from 'ant-design-vue';
 import { IServices } from '../../types';
-import EditorSandbox from './sandbox.vue';
-import pageBar from './page-bar.vue';
+import EditorSandbox from './sandbox/index.vue';
+import pageBar from './sandbox/page-bar.vue';
 import { getNodePath } from '@qimao/quantum-utils';
 import { ISchemasNode } from '@qimao/quantum-schemas';
 defineOptions({

@@ -24,7 +24,7 @@ export const DRAG_EL_ID_PREFIX = 'drag_el_';
 export const HIGHLIGHT_EL_ID_PREFIX = 'highlight_el_';
 
 /** 默认容器高亮时类名 */
-export const CONTAINER_HIGHLIGHT_CLASS_NAME = 'quantum-stage-container-highlight';
+export const CONTAINER_HIGHLIGHT_CLASS_NAME = 'quantum-sandbox-container-highlight';
 
 export enum ZIndex {
     /** 蒙层，用于监听用户操作，需要置于顶层 */

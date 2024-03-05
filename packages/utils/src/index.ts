@@ -122,7 +122,7 @@ export function parseFunction(func: string | Fn, ...agrs: string[]) {
 }
 
 // 获取默认值
-export function getDefaultValueFromFields(obj: Record<string, any>) {
+export function getDefaultValueFromFields(obj: Record<string, any>[]) {
     const data: Record<string, any> = {};
 
     const defaultValue: Record<string, any> = {
@@ -161,7 +161,7 @@ export function getDefaultValueFromFields(obj: Record<string, any>) {
         }
 
         if (field.type === 'object') {
-            data[field.name] = field.fields ? getDefaultValueFromFields(field.fields) : defaultValue.object;
+            data[field.name] = field.fields ? getDefaultValueFromFields(field.fields || []) : defaultValue.object;
             return;
         }
 

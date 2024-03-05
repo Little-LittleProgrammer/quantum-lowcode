@@ -4,3 +4,4 @@ export {default as Page} from './q-page';
 export {default as Demo} from './q-demo';
 export {default as Button} from './q-button';
 export {default as Img} from './q-img';
+export {default as Text} from './q-text';

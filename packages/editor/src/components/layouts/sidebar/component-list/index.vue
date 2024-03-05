@@ -5,7 +5,7 @@
         <div class="q-editor-component-list-search">
             <a-input-search
                 v-model:value="searchText"
-                placeholder="input search text"
+                placeholder="模糊搜索"
                 style="width: 200px"
             />
         </div>
@@ -63,7 +63,6 @@ defineOptions({
     name: 'ComponentList',
 });
 import { js_is_string } from '@qimao/quantum-utils';
-import { getCompType } from '../../../../utils';
 
 const services = inject<IServices>('services');
 const boxOptions = inject<IBoxOptions>('boxOptions');
@@ -102,6 +101,10 @@ function dragstartComp(item: IComponentItem, e: DragEvent) {
         data: {
             label: item.text,
             type: item.component,
+            style: {
+                width: '100%',
+                height: 20
+            },
             ...item.data,
         },
     }));

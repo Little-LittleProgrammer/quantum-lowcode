@@ -16,6 +16,7 @@
                     :labelWidth="100"
                     :showActionButtonGroup="false"
                     :schemas="curFormSchemas[item.value]"
+                    @blur="changeValue"
                 ></q-antd-form>
             </a-tab-pane>
         </a-tabs>
@@ -57,14 +58,17 @@ const init = async() => {
         curFormSchemas.value = [];
         return;
     }
+
     const type = node.value.component || node.value.type;
-    curFormSchemas.value = {
-        props: services?.propsService.getConfig(type),
-        style: services?.propsService.getConfig('style'),
-        ifShow: services?.propsService.getConfig('ifShow'),
-        lifeHooks: services?.propsService.getConfig('lifeHooks'),
-    };
-    nextTick(() => {
+    if (!curFormSchemas.value.props) {
+        curFormSchemas.value = {
+            props: services?.propsService.getConfig(type),
+            style: services?.propsService.getConfig('style'),
+            ifShow: services?.propsService.getConfig('ifShow'),
+            lifeHooks: services?.propsService.getConfig('lifeHooks'),
+        };
+    } 
+    nextTick(async() => {
         formModel.value = node.value || {};
     });
 };
@@ -72,27 +76,34 @@ const init = async() => {
 services?.propsService.on('props-configs-change', init);
 
 watch(() => node.value, (val, oldVal) => {
-    if (JSON.stringify(val || {}) !== JSON.stringify(oldVal || {})) { // 防止死循环
-        init();
+    if (val?.field !==oldVal?.field) {
+        curFormSchemas.value = {}
     }
+    init();
 });
 
-watch(
-    () => valuesFn.value,
-    (val) => {
-        // 因为q-form没有change事件，所以这里监听formModel的值变化，来更新, 但会造成死循环
-        services?.propsService?.setFinPropsValue(val);
-    },
-    { deep: true, }
-);
+function changeValue(value) {
+    const finValue = {
+        ...node.value,
+        ...value
+    }
+    if (finValue.componentProps?.events) {
+        finValue.componentProps = {
+            ...finValue.componentProps,
+            ...finValue.componentProps.events,
+        };
+    }
+    console.log('finValue',finValue)
+    services?.editorService.update(finValue);
+}
+
+
 
 onMounted(() => {
     formRef.value.length &&
         formRef.value.forEach((item: any) => {
             valuesFn.value.push({
-                getValue: item.getFieldsValue,
                 setValue: item.setFieldsValue,
-                value: item.formModel,
                 reset: item.resetFields,
             });
         });

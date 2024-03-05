@@ -63,6 +63,15 @@ const getRightStyle = computed(() => {
     &-left {
         // transition: all .3s;clear
         overflow-x: hidden;
+        border-right: 1px solid #e8e8e8;
+    }
+}
+[data-theme='dark'] {
+    .q-editor-layout  {
+        &-left {
+            border-right: 1px solid #303030;
+        }
+
     }
 }
 </style>

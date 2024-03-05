@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, ref, markRaw } from 'vue';
+import { computed, defineComponent, PropType, ref, markRaw, getCurrentInstance, provide } from 'vue';
 
 import type {Fn, ISchemasNode} from '@qimao/quantum-schemas';
 import {useApp} from '../../hooks/use-app';
@@ -28,7 +28,6 @@ export default defineComponent({
     setup(props) {
         const {app, } = useApp(props);
         const tagName: any = computed(() => {
-            console.log(props.config.type)
             return app && app.resolveComponent(props.config.component || props.config.type);
         });
         const ifShow = computed(() => {
@@ -57,7 +56,6 @@ export default defineComponent({
                     }
                 }
             }
-            console.log('bind', obj);
             return obj;
         });
         const propsOn = computed(() => {
@@ -70,7 +68,6 @@ export default defineComponent({
                     }
                 }
             }
-            console.log('propsOn', props.config.field, obj);
             return obj;
         });
         return {

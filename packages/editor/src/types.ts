@@ -9,6 +9,8 @@ import type {FormSchema} from '@q-front-npm/vue3-antd-pc-ui';
 import { Component } from 'vue';
 import { ComponentService } from './services/component-service';
 import { DataSourceService } from './services/datasource-service';
+import { ContentmenuService } from './services/contentmenu-service';
+import { StorageService } from './services/storage-serivce';
 
 export interface EventOption {
     label: string;
@@ -35,7 +37,9 @@ export interface IServices {
     historyService: HistoryService;
     propsService: PropsService;
     componentService: ComponentService;
-    dataSourceService: DataSourceService
+    dataSourceService: DataSourceService;
+    contentmenuService: ContentmenuService
+    storageService: StorageService;
 }
 
 export interface IUiState {
@@ -190,16 +194,14 @@ export interface IAddNode {
 
 export interface IFormValue {
     setValue?: Fn,
-    getValue: Fn,
     reset?: Fn
-    value: Record<string, any>
 }
 
 export interface IDatasourceTypeOption {
     /** 数据源类型 */
-    type: string;
+    value: string;
     /** 数据源名称 */
-    text: string;
+    label: string;
 }
 export type FormConfig = FormSchema<any, 'DataSourceFields' | 'DataSourceMethods' | 'KeyValue' | 'CodeEditor'>[]
 
@@ -213,3 +215,22 @@ export interface IDataSourceState {
 }
 
 export type IDataSourceStateKey = keyof IDataSourceState
+
+export enum LayerOffset {
+    TOP = 'top',
+    BOTTOM = 'bottom',
+}
+
+export interface IPastePosition {
+    left?: number;
+    top?: number;
+    /**
+     * 粘贴位置X方向偏移量
+     */
+    offsetX?: number;
+    /**
+     * 粘贴位置Y方向偏移量
+     */
+    offsetY?: number;
+}
+

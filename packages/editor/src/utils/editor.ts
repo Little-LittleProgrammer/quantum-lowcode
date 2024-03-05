@@ -4,6 +4,8 @@ import { Layout } from '../types';
 import { BoxCore } from '@qimao/quantum-sandbox';
 import { isPage } from './index';
 
+export const COPY_STORAGE_KEY = 'QuantumEditorCopyData';
+
 export function getNodeIndex(id: Id, parent: ISchemasRoot | ISchemasContainer) {
     const children = parent?.children;
     return children.findIndex((item:ISchemasNode) => `${item.field}` === `${id}`);
@@ -120,7 +122,7 @@ export function fixNodePosition(config: ISchemasNode, parent: ISchemasContainer,
     };
 }
 
-export async function fixed2Other(node:ISchemasNode, root:ISchemasRoot, getLayout: (parent: ISchemasNode, node?: ISchemasNode | null) => Promise<Layout>) {
+export async function fixed2Other(node:ISchemasNode, root:ISchemasRoot, getLayout: (parent: ISchemasNode, node?: ISchemasNode | null) => Layout) {
     const path = getNodePath(node.field, root.children);
     const cur = path.pop();
     const offset = {
@@ -142,7 +144,7 @@ export async function fixed2Other(node:ISchemasNode, root:ISchemasRoot, getLayou
         return getRelativeStyle(style);
     }
 
-    const layout = await getLayout(parent);
+    const layout = getLayout(parent);
     if (layout !== Layout.RELATIVE) {
         return {
             ...style,

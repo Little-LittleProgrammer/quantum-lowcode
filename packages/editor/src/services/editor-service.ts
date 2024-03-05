@@ -5,7 +5,9 @@ import {
     IStoreState,
     IStoreStateKey,
     StepValue,
-    IAddNode
+    IAddNode,
+    IPastePosition,
+    LayerOffset
 } from '../types';
 import {
     ISchemasContainer,
@@ -19,6 +21,7 @@ import {
     getNodePath,
     isFixed,
     js_is_array,
+    js_is_empty,
     js_is_number,
     js_is_object,
     Subscribe
@@ -28,6 +31,7 @@ import { historyService } from './history-service';
 import { cloneDeep, mergeWith, uniq } from 'lodash-es';
 import { isPage } from '../utils';
 import {
+    COPY_STORAGE_KEY,
     change2Fixed,
     fixNodePosition,
     fixed2Other,
@@ -36,6 +40,7 @@ import {
     setChildrenLayout
 } from '../utils/editor';
 import { propsService } from './props-service';
+import { Protocol, storageService } from './storage-serivce';
 
 class EditorService extends Subscribe {
     public state = reactive<IStoreState>({
@@ -150,10 +155,10 @@ class EditorService extends Subscribe {
     /**
 	 * 只有容器拥有布局
 	 */
-    public async getLayout(
+    public getLayout(
         parent: ISchemasNode,
         node?: ISchemasNode | null
-    ): Promise<Layout> {
+    ): Layout {
         if (
             node &&
 			typeof node !== 'function' &&
@@ -167,7 +172,7 @@ class EditorService extends Subscribe {
         }
 
         // 如果该节点没有设置position，则认为是流式布局，例如获取root的布局时
-        if (js_is_object(parent.style) && !(parent.style as any)?.position) {
+        if ((!(parent.style as any)?.position) || parent.style?.position === 'relative') {
             return Layout.RELATIVE;
         }
 
@@ -271,7 +276,7 @@ class EditorService extends Subscribe {
             parent.children?.push(node);
         }
 
-        const layout = await this.getLayout(toRaw(parent) as any, node);
+        const layout = this.getLayout(toRaw(parent) as any, node);
         node.style = getInitPositionStyle(node.style, layout);
 
         await sandbox?.add({
@@ -396,8 +401,9 @@ class EditorService extends Subscribe {
         if (!parentNodeChildren || typeof index === 'undefined' || index === -1)
             throw new Error('更新的节点未找到');
 
-        const newLayout = await this.getLayout(newConfig);
-        const layout = await this.getLayout(node);
+        const newLayout = this.getLayout(newConfig);
+        const layout = this.getLayout(node);
+        console.log('layout', newLayout, layout);
         if (js_is_array(newConfig.children) && newLayout !== layout) {
             newConfig = setChildrenLayout(newConfig, newLayout);
         }
@@ -437,7 +443,6 @@ class EditorService extends Subscribe {
         config: ISchemasNode | ISchemasNode[]
     ): Promise<ISchemasNode | ISchemasNode[]> {
         const nodes = js_is_array(config) ? config : [config];
-
         const newNodes = await Promise.all(
             nodes.map((node) => this.updateHelper(node))
         );
@@ -446,6 +451,7 @@ class EditorService extends Subscribe {
             this.pushHistoryState();
         }
 
+        this.updateHandler();
         this.emit('update', newNodes);
         return js_is_array(config) ? newNodes : newNodes[0];
     }
@@ -510,7 +516,7 @@ class EditorService extends Subscribe {
             // 更新历史记录
             this.pushHistoryState();
         }
-        this.emit('delete', nodes);
+        this.emit('remove', nodes);
     }
 
     public async sort(field1: Id, field2: Id) {
@@ -565,8 +571,200 @@ class EditorService extends Subscribe {
         return val;
     }
 
+    /**
+     * 将组件节点配置存储到localStorage中
+     * @param config 组件节点配置
+     */
+    public copy(config: ISchemasNode | ISchemasNode[]) {
+        storageService.setItem(COPY_STORAGE_KEY, js_is_array(config) ? config : [config], {
+            protocol: Protocol.OBJECT,
+        });
+    }
+
+    public pasteHelper(config: ISchemasNode[], position: IPastePosition = {}) {
+        propsService.clearRelateId();
+        const pasteConfigs = this.beforePaste(position, cloneDeep(config));
+        return pasteConfigs;
+    }
+
+    /**
+     * 从localStorage中获取节点，然后添加到当前容器中
+     * @param position 粘贴的坐标
+     * @returns 添加后的组件节点配置
+     */
+    public paste(position: IPastePosition = {}) {
+        const config = storageService.getItem(COPY_STORAGE_KEY);
+        if (!js_is_array(config)) return;
+
+        const node = this.get('node');
+
+        let parent:ISchemasContainer|null = null;
+        // 粘贴的组件为当前选中组件的副本时，则添加到当前选中组件的父组件中
+        if (config.length === 1 && config[0].field === node?.field) {
+            parent = this.get('parent')!;
+            if (parent?.type === NodeType.ROOT) {
+                parent = this.get('page')!;
+            }
+        }
+
+        const pasteConfigs = this.pasteHelper(config, position);
+        return this.add(pasteConfigs, parent);
+    }
+
     public resetModifiedNodeFields() {
         this.get('modifiedNodeFields')?.clear();
+    }
+
+    /**
+     * 移动当前选中节点位置
+     * @param offset 偏移量
+     */
+    public moveLayer(offset: number | LayerOffset) {
+        const root = this.get('root');
+        if (!root) throw new Error('root为空');
+
+        const parent = this.get('parent');
+        if (!parent) throw new Error('父节点为空');
+
+        const node = this.get('node');
+        if (!node) throw new Error('当前节点为空');
+
+        const brothers: ISchemasNode[] = parent.children || [];
+        const index = brothers.findIndex((item) => `${item.field}` === `${node?.field}`);
+
+        // 流式布局与绝对定位布局操作的相反的
+        const layout = this.getLayout(parent, node);
+        const isRelative = layout === Layout.RELATIVE;
+
+        let offsetIndex: number;
+        if (offset === LayerOffset.TOP) {
+            offsetIndex = isRelative ? 0 : brothers.length;
+        } else if (offset === LayerOffset.BOTTOM) {
+            offsetIndex = isRelative ? brothers.length : 0;
+        } else {
+            offsetIndex = index + (isRelative ? -offset : offset);
+        }
+
+        if ((offsetIndex > 0 && offsetIndex > brothers.length) || offsetIndex < 0) {
+            return;
+        }
+        brothers.splice(index, 1);
+        brothers.splice(offsetIndex, 0, node);
+
+        const grandparent = this.getParentByField(parent.field);
+
+        this.get('sandbox')?.update({
+            config: cloneDeep(toRaw(parent)),
+            parentId: grandparent?.field,
+            root: cloneDeep(root),
+        });
+
+        this.addModifiedNodeField(parent.field);
+        this.pushHistoryState();
+
+        this.emit('move-layer', offset);
+    }
+
+    /**
+     * 移到指定容器
+     * @param config 节点信息
+     * @param targetField 目标容器
+     * @returns void
+     */
+    public async moveToContainer(config: ISchemasNode, targetField: Id) {
+        const root = this.get('root');
+        const {node, parent} = this.getNodeInfo(config.field, false);
+        const targetContainer = this.getNodeByField(targetField) as ISchemasNode;
+
+        const sandbox = this.get('sandbox');
+        if (root && node && parent &&sandbox) {
+            const index = getNodeIndex(node.field, parent);
+            parent.children.splice(index, 1);
+
+            await sandbox.delete({id: node.field, parentId: parent.field, root:cloneDeep(root)});
+            const layout = this.getLayout(targetContainer);
+
+            const newConfig = mergeWith(cloneDeep(node), config, (o,n) => {
+                if (js_is_array(n)) {
+                    return n
+                }
+            })
+
+            newConfig.style = getInitPositionStyle(newConfig.style, layout) as any;
+            targetContainer.children?.push(newConfig);
+
+            await sandbox.select(targetField);
+
+            const targetParent = this.getParentByField(targetContainer.field);
+
+            await sandbox.update({
+                config: cloneDeep(toRaw(targetContainer)),
+                parentId: targetParent?.field,
+                root: cloneDeep(root),
+            });
+
+            await this.select(newConfig);
+            sandbox.select(newConfig.field);
+
+            this.addModifiedNodeField(targetContainer.field);
+            this.addModifiedNodeField(parent.field);
+            this.pushHistoryState();
+      
+            return newConfig;
+        }
+    }
+
+    public alignCenterHelper(config: ISchemasNode) {
+        const parent = this.getNodeByField(config.field);
+
+        if (!parent) throw new Error('找不到父节点');
+
+        const node = cloneDeep(toRaw(config));
+        const layout = this.getLayout(parent, node);
+        if (layout === Layout.RELATIVE) {
+            return config;
+        }
+        if (!node.style) return config;
+
+        const sandbox = this.get('sandbox');
+        const doc = sandbox?.renderer.contentWindow?.document;
+
+        if (doc) {
+            const el = doc.getElementById(node.field);
+            const parentEl = layout === Layout.FIXED ? doc.body : el?.offsetParent;
+            if (parentEl && el) {
+                node.style.left = (parentEl.clientWidth - el.clientWidth) / 2;
+                node.style.right = '';
+            } else if (parent.style && js_is_number(parent.style?.width) && js_is_number(node.style?.width)) {
+                node.style.left = (parent.style.width - node.style.width) / 2;
+                node.style.right = '';
+            }
+        }
+        return node;
+    }
+
+    /**
+     * 将指点节点设置居中
+     * @param config 组件节点配置
+     * @returns 当前组件节点配置
+     */
+    public async alignCenter(config:ISchemasNode | ISchemasNode[]) {
+        const nodes = js_is_array(config) ? config : [config];
+        const sandbox = this.get('sandbox');
+
+        const newNodes = nodes.map((node) => {
+            return this.alignCenterHelper(node);
+        });
+
+        const newNode = await this.update(newNodes);
+
+        if (newNodes.length > 1) {
+            await sandbox?.multiSelect(newNodes.map((node) => node.id));
+        } else {
+            await sandbox?.select(newNodes[0].id);
+        }
+
+        return newNode;
     }
 
     private async pushHistoryState() {
@@ -671,6 +869,81 @@ class EditorService extends Subscribe {
         }
 
         return parentNode;
+    }
+
+    private beforePaste(position: IPastePosition, config: ISchemasNode[]) {
+        if (!config[0]?.style) return config;
+        const curNode = this.get('node');
+        // 将数组中第一个元素的坐标作为参照点
+        const { left: referenceLeft, top: referenceTop, } = config[0].style;
+        // 校准坐标
+        const finConfigs = config.map((item) => {
+            const { offsetX = 0, offsetY = 0, ...positionClone } = position;
+            let pastePosition = positionClone;
+            if (!js_is_empty(pastePosition) && curNode?.items) {
+                // 如果没有传入粘贴坐标则可能为键盘操作，不再转换
+                // 如果粘贴时选中了容器，则将元素粘贴到容器内，坐标需要转换为相对于容器的坐标
+                pastePosition = this.getPositionInContainer(pastePosition, curNode.field);
+            }
+            // 将所有待粘贴元素坐标相对于多选第一个元素坐标重新计算，以保证多选粘贴后元素间距不变
+            if (pastePosition.left && item.style?.left) {
+                pastePosition.left = Number(item.style.left) - Number(referenceLeft) + pastePosition.left;
+            }
+            if (pastePosition.top && item.style?.top) {
+                pastePosition.top = Number(item.style.top) - Number(referenceTop) + pastePosition.top;
+            }
+            const pasteConfig = propsService.setNewField(item, false);
+
+            if (pasteConfig.style) {
+                const { left, top, } = pasteConfig.style;
+                // 判断能转换为数字时，做粘贴偏移量计算
+                if (typeof left === 'number' || (!!left && !isNaN(Number(left)))) {
+                    pasteConfig.style.left = Number(left) + offsetX;
+                }
+                if (typeof top === 'number' || (!!top && !isNaN(Number(top)))) {
+                    pasteConfig.style.top = Number(top) + offsetY;
+                }
+
+                pasteConfig.style = {
+                    ...pasteConfig.style,
+                    ...pastePosition,
+                };
+            }
+            return pasteConfig;
+        });
+        return finConfigs;
+    }
+    private getPositionInContainer(position: { left?: number | undefined; top?: number | undefined; }, field: string): { left?: number | undefined; top?: number | undefined; } {
+        let { left = 0, top = 0, } = position;
+        const parentEl = this.get('sandbox')?.renderer?.contentWindow?.document.getElementById(`${field}`);
+        const parentElRect = parentEl?.getBoundingClientRect();
+        left = left - (parentElRect?.left || 0);
+        top = top - (parentElRect?.top || 0);
+        return {
+            left,
+            top,
+        };
+    }
+
+    /**更新画框 */
+    private updateHandler() {
+        setTimeout(() => {
+            // this.updateMask();
+
+            this.updateSelectStatus();
+        });
+    }
+
+    private updateSelectStatus() {
+        const sandbox = this.get('sandbox');
+        const nodes = this.get('nodes');
+        if (nodes) {
+            if (nodes.length > 1) {
+                sandbox?.multiSelect(nodes.map((n) => n.field));
+            } else {
+                sandbox?.select(nodes[0].field);
+            }
+        }
     }
 }
 export type { EditorService };

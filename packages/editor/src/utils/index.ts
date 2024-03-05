@@ -16,7 +16,7 @@ export function isPage(node?: ISchemasPage | null): boolean {
 }
 
 export function getCompType(type: string): NodeType {
-    if (['page', 'conatiner', 'root'].includes(type)) {
+    if (['page', 'container', 'root'].includes(type)) {
         return type as NodeType;
     }
     return 'node' as NodeType;

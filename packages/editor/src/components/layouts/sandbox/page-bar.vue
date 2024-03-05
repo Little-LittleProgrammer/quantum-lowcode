@@ -21,12 +21,11 @@
 </template>
 
 <script lang='ts' setup>
-import { IServices } from '../../types';
+import { IServices } from '../../../types';
 import { computed, inject, ref, toRaw } from 'vue';
 import {Tabs as ATabs, TabPane} from 'ant-design-vue';
 import { DropMenu } from '@q-front-npm/vue3-antd-pc-ui';
 import { ISchemasPage, NodeType } from '@qimao/quantum-schemas';
-import props from 'ant-design-vue/es/dropdown/props';
 defineOptions({
     name: 'QEditorPageBar',
 });

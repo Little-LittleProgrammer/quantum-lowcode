@@ -89,7 +89,6 @@ class HistoryService extends Subscribe {
     }
 
     private setCanUndoRedo(): void {
-        console.log(this);
         const undoRedo = this.getUndoRedo();
         this.state.canRedo = undoRedo?.canRedo() || false;
         this.state.canUndo = undoRedo?.canUndo() || false;

@@ -10,7 +10,11 @@
 			:moveable-options="moveableOptions"
             :propsConfigs="propsConfigs"
             :methodsList="methodsList"
+            :boxContextmenuConfigs="boxContextmenuConfigs"
 		>
+            <template #nav-left>
+                <p>量子编辑器</p>
+            </template>
             <template #nav-right="{uiService}">
                 <div class="editor-container-nav-right">
                     <a-button size="small" @click="openPreviewModal">预览</a-button>
@@ -32,7 +36,7 @@
 				>
 					<a-radio-button value="phone">Phone</a-radio-button>
 					<a-radio-button value="pad">Pad</a-radio-button>
-					<a-radio-button value="pc">PC</a-radio-button>
+					<a-radio-button value="pc">折叠屏</a-radio-button>
 				</a-radio-group>
 			</template>
 		</quantum-editor>
@@ -50,7 +54,7 @@
 	import { QuantumEditor } from '@qimao/quantum-editor';
 	import { ISchemasRoot, NodeType } from '@qimao/quantum-schemas';
 	import { serializeToString, parseSchemas, asyncLoadJs } from '@qimao/quantum-utils';
-	import { testSchemas } from './init-schemas';
+	import { testSchemas , defaultSchemas} from './init-schemas';
 	import { RUNTIME_PATH } from '@/enums/runtimeEnum';
 	import { useRoute } from 'vue-router';
 	import { useMessage } from '@q-front-npm/hooks/vue/use-message';
@@ -79,7 +83,7 @@
 
 	const editor = ref<InstanceType<typeof QuantumEditor>>();
 
-	const schemas = ref<ISchemasRoot>(testSchemas);
+	const schemas = ref<ISchemasRoot>(defaultSchemas);
 	let preSchemasStr = '';
 	let schemasStr = '';
 	let id: string | null = null;
@@ -92,6 +96,18 @@
 	const previewUrl = computed(
 		() =>`${RUNTIME_PATH[runtimePathType as 'vue3']}/page/index.html?localPreview=1&page=${editor.value?.editorService.get('page')?.field}`
 	);
+
+    const boxContextmenuConfigs = {
+        dropDownList: [
+        {
+            icon: 'SaveOutlined',
+            event: 'save',
+            text: '保存为模版',
+        }],
+        handleMenuEvent: (menu) => {
+            
+        }
+    }
 
 	function moveableOptions(config?: ICustomizeMoveableOptionsCallbackConfig) {
 		const options: MoveableOptions = {};
@@ -217,7 +233,7 @@
         if (uiService.get('showCode')) {
             uiService.set('workspaceLeft', 0)
         } else {
-            uiService.set('workspaceLeft', 300)
+            uiService.set('workspaceLeft', 330)
         }
     }
 
@@ -241,6 +257,7 @@
 	.editor-container {
 		width: 100%;
 		height: 100%;
+        min-width: 1250px;
 		@include bg-color(aside-bg);
 		&-header {
 			height: 32px;

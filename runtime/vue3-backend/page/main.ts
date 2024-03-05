@@ -5,6 +5,9 @@ import { requestFn } from './utils/http';
 import { getUrlParam } from '@qimao/quantum-utils';
 import { getLocalConfig } from './utils';
 import App from './App.vue';
+if (import.meta.env.PROD) {
+    import('@qimao/quantum-ui/dist/es/style/index.css');
+}
 
 const app = new LowCodeRoot({
     ua: window.navigator.userAgent,
@@ -14,7 +17,7 @@ const app = new LowCodeRoot({
 });
 Object.keys(components).forEach((type: string) => app.registerComponent(type.toLowerCase(), components[type]));
 
-app.setDesignWidth(window.document.documentElement.getBoundingClientRect().width);
+app.setDesignWidth(app.env.isWeb ? window.document.documentElement.getBoundingClientRect().width : 375);
 
 window.appInstance = app;
 

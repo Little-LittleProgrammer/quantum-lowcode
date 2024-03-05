@@ -54,6 +54,8 @@ import PropsEditor from './components/layouts/props-editor.vue';
 import { propsService } from './services/props-service';
 import Sidebar from './components/layouts/sidebar/index.vue';
 import { dataSourceService } from './services/datasource-service';
+import { contentmenuService } from './services/contentmenu-service';
+import { storageService } from './services/storage-serivce';
 defineOptions({
     name: 'QEditor',
 });
@@ -72,6 +74,8 @@ const services: IServices = {
     propsService,
     componentService,
     dataSourceService,
+    contentmenuService,
+    storageService,
 };
 
 const sandboxOptions = reactive<IBoxOptions>({

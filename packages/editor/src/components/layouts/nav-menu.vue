@@ -1,7 +1,7 @@
 <!-- 画布小工具 -->
 <template>
     <div class="q-editor-nav-menu">
-        <div class="q-editor-nav-menu-left" :style="{width: workspaceLeft+ 'px'}">
+        <div class="q-editor-nav-menu-left" v-if="workspaceLeft > 0" :style="{width: workspaceLeft+ 'px'}">
             <slot name=left></slot>
         </div>
         <div class="q-editor-nav-menu-center">
