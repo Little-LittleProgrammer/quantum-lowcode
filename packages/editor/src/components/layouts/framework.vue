@@ -7,6 +7,7 @@
             class="q-editor-content"
             :left="uiService?.get('workspaceLeft')"
             :center="uiService?.get('workspaceCenter')"
+            :right="uiService?.get('workspaceRight')"
         >
             <template #left>
                 <slot name="left"></slot>

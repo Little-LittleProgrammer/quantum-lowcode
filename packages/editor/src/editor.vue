@@ -11,6 +11,9 @@
                         <template #left>
                             <slot name="nav-left" :uiService="uiService"></slot>
                         </template>
+                        <template #center>
+                            <slot name="nav-center" :uiService="uiService" ></slot>
+                        </template>
                         <template #right>
                             <slot name="nav-right" :uiService="uiService" ></slot>
                         </template>

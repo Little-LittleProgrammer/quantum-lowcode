@@ -20,11 +20,18 @@
                     <a-button size="small" @click="openPreviewModal">预览</a-button>
                     <a-button size="small" @click="saveProject">保存</a-button>
                     <a-button size="small" @click="publishProject">发布</a-button>
-                    <a-button size="small" type="link" @click="handlerShowCode(uiService)">
+                    <a-button v-if="viewMode === 'new'" size="small" type="link" @click="handlerShowCode(uiService)">
                         <template #icon>
                             <q-antd-icon type="FileTextOutlined"></q-antd-icon>
                         </template>
                     </a-button>
+                    <a-tooltip placement="right" :title="viewMode === 'classic' ? '经典模式' : '视图模式'">
+                        <a-button size="small" type="link" @click="changeMode">
+                            <template #icon>
+                                <q-antd-icon type="ControlOutlined"></q-antd-icon>
+                            </template>
+                        </a-button>
+                    </a-tooltip>
                 </div>
             </template>
 			<template #workspace-header="{ editorService }">
@@ -39,6 +46,12 @@
 					<a-radio-button value="pc">折叠屏</a-radio-button>
 				</a-radio-group>
 			</template>
+            <template v-if="viewMode === 'classic'" #nav-center>
+                <div></div>
+            </template>
+            <template v-if="viewMode === 'classic'" #props-editor="{editorService}">
+                <div></div>
+            </template>
 		</quantum-editor>
 		<preview
 			:uaInfo="UA_MAP[sandboxDev as 'phone']"
@@ -75,6 +88,7 @@
 	});
 
 	const route = useRoute();
+    const viewMode = ref<'classic' | 'new'>('new')
 	const { runtimePathType = 'vue3' } = route.query;
 
 	const runtimeUrl = ref(
@@ -247,6 +261,10 @@
 			preSchemasStr = schemasStr;
 		}
 	}
+
+    function changeMode() {
+        viewMode.value = viewMode.value === 'new' ? 'classic' : 'new';
+    }
 
     asyncLoadJs(`/quantum-editor/entry/${runtimePathType}/config.umd.js`).then(() => {
         propsConfigs.value = (globalThis as any).quantumCompConfigs.formSchemas;

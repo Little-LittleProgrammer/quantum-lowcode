@@ -61,6 +61,7 @@ export interface IUiState {
     showGuides: boolean;
     workspaceLeft?: number
     workspaceCenter?: number
+    workspaceRight?: number
 }
 
 export interface IPropsState {

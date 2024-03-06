@@ -5,26 +5,29 @@
             <slot name=left></slot>
         </div>
         <div class="q-editor-nav-menu-center">
-            <div class="q-editor-nav-menu-center-btnlist">
-                <template v-for="item of buttons" :key="item.type">
-                    <template v-if="item.type === 'divider'">
-                        <Divider type="vertical"></Divider>
+            <slot name="center">
+                <div class="q-editor-nav-menu-center-btnlist">
+                    <template v-for="item of buttons" :key="item.type">
+                        <template v-if="item.type === 'divider'">
+                            <Divider type="vertical"></Divider>
+                        </template>
+                        <template v-if="item.type === 'button'">
+                            <Tooltip :title="item.tooltip">
+                                <Button :disabled="js_is_function(item.disabled) ? (item.disabled as Function)?.() : item.disabled" size="small" type="text" @click="item.onClick">
+                                    <template #icon >
+                                        <q-antd-icon :type="item.icon"></q-antd-icon>
+                                    </template>
+                                    {{ item.text }}
+                                </Button>
+                            </Tooltip>
+                        </template>
+                        <template v-if="item.type === 'text'">
+                            <span>{{ item.text }}</span>
+                        </template>
                     </template>
-                    <template v-if="item.type === 'button'">
-                        <Tooltip :title="item.tooltip">
-                            <Button :disabled="js_is_function(item.disabled) ? (item.disabled as Function)?.() : item.disabled" size="small" type="text" @click="item.onClick">
-                                <template #icon >
-                                    <q-antd-icon :type="item.icon"></q-antd-icon>
-                                </template>
-                                {{ item.text }}
-                            </Button>
-                        </Tooltip>
-                    </template>
-                    <template v-if="item.type === 'text'">
-                        <span>{{ item.text }}</span>
-                    </template>
-                </template>
-            </div>
+                </div>
+            </slot>
+            
         </div>
         <div class="q-editor-nav-menu-right">
             <slot name=right></slot>
