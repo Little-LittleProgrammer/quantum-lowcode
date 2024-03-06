@@ -3,7 +3,7 @@ import {
     js_is_array,
     js_utils_get_uuid
 } from '@qimao/quantum-utils';
-import { IFormValue, IPropsState } from '../types';
+import { IPropsState } from '../types';
 import { reactive } from 'vue';
 import { FormSchema } from '@q-front-npm/vue3-antd-pc-ui';
 import { formatConfig, otherConfigMap } from '../utils/props';
@@ -11,7 +11,6 @@ import { cloneDeep, mergeWith } from 'lodash-es';
 import { ISchemasNode, ISchemasPage, Id } from '@qimao/quantum-schemas';
 import { editorService } from './editor-service';
 import { getCompType } from '../utils';
-import { merge, throttle } from 'lodash-es';
 
 class PropsService extends Subscribe {
     private state = reactive<IPropsState>({

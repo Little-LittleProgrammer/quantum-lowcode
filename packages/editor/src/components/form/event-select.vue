@@ -35,7 +35,7 @@
                     </div>
                     <a-form>
                         <a-form-item label="事件类型">
-                            <a-select v-model:value="item.type" size="small" :options="uniOptions"></a-select>
+                            <a-select v-model:value="item.type" size="small" :options="uniOptions" @click="resetEventUni"></a-select>
                         </a-form-item>
                         <template v-if="item.type==='component'">
                             <a-form-item label="联动组件">
@@ -47,9 +47,19 @@
                         </template>
                         <template v-else-if="item.type==='dataSource'">
                             <a-form-item label="方法">
-                                <a-select v-model:value="item.method" :options="getDsSelect"></a-select>
+                                <a-tree-select v-model:value="item.field" :treeData="getDsSelect"  @change="selectDsEvent(item)"></a-tree-select>
                             </a-form-item>
-                            <a-form-item label="参数"></a-form-item>
+                            <a-form-item v-if="item.field && paramsData.length" label="参数">
+                                <div class="q-editor-event-select-content-uni-params" v-for="c in paramsData">
+                                    <a-form-item-rest>
+                                        {{ c.value }}: 
+                                        <a-input class="input" v-model:value="item.params[c.value]"></a-input>
+                                        <a-tooltip :title="c.description">
+                                            <q-antd-icon type="QuestionCircleOutlined"></q-antd-icon>
+                                        </a-tooltip>
+                                    </a-form-item-rest>
+                                </div>
+                            </a-form-item>
                         </template>
                     </a-form>
                 </div>
@@ -59,6 +69,7 @@
 </template>
 
 <script lang='ts' setup>
+import { js_is_array } from '@qimao/quantum-utils';
 import { IServices } from '../../types';
 import { computed, inject, reactive, ref, watch } from 'vue';
 defineOptions({
@@ -87,6 +98,20 @@ watch(() => props.value, () => {
 
 const getCompSelect = computed(() => {
     return service?.propsService.getMethods(page.value);
+});
+const getDsSelect = computed(() => {
+    return service?.editorService.get('root')?.dataSources?.map(ds => {
+        return {
+            label: `${ds.title || ''}(${ds.id})`,
+            value: ds.id,
+            children: ds.methods.map((method: any) => {
+                return {
+                    label: method.title || method.name,
+                    value: `${ds.id}:${method.name}`,
+                }
+            })
+        }
+    })
 });
 
 function addEvent() {
@@ -135,12 +160,47 @@ function getCompEventSelect(item:any) {
     return service?.propsService.getConfig('methods')[eventKey]?.methods || [];
 }
 
+function resetEventUni(item: any) {
+    item.params = {};
+    item.field = {}
+}
+
 function selectCompEvent(item:any) {
     if (!item.comp || !item.event) {
         return;
     }
     const key = item.comp.split('&&&')[1] || '';
     item.field = key + ':' + item.event;
+}
+
+const paramsData = ref<any>([])
+
+function selectDsEvent(item:any) {
+    if (!item.field) {
+        return;
+    }
+    paramsData.value = []
+    const id = item.field.split(':')[0]
+    const name = item.field.split(':')[1];
+    const list = service?.editorService.get('root')?.dataSources || []
+    item.params = {}
+    for (let child of list) {
+        if (child.id === id) {
+            if (js_is_array(child.methods)) {
+                for (let sub of child.methods) {
+                    if (sub.name === name) {
+                        for (let tri of (sub.params || [])) {
+                            paramsData.value.push({label: tri.description, value: tri.name})
+                            item.params[tri.name] = ''  
+                        }
+                        break;
+                    }
+                }
+            }
+            
+        }
+    }
+    
 }
 
 </script>
@@ -165,6 +225,11 @@ function selectCompEvent(item:any) {
                 font-weight: 500;
                 display: flex;
                 justify-content: space-between;
+            }
+            &-params {
+                .input {
+                    width: 200px;
+                }
             }
         }
     }
