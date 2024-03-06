@@ -70,7 +70,7 @@ export default defineConfig(({ mode, }) => {
 
             publicDir: '../public',
 
-            base: isDeclaration ? `/quantum-editor/runtime/vue2/${mode}` : `https://ssg-front.qmniu.com/allocation/lowCode`,
+            base: isDeclaration ? `/quantum-editor/runtime/vue2/${mode}` : `/`,
 
             build: {
                 emptyOutDir: true,
