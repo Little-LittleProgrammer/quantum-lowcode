@@ -96,7 +96,6 @@ export default defineComponent({
             },
 
             update({config, parentId, }: IUpdateData) {
-                console.log('runtime.update', config);
                 if (!root.value || !app) throw new Error('未初始化');
 
                 replaceChildNode(reactive(config), [root.value as any], parentId);
@@ -105,6 +104,7 @@ export default defineComponent({
                 if (nodeInstance) {
                     nodeInstance.setData(config);
                 }
+                console.log('runtime.update', config, app);
             },
 
             delete({id, parentId, }: IDeleteData) {
