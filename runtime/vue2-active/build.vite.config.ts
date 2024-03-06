@@ -70,7 +70,7 @@ export default defineConfig(({ mode, }) => {
 
             publicDir: '../public',
 
-            base: isDeclaration ? `/quantum-editor/runtime/vue2/${mode}` : `/`,
+            base: `/quantum-editor/runtime/vue2/${mode}`,
 
             build: {
                 emptyOutDir: true,
