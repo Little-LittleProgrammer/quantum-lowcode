@@ -204,6 +204,7 @@ export const convertToNumber = (value: number | string, parentValue = 0) => {
  */
 export const replaceChildNode = (newNode: ISchemasNode, data?: ISchemasNode[], parentId?: Id) => {
     const path = getNodePath(newNode.field, data!);
+    if (!path.length) return;
     const node:ISchemasNode = path.pop();
     let parent:ISchemasNode = path.pop();
 
@@ -214,8 +215,8 @@ export const replaceChildNode = (newNode: ISchemasNode, data?: ISchemasNode[], p
     if (!node) throw new Error('未找到目标节点');
     if (!parent) throw new Error('未找到父节点');
 
-    const index = parent.children?.findIndex((child: ISchemasNode) => child.field === node.field);
-    parent.children.splice(index, 1, newNode);
+    const index = parent.children?.findIndex((child: ISchemasNode) => child.field === node.field) || 999;
+    parent.children?.splice(index, 1, newNode);
 };
 
 export const getNeedKey = (node: ISchemasNode) => {
@@ -225,7 +226,8 @@ export const getNeedKey = (node: ISchemasNode) => {
             if (js_is_object(obj[key])) {
                 dfs(obj[key], `${path}${key}.`);
             } else {
-                if (js_is_string(obj[key]) && obj[key].includes('${') && obj[key].includes('}')) {
+                const finKey = key;
+                if (js_is_string(obj[key]) && obj[finKey].includes('${') && obj[finKey].includes('}')) {
                     keys.push(`${path}${key}`);
                 }
             }
@@ -243,9 +245,10 @@ export const getNeedKey = (node: ISchemasNode) => {
  */
 export function compiledNode(
     node: ISchemasNode,
-    compile?: (value: any) => any,
+    compile?: (value: any, keyPath?: string) => any,
     sourceId?: Id
 ) {
+    // TODO 整个数据收集部分待优化
     let keys: string[] = [];
     if (!sourceId) {
         keys = getNeedKey(node);
@@ -257,7 +260,7 @@ export function compiledNode(
         const value = js_utils_find_attr(node, key);
         let newValue;
         try {
-            newValue = compile ? compile(value) : value;
+            newValue = compile ? compile(value, key) : value;
         } catch (e) {
             console.error(e);
             newValue = '';
@@ -265,8 +268,13 @@ export function compiledNode(
         js_utils_edit_attr(key, newValue, node);
     });
 
-    if (js_is_array(node.children)) {
-        node.children.forEach(item => compiledNode(item, compile, sourceId));
-    }
+    // if (js_is_array(node.children)) {
+    //     node.children.forEach(item => compiledNode(item, compile, sourceId));
+    // }
     return node;
+}
+
+// TODO 获取带动态参数的节点
+export function getNodes(){
+
 }

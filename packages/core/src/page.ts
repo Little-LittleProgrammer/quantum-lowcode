@@ -21,6 +21,7 @@ export class LowCodePage extends LowCodeNode {
             parent,
             page: this,
             root: this.root,
+            init: true,
         });
         this.setNode(config.field, node);
         config.children?.forEach(element => {
@@ -38,6 +39,18 @@ export class LowCodePage extends LowCodeNode {
 
     public deleteNode(field: Id) {
         this.nodes.delete(field);
+        if (this.root.dataSourceDep.has(this.data.field)) {
+            const data = this.root.dataSourceDep.get(this.data.field) || [];
+            const index = data?.indexOf(field) || -1;
+            if (~index) {
+                data?.splice(index, 1);
+                if (data?.length === 0) {
+                    this.root.dataSourceDep.delete(this.data.field);
+                } else {
+                    this.root.dataSourceDep.set(this.data.field, data);
+                }
+            }
+        }
     }
 
     public destroy(): void {

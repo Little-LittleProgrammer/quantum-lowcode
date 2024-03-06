@@ -42,6 +42,7 @@ export interface ILowCodeRoot {
     schemasRoot?: ISchemasRoot;
     request?: IRequestFunction;
     registerEvent?: Fn;
+    dataSourceDep: Map<Id, Id[]>
     [key: string]: any;
 }
 

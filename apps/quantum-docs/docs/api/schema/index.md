@@ -11,53 +11,50 @@
  * 数据组件 scheams
  */
 export interface ISchemasNode{
-    /**
-     * 组件字段, 也为数据节点唯一值id
-     */
+    type: NodeType.NODE | string
+    /**组件字段, 也为数据节点唯一值id*/
     field: Id
-    /**
-     * 组件名
-     */
-    component: string;
-    /**
-     * 组件的属性集合
-     */
+    /** 组件名*/
+    component?: string;
+    /**组件的属性集合*/
     componentProps?: Record<string, any> ;
     label?: string;
-    /**
-     * 样式
-     */
-    style?: Partial<CSSStyleDeclaration> | ((el: HTMLElement) => CSSStyleDeclaration)
+    /**样式*/
+    style?: Partial<CSSStyleDeclaration>
 
-    /**
-     * 是否展示
-     */
+    /**是否展示*/
     ifShow?: boolean | Fn;
-    /**
-     * 子节点
-     */
+    /** 子节点*/
+    children?: (ISchemasNode | ISchemasContainer)[]
+    created?: Hooks;
+    mounted?: Hooks
+    [key: string]: any;
+}
+
+/**
+ * 数据容器 scheams
+ */
+export interface ISchemasContainer extends ISchemasNode{
+    type: NodeType.CONTAINER | string;
     children: (ISchemasNode | ISchemasContainer)[]
 }
 
 /**
- * 容器节点
+ * 数据页面 scheams
  */
-export interface ISchemasContainer extends SelectPartial<ISchemasNode, 'field'>{
-    // 默认container
-    type?: NodeType.CONTAINER | string;
+export interface ISchemasPage extends ISchemasContainer{
+    type: NodeType.PAGE
 }
 
-/**
- * 页面节点
- */
-export interface ISchemasPage extends ISchemasContainer{ 
-    type: NodeType.PAGE
+export interface IMetaDes {
+    keywords: string[];
+    description: string[];
 }
 
 /**
  * 根节点
  */
-export interface ISchemasRoot {
+export interface ISchemasRoot extends ISchemasNode {
     type: NodeType.ROOT;
     children: ISchemasPage[];
     name: string;

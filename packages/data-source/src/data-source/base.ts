@@ -1,6 +1,6 @@
 import { ICodeBlockContent, IDataSchema, ILowCodeRoot } from '@qimao/quantum-schemas';
-import { Subscribe } from '@qimao/quantum-utils';
-import { IDataSourceOption } from '../types';
+import { Subscribe, js_utils_edit_attr } from '@qimao/quantum-utils';
+import { ChangeDataEvent, IDataSourceOption } from '../types';
 import { getDefaultValueFromFields } from '@qimao/quantum-utils';
 
 export class DataSource extends Subscribe {
@@ -60,10 +60,19 @@ export class DataSource extends Subscribe {
         this.#methods = methods;
     }
 
-    public setData(data: Record<string, any>) {
-        // TODO: 校验数据，看是否符合 schema
-        this.data = data;
-        this.emit('change');
+    public setData(data: Record<string, any>, path?: string) {
+        if (path) {
+            js_utils_edit_attr(path, data, this.data);
+        } else {
+            // TODO: 校验数据，看是否符合 schema
+            this.data = data;
+        }
+        const changeEvent: ChangeDataEvent = {
+            updateData: data,
+            path,
+        };
+        console.log('ds change 1');
+        this.emit('change', changeEvent);
     }
 
     // 获取默认值

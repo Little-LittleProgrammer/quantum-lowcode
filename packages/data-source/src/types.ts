@@ -32,3 +32,9 @@ export interface IHttpDataSourceSchema extends IDataSourceSchema {
 export interface IDataSourceManagerData {
     [key: string]: Record<string, any>;
 }
+
+export interface ChangeDataEvent {
+    path?: string;
+    updateData: any;
+}
+

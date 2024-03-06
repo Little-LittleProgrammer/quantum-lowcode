@@ -1,6 +1,6 @@
-import { IDataSourceSchema, ILowCodeRoot, ISchemasNode, Id } from '@qimao/quantum-schemas';
+import { IDataSourceSchema, ILowCodeRoot} from '@qimao/quantum-schemas';
 import { Subscribe, js_is_function } from '@qimao/quantum-utils';
-import { IDataSourceManagerData, IDataSourceManagerOptions, IHttpDataSourceSchema } from './types';
+import { ChangeDataEvent, IDataSourceManagerData, IDataSourceManagerOptions, IHttpDataSourceSchema } from './types';
 import { DataSource } from './data-source/base';
 import { HttpDataSource } from './data-source/http';
 
@@ -85,12 +85,15 @@ export class DataSourceManager extends Subscribe {
 
         this.data[ds.id] = ds.data;
 
-        ds.emit('change', () => this.setData(ds));
+        ds.on('change', (cdata: ChangeDataEvent) => {
+            console.log('ds change 2');
+            this.setData(ds, cdata);
+        });
     }
 
-    public setData(ds: DataSource) {
+    public setData(ds: DataSource, cdata: any) {
         Object.assign(this.data[ds.id], ds.data);
-        this.emit('change', ds.id);
+        this.emit('change', ds.id, cdata);
     }
 
     public updateSchema(schemas: IDataSourceSchema[]) {

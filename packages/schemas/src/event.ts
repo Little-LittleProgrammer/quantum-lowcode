@@ -17,6 +17,14 @@ export interface IDataSourceSchema {
     /** mock数据 */
     mocks?: IMockSchema;
 }
+export interface IDepData {
+    [pageField: Id]: {
+        /** 组件Field */
+        field: Id; // nodeField
+        key: string; // path
+        rawValue: string // ${base1.a1}
+    };
+}
 
 export interface IDataSchema {
     type?: 'null' | 'boolean' | 'object' | 'array' | 'number' | 'string' | 'any';

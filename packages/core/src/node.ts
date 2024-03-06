@@ -1,4 +1,4 @@
-import { ISchemasContainer, ISchemasNode, ISchemasPage } from '@qimao/quantum-schemas';
+import { ISchemasContainer, ISchemasNode, ISchemasPage, IDepData } from '@qimao/quantum-schemas';
 import { LowCodeRoot } from './app';
 import { LowCodePage } from './page';
 import { Subscribe, js_is_function, js_is_object, compiledNode, js_is_array } from '@qimao/quantum-utils';
@@ -9,6 +9,7 @@ interface INodeOptions {
     page?: LowCodePage;
     parent?: LowCodeNode;
     root: LowCodeRoot;
+    init?: boolean
 }
 
 export class LowCodeNode extends Subscribe {
@@ -24,31 +25,49 @@ export class LowCodeNode extends Subscribe {
         this.parent = options.parent;
         this.root = options.root;
         this.data = options.config;
-        this.setData(options.config);
-
+        if (options.init) {
+            this.setData(options.config);
+            this.setEvents(this.data);
+        }
         this.listenLifeSafe();
     }
 
     public setData(data: ISchemasNode | ISchemasContainer | ISchemasPage) {
         this.data = this.compileNode(data);
-        this.setEvents(data);
-        this.emit('updata-data');
+        this.emit('update-data');
     }
 
     public compileNode(data: ISchemasNode | ISchemasContainer | ISchemasPage) {
-        return compiledNode(data, (value) => {
+        // TODO 整个数据收集部分待优化
+        if (this.page) { // 复原node依赖
+            const ids = this.root.dataSourceDep.get(this.page?.data.field || '') || [];
+            this.root.dataSourceDep.set(this.page.data.field, ids.filter(item => item.field !== this.data.field));
+        }
+        return compiledNode(data, (value, key) => {
+            if (this.page) {
+                if (this.root.dataSourceDep.has(this.page.data.field)) {
+                    const ids = this.root.dataSourceDep.get(this.page.data.field)!;
+                    ids.push({
+                        field: this.data.field,
+                        key,
+                        rawValue: value,
+                    });
+                    this.root.dataSourceDep.set(this.page.data.field, ids);
+                } else {
+                    this.root.dataSourceDep.set(this.page.data.field, [{
+                        field: this.data.field,
+                        key,
+                        rawValue: value,
+                    }]);
+                }
+            }
             if (typeof value === 'string') {
                 return template(value)(this.root.dataSourceManager?.data);
             }
         });
     }
 
-    // TODO
-    // public addEvent(event: string, fn: Fn) {
-    // }
-
     public setEvents(config: ISchemasNode | ISchemasContainer) {
-        // TODO: 1. 通过 拖拽配置生成 event; 2. 联动组件事件
         if (config.componentProps && js_is_object(config.componentProps)) {
             for (const [key, val] of Object.entries(config.componentProps)) {
                 /**
@@ -101,7 +120,6 @@ export class LowCodeNode extends Subscribe {
             this.instance = instance;
 
             for (const [key, val] of Object.entries(instance)) {
-                // TODO: 1. 绑定组件暴露出来的方法; 2. 绑定组件的事件
                 this.root && this.root.registerEvent(key, val, undefined, this);
             }
 

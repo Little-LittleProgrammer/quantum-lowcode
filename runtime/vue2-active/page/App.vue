@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject, nextTick, reactive} from 'vue';
+import { defineComponent, inject, nextTick, reactive, ref} from 'vue';
 
 import type { LowCodeRoot } from '@qimao/quantum-core';
 import { IQuantum} from '@qimao/quantum-sandbox';
@@ -28,15 +28,16 @@ export default defineComponent({
     setup() {
         const app = inject<LowCodeRoot | undefined>('app');
 
-        const pageConfig = computed(() => {
-            return app?.page?.data;
-        });
+        const pageConfig = ref(app?.page?.data || {});
 
         // 数据更新
         app?.dataSourceManager?.on('update-data', (nodes: ISchemasNode[], sourceId: string, data: any) => {
+            console.log(nodes);
             nodes.forEach((node) => {
-                replaceChildNode(reactive(node) as ISchemasNode, [pageConfig as unknown as ISchemasNode]);
+                replaceChildNode(reactive(node) as ISchemasNode, [pageConfig.value as ISchemasNode]);
             });
+
+            console.log(pageConfig.value);
 
             if (!app) return;
 
