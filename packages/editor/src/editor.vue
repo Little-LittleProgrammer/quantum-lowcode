@@ -9,13 +9,13 @@
                 <div class="nav-menu-container">
                     <nav-menu :btn-list="btnList">
                         <template #left>
-                            <slot name="nav-left" :uiService="uiService"></slot>
+                            <slot name="nav-left" :uiService="uiService" :editorService="editorService"></slot>
                         </template>
                         <template #center>
-                            <slot name="nav-center" :uiService="uiService" ></slot>
+                            <slot name="nav-center" :uiService="uiService" :editorService="editorService"></slot>
                         </template>
                         <template #right>
-                            <slot name="nav-right" :uiService="uiService" ></slot>
+                            <slot name="nav-right" :uiService="uiService" :editorService="editorService"></slot>
                         </template>
                     </nav-menu>
                 </div>

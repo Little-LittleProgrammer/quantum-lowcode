@@ -5,3 +5,4 @@ export {default as Demo} from './q-demo';
 export {default as Button} from './q-button';
 export {default as Img} from './q-img';
 export {default as Text} from './q-text';
+export {default as Video} from './q-video';

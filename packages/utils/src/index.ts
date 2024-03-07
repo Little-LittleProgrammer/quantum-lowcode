@@ -204,7 +204,6 @@ export const convertToNumber = (value: number | string, parentValue = 0) => {
  */
 export const replaceChildNode = (newNode: ISchemasNode, data?: ISchemasNode[], parentId?: Id) => {
     const path = getNodePath(newNode.field, data!);
-    if (!path.length) return;
     const node:ISchemasNode = path.pop();
     let parent:ISchemasNode = path.pop();
 
@@ -215,7 +214,7 @@ export const replaceChildNode = (newNode: ISchemasNode, data?: ISchemasNode[], p
     if (!node) throw new Error('未找到目标节点');
     if (!parent) throw new Error('未找到父节点');
 
-    const index = parent.children?.findIndex((child: ISchemasNode) => child.field === node.field) || 999;
+    const index = parent.children?.findIndex((child: ISchemasNode) => child.field === node.field);
     parent.children?.splice(index, 1, newNode);
 };
 

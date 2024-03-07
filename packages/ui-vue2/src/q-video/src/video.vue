@@ -1,5 +1,5 @@
 <template>
-    <video :src="src" @click="handlerClick"/>
+    <video :src="src" :controls="controls" @click="handlerClick"/>
 </template>
 
 <script lang="ts">
@@ -18,6 +18,10 @@ export default defineComponent({
         src: {
             type: String,
             default: ''
+        },
+        controls: {
+            type: Boolean,
+            default: true
         }
     },
     emits: ['click'],
