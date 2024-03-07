@@ -17,7 +17,7 @@ import MoveableHelper from 'moveable-helper';
 import { DRAG_EL_ID_PREFIX, GHOST_EL_ID_PREFIX, Mode, ZIndex } from './const';
 import { TargetShadow } from './target-shadow';
 import { IDragResizeHelperConfig, IRect, ITargetElement } from './types';
-import { calcValueByFontsize, getBorderWidth, getMarginValue } from './utils';
+import { calcValueByDesignWidth, getBorderWidth, getMarginValue } from './utils';
 import { js_utils_dom_offset, getAbsolutePosition } from '@qimao/quantum-utils';
 
 /**
@@ -46,8 +46,10 @@ export default class DragResizeHelper {
     private framesSnapShot: { left: number; top: number; id: string }[] = [];
     /** 布局方式：流式布局、绝对定位、固定定位 */
     private mode: Mode = Mode.ABSOLUTE;
+    private designWidth: number
 
     constructor(config: IDragResizeHelperConfig) {
+        this.designWidth = config.designWidth;
         this.moveableHelper = MoveableHelper.create({
             useBeforeRender: true,
             useRender: false,
@@ -320,8 +322,8 @@ export default class DragResizeHelper {
 
         const { marginLeft, marginTop, } = getMarginValue(el);
 
-        let left = calcValueByFontsize(doc, offset.left) - marginLeft;
-        let top = calcValueByFontsize(doc, offset.top) - marginTop;
+        let left = calcValueByDesignWidth(doc, offset.left, this.designWidth) - marginLeft;
+        let top = calcValueByDesignWidth(doc, offset.top, this.designWidth) - marginTop;
 
         const {
             borderLeftWidth,
@@ -330,13 +332,15 @@ export default class DragResizeHelper {
             borderBottomWidth,
         } = getBorderWidth(el);
 
-        const width = calcValueByFontsize(
+        const width = calcValueByDesignWidth(
             doc,
-            el.clientWidth + borderLeftWidth + borderRightWidth
+            el.clientWidth + borderLeftWidth + borderRightWidth,
+            this.designWidth
         );
-        const height = calcValueByFontsize(
+        const height = calcValueByDesignWidth(
             doc,
-            el.clientHeight + borderTopWidth + borderBottomWidth
+            el.clientHeight + borderTopWidth + borderBottomWidth,
+            this.designWidth
         );
 
         let shadowEl = this.getShadowEl();
@@ -359,13 +363,13 @@ export default class DragResizeHelper {
 				js_utils_dom_offset(parentEl);
 
             left =
-				calcValueByFontsize(doc, targetShadowElOffsetLeft) +
+				calcValueByDesignWidth(doc, targetShadowElOffsetLeft, this.designWidth) +
 				parseFloat(translateX) -
-				calcValueByFontsize(doc, parentLeft);
+				calcValueByDesignWidth(doc, parentLeft, this.designWidth);
             top =
-				calcValueByFontsize(doc, targetShadowElOffsetTop) +
+				calcValueByDesignWidth(doc, targetShadowElOffsetTop, this.designWidth) +
 				parseFloat(translateY) -
-				calcValueByFontsize(doc, parentTop);
+				calcValueByDesignWidth(doc, parentTop, this.designWidth);
         }
 
         return { width, height, left, top, };

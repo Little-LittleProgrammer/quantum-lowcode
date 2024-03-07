@@ -20,7 +20,7 @@ const components:any = {
 console.log('components', components);
 Object.keys(components).forEach((type: string) => app.registerComponent(type, components[type]));
 
-app.setDesignWidth(app.env.isWeb ? window.document.documentElement.getBoundingClientRect().width : 375);
+// app.setDesignWidth(app.env.isWeb ? window.document.documentElement.getBoundingClientRect().width : 375);
 window.appInstance = app;
 
 new Vue({

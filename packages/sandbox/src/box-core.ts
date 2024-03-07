@@ -18,7 +18,7 @@ import {
     IUpdateData,
     IUpdateEventData
 } from './types';
-import { Id } from '@qimao/quantum-schemas';
+import { DESIGN_WIDTH, Id } from '@qimao/quantum-schemas';
 import { DEFAULT_ZOOM } from './const';
 import { ActionManager } from './action-manager';
 import { MoveableOptions, OnDragStart } from 'moveable';
@@ -31,6 +31,7 @@ export class BoxCore extends Subscribe {
     public renderer: BoxRender;
     public mask: BoxMask;
     public actionManager: ActionManager;
+    public designWidth = DESIGN_WIDTH;
 
     private pageResizeObserver: ResizeObserver | null = null;
     private autoScrollIntoView: boolean | undefined;
@@ -39,6 +40,9 @@ export class BoxCore extends Subscribe {
         super();
 
         this.autoScrollIntoView = config.autoScrollIntoView;
+        if (config.designWidth) {
+            this.designWidth = config.designWidth;
+        }
 
         this.renderer = new BoxRender({
             runtimeUrl: config.runtimeUrl,
@@ -250,6 +254,7 @@ export class BoxCore extends Subscribe {
             container: this.mask.content,
             disabledDragStart: config.disabledDragStart,
             disabledMultiSelect: config.disabledMultiSelect,
+            designWidth: this.designWidth,
             canSelect: config.canSelect,
             isContainer: config.isContainer,
             updateDragEl: config.updateDragEl,

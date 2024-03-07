@@ -15,9 +15,9 @@
             <template #nav-left>
                 <p>量子编辑器</p>
             </template>
-            <template #nav-right="{uiService}">
+            <template #nav-right="{uiService, editorService}">
                 <div class="editor-container-nav-right">
-                    <a-button size="small" @click="openPreviewModal">预览</a-button>
+                    <a-button size="small" @click="openPreviewModal(editorService)">预览</a-button>
                     <a-button size="small" @click="saveProject">保存</a-button>
                     <a-button size="small" @click="publishProject">发布</a-button>
                     <a-button v-if="viewMode === 'new'" size="small" type="link" @click="handlerShowCode(uiService)">
@@ -58,6 +58,7 @@
 			v-model:previewVisible="previewVisible"
 			:previewUrl="previewUrl"
 			:sandboxRect="sandboxRect"
+            :designWidth="designWidth"
 		></preview>
 	</div>
 </template>
@@ -103,6 +104,7 @@
 	let id: string | null = null;
 
 	const previewVisible = ref(false);
+	const designWidth = ref(720);
 
     const propsConfigs = ref({})
     const methodsList = ref({})
@@ -203,11 +205,14 @@
 
 		app.setEnv(UA_MAP[sandboxDev.value as 'phone']);
 
-		app.setDesignWidth(width);
+		app.setDesignWidth(editorService.get('root')?.designWidth || designWidth.value);
 	}
 
-	function openPreviewModal() {
+	function openPreviewModal(editorService: EditorService) {
 		save();
+        if (editorService.get('root')?.designWidth) {
+            designWidth.value = editorService.get('root')?.designWidth
+        }
 		if (schemasStr !== preSchemasStr) {
 			createConfirm({
 				title: '有修改未保存，是否先保存再预览',

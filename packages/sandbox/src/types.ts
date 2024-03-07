@@ -107,6 +107,7 @@ export interface IBoxCoreConfig {
     updateDragEl?: IUpdateDragEl;
     guidesOptions?: Partial<IGuidesOptions>;
     disabledMultiSelect?: boolean;
+    designWidth?: number
 }
 
 export interface ICustomizeMoveableOptionsCallbackConfig {
@@ -186,6 +187,7 @@ export interface IActionManagerConfig {
     updateDragEl?: IUpdateDragEl;
     getTargetElement: GetTargetElement;
     getElementsFromPoint: GetElementsFromPoint;
+    designWidth: number
 }
 
 export interface IUpdateEventData {
@@ -221,6 +223,7 @@ export interface IBoxHighlightConfig {
 export interface IDragResizeHelperConfig {
     container: HTMLElement;
     updateDragEl?: IUpdateDragEl;
+    designWidth: number;
 }
 
 export interface IMoveableManagerConfig {

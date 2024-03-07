@@ -33,7 +33,7 @@ import { cloneDeep } from 'lodash-es';
 import { ISchemasPage, ISchemasRoot } from '@qimao/quantum-schemas';
 import { useBox } from '../../../hooks';
 import { js_utils_dom_offset, parseSchemas } from '@qimao/quantum-utils';
-import { calcValueByFontsize } from '@qimao/quantum-sandbox';
+import { calcValueByDesignWidth } from '@qimao/quantum-sandbox';
 import { DropMenu } from '@q-front-npm/vue3-antd-pc-ui';
 
 defineOptions({
@@ -175,8 +175,8 @@ async function dropHandler(e: DragEvent) {
 
             if (parentEl && doc) {
                 const {left: parentLeft, top: parentTop, } = js_utils_dom_offset(parentEl as HTMLElement);
-                left = left - calcValueByFontsize(doc, parentLeft) * zoom.value;
-                top = top - calcValueByFontsize(doc, parentTop) * zoom.value;
+                left = left - calcValueByDesignWidth(doc, parentLeft) * zoom.value;
+                top = top - calcValueByDesignWidth(doc, parentTop) * zoom.value;
             }
         }
 

@@ -15,12 +15,14 @@ const props = withDefaults(defineProps<{
     previewVisible: boolean;
     sandboxRect: Record<'width' | 'height', number>;
     previewUrl: string;
-    uaInfo: string
+    uaInfo: string;
+    designWidth: number;
 }>(), {
     previewVisible: false,
     sandboxRect: { width: 375, height: 817 },
     previewUrl: '',
-    uaInfo: ''
+    uaInfo: '',
+    designWidth: 720
 })
 const previewRef = ref()
 
@@ -31,7 +33,7 @@ watchEffect(() => {
         setTimeout(() => {
             const app = (previewRef.value.contentWindow as any).appInstance;
             app.setEnv(props.uaInfo);
-            app.setDesignWidth(props.sandboxRect.width);
+            app.setDesignWidth(props.designWidth);
         },500)
     }
 },)

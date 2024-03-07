@@ -50,6 +50,7 @@ const defaultContainerHighlightDuration = 800;
  *
  */
 export class ActionManager extends Subscribe {
+    private designWidth: number;
     private dr: BoxDragResize;
     private multiDr?: BoxMultiDragResize;
     private highlightLayer: BoxHighlight;
@@ -90,6 +91,7 @@ export class ActionManager extends Subscribe {
 			config.containerHighlightDuration ||
 			defaultContainerHighlightDuration;
         this.containerHighlightType = config.containerHighlightType;
+        this.designWidth = config.designWidth;
         this.disabledMultiSelect = config.disabledMultiSelect ?? false;
         this.getTargetElement = config.getTargetElement;
         this.getElementsFromPoint = config.getElementsFromPoint;
@@ -409,6 +411,7 @@ export class ActionManager extends Subscribe {
             new DragResizeHelper({
                 container: config.container,
                 updateDragEl: config.updateDragEl,
+                designWidth: this.designWidth,
             });
 
         const dr = new BoxDragResize({

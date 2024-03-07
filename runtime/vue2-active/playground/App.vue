@@ -97,14 +97,13 @@ export default defineComponent({
 
             update({config, parentId, }: IUpdateData) {
                 if (!root.value || !app) throw new Error('未初始化');
-
                 replaceChildNode(reactive(config), [root.value as any], parentId);
 
                 const nodeInstance = app.page?.getNode(config.field);
                 if (nodeInstance) {
                     nodeInstance.setData(config);
                 }
-                console.log('runtime.update', config, app);
+                console.log('runtime.update', config, root.value);
             },
 
             delete({id, parentId, }: IDeleteData) {

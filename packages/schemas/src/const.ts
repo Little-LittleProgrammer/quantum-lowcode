@@ -16,3 +16,5 @@ export enum ActionType {
     /** 数据源 */
     DATA_SOURCE = 'data-source',
 }
+
+export const DESIGN_WIDTH = 720;
