@@ -23,17 +23,15 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue2';
 import externalGlobals from 'rollup-plugin-external-globals';
 import postCssPxtorem from 'postcss-pxtorem';
-import {resolve} from 'path';
+import { resolve } from 'path';
 
 export default defineConfig(({ mode, }) => {
-    // 阿里云自带环境
-    const isDeclaration =
-    !(process.env.PIPELINE_NAME?.includes('生产') || process.env.PIPELINE_TAGS?.includes('生产') || process.env.PIPELINE_NAME?.includes('测试') || process.env.PIPELINE_TAGS?.includes('测试'));
-    const isPro = process.env.PIPELINE_NAME?.includes('生产') || process.env.PIPELINE_TAGS?.includes('生产');
-    const baseBuild = isPro ? 'https://cdn-front.qimao.com/quantum-lowcode/' : 'https://cdn-front-test.qimao.com/quantum-lowcode/';
     // TODO
     if (['config'].includes(mode)) {
-        const file = resolve(__dirname, 'node_modules/@qimao/quantum-ui-vue2/dist/es/config.js');
+        const file = resolve(
+            __dirname,
+            'node_modules/@qimao/quantum-ui-vue2/dist/es/config.js'
+        );
         return {
             publicDir: '../public',
             build: {
@@ -51,20 +49,36 @@ export default defineConfig(({ mode, }) => {
     }
 
     if (['page', 'playground'].includes(mode)) {
+        // 阿里云自带环境
+        const isPro =
+			process.env.PIPELINE_NAME?.includes('生产') ||
+			process.env.PIPELINE_TAGS?.includes('生产');
+        const isCI =
+			isPro ||
+			process.env.PIPELINE_NAME?.includes('测试') ||
+			process.env.PIPELINE_TAGS?.includes('测试');
+        const baseBuild = isPro
+            ? 'https://cdn-front.qimao.com/quantum-lowcode/'
+            : 'https://cdn-front-test.qimao.com/quantum-lowcode/';
         return {
             plugins: [
                 vue(),
                 // legacy({
                 //     targets: ['defaults', 'not IE 11'],
                 // }),
-                externalGlobals({ vue: 'Vue', }, { exclude: [`./${mode}/index.html`], })
+                externalGlobals(
+                    { vue: 'Vue', },
+                    { exclude: [`./${mode}/index.html`], }
+                )
             ],
             css: {
                 postcss: {
-                    plugins: [postCssPxtorem({
-                        rootValue: 75,
-                        propList: ['*'],
-                    })],
+                    plugins: [
+                        postCssPxtorem({
+                            rootValue: 75,
+                            propList: ['*'],
+                        })
+                    ],
                 },
             },
 
@@ -72,12 +86,19 @@ export default defineConfig(({ mode, }) => {
 
             publicDir: '../public',
 
-            base: isDeclaration ? `/quantum-editor/runtime/vue2/${mode}` : baseBuild,
+            base:
+				mode === 'playground'
+				    ? `/quantum-editor/runtime/vue2/${mode}`
+				    : isCI
+				        ? baseBuild
+				        : `/quantum-editor/runtime/vue2/${mode}`,
 
             build: {
                 emptyOutDir: true,
-                outDir: path.resolve(process.cwd(), `../../apps/quantum-backend/public/runtime/vue2/${mode}`),
-
+                outDir: path.resolve(
+                    process.cwd(),
+                    `../../apps/quantum-backend/public/runtime/vue2/${mode}`
+                ),
             },
         };
     }
