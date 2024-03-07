@@ -29,6 +29,8 @@ export default defineConfig(({ mode, }) => {
     // 阿里云自带环境
     const isDeclaration =
     !(process.env.PIPELINE_NAME?.includes('生产') || process.env.PIPELINE_TAGS?.includes('生产') || process.env.PIPELINE_NAME?.includes('测试') || process.env.PIPELINE_TAGS?.includes('测试'));
+    const isPro = process.env.PIPELINE_NAME?.includes('生产') || process.env.PIPELINE_TAGS?.includes('生产');
+    const baseBuild = isPro ? 'https://cdn-front.qimao.com/quantum-lowcode/' : 'https://cdn-front-test.qimao.com/quantum-lowcode/';
     // TODO
     if (['config'].includes(mode)) {
         const file = resolve(__dirname, 'node_modules/@qimao/quantum-ui-vue2/dist/es/config.js');
@@ -70,7 +72,7 @@ export default defineConfig(({ mode, }) => {
 
             publicDir: '../public',
 
-            base: isDeclaration ? `/quantum-editor/runtime/vue2/${mode}` : `https://cdn-front-test.qimao.com/quantum-lowcode/`,
+            base: isDeclaration ? `/quantum-editor/runtime/vue2/${mode}` : baseBuild,
 
             build: {
                 emptyOutDir: true,
