@@ -1,7 +1,6 @@
 // 数组节点模型
 import { NodeType } from './const';
-import { IDataSourceSchema } from './event';
-type SelectPartial<T, V extends keyof T> = Partial<Omit<T, V>> & Required<Pick<T, V>>
+import { IDataSourceSchema, IDepData } from './event';
 export type Id = string
 export interface Fn<T = any, R = T> {
     (...arg: T[]): R;
@@ -42,7 +41,7 @@ export interface ILowCodeRoot {
     schemasRoot?: ISchemasRoot;
     request?: IRequestFunction;
     registerEvent?: Fn;
-    dataSourceDep: Map<Id, Id[]>
+    dataSourceDep: Map<Id, IDepData[]>
     [key: string]: any;
 }
 

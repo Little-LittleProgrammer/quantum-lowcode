@@ -18,12 +18,10 @@ export interface IDataSourceSchema {
     mocks?: IMockSchema;
 }
 export interface IDepData {
-    [pageField: Id]: {
-        /** 组件Field */
-        field: Id; // nodeField
-        key: string; // path
-        rawValue: string // ${base1.a1}
-    };
+    /** 组件Field */
+    field: Id; // nodeField
+    key: string; // path
+    rawValue: string // ${base1.a1}
 }
 
 export interface IDataSchema {
