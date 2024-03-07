@@ -13,7 +13,7 @@ function pathResolve(dir) {
 const result = rollup_commpn_lib_config('quantum-data', {
     external: ['@qimao/quantum-utils', 'lodash-es'],
     plugins: [alias({
-        entries: process.env.NODE_ENV === 'production' ? [] : [
+        entries: process.env.TYPES === 'true' ? [] : [
             { find: /^@qimao\/quantum-utils/, replacement: pathResolve('../utils/index.ts'), }
         ],
     })],
