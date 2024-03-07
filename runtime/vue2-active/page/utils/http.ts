@@ -6,7 +6,7 @@ import { IHttpOptions } from '@qimao/quantum-schemas';
 // const _requestPageUrl = ''; // 请求地址所在页面
 
 const env = {
-    apiUrl: 'test',
+    apiUrl: 'https://test.test/',
     urlPrefix: '/api',
 };
 // const env = useViteEnv();
