@@ -58,8 +58,8 @@ export default defineConfig(({ mode, }) => {
 			process.env.PIPELINE_NAME?.includes('测试') ||
 			process.env.PIPELINE_TAGS?.includes('测试');
         const baseBuild = isPro
-            ? 'https://cdn-front.qimao.com/quantum-lowcode/'
-            : 'https://cdn-front-test.qimao.com/quantum-lowcode/';
+            ? 'https://cdn-front.qimao.com/quantum-lowcode/vue2'
+            : 'https://cdn-front-test.qimao.com/quantum-lowcode/vue2';
         return {
             plugins: [
                 vue(),
