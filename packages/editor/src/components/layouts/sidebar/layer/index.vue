@@ -14,9 +14,11 @@
                 @drop="handlerDrop"
             >
                 <template #title="{ label, field }">
-                    <div class="q-editor-layer-body-title">
-                        {{ label ?? '' }}({{ field }})
-                    </div>
+                    <q-antd-dropdown :trigger="['contextmenu']" :dropMenuList="baseDropMenuList" @menuEvent="handleMenuEvent">
+                        <div class="q-editor-layer-body-title">
+                            {{ label ?? '' }}({{ field }})
+                        </div>
+                    </q-antd-dropdown>
                 </template>
             </a-tree>
         </div>
@@ -28,6 +30,7 @@ import { IServices } from '../../../../types';
 import { computed, inject, ref } from 'vue';
 import {useDrag} from './use-drag';
 import { cloneDeep } from 'lodash-es';
+import { DropMenu } from '@q-front-npm/vue3-antd-pc-ui';
 
 defineOptions({
     name: 'Layer',
@@ -36,10 +39,22 @@ defineOptions({
 const services = inject<IServices>('services');
 const page = computed(() => services?.editorService?.get('page'));
 const nodes = computed(() => services?.editorService?.get('nodes'));
+const node = computed(() => services?.editorService?.get('node'));
 
 const searchText = ref();
 
 const nodeData = computed(() => (!page.value ? [] : [page.value]));
+
+const baseDropMenuList = computed(() => {
+    if (node.value) {
+        return services?.contentmenuService.getDropMenuList(node.value)
+    }
+    return []
+})
+
+function handleMenuEvent(menu: DropMenu) {
+    services?.contentmenuService.handleMenuEvent(menu)
+}
 
 const layerList = computed(() => {
     const data = cloneDeep(nodeData.value);
