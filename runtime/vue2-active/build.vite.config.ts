@@ -70,7 +70,7 @@ export default defineConfig(({ mode, }) => {
 
             publicDir: '../public',
 
-            base: `/quantum-editor/runtime/vue2/${mode}`,
+            base: isDeclaration ? `/quantum-editor/runtime/vue2/${mode}` : `https://cdn-front-test.qimao.com/quantum-lowcode/`,
 
             build: {
                 emptyOutDir: true,
