@@ -41,7 +41,7 @@
   "dependencies": {
     "@qimao/quantum-utils": "workspace:*",
     "@qimao/quantum-core": "workspace:*",
-    "@q-front-npm/vue3-antd-pc-ui": "~1.2.10-beta.4",
+    "@q-front-npm/vue3-antd-pc-ui": "~1.2.10-beta.5",
     "@qimao/quantum-schemas": "workspace:*"
   },
   "peerDependencies": {

@@ -26,7 +26,7 @@
 <script lang="ts" setup>
 import { computed, inject, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { IFormValue, IServices } from '../../types';
-import { js_is_array } from '@qimao/quantum-utils';
+import { js_is_array, js_is_boolean } from '@qimao/quantum-utils';
 defineOptions({
     name: 'PropsEditor',
 });
@@ -48,9 +48,14 @@ const getTabList = computed(() => {
 
 const curFormSchemas = ref<any>({});
 
-const init = async() => {
+const init = async(changeNode=false) => {
+    let customStyleSwitch = false
     if (js_is_array(valuesFn.value)) {
         for (const item of valuesFn.value) {
+            const sw = item?.getValue?.()?.customStyleSwitch
+            if (js_is_boolean(sw) && !changeNode) {
+                customStyleSwitch = sw
+            }
             await item.reset?.();
         }
     }
@@ -69,7 +74,11 @@ const init = async() => {
         };
     } 
     nextTick(async() => {
-        formModel.value = node.value || {};
+        formModel.value = {
+            ...node.value,
+            customStyleSwitch
+        }|| {};
+        
     });
 };
 
@@ -79,10 +88,13 @@ watch(() => node.value, (val, oldVal) => {
     if (val?.field !==oldVal?.field) {
         curFormSchemas.value = {}
     }
-    init();
+    init(val?.field !==oldVal?.field);
 });
 
 function changeValue(value) {
+    if (js_is_boolean(value.customStyleSwitch)) {
+        Reflect.deleteProperty(value, 'customStyleSwitch')
+    }
     const finValue = {
         ...node.value,
         ...value
@@ -105,6 +117,7 @@ onMounted(() => {
             valuesFn.value.push({
                 setValue: item.setFieldsValue,
                 reset: item.resetFields,
+                getValue: item.getFieldsValue,
             });
         });
 });

@@ -22,7 +22,7 @@
         "@qimao/quantum-sandbox": "workspace:*",
         "@qimao/quantum-utils": "workspace:*",
         "@qimao/quantum-ui": "workspace:*",
-        "@q-front-npm/vue3-antd-pc-ui": "~1.2.10-beta.4",
+        "@q-front-npm/vue3-antd-pc-ui": "~1.2.10-beta.5",
         "@q-front-npm/http": "^1.2.9-beta.2",
         "axios": "^0.27.2",
         "vue": "^3.3.4"

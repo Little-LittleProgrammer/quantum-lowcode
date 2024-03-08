@@ -1,6 +1,7 @@
 import { FormSchema } from '@q-front-npm/vue3-antd-pc-ui';
+import { parseSchemas } from '@qimao/quantum-utils';
 
-const styleSchemas:FormSchema[] = [
+const styleSchemas:FormSchema<any, 'CodeEditor'>[] = [
     {
         label: '布局',
         field: 'type',
@@ -28,52 +29,113 @@ const styleSchemas:FormSchema[] = [
         }),
     },
     {
+        label: '自定义样式',
+        field: 'customStyleSwitch',
+        component: 'Switch',
+        helpMessage: '需熟悉css',
+        componentProps: ({formModel, formActionType }) => {
+            return {
+                onChange: (e) => {
+                    if (!e) {
+                        formActionType.removeSchemaByFiled('style')
+                    } else {
+                        formActionType.appendSchemaByField({
+                            label: '',
+                            field: 'style',
+                            component: 'CodeEditor',
+                            helpMessage: '对于需要转为rem的属性请直接填写数字',
+                            componentProps: {
+                                style: {
+                                    height: '600px' 
+                                },
+                                parse: parseSchemas
+                            }
+                        },'customStyleSwitch')
+                    }
+                },
+            };
+        },
+    },
+    {
         label: '位置',
         field: 'position',
         component: 'Divider',
         helpMessage: '填写${dataSourceId:fieldId} 可获取全局参数',
+        ifShow: ({values, }) => {
+            return !values['customStyleSwitch'];
+        }
     }, {
         label: 'top',
         field: 'style.top',
         component: 'Input',
+        ifShow: ({values, }) => {
+            return !values['customStyleSwitch'];
+        }
     }, {
         label: 'left',
         field: 'style.left',
         component: 'Input',
+        ifShow: ({values, }) => {
+            return !values['customStyleSwitch'];
+        }
     }, {
         label: 'right',
         field: 'style.right',
         component: 'Input',
+        ifShow: ({values, }) => {
+            return !values['customStyleSwitch'];
+        }
     }, {
         label: 'bottom',
         field: 'style.bottom',
         component: 'Input',
+        ifShow: ({values, }) => {
+            return !values['customStyleSwitch'];
+        }
     }, {
         label: '盒子',
         field: 'box',
         component: 'Divider',
         helpMessage: '填写${dataSourceId:fieldId} 可获取全局参数',
+        ifShow: ({values, }) => {
+            return !values['customStyleSwitch'];
+        }
     }, {
         label: '宽度',
         field: 'style.width',
         component: 'Input',
+        ifShow: ({values, }) => {
+            return !values['customStyleSwitch'];
+        }
     }, {
         label: '高度',
         field: 'style.height',
         component: 'Input',
+        ifShow: ({values, }) => {
+            return !values['customStyleSwitch'];
+        }
     }, {
         label: '边框',
         field: 'box',
         component: 'Divider',
         helpMessage: '填写${dataSourceId:fieldId} 可获取全局参数',
+        ifShow: ({values, }) => {
+            return !values['customStyleSwitch'];
+        }
     }, {
         label: '宽度',
         field: 'style.borderWidth',
         component: 'Input',
+        ifShow: ({values, }) => {
+            return !values['customStyleSwitch'];
+        }
     }, {
         label: '颜色',
         field: 'style.borderColor',
         component: 'Input',
+        ifShow: ({values, }) => {
+            return !values['customStyleSwitch'];
+        }
     }, {
         label: '样式',
         field: 'style.borderStyle',
@@ -91,23 +153,38 @@ const styleSchemas:FormSchema[] = [
                 { label: 'inset', value: 'inset', },
                 { label: 'outset', value: 'outset', } ],
         },
+        ifShow: ({values, }) => {
+            return !values['customStyleSwitch'];
+        }
     }, {
         label: '圆角',
         field: 'style.borderRadius',
         component: 'Input',
+        ifShow: ({values, }) => {
+            return !values['customStyleSwitch'];
+        }
     }, {
         label: '背景',
         field: 'background',
         component: 'Divider',
         helpMessage: '填写${dataSourceId:fieldId} 可获取全局参数',
+        ifShow: ({values, }) => {
+            return !values['customStyleSwitch'];
+        }
     }, {
         label: '链接',
         field: 'style.backgroundImage',
         component: 'Input',
+        ifShow: ({values, }) => {
+            return !values['customStyleSwitch'];
+        }
     }, {
         label: '颜色',
         field: 'style.backgroundColor',
         component: 'Input',
+        ifShow: ({values, }) => {
+            return !values['customStyleSwitch'];
+        }
     }, {
         label: '重复',
         field: 'style.backgroundRepeat',
@@ -122,32 +199,53 @@ const styleSchemas:FormSchema[] = [
                 { label: 'inherit', value: 'inherit', }
             ],
         },
+        ifShow: ({values, }) => {
+            return !values['customStyleSwitch'];
+        }
     }, {
         label: '背景图大小',
         field: 'style.backgroundSize',
         component: 'Input',
         defaultValue: '100% 100%',
+        ifShow: ({values, }) => {
+            return !values['customStyleSwitch'];
+        }
     }, {
         label: '字体',
         field: 'font',
         component: 'Divider',
         helpMessage: '填写${dataSourceId:fieldId} 可获取全局参数',
+        ifShow: ({values, }) => {
+            return !values['customStyleSwitch'];
+        }
     }, {
         label: '颜色',
         field: 'style.color',
         component: 'Input',
+        ifShow: ({values, }) => {
+            return !values['customStyleSwitch'];
+        }
     }, {
         label: '大小',
         field: 'style.fontSize',
         component: 'Input',
+        ifShow: ({values, }) => {
+            return !values['customStyleSwitch'];
+        }
     }, {
         label: '行高',
         field: 'style.lineHeight',
         component: 'Input',
+        ifShow: ({values, }) => {
+            return !values['customStyleSwitch'];
+        }
     }, {
         label: '粗细',
         field: 'style.fontSize',
         component: 'Input',
+        ifShow: ({values, }) => {
+            return !values['customStyleSwitch'];
+        }
     }, {
         label: '对齐',
         field: 'style.textAlign',
@@ -160,19 +258,31 @@ const styleSchemas:FormSchema[] = [
                 { label: 'right', value: 'right', }
             ],
         },
+        ifShow: ({values, }) => {
+            return !values['customStyleSwitch'];
+        }
     }, {
         label: '变形',
         field: 'transform',
         component: 'Divider',
         helpMessage: '填写${dataSourceId:fieldId} 可获取全局参数',
+        ifShow: ({values, }) => {
+            return !values['customStyleSwitch'];
+        }
     }, {
         label: '旋转角度',
         field: 'style.transform.rotate',
         component: 'Input',
+        ifShow: ({values, }) => {
+            return !values['customStyleSwitch'];
+        }
     }, {
         label: '缩放',
         field: 'style.transform.scale',
         component: 'Input',
+        ifShow: ({values, }) => {
+            return !values['customStyleSwitch'];
+        }
     }];
 const lifeHookschemas:FormSchema[] = [];
 const ifShowSchemas:FormSchema[] = [];

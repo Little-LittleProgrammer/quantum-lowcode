@@ -195,7 +195,8 @@ export interface IAddNode {
 
 export interface IFormValue {
     setValue?: Fn,
-    reset?: Fn
+    reset?: Fn,
+    getValue?: Fn,
 }
 
 export interface IDatasourceTypeOption {
