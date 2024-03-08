@@ -77,6 +77,7 @@ async function commitOk() {
     const values = getFieldsValue();
     const finDsl = defaultSchemas;
     finDsl.name = values.title;
+    finDsl.children[0].style!.width = values.designWidth
     if (values.designWidth) {
         finDsl.designWidth = values.designWidth;
     }

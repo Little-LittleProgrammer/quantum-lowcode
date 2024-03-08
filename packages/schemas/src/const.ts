@@ -17,4 +17,4 @@ export enum ActionType {
     DATA_SOURCE = 'data-source',
 }
 
-export const DESIGN_WIDTH = 720;
+export const DEFAULT_DESIGN_WIDTH = 720;

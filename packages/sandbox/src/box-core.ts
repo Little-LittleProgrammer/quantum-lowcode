@@ -18,7 +18,7 @@ import {
     IUpdateData,
     IUpdateEventData
 } from './types';
-import { DESIGN_WIDTH, Id } from '@qimao/quantum-schemas';
+import { DEFAULT_DESIGN_WIDTH, Id } from '@qimao/quantum-schemas';
 import { DEFAULT_ZOOM } from './const';
 import { ActionManager } from './action-manager';
 import { MoveableOptions, OnDragStart } from 'moveable';
@@ -31,7 +31,7 @@ export class BoxCore extends Subscribe {
     public renderer: BoxRender;
     public mask: BoxMask;
     public actionManager: ActionManager;
-    public designWidth = DESIGN_WIDTH;
+    public designWidth = DEFAULT_DESIGN_WIDTH;
 
     private pageResizeObserver: ResizeObserver | null = null;
     private autoScrollIntoView: boolean | undefined;
@@ -225,13 +225,13 @@ export class BoxCore extends Subscribe {
 	 * @param page 页面元素
 	 */
     private observePageResize(page: HTMLElement): void {
-        console.log('observePageResize');
         if (this.pageResizeObserver) {
             this.pageResizeObserver.disconnect();
         }
 
         if (typeof ResizeObserver !== 'undefined') {
             this.pageResizeObserver = new ResizeObserver((entries) => {
+                console.log('observePageResize');
                 this.mask.pageResize(entries);
                 this.actionManager.updateMoveable();
             });

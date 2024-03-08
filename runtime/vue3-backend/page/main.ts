@@ -5,7 +5,7 @@ import { requestFn } from './utils/http';
 import { getUrlParam, parseSchemas } from '@qimao/quantum-utils';
 import { getLocalConfig } from './utils';
 import App from './App.vue';
-import { DESIGN_WIDTH } from '@qimao/quantum-schemas';
+import { DEFAULT_DESIGN_WIDTH } from '@qimao/quantum-schemas';
 if (import.meta.env.PROD) {
     import('@qimao/quantum-ui/dist/es/style/index.css');
 }
@@ -17,7 +17,7 @@ const app = new LowCodeRoot({
     config: dsls[0] || {},
     curPage: getUrlParam('page'),
     request: requestFn,
-    designWidth: DESIGN_WIDTH,
+    designWidth: DEFAULT_DESIGN_WIDTH,
 });
 Object.keys(components).forEach((type: string) => app.registerComponent(type.toLowerCase(), components[type]));
 

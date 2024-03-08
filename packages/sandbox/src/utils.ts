@@ -9,7 +9,7 @@ import {
     js_utils_dom_remove_class
 } from '@qimao/quantum-utils';
 import { ISortEventData, ITargetElement } from './types';
-import {DESIGN_WIDTH} from '@qimao/quantum-schemas';
+import {DEFAULT_DESIGN_WIDTH} from '@qimao/quantum-schemas';
 
 export function addSelectedClassName(el: Element, doc: Document) {
     js_utils_dom_add_class(el, SELECTED_CLASS);
@@ -56,7 +56,7 @@ export function getTargetElStyle(el: ITargetElement, zIndex?: ZIndex) {
     `;
 }
 
-export function calcValueByDesignWidth(doc: Document, value: number, designWidth = DESIGN_WIDTH) {
+export function calcValueByDesignWidth(doc: Document, value: number, designWidth = DEFAULT_DESIGN_WIDTH) {
     // const { fontSize, } = doc.documentElement.style;
 
     const maxWidth = globalThis.getComputedStyle(doc.documentElement).width;

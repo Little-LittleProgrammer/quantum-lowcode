@@ -132,13 +132,13 @@ export const defaultEditorProps = {
         'page': {
             style: {
                 height: '100%',
-                width: '100%',
+                margin: '0 auto'
             },
         },
         'container': {
             style: {
                 height: '100',
-                width: '375', },
+            },
         },
     }),
     propsConfigs: () => {},

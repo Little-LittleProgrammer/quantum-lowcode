@@ -8,7 +8,7 @@ import { reactive } from 'vue';
 import { FormSchema } from '@q-front-npm/vue3-antd-pc-ui';
 import { formatConfig, otherConfigMap } from '../utils/props';
 import { cloneDeep, mergeWith } from 'lodash-es';
-import { ISchemasNode, ISchemasPage, Id } from '@qimao/quantum-schemas';
+import { DEFAULT_DESIGN_WIDTH, ISchemasNode, ISchemasPage, Id } from '@qimao/quantum-schemas';
 import { editorService } from './editor-service';
 import { getCompType } from '../utils';
 
@@ -135,9 +135,9 @@ class PropsService extends Subscribe {
 
         return {
             field,
-            ...defaultPropsValue,
             ...mergeWith(
                 {},
+                defaultPropsValue,
                 cloneDeep(this.state.propsValueMap[type] || {}),
                 data
             ),
@@ -175,14 +175,20 @@ class PropsService extends Subscribe {
             ? {
                 type,
                 layout: 'absolute',
-                style: {},
+                style: {
+                    width: editorService.get('root')?.designWidth || DEFAULT_DESIGN_WIDTH,
+                    height: 100
+                },
                 label: type,
                 children: [],
             }
             : {
                 type: 'node',
                 component: type,
-                style: {},
+                style: {
+                    width: (editorService.get('root')?.designWidth || DEFAULT_DESIGN_WIDTH) / 2,
+                    height: 50
+                },
                 label: type,
             };
     }

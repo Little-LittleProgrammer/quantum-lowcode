@@ -101,10 +101,6 @@ function dragstartComp(item: IComponentItem, e: DragEvent) {
         data: {
             label: item.text,
             type: item.component,
-            style: {
-                width: '100%',
-                height: 20
-            },
             ...item.data,
         },
     }));

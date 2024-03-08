@@ -8,7 +8,7 @@ import * as componentExtra from '@q-front-npm/vue2-active-ui';
 import * as component from '@qimao/quantum-ui-vue2';
 import '@q-front-npm/vue2-active-ui/dist/components.css';
 import '../hooks/reset.css';
-import { DESIGN_WIDTH } from '@qimao/quantum-schemas';
+import { DEFAULT_DESIGN_WIDTH } from '@qimao/quantum-schemas';
 if (import.meta.env.PROD) {
     import('@qimao/quantum-ui-vue2/dist/es/style/index.css');
 }
@@ -28,7 +28,7 @@ const app = new LowCodeRoot({
     config: dsls[0] || {},
     curPage: getUrlParam('page'),
     request: requestFn,
-    designWidth: DESIGN_WIDTH,
+    designWidth: DEFAULT_DESIGN_WIDTH,
 });
 
 Object.keys(components).forEach((type: string) => app.registerComponent(type, components[type]));
