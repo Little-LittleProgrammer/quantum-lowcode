@@ -70,6 +70,7 @@ export default defineConfig(({ mode, }) => {
                             'library': ['@q-front-npm/vue3-antd-pc-ui'],
                         },
                     },
+                    external: ['vue'],
                 },
             },
         };
