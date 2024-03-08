@@ -79,6 +79,7 @@ export class BoxDragResize extends MoveableManager {
         Object.entries(options).forEach(([key, val]) => {
             (this.moveable as any)[key] = val;
         });
+        this.moveable.updateRect();
     }
 
     public clearSelectStatus(): void {
