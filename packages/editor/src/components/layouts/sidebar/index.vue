@@ -58,6 +58,7 @@ function handleClick(item) {
     display: flex;
     &-manu {
         width: 40px;
+        min-width: 40px;
         height: 100%;
         background-color: rgba(224,158,42,0.5);
         &-uni {

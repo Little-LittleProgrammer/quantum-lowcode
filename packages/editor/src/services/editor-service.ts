@@ -372,7 +372,7 @@ class EditorService extends Subscribe {
         );
 
         newConfig = mergeWith(cloneDeep(node), newConfig, (objVal, srcVal) => {
-            if (srcVal?.events) {
+            if (srcVal?.events || srcVal?.backgroundSize) {
                 return srcVal;
             }
             if (js_is_object(srcVal) && js_is_array(objVal)) {

@@ -32,29 +32,24 @@ const styleSchemas:FormSchema<any, 'CodeEditor'>[] = [
         label: '自定义样式',
         field: 'customStyleSwitch',
         component: 'Switch',
-        helpMessage: '需熟悉css',
-        componentProps: ({formModel, formActionType }) => {
-            return {
-                onChange: (e) => {
-                    if (!e) {
-                        formActionType.removeSchemaByFiled('style')
-                    } else {
-                        formActionType.appendSchemaByField({
-                            label: '',
-                            field: 'style',
-                            component: 'CodeEditor',
-                            helpMessage: '对于需要转为rem的属性请直接填写数字',
-                            componentProps: {
-                                style: {
-                                    height: '600px' 
-                                },
-                                parse: parseSchemas
-                            }
-                        },'customStyleSwitch')
-                    }
-                },
-            };
+        helpMessage: '需熟悉css'
+    },
+    // TODO 优化样式功能
+    // 目前问题: 1. 样式覆盖, 无法更改输入框配置样式了; 2. 编辑器失焦报错; 3. 卡顿问题
+    {
+        label: 'css编辑器',
+        field: 'style',
+        component: 'CodeEditor',
+        helpMessage: ['对于需要转为rem的属性请直接填写数字', '对于输入框配置的属性无法更改', 'command+s保存'],
+        componentProps: {
+            style: {
+                height: '700px' 
+            },
+            parse: parseSchemas
         },
+        ifShow: ({values, }) => {
+            return values['customStyleSwitch'];
+        }
     },
     {
         label: '位置',

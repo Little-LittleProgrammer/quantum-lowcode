@@ -105,7 +105,7 @@ function changeValue(value) {
             ...finValue.componentProps.events,
         };
     }
-    console.log('finValue',finValue)
+    console.log('finValue',finValue, value)
     services?.editorService.update(finValue);
 }
 
