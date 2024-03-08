@@ -173,10 +173,12 @@ async function dropHandler(e: DragEvent) {
             top = e.clientY - containerRect.top + scrollTop;
             left = e.clientX - containerRect.left + scrollLeft;
 
+            const designWidth = services?.editorService.get('root')?.designWidth
+
             if (parentEl && doc) {
                 const {left: parentLeft, top: parentTop, } = js_utils_dom_offset(parentEl as HTMLElement);
-                left = left - calcValueByDesignWidth(doc, parentLeft) * zoom.value;
-                top = top - calcValueByDesignWidth(doc, parentTop) * zoom.value;
+                left = left - calcValueByDesignWidth(doc, parentLeft, designWidth) * zoom.value;
+                top = top - calcValueByDesignWidth(doc, parentTop, designWidth) * zoom.value;
             }
         }
 

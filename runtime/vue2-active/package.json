@@ -16,7 +16,7 @@
     "author": "Evan Wu",
     "license": "ISC",
     "dependencies": {
-        "@q-front-npm/http": "^1.2.9-beta.1",
+        "@q-front-npm/http": "^1.2.9-beta.2",
         "@q-front-npm/vue2-active-ui": "1.0.1-beta.0",
         "@qimao/quantum-core": "workspace:*",
         "@qimao/quantum-sandbox": "workspace:*",

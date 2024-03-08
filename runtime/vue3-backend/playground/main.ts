@@ -9,8 +9,7 @@ if (import.meta.env.PROD) {
 const app = new LowCodeRoot({});
 Object.keys(components).forEach((type: string) => app.registerComponent(type.toLowerCase(), components[type]));
 
-// app.setDesignWidth(app.env.isWeb ? window.document.documentElement.getBoundingClientRect().width : 375);
-
+app.setDesignWidth(app.env.isWeb ? window.document.documentElement.getBoundingClientRect().width : 720);
 const appVue = createApp(App);
 
 window.appInstance = app;

@@ -53,7 +53,7 @@
 		useTable,
 	} from '@q-front-npm/vue3-antd-pc-ui';
 	import { ICodeBlockContent } from '@qimao/quantum-schemas';
-	import { js_is_array, js_utils_get_uuid } from '@qimao/quantum-utils';
+	import { js_is_array, js_utils_get_uuid, parseSchemas } from '@qimao/quantum-utils';
 	import { cloneDeep } from 'lodash-es';
     import { getConfig } from '../../utils';
 	import { computed, nextTick, ref, unref } from 'vue';
@@ -158,7 +158,9 @@
 						visible: true,
 					});
 					nextTick(() => {
-						setFieldsValue(record);
+						setFieldsValue({
+                            ...record
+                        });
 					});
 				},
 			},
@@ -190,7 +192,7 @@
 				type: '',
 				params: [],
 				description: '',
-                content: '({app, dataSource, }, params) => { console.log(app, dataSource, params) }'
+                content: "({app, dataSource, }, params) => { console.log(app, dataSource, params) }"
 			});
 		});
 	}
@@ -237,12 +239,11 @@
 				label: '',
 				field: 'content',
 				component: 'CodeEditor',
-                valueField: 'initValues',
+                defaultValue: "({app, dataSource, }, params) => { console.log(app, dataSource, params) }",
 				componentProps: {
 					style: {
 						height: '800px',
 					},
-					initValues: '({app, dataSource, }, params) => { console.log(app, dataSource, params) }',
 				},
 			},
 		]),

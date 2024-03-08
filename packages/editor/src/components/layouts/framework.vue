@@ -24,7 +24,7 @@
             </template>
             <template #right>
                 <slot name="code-editor" v-if="showCode">
-                    <q-code-editor class="q-editor-content" :init-values="getDealRoot" :options="codeOptions" @save="save_code"></q-code-editor>
+                    <q-code-editor class="q-editor-content" :value="getDealRoot" :options="codeOptions" @save="save_code"></q-code-editor>
                 </slot>
                 <slot name="props-editor" v-else></slot>
             </template>

@@ -20,7 +20,7 @@ export enum Protocol {
  */
 export class WebStorage {
     private storage: Storage = globalThis.localStorage;
-    private namespace = 'tmagic';
+    private namespace = 'quantum';
 
     /**
 	 * 获取数据存储对象，可以通过

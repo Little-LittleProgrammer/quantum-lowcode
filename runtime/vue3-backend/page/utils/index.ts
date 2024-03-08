@@ -1,5 +1,5 @@
 /*
- * Tencent is pleased to support the open source community by making TMagicEditor available.
+ * Tencent is pleased to support the open source community by making QuantumEditor available.
  *
  * Copyright (C) 2023 THL A29 Limited, a Tencent company.  All rights reserved.
  *

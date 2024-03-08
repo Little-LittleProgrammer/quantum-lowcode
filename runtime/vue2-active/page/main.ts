@@ -21,16 +21,19 @@ const components:any = {
     ...componentExtra,
 };
 
+const dsls = (getUrlParam('localPreview') ? getLocalConfig() : [parseSchemas(window.PAGE_JSON)]) || [];
+
 const app = new LowCodeRoot({
     ua: window.navigator.userAgent,
-    config: ((getUrlParam('localPreview') ? getLocalConfig() : [parseSchemas(window.PAGE_JSON)]) || [])[0] || {},
+    config: dsls[0] || {},
     curPage: getUrlParam('page'),
     request: requestFn,
     designWidth: DESIGN_WIDTH,
 });
 
 Object.keys(components).forEach((type: string) => app.registerComponent(type, components[type]));
-// app.setDesignWidth(app.env.isWeb ? window.document.documentElement.getBoundingClientRect().width : 375);
+// app.setDesignWidth(app.env.isWeb ? window.document.documentElement.getBoundingClientRect().width : dsls[0].designWidth || 720);
+app.setDesignWidth(dsls[0].designWidth || 720);
 window.appInstance = app;
 new Vue({
     render: (h) => h(App),

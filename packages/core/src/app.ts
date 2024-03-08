@@ -153,11 +153,11 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
     public setDesignWidth(width: number) {
         this.designWidth = width;
         // 根据屏幕大小计算出跟节点的font-size，用于rem样式的适配
-        if (this.isH5()) {
-            this.calcFontsize();
-            globalThis.removeEventListener('resize', this.calcFontsize.bind(this));
-            globalThis.addEventListener('resize', this.calcFontsize.bind(this));
-        }
+        // if (this.isH5()) {
+        this.calcFontsize();
+        globalThis.removeEventListener('resize', this.calcFontsize.bind(this));
+        globalThis.addEventListener('resize', this.calcFontsize.bind(this));
+        // }
     }
 
     /**
@@ -196,14 +196,13 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
         return results;
     }
 
+    // TODO 增加设备判断
     public isH5() {
         return this.env.isAndroid || this.env.isAndroidPad || this.env.isIos || this.env.isIpad || this.env.isIphone || this.env.isWechat;
     }
 
     private getTransform(value: Record<string, string>) {
         if (!value) return [];
-
-        const isH5 = this.isH5();
 
         const transform = Object.entries(value).map(([transformKey, transformValue]) => {
             if (!transformValue || !transformValue.trim()) return '';
@@ -226,7 +225,7 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
         const { width, } = document.documentElement.getBoundingClientRect();
         const dpr = globalThis?.devicePixelRatio || 1;
         this.setBodyFontSize(dpr);
-        const fontSize = width / 10;
+        const fontSize = Math.min(540, width) / 10;
         document.documentElement.style.fontSize = `${fontSize}px`;
     }
 

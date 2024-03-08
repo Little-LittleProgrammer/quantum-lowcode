@@ -56,7 +56,7 @@ export enum DEVICE_TYPE {
 export const DEV_RECT = {
     [DEVICE_TYPE.Phone]: {height: 817, width: 375, },
     [DEVICE_TYPE.Pad]: {height: 1024, width: 768, },
-    [DEVICE_TYPE.PC]: {height: 900, width: 1600, },
+    [DEVICE_TYPE.PC]: {height: 1147, width: 981, },
 };
 
 export const UA_MAP = {
@@ -65,7 +65,7 @@ export const UA_MAP = {
     [DEVICE_TYPE.Pad]:
       'Mozilla/5.0 (iPad; CPU OS 11_0 like Mac OS X) AppleWebKit/604.1.34 (KHTML, like Gecko) Version/11.0 Mobile/15A5341f Safari/604.1',
     [DEVICE_TYPE.PC]:
-      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
+      'Mozilla/5.0 (Linux; U; Android 9; zh-CN; SM-F9000  Build/PPR1.180610.011) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/57.0.2987.108 UCBrowser/12.1.2.992 Mobile Safari/537.36',
 };
 
 export default setting;
