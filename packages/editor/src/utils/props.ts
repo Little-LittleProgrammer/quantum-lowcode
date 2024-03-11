@@ -236,7 +236,7 @@ const styleSchemas:FormSchema<any, 'CodeEditor'>[] = [
         }
     }, {
         label: '粗细',
-        field: 'style.fontSize',
+        field: 'style.fontWidth',
         component: 'Input',
         ifShow: ({values, }) => {
             return !values['customStyleSwitch'];

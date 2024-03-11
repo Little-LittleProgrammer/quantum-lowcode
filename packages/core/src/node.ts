@@ -85,6 +85,7 @@ export class LowCodeNode extends Subscribe {
                     const fn = () => {
                         for (const item of val) {
                             const { field, params = {}, } = item;
+                            console.log(this.root, field);
                             this.root.emit(`${field}`, params);
                         }
                     };

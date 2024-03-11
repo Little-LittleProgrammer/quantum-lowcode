@@ -28,6 +28,10 @@ export class DataSourceManager extends Subscribe {
         // 处理初始化数据逻辑
         const beforeInit: ((...args: any[]) => any)[] = [];
         const afterInit: ((...args: any[]) => any)[] = [];
+        if (ds.type === 'http') {
+            const _ds = (ds as HttpDataSource);
+            this.app.registerEvent && this.app.registerEvent(`http:${ds.id}`, _ds.request.bind(_ds, [_ds.httpOptions]), _ds);
+        }
 
         ds.methods.forEach((method) => {
             if (!js_is_function(method.content)) return;

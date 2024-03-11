@@ -46,6 +46,12 @@ const [registerDrawer, {closeDrawer, }] = useDrawerInner(async(obj: any) => {
 async function editSave() {
     await validate();
     const values = getFieldsValue();
+    if (!values.fields) {
+        values.fields = []
+    }
+    if (!values.methods) {
+        values.methods = []
+    }
     if (values.id) {
         dataSourceService?.update(values as IDataSourceSchema);
     } else {

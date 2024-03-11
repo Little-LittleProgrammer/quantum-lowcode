@@ -103,7 +103,7 @@ const getDsSelect = computed(() => {
     return service?.editorService.get('root')?.dataSources?.map(ds => {
         return {
             label: `${ds.title || ''}(${ds.id})`,
-            value: ds.id,
+            value: ds.type === 'base' ? ds.id : `http:${ds.id}`,
             children: ds.methods.map((method: any) => {
                 return {
                     label: method.title || method.name,
@@ -181,6 +181,9 @@ function selectDsEvent(item:any) {
     }
     paramsData.value = []
     const id = item.field.split(':')[0]
+    if (id === 'http') {
+        return
+    }
     const name = item.field.split(':')[1];
     const list = service?.editorService.get('root')?.dataSources || []
     item.params = {}
@@ -200,7 +203,6 @@ function selectDsEvent(item:any) {
             
         }
     }
-    
 }
 
 </script>
