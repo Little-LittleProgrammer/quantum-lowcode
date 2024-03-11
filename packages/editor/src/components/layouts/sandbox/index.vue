@@ -177,8 +177,9 @@ async function dropHandler(e: DragEvent) {
 
             if (parentEl && doc) {
                 const {left: parentLeft, top: parentTop, } = js_utils_dom_offset(parentEl as HTMLElement);
+                console.log(top, parentTop, calcValueByDesignWidth(doc, parentTop, designWidth))
                 left = left - calcValueByDesignWidth(doc, parentLeft, designWidth) * zoom.value;
-                top = top - calcValueByDesignWidth(doc, parentTop, designWidth) * zoom.value;
+                top = top - parentTop * zoom.value;
             }
         }
 
