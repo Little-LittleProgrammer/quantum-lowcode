@@ -404,6 +404,7 @@ class EditorService extends Subscribe {
         const newLayout = this.getLayout(newConfig);
         const layout = this.getLayout(node);
         console.log('layout', newLayout, layout);
+        console.log('newConfig', newConfig);
         if (js_is_array(newConfig.children) && newLayout !== layout) {
             newConfig = setChildrenLayout(newConfig, newLayout);
         }

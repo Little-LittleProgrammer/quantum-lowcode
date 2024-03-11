@@ -26,7 +26,7 @@
 <script lang="ts" setup>
 import { computed, inject, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { IFormValue, IServices } from '../../types';
-import { js_is_array, js_is_boolean } from '@qimao/quantum-utils';
+import { js_is_array, js_is_number } from '@qimao/quantum-utils';
 defineOptions({
     name: 'PropsEditor',
 });
@@ -48,14 +48,12 @@ const getTabList = computed(() => {
 
 const curFormSchemas = ref<any>({});
 
+const curStyleSwitch = ref(1);
+
 const init = async(changeNode=false) => {
-    let customStyleSwitch = false
+    curStyleSwitch.value = 1
     if (js_is_array(valuesFn.value)) {
         for (const item of valuesFn.value) {
-            const sw = item?.getValue?.()?.customStyleSwitch
-            if (js_is_boolean(sw) && !changeNode) {
-                customStyleSwitch = sw
-            }
             await item.reset?.();
         }
     }
@@ -76,9 +74,9 @@ const init = async(changeNode=false) => {
     nextTick(async() => {
         formModel.value = {
             ...node.value,
-            customStyleSwitch
+            customStyleSwitch: curStyleSwitch.value,
+            customStyle: node.value?.style
         }|| {};
-        
     });
 };
 
@@ -92,8 +90,19 @@ watch(() => node.value, (val, oldVal) => {
 });
 
 function changeValue(value) {
-    if (js_is_boolean(value.customStyleSwitch)) {
+    if (js_is_number(value.customStyleSwitch)) {
+        if (value.customStyleSwitch !== curStyleSwitch.value) {
+            curStyleSwitch.value = value.customStyleSwitch
+            return
+        }
         Reflect.deleteProperty(value, 'customStyleSwitch')
+    }
+    value.style = {
+        ...value.customStyle,
+        ...value.style,
+    }
+    if(value.customStyle) {
+        Reflect.deleteProperty(value, 'customStyle')
     }
     const finValue = {
         ...node.value,
@@ -106,6 +115,7 @@ function changeValue(value) {
         };
     }
     console.log('finValue',finValue, value)
+    
     services?.editorService.update(finValue);
 }
 
