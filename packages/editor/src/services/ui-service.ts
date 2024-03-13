@@ -17,7 +17,7 @@ class UiService {
             height: 0,
         },
         showGuides: true,
-        workspaceLeft: 330,
+        workspaceLeft: 340,
         workspaceCenter: 600,
         workspaceRight: 1,
     });

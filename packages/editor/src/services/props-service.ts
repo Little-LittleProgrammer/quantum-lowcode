@@ -174,7 +174,7 @@ class PropsService extends Subscribe {
         return ['page', 'container'].includes(type)
             ? {
                 type,
-                layout: 'absolute',
+                layout: 'relative',
                 style: {
                     width: editorService.get('root')?.designWidth || DEFAULT_DESIGN_WIDTH,
                     height: 100
