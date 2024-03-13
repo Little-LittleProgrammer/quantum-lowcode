@@ -26,7 +26,7 @@ import {
     js_is_object,
     Subscribe
 } from '@qimao/quantum-utils';
-import { BoxCore } from '@qimao/quantum-sandbox';
+import { BoxCore, calcValueByDesignWidth } from '@qimao/quantum-sandbox';
 import { historyService } from './history-service';
 import { cloneDeep, mergeWith, uniq } from 'lodash-es';
 import { isPage } from '../utils';
@@ -37,7 +37,8 @@ import {
     fixed2Other,
     getInitPositionStyle,
     getNodeIndex,
-    setChildrenLayout
+    setChildrenLayout,
+    setLayout
 } from '../utils/editor';
 import { propsService } from './props-service';
 import { Protocol, storageService } from './storage-serivce';
@@ -443,6 +444,7 @@ class EditorService extends Subscribe {
     public async update(
         config: ISchemasNode | ISchemasNode[]
     ): Promise<ISchemasNode | ISchemasNode[]> {
+        console.log('editorService.update')
         const nodes = js_is_array(config) ? config : [config];
         const newNodes = await Promise.all(
             nodes.map((node) => this.updateHelper(node))
@@ -667,7 +669,7 @@ class EditorService extends Subscribe {
     }
 
     /**
-     * 移到指定容器
+     * 移到指定容器, sandbox触发
      * @param config 节点信息
      * @param targetField 目标容器
      * @returns void
@@ -734,10 +736,10 @@ class EditorService extends Subscribe {
             const el = doc.getElementById(node.field);
             const parentEl = layout === Layout.FIXED ? doc.body : el?.offsetParent;
             if (parentEl && el) {
-                node.style.left = (parentEl.clientWidth - el.clientWidth) / 2;
+                node.style.left = calcValueByDesignWidth(doc, (parentEl.clientWidth - el.clientWidth) / 2, editorService.get('root')?.designWidth);
                 node.style.right = '';
             } else if (parent.style && js_is_number(parent.style?.width) && js_is_number(node.style?.width)) {
-                node.style.left = (parent.style.width - node.style.width) / 2;
+                node.style.left = calcValueByDesignWidth(doc, (parent.style.width - node.style.width) / 2, editorService.get('root')?.designWidth);
                 node.style.right = '';
             }
         }
@@ -766,6 +768,55 @@ class EditorService extends Subscribe {
         }
 
         return newNode;
+    }
+
+    public dragTo(config: ISchemasNode, newParent: ISchemasContainer, newIndex: number) {
+        if (!newParent ) {
+            return;
+        }
+        if (!js_is_array(newParent.children)) {
+            newParent.children = []
+        };
+        const { parent, node: curNode } = this.getNodeInfo(config.field, false);
+        if (!parent || !curNode) throw new Error('找不要删除的节点');
+    
+        const index = getNodeIndex(curNode.field, parent);
+
+        if (typeof index !== 'number' || index === -1) throw new Error('找不要删除的节点');
+
+        if (parent.field === newParent.field) {
+            if (index === newIndex) return;
+            if (index < newIndex) {
+                newIndex -=1;
+            }
+        }
+
+        const layout = this.getLayout(parent);
+        const newLayout = this.getLayout(newParent);
+
+        if (layout !== newLayout) {
+            setLayout(config, newLayout);
+        }
+
+        parent.children?.splice?.(index, 1);
+
+        newParent.children.splice(newIndex, 0, config);
+
+        const page = this.get('page');
+        const root = this.get('root');
+        const sandbox = this.get('sandbox');
+        if (sandbox && page && root) {
+            sandbox.update({
+                config: cloneDeep(page),
+                parentId: root.field,
+                root: cloneDeep(root)
+            })
+        }
+
+        this.addModifiedNodeField(config.field);
+        this.addModifiedNodeField(parent.field);
+        this.pushHistoryState();
+
     }
 
     private async pushHistoryState() {
