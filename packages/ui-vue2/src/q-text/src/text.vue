@@ -26,8 +26,8 @@
             default: false
         },
 	    isNative: {
-	      type: Boolean,
-	      default: true,
+	      type: String,
+	      default: '1',
 	    },
 	  },
 
@@ -56,7 +56,7 @@
 	  },
 
 	  render() {
-        if (this.isNative) {
+        if (this.isNative === '2') {
             return h('div', {
                 domProps: {
                     innerHTML: this.displayText

@@ -3,26 +3,36 @@ export default [{
     label: '视频格式',
     component: 'Select',
     defaultValue: '1',
-    componentProps: {
-        options: [{
-            label: '填写视频链接',
-            value: '1',
-        }, {
-            label: '上传视频',
-            value: '2',
-        }],
+    componentProps: ({ formActionType, }) => {
+        return {
+            options: [{
+                label: '填写视频链接',
+                value: '1',
+            }, {
+                label: '上传视频',
+                value: '2',
+            }],
+            onChange: (e) => {
+                if (e === '1') {
+                    formActionType.updateSchema({
+                        field: 'componentProps.src',
+                        label: '视频链接',
+                        component: 'Input',
+                    });
+                } else {
+                    formActionType.updateSchema({
+                        field: 'src',
+                        label: '视频',
+                        component: 'CardUpload',
+                    });
+                }
+            },
+        };
     },
 }, {
     field: 'src',
     label: '视频链接',
     component: 'Input',
-    defaultValue: '这是一个视频',
-    ifShow: ({values, }) => values['componentProps.vdType'] === '1',
-}, {
-    field: 'src',
-    label: '视频',
-    component: 'CardUpload',
-    ifShow: ({values, }) => values['componentProps.vdType'] === '2',
 }, {
     field: 'controls',
     label: '控制',
