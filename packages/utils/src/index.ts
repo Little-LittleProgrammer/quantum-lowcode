@@ -60,6 +60,17 @@ export const getUrlParam = (param: string, url?: string) => {
     return '';
 };
 
+export function isBoolean(val: any): boolean {
+    return typeof val === 'boolean' || val === 'true' || val === 'false';
+}
+
+export function stringToBoolean(val: string) {
+    if (isBoolean(val)) {
+        return val === 'true';
+    }
+    return val;
+}
+
 export function parseSchemas(schema: string | Record<string, any>) {
     let firstDeal: Record<string, any> = {};
     if (!js_is_object(schema)) {
@@ -81,10 +92,17 @@ export function parseSchemas(schema: string | Record<string, any>) {
         return new _c();
     }
     function dfs(target: any, map = new Map()) {
-        if (js_is_string(target) && (target.includes('function') || target.includes('=>'))) {
-            // eslint-disable-next-line no-eval
-            return eval(`(${target})`); // 字符串转方法
+        if (js_is_string(target)) {
+            if ((target.includes('function') || target.includes('=>'))) {
+                // eslint-disable-next-line no-eval
+                return eval(`(${target})`); // 字符串转方法
             // return new Function(`return ${target}`)(); // 字符串转方法
+            } else if (isBoolean(target)) {
+                return stringToBoolean(target);
+            }
+            // else if (/^[-]?[0-9]*[.]?[0-9]*$/.test(target)) {
+            //     return +target;
+            // }
         }
         if (js_is_base(target) || js_is_reg_exp(target) || js_is_function(target)) {
             return target;
