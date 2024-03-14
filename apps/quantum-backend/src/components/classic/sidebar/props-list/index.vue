@@ -90,7 +90,6 @@ import { CLASSIC_WORKSPACE_WIDTH } from '@/enums/projectEnum';
                                 newIndex++
                             }
                             if (parentNode) {
-                                console.log(curNode, parentNode, _evt.newIndex)
                                 services?.editorService.dragTo(curNode, parentNode, newIndex)
                             }
 						},
@@ -128,15 +127,15 @@ import { CLASSIC_WORKSPACE_WIDTH } from '@/enums/projectEnum';
 					const propsConfig = computed(() => {
                         const configs = services?.propsService.getConfig(
                             node.component || node.type
-                        )
-                        if (configs[configs.length-1].component === 'EventSelect') {
+                        ) || []
+                        if (configs[configs.length-1]?.component === 'EventSelect') {
                             return services?.propsService.getConfig(
                                 node.component || node.type
-                            ).slice(2, configs.length-1)
+                            )?.slice(2, configs.length-1) || []
                         }
                         return services?.propsService.getConfig(
                             node.component || node.type
-                        ).slice(2)
+                        )?.slice(2) || []
                     });
 					return (
 						<div class="classic-sidebar-props-list" id={node.field} onClick={(e) =>selectNode(e, node.field)}>
@@ -150,7 +149,7 @@ import { CLASSIC_WORKSPACE_WIDTH } from '@/enums/projectEnum';
 									<q-antd-icon type="DragOutlined"></q-antd-icon>
 								</div>
 							</div>
-							{propsConfig.value.length > 0 && (<div class="item-content">
+							{propsConfig.value?.length > 0 && (<div class="item-content">
 								<q-antd-form
 									model={node}
 									layout="vertical"
