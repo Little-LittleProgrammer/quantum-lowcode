@@ -38,7 +38,6 @@ const defHttp = createAxios({
         apiUrl: env.apiUrl,
         // 接口拼接地址
         urlPrefix: env.urlPrefix,
-        uploadUrl: env.uploadUrl,
     },
 });
 
