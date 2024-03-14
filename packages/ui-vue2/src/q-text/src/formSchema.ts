@@ -2,42 +2,31 @@ export default [{
     field: 'isNative',
     label: '文本格式',
     component: 'Select',
-    componentProps: ({ formActionType, }) => {
-        return {
-            options: [{
-                label: '普通文本',
-                value: '1',
-            }, {
-                label: '富文本',
-                value: '2',
-            }],
-            onChange: (e) => {
-                if (e === '1') {
-                    formActionType.updateSchema({
-                        field: 'componentProps.text',
-                        label: '文本',
-                        component: 'Input',
-                    });
-                } else {
-                    formActionType.updateSchema({
-                        field: 'componentProps.text',
-                        label: '内容',
-                        component: 'RichText',
-                        colProps: {
-                            span: 24,
-                        },
-                    });
-                }
-            },
-        };
+    componentProps: {
+        options: [{
+            label: '普通文本',
+            value: '1',
+        }, {
+            label: '富文本',
+            value: '2',
+        }],
     },
 }, {
     field: 'text',
-    label: '内容',
+    label: '文本',
     component: 'Input',
+    ifShow: ({values, }) => values['componentProps.isNative'] === '1',
 }, {
     field: 'multiple',
     label: '多行文本',
     component: 'Switch',
     ifShow: ({values, }) => values['componentProps.isNative'] === '1',
+}, {
+    field: 'text',
+    label: '富文本',
+    component: 'RichText',
+    ifShow: ({values, }) => values['componentProps.isNative'] === '2',
+    colProps: {
+        span: 24,
+    },
 }];

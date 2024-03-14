@@ -28,7 +28,7 @@
                             <q-antd-icon type="FileTextOutlined"></q-antd-icon>
                         </template>
                     </a-button>
-                    <a-tooltip placement="right" :title="viewMode === 'classic' ? '经典模式' : '视图模式'">
+                    <a-tooltip placement="right" :title="viewMode === 'classic' ? '视图模式' : '经典模式'">
                         <a-button size="small" type="link" @click="changeMode(uiService)">
                             <template #icon>
                                 <q-antd-icon type="ControlOutlined"></q-antd-icon>
