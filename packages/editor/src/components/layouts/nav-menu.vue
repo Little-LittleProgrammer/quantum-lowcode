@@ -1,7 +1,7 @@
 <!-- 画布小工具 -->
 <template>
     <div class="q-editor-nav-menu">
-        <div class="q-editor-nav-menu-left" v-if="workspaceLeft > 0" :style="{width: workspaceLeft+ 'px'}">
+        <div class="q-editor-nav-menu-left" v-if="workspaceLeft > 0" :style="leftStyle">
             <slot name=left></slot>
         </div>
         <div class="q-editor-nav-menu-center">
@@ -59,6 +59,15 @@ const uiService = services?.uiService;
 
 const zoom = computed((): number => uiService?.get('zoom') ?? 1);
 const workspaceLeft = computed((): number => uiService?.get('workspaceLeft') ?? 0);
+
+const leftStyle = computed(() => {
+    if (workspaceLeft.value === 1) {
+        return {flex: 1}
+    }
+    return {
+        width: workspaceLeft.value + 'px',
+    }
+})
 
 const isMac = /mac os x/.test(navigator.userAgent.toLowerCase());
 const ctrl = isMac ? 'Command' : 'Ctrl';

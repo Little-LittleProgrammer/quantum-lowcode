@@ -7,7 +7,11 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    CompList: typeof import('./src/components/classic/sidebar/comp-list/index.vue')['default']
+    Left: typeof import('./src/components/classic/sidebar/left/index.vue')['default']
     Preview: typeof import('./src/components/pagePreview/preview.vue')['default']
+    PropsItem: typeof import('./src/components/classic/sidebar/props-list/props-item.vue')['default']
+    PropsList: typeof import('./src/components/classic/sidebar/props-list/index.vue')['default']
     QAntdDrawer: typeof import('@q-front-npm/vue3-antd-pc-ui/es')['QAntdDrawer']
     QAntdDropdown: typeof import('@q-front-npm/vue3-antd-pc-ui/es')['QAntdDropdown']
     QAntdForm: typeof import('@q-front-npm/vue3-antd-pc-ui/es')['QAntdForm']
@@ -27,6 +31,7 @@ declare module 'vue' {
     QThemeModeButton: typeof import('@q-front-npm/vue3-pc-ui/es')['QThemeModeButton']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Sidebar: typeof import('./src/components/classic/sidebar/index.vue')['default']
     Src: typeof import('./src/components/json-viewer/src/index.vue')['default']
     ViewModal: typeof import('./src/components/json-viewer/src/view-modal.vue')['default']
   }

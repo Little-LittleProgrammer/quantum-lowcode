@@ -22,7 +22,9 @@
             </slot>
         </template>
         <template #left>
-            <sidebar></sidebar>
+            <slot name="left" :services="services" >
+                <sidebar></sidebar>
+            </slot>
         </template>
         <template #workspace>
             <slot name="workspace" :editorService="editorService">

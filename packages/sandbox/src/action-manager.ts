@@ -455,6 +455,7 @@ export class ActionManager extends Subscribe {
             new DragResizeHelper({
                 container: config.container,
                 updateDragEl: config.updateDragEl,
+                designWidth: this.designWidth,
             });
         const multiDr = new BoxMultiDragResize({
             container: config.container,

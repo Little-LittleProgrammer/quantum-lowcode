@@ -148,9 +148,11 @@ class ContentmenuService {
             }
         }
         if (js_is_function(this.state.extraDropEvent)) {
-            const node = this.get('node')
-            const nodeInfo = editorService.getNodeInfo(node.field)
-            this.state.extraDropEvent(menu, nodeInfo);
+            const node = editorService.get('node')
+            if (node) {
+                const nodeInfo = editorService.getNodeInfo(node.field)
+                this.state.extraDropEvent(menu, nodeInfo);
+            }
         }
     }
 }

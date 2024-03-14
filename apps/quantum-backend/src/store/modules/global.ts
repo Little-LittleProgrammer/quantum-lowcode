@@ -17,7 +17,7 @@ const ls = {
     },
     set() {
 
-    }
+    },
 };
 
 // state
@@ -30,16 +30,17 @@ const createState = () => {
         pageLoading: false,
         environmentData: { //  环境
             env: '', // 0:测试环境 1:正式环境
-            title: ''
+            title: '',
         },
         asyncExportNoticePop: { //  下载
             visible: false,
             file: '', //  文件名
-            title: '' //  异步查看文件的列表html代码（包含查看链接）
+            title: '', //  异步查看文件的列表html代码（包含查看链接）
         },
         hasHistoryUrl: false, // 是否有项目历史地址
         authorityManage: false, // 权限管理开关（默认为开启，需要配置相应的数据）
-        citySelect: [] as ISelectOption[]
+        citySelect: [] as ISelectOption[],
+        viewMode: 'classic',
     };
     return state;
 };
@@ -52,12 +53,16 @@ export const useGlobalStore = defineStore('global', {
     getters: {
         getThemeMode(state): 'light' | 'dark' {
             return state.theme || ls.get('themeMode') || 'light';
-        }
+        },
     },
     actions: {
         set_theme_mode(mode: 'light' | 'dark') {
             this.theme = mode;
             ls.set('themeMode', mode);
+        },
+        set_view_mode(mode: 'new' | 'classic') {
+            this.viewMode = mode;
+            ls.set('viewMode', mode);
         },
         set_environment_data(data: SelectPartial<globalState['environmentData'], 'env'>) {
             if (this.environmentData.env != '' && parseInt(data.env) != parseInt(this.environmentData.env)){
@@ -94,7 +99,7 @@ export const useGlobalStore = defineStore('global', {
                 this.pageLoading = loading;
                 clearTimeout(timeId);
             }
-        }
-    }
+        },
+    },
 });
 

@@ -341,6 +341,7 @@ export class BoxCore extends Subscribe {
 
     /**
 	 * 初始化DragResize类通过ActionManager抛出来的事件监听
+     * 在画布内拖动的事件
 	 */
     private initDrEvent(): void {
         this.actionManager.on('update', (data: IUpdateEventData) => {

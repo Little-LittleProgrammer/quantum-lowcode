@@ -88,6 +88,9 @@ async function commitOk() {
     if (values.description.description) {
         finDsl.description.description = values.description.description.split(';');
     }
+    if (values.description) {
+        Reflect.deleteProperty(values, 'description');
+    }
     const res = await apiSaveH5ManageProject({
         ...values,
         pageJson: serializeToString(finDsl)

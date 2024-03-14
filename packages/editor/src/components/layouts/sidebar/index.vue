@@ -82,7 +82,8 @@ function handleClick(item) {
         }
     }
     &-content {
-        flex: 1
+        flex: 1;
+        overflow-y: auto;
     }
 }
 </style>

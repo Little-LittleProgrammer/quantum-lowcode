@@ -1,6 +1,6 @@
 import { ISchemasNode, ISchemasRoot, Id } from '@qimao/quantum-schemas';
 import { IComponentGroup, IDatasourceTypeOption, IEditorNodeInfo, ISandboxRect } from './types';
-import { CONTAINER_HIGHLIGHT_CLASS_NAME, ContainerHighlightType, ICustomizeMoveableOptionsCallbackConfig, IUpdateDragEl, MoveableOptions } from '@qimao/quantum-sandbox';
+import { CONTAINER_HIGHLIGHT_CLASS_NAME, CONTAINER_HIGHLIGHT_DELAY_TIME, ContainerHighlightType, ICustomizeMoveableOptionsCallbackConfig, IGuidesOptions, IUpdateDragEl, MoveableOptions } from '@qimao/quantum-sandbox';
 import type { DropMenu, FormSchema } from '@q-front-npm/vue3-antd-pc-ui';
 
 export interface IEditorProps {
@@ -36,6 +36,10 @@ export interface IEditorProps {
         dropDownList: DropMenu;
         extraDropEvent: (menu: DropMenu, nodeInfo:IEditorNodeInfo) => void;
     }>;
+    /** 禁用鼠标左键按下时就开始拖拽，需要先选中再可以拖拽 */
+    disabledDragStart?: boolean;
+    /** 标尺配置 */
+    guidesOptions?: Partial<IGuidesOptions>;
 }
 
 export const defaultEditorProps = {
@@ -126,7 +130,7 @@ export const defaultEditorProps = {
         }],
     }],
     containerHighlightClassName: CONTAINER_HIGHLIGHT_CLASS_NAME,
-    containerHighlightDuration: 800,
+    containerHighlightDuration: CONTAINER_HIGHLIGHT_DELAY_TIME,
     containerHighlightType: ContainerHighlightType.DEFAULT,
     propsValues: () => ({
         'page': {

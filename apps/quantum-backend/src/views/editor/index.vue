@@ -11,6 +11,9 @@
             :propsConfigs="propsConfigs"
             :methodsList="methodsList"
             :boxContextmenuConfigs="boxContextmenuConfigs"
+            :containerHighlightDuration="CONTAINER_HIGHLIGHT_DELAY_TIME"
+            :containerHighlightClassName="CONTAINER_HIGHLIGHT_CLASS_NAME"
+            :can-select="viewMode==='classic' ? () => false : (el: HTMLElement) => Boolean(el.id)"
 		>
             <template #nav-left>
                 <p>量子编辑器</p>
@@ -26,7 +29,7 @@
                         </template>
                     </a-button>
                     <a-tooltip placement="right" :title="viewMode === 'classic' ? '经典模式' : '视图模式'">
-                        <a-button size="small" type="link" @click="changeMode">
+                        <a-button size="small" type="link" @click="changeMode(uiService)">
                             <template #icon>
                                 <q-antd-icon type="ControlOutlined"></q-antd-icon>
                             </template>
@@ -36,6 +39,7 @@
             </template>
 			<template #workspace-header="{ editorService }">
 				<a-radio-group
+                    v-if="viewMode === 'new'"
 					size="small"
 					v-model:value="sandboxDev"
 					button-style="solid"
@@ -48,6 +52,9 @@
 			</template>
             <template v-if="viewMode === 'classic'" #nav-center>
                 <div></div>
+            </template>
+            <template v-if="viewMode === 'classic'" #left="{services}">
+                <Sidebar :services="services"></Sidebar>
             </template>
             <template v-if="viewMode === 'classic'" #props-editor="{editorService}">
                 <div></div>
@@ -64,8 +71,8 @@
 </template>
 
 <script lang="ts" setup>
-	import { computed, nextTick, ref, toRaw } from 'vue';
-	import { QuantumEditor } from '@qimao/quantum-editor';
+	import { computed, nextTick, onUnmounted, ref, toRaw } from 'vue';
+	import { QuantumEditor, UiService } from '@qimao/quantum-editor';
 	import { ISchemasRoot, NodeType } from '@qimao/quantum-schemas';
 	import { serializeToString, parseSchemas, asyncLoadJs } from '@qimao/quantum-utils';
 	import { testSchemas , defaultSchemas} from './init-schemas';
@@ -78,18 +85,22 @@
 		apiSaveH5ManageProject,
 	} from '@/http/api/manage/h5-manage';
 	import Preview from '@/components/pagePreview/preview.vue';
-	import { DEV_RECT, UA_MAP } from '@/enums/projectEnum';
+	import { DEV_RECT, UA_MAP, CLASSIC_WORKSPACE_WIDTH, NEW_WORKSPACE_WIDTH } from '@/enums/projectEnum';
 	import { EditorService } from '@qimao/quantum-editor';
 	import {
 		ICustomizeMoveableOptionsCallbackConfig,
 		MoveableOptions,
 	} from '@qimao/quantum-sandbox';
+    import Sidebar from '@/components/classic/sidebar/index.vue'
+    import { useGlobalStore } from '@/store/modules/global';
+    import {CONTAINER_HIGHLIGHT_CLASS_NAME, CONTAINER_HIGHLIGHT_DELAY_TIME} from '@qimao/quantum-sandbox'
 	defineOptions({
 		name: 'Editor',
 	});
 
 	const route = useRoute();
-    const viewMode = ref<'classic' | 'new'>('new')
+    const globalStore = useGlobalStore()
+    const viewMode = computed(() => globalStore.viewMode);
 	const { runtimePathType = 'vue3' } = route.query;
 
 	const runtimeUrl = ref(
@@ -97,6 +108,7 @@
 	);
 
 	const editor = ref<InstanceType<typeof QuantumEditor>>();
+    
 
 	const schemas = ref<ISchemasRoot>(defaultSchemas);
 	let preSchemasStr = '';
@@ -120,8 +132,9 @@
             event: 'save',
             text: '保存为模版',
         }],
-        handleMenuEvent: (menu) => {
-            
+        handleMenuEvent: (menu, nodeInfo) => {
+            console.log(nodeInfo)
+            // 发送通讯保存模版
         }
     }
 
@@ -252,7 +265,7 @@
         if (uiService.get('showCode')) {
             uiService.set('workspaceLeft', 0)
         } else {
-            uiService.set('workspaceLeft', 330)
+            uiService.set('workspaceLeft', NEW_WORKSPACE_WIDTH.Left)
         }
     }
 
@@ -267,14 +280,29 @@
 		}
 	}
 
-    function changeMode() {
-        viewMode.value = viewMode.value === 'new' ? 'classic' : 'new';
+    function changeMode(ui: UiService) {
+        globalStore.pageLoading = true
+        setTimeout(() => {
+            ui.set('showCode', false)
+            globalStore.set_view_mode(viewMode.value === 'new' ? 'classic' : 'new')
+            if (viewMode.value === 'new') {
+                ui.set('workspaceRight', NEW_WORKSPACE_WIDTH.Right)
+                ui.set('workspaceCenter', NEW_WORKSPACE_WIDTH.Center)
+                ui.set('workspaceLeft', NEW_WORKSPACE_WIDTH.Left)
+            } else {
+                ui.set('workspaceRight', CLASSIC_WORKSPACE_WIDTH.Right)
+                ui.set('workspaceCenter', CLASSIC_WORKSPACE_WIDTH.Center)
+                ui.set('workspaceLeft', CLASSIC_WORKSPACE_WIDTH.Left)
+            }
+            globalStore.pageLoading = false
+        }, 500)
     }
 
     asyncLoadJs(`/quantum-editor/entry/${runtimePathType}/config.umd.js`).then(() => {
         propsConfigs.value = (globalThis as any).quantumCompConfigs.formSchemas;
         methodsList.value = (globalThis as any).quantumCompConfigs.events;
     })
+
 </script>
 <style lang="scss">
 	.editor-container {

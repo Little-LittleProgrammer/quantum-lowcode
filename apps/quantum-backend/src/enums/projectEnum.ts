@@ -53,6 +53,18 @@ export enum DEVICE_TYPE {
     PC = 'pc',
 }
 
+export enum NEW_WORKSPACE_WIDTH {
+    Left= 340,
+    Center=600,
+    Right = 1
+}
+
+export enum CLASSIC_WORKSPACE_WIDTH {
+    Left= 1,
+    Center= 500,
+    Right = 0
+}
+
 export const DEV_RECT = {
     [DEVICE_TYPE.Phone]: {height: 817, width: 375, },
     [DEVICE_TYPE.Pad]: {height: 1024, width: 768, },
