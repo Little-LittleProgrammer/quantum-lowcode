@@ -13,7 +13,7 @@
 -->
 <template>
     <div class="q-editor-event-select">
-        <a-select v-model:value="eventKey" :options="props.options" mode="multiple" @blur="addEvent"></a-select>
+        <a-select class="g-w-200" v-model:value="eventKey" :options="props.options" mode="multiple" @blur="addEvent"></a-select>
         <div v-for="key in eventKey" :key="key">
             <div class="q-editor-event-select-content">
                 <div class="q-editor-event-select-content-title">

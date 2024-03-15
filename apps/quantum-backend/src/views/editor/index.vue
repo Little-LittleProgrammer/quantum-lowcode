@@ -16,7 +16,7 @@
             :can-select="viewMode==='classic' ? () => false : (el: HTMLElement) => Boolean(el.id)"
 		>
             <template #nav-left>
-                <p>量子编辑器</p>
+                <p class="editor-title">量子编辑器</p>
             </template>
             <template #nav-right="{uiService, editorService}">
                 <div class="editor-container-nav-right">
@@ -310,17 +310,15 @@
 		height: 100%;
         min-width: 1250px;
 		@include bg-color(aside-bg);
-		&-header {
-			height: 32px;
-			text-align: right;
-			border: 1px solid;
-			line-height: 38px;
-			@include border-color(border-color);
-		}
 		&-content {
 			border: 1px solid;
 			@include border-color(border-color);
             border-bottom: 0;
+            .editor-title {
+                padding: 0 10px;
+                font-size: 16px;
+                font-weight: bold;
+            }
 		}
 		.q-editor {
 			flex: 1;

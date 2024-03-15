@@ -94,6 +94,7 @@ const sandboxOptions = reactive<IBoxOptions>({
     containerHighlightType: props.containerHighlightType,
     disabledDragStart: props.disabledDragStart,
     guidesOptions: props.guidesOptions,
+    autoScrollIntoView: props.autoScrollIntoView
 });
 
 const {initServiceEvents, initServiceState, } = useServicesInit(props, emit, services);

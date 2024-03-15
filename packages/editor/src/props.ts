@@ -26,6 +26,8 @@ export interface IEditorProps {
     containerHighlightDuration?: number;
     /** 拖入画布中容器时，识别容器的操作类型 */
     containerHighlightType?: ContainerHighlightType;
+    /** 选中时是否自动滚动到可视区域 */
+    autoScrollIntoView?: boolean;
     /** 初始值 */
     propsValues?: Record<string, Partial<ISchemasNode>>;
     propsConfigs?: Record<string, FormSchema[]>;
@@ -132,6 +134,7 @@ export const defaultEditorProps = {
     containerHighlightClassName: CONTAINER_HIGHLIGHT_CLASS_NAME,
     containerHighlightDuration: CONTAINER_HIGHLIGHT_DELAY_TIME,
     containerHighlightType: ContainerHighlightType.DEFAULT,
+    autoScrollIntoView: true,
     propsValues: () => ({
         'page': {
             style: {

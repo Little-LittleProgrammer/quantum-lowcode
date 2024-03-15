@@ -79,8 +79,8 @@ const selectedKeys = computed(() => {
 const fieldNames = {children: 'children', title: 'label', key: 'field', };
 
 function selectNode(e: string[]) {
-    services?.editorService?.multiSelect(e);
-    services?.editorService?.get('sandbox')?.multiSelect(e);
+    services?.editorService?.select(e[0]);
+    services?.editorService?.get('sandbox')?.select(e[0]);
 }
 
 const {handlerDrop, } = useDrag(services!, nodeData);
