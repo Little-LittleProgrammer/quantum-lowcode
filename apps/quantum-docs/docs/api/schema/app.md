@@ -2,7 +2,7 @@
 
 ## api
 
-`setConfig(config)`: 设置schemas  
+`dataSource`: 请看 [dataSource](./dataSource.md)
 `setPage(field)`: 设置页面  
 `getPage(field)`: 查询页面  
 `deletePage`: 删除页面  
@@ -10,4 +10,6 @@
 `unregisterComponent`: 删除组件  
 `resolveComponent`: 获取组件  
 `request`: 请求方法
-`emit`: 调用方法,例如 `emit('datasourceId:functionName', params)`, `emit('nodeID:functionName', params)` 
+`emit`: 调用方法,例如 `emit('datasourceId:functionName', params)`, `emit('nodeID:functionName', params)`
+
+### 
