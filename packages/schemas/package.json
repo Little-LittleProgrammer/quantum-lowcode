@@ -1,0 +1,21 @@
+{
+  "name": "@qimao/quantum-schemas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/quantum-schemas.cjs.min.js",
+  "module": "dist/quantum-schemas.esm.min.js",
+  "typings": "dist/types/index.d.ts",
+  "scripts": {
+    "build": "rollup -c --environment TYPES:true"
+  },
+  "files": ["dist"],
+  "keywords": [],
+  "author": "Evan Wu",
+  "license": "ISC",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@q-front-npm-configs/rollup": "1.2.0",
+    "rollup": "^3.29.4"
+  }
+}

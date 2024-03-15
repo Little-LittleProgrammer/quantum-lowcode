@@ -1,0 +1,10 @@
+{
+  "extends": "@q-front-npm-configs/tsconfig/vue.json",
+  "compilerOptions": {
+    "isolatedModules": true,
+    "noEmit": true,
+    "baseUrl": ".",
+  },
+  "include": ["src", "index.ts", "node_modules/@quantum-design/types/**/*.d.ts"],
+  "exclude": ["dist"]
+}

@@ -2,15 +2,16 @@
   "name": "@qimao/quantum-editor",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/quantum-editor.umd.js",
-  "module": "dist/quantum-editor.mjs",
+  "type": "module",
+  "main": "dist/quantum-editor.umd.cjs",
+  "module": "dist/quantum-editor.js",
   "style": "dist/style.css",
   "types": "./dist/types/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
-      "import": "./dist/quantum-editor.mjs",
-      "require": "./dist/quantum-editor.umd.js"
+      "import": "./dist/quantum-editor.js",
+      "require": "./dist/quantum-editor.umd.cjs"
     },
     "./dist/style.css": {
       "import": "./dist/style.css",
@@ -19,7 +20,7 @@
     "./*": "./"
   },
   "scripts": {
-    "build": "vite build && npm run build:type",
+    "build": "vite build",
     "build:type": "vue-tsc --declaration --emitDeclarationOnly --project tsconfig.build.json",
     "clear:type": "rimraf ./types"
   },
@@ -31,13 +32,18 @@
     "@qimao/quantum-utils": "workspace:*",
     "@qimao/quantum-ui": "workspace:*",
     "@qimao/quantum-core": "workspace:*",
+    "@qimao/quantum-schemas": "workspace:*",
+    "@q-front-npm/vue3-antd-pc-ui": "~1.2.10-beta.5",
+    "@q-front-npm/vue3-pc-ui": "~1.2.5-beta.5",
+    "@q-front-npm-configs/vite": "~1.2.5-beta.1",
     "lodash-es": "^4.17.21",
     "monaco-editor": "^0.44.0",
+    "tinymce": "^5.10.9",
     "vue": "~3.3.4"
   },
   "devDependencies": {
     "@types/lodash-es": "^4.17.6",
-    "@q-front-npm/types": "~1.2.1-beta.0",
+    "@q-front-npm/types": "~1.2.1",
     "sass": "^1.63.3",
     "@ant-design/icons-vue": "^6.1.0",
     "ant-design-vue": "^4.0.1",
@@ -45,6 +51,7 @@
     "csstype": "~3.1.2",
     "rimraf": "^3.0.2",
     "@vitejs/plugin-vue": "^4.3.4",
-    "vue-tsc": "1.8.8"
+    "vue-tsc": "1.8.8",
+    "unplugin-vue-components": "^0.25.2"
   }
 }

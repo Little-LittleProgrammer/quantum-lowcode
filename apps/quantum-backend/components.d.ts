@@ -7,7 +7,11 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    CompList: typeof import('./src/components/classic/sidebar/comp-list/index.vue')['default']
     Preview: typeof import('./src/components/pagePreview/preview.vue')['default']
+    PropsList: typeof import('./src/components/classic/sidebar/props-list/index.vue')['default']
+    QAntdDrawer: typeof import('@q-front-npm/vue3-antd-pc-ui/es')['QAntdDrawer']
+    QAntdDropdown: typeof import('@q-front-npm/vue3-antd-pc-ui/es')['QAntdDropdown']
     QAntdForm: typeof import('@q-front-npm/vue3-antd-pc-ui/es')['QAntdForm']
     QAntdIcon: typeof import('@q-front-npm/vue3-antd-pc-ui/es')['QAntdIcon']
     QAntdKeepAliveTabs: typeof import('@q-front-npm/vue3-antd-pc-ui/es')['QAntdKeepAliveTabs']
@@ -16,6 +20,7 @@ declare module 'vue' {
     QAntdTable: typeof import('@q-front-npm/vue3-antd-pc-ui/es')['QAntdTable']
     QAntdTableAction: typeof import('@q-front-npm/vue3-antd-pc-ui/es')['QAntdTableAction']
     QBreadcrumb: typeof import('@q-front-npm/vue3-pc-ui/es')['QBreadcrumb']
+    QCodeEditor: typeof import('@q-front-npm/vue3-pc-ui/es')['QCodeEditor']
     QLoading: typeof import('@q-front-npm/vue3-pc-ui/es')['QLoading']
     QmAside: typeof import('./src/components/layout/qm-aside.vue')['default']
     QmAuthority: typeof import('./src/components/qm-authority/index.vue')['default']
@@ -24,6 +29,7 @@ declare module 'vue' {
     QThemeModeButton: typeof import('@q-front-npm/vue3-pc-ui/es')['QThemeModeButton']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Sidebar: typeof import('./src/components/classic/sidebar/index.vue')['default']
     Src: typeof import('./src/components/json-viewer/src/index.vue')['default']
     ViewModal: typeof import('./src/components/json-viewer/src/view-modal.vue')['default']
   }

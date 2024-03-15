@@ -20,5 +20,7 @@ Quantum可视化低代码平台 是一个前端低代码解决方案, 意在帮�
 - `@qimao/quantum-sandbox`: 实现在编辑器与渲染器之间的通讯
 - `@qimao/quantum-editor`: 实现一个可视化编辑器
 - `@qimao/quantum-ui`: 提供一些vue3基础组件
+- `@qimao/quantum-schemas`: 规定基本的节点类型以及常量枚举
+- `@qimao/quantum-data`: 全局数据以及方法管理
 - `runtime`: 实现在编辑器中对使用不同框架的组件的渲染
 

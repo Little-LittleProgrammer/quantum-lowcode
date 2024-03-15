@@ -19,6 +19,11 @@ export interface IH5ManageList {
     status?: number;
     title?: string;
     updateTime?: string;
+    designWidth?: number;
+    description?: {
+        keywords?: string[]
+        description?: string[]
+    }
 }
 
 export interface IH5ManageTableHeader {

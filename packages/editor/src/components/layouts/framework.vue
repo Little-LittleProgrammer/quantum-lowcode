@@ -1,8 +1,17 @@
 <!--  -->
 <template>
     <div class="q-editor" ref="refQEditor" style="min-width: 180px">
-        <split-view class="q-editor-content">
-            <!-- <template #left></template> -->
+        <slot name="header"></slot>
+        <slot name="nav"></slot>
+        <split-view
+            class="q-editor-content"
+            :left="uiService?.get('workspaceLeft')"
+            :center="uiService?.get('workspaceCenter')"
+            :right="uiService?.get('workspaceRight')"
+        >
+            <template #left>
+                <slot name="left"></slot>
+            </template>
             <template #center>
                 <slot v-if="pageLength > 0" name="workspace"></slot>
                 <slot v-else name="empty">
@@ -14,9 +23,10 @@
                 </slot>
             </template>
             <template #right>
-                <slot v-if="showSrc">
-                    <q-code-editor class="q-editor-content" :init-values="getDealRoot" :options="codeOptions" @save="save_code"></q-code-editor>
+                <slot name="code-editor" v-if="showCode">
+                    <q-code-editor class="q-editor-content" :value="getDealRoot" :options="codeOptions" @save="save_code"></q-code-editor>
                 </slot>
+                <slot name="props-editor" v-else></slot>
             </template>
         </split-view>
     </div>
@@ -25,37 +35,35 @@
 <script lang='ts' setup>
 import { computed, inject } from 'vue';
 import splitView from '../base/split-view.vue';
-import { editorService } from '../../services/editor-service';
-import { uiService } from '../../services/ui-service';
-import {QCodeEditor} from '@qimao/quantum-ui';
-import {getConfig, getSchemasRootToNeed, setSchemasRoot} from '../../utils';
+import {getConfig} from '../../utils';
 import { Empty } from 'ant-design-vue';
 import { serializeToString } from '@qimao/quantum-utils';
+import { ISchemasRoot } from '@qimao/quantum-schemas';
+import { IServices } from '../../types';
 defineOptions({
     name: 'QEditorFramework',
 });
 
 const codeOptions = inject('codeOptions', {});
-const root = computed(() => editorService?.get('root'));
+const { editorService, uiService, } = inject<IServices>('services') || {};
+const root = computed(() => editorService?.get('root') as ISchemasRoot);
 const pageLength = computed(() => editorService?.get('pageLength') || 0);
-const showSrc = computed(() => uiService?.get('showSrc'));
+const showCode = computed(() => uiService?.get('showCode'));
 
 const getDealRoot = computed(() => {
-    const values = root.value ? getSchemasRootToNeed(root.value) : [];
-    return serializeToString(values).replace(/"(\w+)":\s/g, '$1: ');
+    return `export const _schemas: ISchemasRoot=${serializeToString(root.value).replace(/"(\w+)":\s/g, '$1: ')}`;
 });
 
-// function dealRoot(code: string): string {
-//     const index = code.indexOf('=');
-//     return code.slice(index + 1);
-// }
+function dealRoot(code: string): string {
+    const index = code.indexOf('=');
+    return code.slice(index + 1);
+}
 
 function save_code(code: string) {
     try {
         const parse = getConfig('parseSchemas');
-        const finCode = setSchemasRoot(parse(code));
-        console.log(finCode);
-        editorService?.set('root', finCode || null);
+        const finCode = dealRoot(code);
+        editorService?.set('root', finCode ? parse(`(${finCode})`) : '');
     } catch (e: any) {
         console.error(e);
     }
