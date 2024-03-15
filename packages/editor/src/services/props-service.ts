@@ -10,7 +10,7 @@ import { formatConfig, otherConfigMap } from '../utils/props';
 import { cloneDeep, mergeWith } from 'lodash-es';
 import { DEFAULT_DESIGN_WIDTH, ISchemasNode, ISchemasPage, Id } from '@qimao/quantum-schemas';
 import { editorService } from './editor-service';
-import { getCompType } from '../utils';
+import { getCompType, isContainerNode } from '../utils';
 
 class PropsService extends Subscribe {
     private state = reactive<IPropsState>({
@@ -171,7 +171,7 @@ class PropsService extends Subscribe {
 	 * @returns Object
 	 */
     public getDefaultPropsValue(type: string) {
-        return ['page', 'container'].includes(type)
+        return (['page', 'container'].includes(type) || isContainerNode(type))
             ? {
                 type,
                 layout: 'relative',

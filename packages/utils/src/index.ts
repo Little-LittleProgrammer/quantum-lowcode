@@ -290,8 +290,3 @@ export function compiledNode(
     // }
     return node;
 }
-
-// TODO 获取带动态参数的节点
-export function getNodes(){
-
-}
