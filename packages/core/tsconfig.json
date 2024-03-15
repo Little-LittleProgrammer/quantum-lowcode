@@ -1,5 +1,6 @@
 {
-  "extends": "@q-front-npm-configs/tsconfig/lib.json",
-  "include": ["src", "index.ts"],
-  "exclude": ["dist"]
-}
+    "extends": "@q-front-npm-configs/tsconfig/lib.json",
+    "include": ["src", "index.ts"],
+    "exclude": ["dist"]
+  }
+  

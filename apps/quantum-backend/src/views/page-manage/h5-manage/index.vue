@@ -56,7 +56,7 @@ function createTableActions(record: IH5ManageList):ActionItem[] {
             go({
                 path: '/backend/editor/editor-page',
                 query: {
-                    runtimePathType: 'active',
+                    runtimePathType: 'vue2',
                     id: record.id
                 }
             })

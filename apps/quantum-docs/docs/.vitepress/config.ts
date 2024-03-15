@@ -10,7 +10,7 @@ const _baseScssFile = "@import '@q-front-npm/shared/style/base/base.scss'; @impo
 
 export default defineConfig({
     base: '/',
-    title: 'Vite-project',
+    title: 'Quantum Editor',
     lang: 'zh-CN',
     description: '一个开箱即用的前端框架',
     head: [['link', { rel: 'icon', href: '/logo.png' }]],
@@ -38,11 +38,11 @@ export default defineConfig({
             next: '下一篇'
         },
         socialLinks: [
-            { icon: 'github', link: 'https://codeup.aliyun.com/qimao/front/q-front-npm' }
+            { icon: 'github', link: 'https://codeup.aliyun.com/qimao/front/quantum-lowcode/tree/main' }
         ],
         editLink: {
             text: '编辑此页',
-            pattern: 'https://codeup.aliyun.com/qimao/front/q-front-npm/tree/master/docs/project-docs/docs/:path'
+            pattern: 'https://codeup.aliyun.com/qimao/front/quantum-lowcode/tree/main/apps/quantum-docs/docs/:path'
         }
     },
     vite: {
@@ -69,15 +69,15 @@ function createNav(): DefaultTheme.NavItem[] {
     return [
         {
             text: '开发手册',
-            link: '/help-code/guide/',
+            link: '/help-code/guide/introduction.md',
             items: [
                 {
                     text: '指南',
-                    link: '/help-code/guide/',
+                    link: '/help-code/guide/introduction.md',
                 },
                 {
                     text: '进阶指南',
-                    link: '/help-code/develop/docs',
+                    link: '/help-code/upgrade/introduction.md',
                 }
             ],
         },
@@ -114,8 +114,8 @@ function createSidebar(): DefaultTheme.Sidebar {
         }, {
             text: '进阶指南',
             items: [{
-                text: '原理介绍',
-                link: '/help-code/upgrade/index.md'
+                text: '介绍',
+                link: '/help-code/upgrade/introduction.md'
             }, {
                 text: '二次开发',
                 link: '/help-code/upgrade/sec.md'
@@ -141,6 +141,9 @@ function createSidebar(): DefaultTheme.Sidebar {
             }, {
                 text: 'app实例',
                 link: '/api/schema/app.md'
+            }, {
+                text: '全局数据',
+                link: '/api/schema/datasource.md'
             }]
         }]
     }

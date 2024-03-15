@@ -4,3 +4,4 @@ export * from './src';
 export * from './src/dom';
 export * from '@q-front-npm/utils';
 export * from './src/style';
+export * from './src/fetch';

@@ -6,7 +6,7 @@
   "module": "dist/quantum-sandbox.esm.min.js",
   "typings": "dist/types/index.d.ts",
   "scripts": {
-    "build": "rollup -c --environment TYPES:true"
+    "build": "rm -rf dist && rollup -c --environment TYPES:true"
   },
   "files": ["dist"],
   "keywords": [],
@@ -14,7 +14,11 @@
   "license": "ISC",
   "dependencies": {
     "@qimao/quantum-utils": "workspace:*",
-    "@qimao/quantum-core": "workspace:*"
+    "@qimao/quantum-core": "workspace:*",
+    "@qimao/quantum-schemas": "workspace:*",
+    "keycon": "^1.4.0",
+    "moveable": "^0.51.1",
+    "moveable-helper": "^0.4.0"
   },
   "devDependencies": {
     "rollup": "^3.29.4",

@@ -96,7 +96,7 @@ const data = reactive({
 //         });
 //     }
 // });
-const getTarget = () => document.getElementsByClassName('js-main-conatiner')[0] as HTMLElement;
+const getTarget = () => document.getElementsByClassName('js-main-container')[0] as HTMLElement;
 const change_search_modal = () => {
     data.modalVisible = !data.modalVisible;
 };

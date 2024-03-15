@@ -4,6 +4,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "baseUrl": ".",
+    "target": "ESNext"
   },
   "include": ["src", "index.ts"],
   "exclude": ["dist"]

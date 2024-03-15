@@ -1,6 +1,6 @@
-import { js_is_array, js_is_object } from '@qimao/quantum-utils';
+import { ISchemasContainer, ISchemasPage, NodeType } from '@qimao/quantum-schemas';
 import { IInstallOptions } from '../types';
-import { ISchemasRoot, NodeType } from '@qimao/quantum-core';
+import { js_is_string } from '@qimao/quantum-utils';
 
 let Options: IInstallOptions = {} as any;
 export function getConfig<K extends keyof IInstallOptions>(key: K) {
@@ -11,35 +11,25 @@ export function setConfig(options: IInstallOptions) {
     Options = options;
 }
 
-// TODO delete 为了一期简化用户输入, 后续会删除
-export function setSchemasRoot(scheams: any): ISchemasRoot | undefined {
-    if (js_is_object(scheams) && scheams.type === 'root') {
-        return scheams as ISchemasRoot;
-    }
-    if (js_is_array(scheams)) {
-        if (scheams.length > 0 && scheams[0].type === 'page') {
-            return {
-                name: 'active',
-                type: NodeType.ROOT,
-                children: scheams,
-            };
-        }
-        return {
-            name: 'active',
-            type: NodeType.ROOT,
-            children: [{
-                type: NodeType.PAGE,
-                field: 'page1',
-                children: scheams,
-            }],
-        };
-    }
+export function isPage(node?: ISchemasPage | null): boolean {
+    if (!node) return false;
+    return Boolean(node.type === NodeType.PAGE);
 }
 
-// TODO delete 为了一期简化用户输入, 后续会删除
-export function getSchemasRootToNeed(scheams:ISchemasRoot) {
-    if (scheams.children?.[0]?.children) {
-        return scheams.children?.[0]?.children;
+export function isContainerNode(node?: ISchemasContainer | null | string): boolean {
+    if (!node) return false;
+    if (js_is_string(node)) {
+        return node.toLowerCase().includes('container')
     }
-    return [];
+    return Boolean(node.type === NodeType.CONTAINER);
+}
+
+export function getCompType(type: string): NodeType {
+    if (['page', 'container', 'root'].includes(type)) {
+        return type as NodeType;
+    }
+    if (isContainerNode(type)) {
+        return 'container' as NodeType;
+    }
+    return 'node' as NodeType;
 }

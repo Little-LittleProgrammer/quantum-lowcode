@@ -29,32 +29,31 @@ export default ({ command, mode, }: ConfigEnv):UserConfig => {
             ] : [
                 { find: /^@\//, replacement: pathResolve('./src/') + '/', },
                 { find: /^@qimao\/quantum-editor\/dist\/style.css/, replacement: pathResolve('../../packages/editor/dist/style.css'), },
-                { find: /^@qimao\/quantum-ui\/dist\/es\/style.css/, replacement: pathResolve('../../packages/ui/dist/es/style/index.css'), },
                 { find: /^@qimao\/quantum-utils/, replacement: pathResolve('../../packages/utils/index.ts'), },
                 { find: /^@qimao\/quantum-editor/, replacement: pathResolve('../../packages/editor/index.ts'), },
                 { find: /^@qimao\/quantum-core/, replacement: pathResolve('../../packages/core/index.ts'), },
                 { find: /^@qimao\/quantum-sandbox/, replacement: pathResolve('../../packages/sandbox/index.ts'), }
             ],
         },
-        // optimizeDeps: {
-        //     esbuildOptions: {
-        //         define: {
-        //             global: 'globalThis',
-        //         },
-        //     },
-        // },
+        optimizeDeps: {
+            esbuildOptions: {
+                define: {
+                    global: 'globalThis',
+                },
+            },
+        },
         server: {
             host: '0.0.0.0',
-            port: 8098,
+            port: 8198,
             strictPort: true,
             proxy: {
                 '^/quantum-editor/runtime/vue2': {
-                    target: 'http://127.0.0.1:8078',
+                    target: 'http://127.0.0.1:8178',
                     changeOrigin: true,
                     prependPath: false,
                 },
                 '^/quantum-editor/runtime/vue3': {
-                    target: 'http://127.0.0.1:8079',
+                    target: 'http://127.0.0.1:8179',
                     changeOrigin: true,
                     prependPath: false,
                 },

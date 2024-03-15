@@ -9,12 +9,12 @@ const pkg = require('./package.json');
 function pathResolve(dir) {
     return resolve(process.cwd(), '.', dir);
 }
-
 const result = rollup_commpn_lib_config('quantum-core', {
     external: ['@qimao/quantum-utils', 'lodash-es'],
     plugins: [alias({
-        entries: process.env.NODE_ENV === 'production' ? [] : [
-            { find: /^@qimao\/quantum-utils/, replacement: pathResolve('../utils/index.ts'), }
+        entries: process.env.TYPES === 'true' ? [] : [
+            { find: /^@qimao\/quantum-utils/, replacement: pathResolve('../utils/index.ts'), },
+            { find: /^@qimao\/quantum-schemas/, replacement: pathResolve('../schemas/index.ts'), }
         ],
     })],
 }, pkg.version);

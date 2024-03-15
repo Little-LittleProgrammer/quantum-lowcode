@@ -9,9 +9,12 @@ import 'dayjs/locale/zh-cn';
 import { setup_project_conf } from '@q-front-npm/vue3-antd-pc-ui';
 import setting from './enums/projectEnum';
 import {install_monaco} from './monaco';
+import '@q-front-npm/vue3-pc-ui/dist/es/style/index.css';
+import '@q-front-npm/vue3-antd-pc-ui/dist/es/style/index.css';
 
-import '@qimao/quantum-editor/dist/style.css';
-import '@qimao/quantum-ui/dist/es/style/index.css';
+if (import.meta.env.PROD) {
+    import('@qimao/quantum-editor/dist/style.css');
+}
 
 // 时间组件中文
 // dayjs.locale('zh-cn');

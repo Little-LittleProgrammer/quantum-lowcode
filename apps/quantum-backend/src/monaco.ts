@@ -4,7 +4,7 @@ import CssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker';
 import HtmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker';
 import JsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
 import TsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
-import { schemasRootType } from '@qimao/quantum-core';
+import { schemasRootType } from '@qimao/quantum-schemas';
 
 export function install_monaco() {
     window.MonacoEnvironment = {
@@ -22,7 +22,7 @@ export function install_monaco() {
                 return new TsWorker();
             }
             return new EditorWorker();
-        }
+        },
     };
 
     monaco.languages.typescript.typescriptDefaults.setEagerModelSync(true);
