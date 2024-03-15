@@ -19,7 +19,7 @@ export function isPage(node?: ISchemasPage | null): boolean {
 export function isContainerNode(node?: ISchemasContainer | null | string): boolean {
     if (!node) return false;
     if (js_is_string(node)) {
-        return node.includes('container')
+        return node.toLowerCase().includes('container')
     }
     return Boolean(node.type === NodeType.CONTAINER);
 }
