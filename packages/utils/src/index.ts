@@ -94,6 +94,7 @@ export function parseSchemas(schema: string | Record<string, any>) {
     function dfs(target: any, map = new Map()) {
         if (js_is_string(target)) {
             if ((target.includes('function') || target.includes('=>'))) {
+                target = target.replace(/;/g, '\n');
                 // eslint-disable-next-line no-eval
                 return eval(`(${target})`); // 字符串转方法
             // return new Function(`return ${target}`)(); // 字符串转方法

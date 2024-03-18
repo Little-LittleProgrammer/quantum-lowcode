@@ -6,7 +6,7 @@ import {useComponentRegister, delComponentRegister} from '@q-front-npm/vue3-antd
 import EventSelect from '../components/form/event-select.vue';
 import DataSourceFields from '../components/form/datasource-fields.vue';
 import DataSourceMethods from '../components/form/datasource-methods.vue';
-import KeyValue from '../components/form/event-select.vue';
+import KeyValue from '../components/form/key-value.vue';
 import { QCodeEditor, QRichText } from '@q-front-npm/vue3-pc-ui';
 
 export function useServicesInit(

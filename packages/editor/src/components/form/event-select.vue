@@ -13,7 +13,7 @@
 -->
 <template>
     <div class="q-editor-event-select">
-        <a-select class="g-w-200" v-model:value="eventKey" :options="props.options" mode="multiple" @blur="addEvent"></a-select>
+        <a-select class="select-input" v-model:value="eventKey" :options="props.options" mode="multiple" @blur="addEvent"></a-select>
         <div v-for="key in eventKey" :key="key">
             <div class="q-editor-event-select-content">
                 <div class="q-editor-event-select-content-title">
@@ -209,6 +209,9 @@ function selectDsEvent(item:any) {
 <style lang='scss' scoped>
 .q-editor-event-select {
     width: 100%;
+    .select-input {
+        width: 100%
+    }
     &-content {
         margin: 6px 0;
         border: 1px solid #e8e8e8;
