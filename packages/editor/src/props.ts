@@ -82,54 +82,6 @@ export const defaultEditorProps = {
             'component': 'Button',
             icon: 'SelectOutlined',
         }],
-    }, {
-        text: '定制组件',
-        /** 组内列表 */
-        children: [{
-            'text': '按钮',
-            'component': 'Button',
-            icon: 'SelectOutlined',
-        }, {
-            'text': '图片',
-            'component': 'Button',
-            icon: 'SelectOutlined',
-        }, {
-            'text': '视频',
-            'component': 'Button',
-            icon: 'SelectOutlined',
-        }, {
-            'text': '文本',
-            'component': 'Button',
-            icon: 'SelectOutlined',
-        }, {
-            'text': '二维码',
-            'component': 'Button',
-            icon: 'SelectOutlined',
-        }],
-    }, {
-        text: '自定义模版',
-        /** 组内列表 */
-        children: [{
-            'text': '按钮',
-            'component': 'Button',
-            icon: 'SelectOutlined',
-        }, {
-            'text': '图片',
-            'component': 'Button',
-            icon: 'SelectOutlined',
-        }, {
-            'text': '视频',
-            'component': 'Button',
-            icon: 'SelectOutlined',
-        }, {
-            'text': '文本',
-            'component': 'Button',
-            icon: 'SelectOutlined',
-        }, {
-            'text': '二维码',
-            'component': 'Button',
-            icon: 'SelectOutlined',
-        }],
     }],
     containerHighlightClassName: CONTAINER_HIGHLIGHT_CLASS_NAME,
     containerHighlightDuration: CONTAINER_HIGHLIGHT_DELAY_TIME,

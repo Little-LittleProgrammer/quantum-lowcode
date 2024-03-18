@@ -12,9 +12,15 @@
         <div class="q-editor-component-list-content">
             <template v-for="(group, index) in compList" :key="index">
                 <divider
-                ><q-antd-icon type="AppstoreOutlined" />{{
-                    group.text
-                }}</divider
+                >
+                    <q-antd-icon type="AppstoreOutlined" />
+                    {{group.text}}
+                    <template v-if="group.helpMessage">
+                        <a-tooltip :title="group.helpMessage">
+                            <q-antd-icon type="InfoCircleOutlined" />
+                        </a-tooltip>
+                    </template>
+                </divider
                 >
                 <div class="q-editor-component-list-item-container">
                     <template
@@ -89,21 +95,33 @@ const compList = computed(() => {
 });
 
 function addComp(item: IComponentItem) {
-    services?.editorService.add({
-        label: item.text,
-        type: item.component,
-        ...item.data,
-    });
-}
-function dragstartComp(item: IComponentItem, e: DragEvent) {
-    e.dataTransfer?.setData('text/json', serializeToString({
-        dragType: DragType.COMPONENT_LIST,
-        data: {
+    const itemType = item.itemType || 'add';
+    if (itemType === 'add') {
+        services?.editorService.add({
             label: item.text,
             type: item.component,
             ...item.data,
-        },
-    }));
+        }); 
+    } else if (itemType === 'cover') {
+        services?.editorService.update({
+            type: 'root',
+            field: 'root',
+            ...item.data
+        })
+    }
+}
+function dragstartComp(item: IComponentItem, e: DragEvent) {
+    const itemType = item.itemType || 'add'
+    if(itemType == 'add') {
+        e.dataTransfer?.setData('text/json', serializeToString({
+            dragType: DragType.COMPONENT_LIST,
+            data: {
+                label: item.text,
+                type: item.component,
+                ...item.data,
+            },
+        }));
+    }
 }
 function dragendComp() {
     console.log('dragend');
