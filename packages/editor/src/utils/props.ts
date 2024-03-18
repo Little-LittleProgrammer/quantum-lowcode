@@ -286,8 +286,25 @@ const styleSchemas:FormSchema<any, 'CodeEditor'>[] = [
             return values['customStyleSwitch'] === 1;
         }
     }];
-const lifeHookschemas:FormSchema[] = [];
-const ifShowSchemas:FormSchema[] = [];
+const lifeHookschemas:FormSchema[] = [
+    {
+        label: '初始化前',
+        field: 'created',
+        helpMessage: 'created 生命周期',
+        component: 'EventChoose'
+    },{
+        label: '初始化后',
+        field: 'mounted',
+        helpMessage: 'mounted 生命周期',
+        component: 'EventChoose'
+    },
+];
+const ifShowSchemas:FormSchema[] = [
+    {
+        label: '',
+        field: 'ifShow',
+        component: 'ShowInput'
+    }];
 
 export const otherConfigMap:Record<string, any> = {
     style: styleSchemas,

@@ -1,5 +1,5 @@
 // 数组节点模型
-import { NodeType } from './const';
+import { ActionType, NodeType } from './const';
 import { IDataSourceSchema, IDepData } from './event';
 export type Id = string
 export interface Fn<T = any, R = T> {
@@ -13,7 +13,9 @@ export enum HookType {
 
 export interface HookData {
     field: Id;
+    type?: ActionType;
     params: any;
+    [key: string]: any
 }
 
 export interface Hooks {
@@ -132,7 +134,11 @@ declare interface IDataSourceSchema {
     /** 方法列表 */
     methods: ICodeBlockContent[];
     /** mock数据 */
-    mocks?: IMockSchema;
+    mocks?: IMockSchema;    
+    options?: IHttpOptions;
+    responseOptions?: {
+        dataPath?: string;
+    };
 }
 
 declare interface IDataSchema {
@@ -155,7 +161,7 @@ declare interface ICodeBlockContent {
     /** 代码块内容 */
     content: ((...args: any[]) => any) | string;
     /** 参数定义 */
-    params: ICodeParam[] | [];
+    params?: ICodeParam[] | [];
     /** 注释 */
     description?: string;
     /** 扩展字段 */
@@ -197,7 +203,9 @@ declare enum HookType {
 
 declare interface HookData {
     field: Id;
+    type?: ActionType;
     params: any;
+    [key: string]: any
 }
 
 declare interface Hooks {

@@ -1,5 +1,5 @@
 import { ActionType } from './const';
-import { Id } from './type';
+import { IHttpOptions, Id } from './type';
 
 export interface IDataSourceSchema {
     /** 数据源类型，根据类型来实例化；例如http则使用new HttpDataSource */
@@ -16,6 +16,7 @@ export interface IDataSourceSchema {
     methods: ICodeBlockContent[];
     /** mock数据 */
     mocks?: IMockSchema;
+    options?: IHttpOptions
 }
 export interface IDepData {
     /** 组件Field */
