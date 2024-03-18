@@ -13,7 +13,6 @@
             :boxContextmenuConfigs="boxContextmenuConfigs"
             :containerHighlightDuration="CONTAINER_HIGHLIGHT_DELAY_TIME"
             :containerHighlightClassName="CONTAINER_HIGHLIGHT_CLASS_NAME"
-            :can-select="viewMode==='classic' ? () => false : (el: HTMLElement) => Boolean(el.id)"
 		>
             <template #nav-left>
                 <p class="editor-title">量子编辑器</p>
