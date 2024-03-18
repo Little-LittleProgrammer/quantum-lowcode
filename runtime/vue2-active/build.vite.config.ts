@@ -26,7 +26,7 @@ import postCssPxtorem from 'postcss-pxtorem';
 import { resolve } from 'path';
 
 export default defineConfig(({ mode, }) => {
-    // TODO
+    // TODO 待优化
     if (['config'].includes(mode)) {
         const file = resolve(
             __dirname,

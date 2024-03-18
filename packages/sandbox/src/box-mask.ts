@@ -60,7 +60,7 @@ export class BoxMask extends Rule {
 
     constructor(options?: IRuleOptions) {
         const wrapper = createWrapper();
-        super(wrapper, options); // TODO, 画布遮罩规则, 扩展
+        super(wrapper, options); // TODO, 辅助线扩展
         this.wrapper = wrapper;
 
         this.content.addEventListener('wheel', this.mouseWheelHandler);

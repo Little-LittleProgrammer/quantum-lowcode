@@ -1,4 +1,3 @@
-// TODO 快捷操作栏, 包括选择父亲节点、删除, 复制, 移动
 import { MoveableManagerInterface, Renderer } from 'moveable';
 
 import { AbleActionEventType } from './const';

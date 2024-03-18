@@ -33,7 +33,6 @@ export function createDataSourceManager(app: ILowCodeRoot, useMock?:boolean) {
             }
         }
         console.log('ds change 3', nodes, app.dataSourceDep);
-        // TODO 更新数据后需要更新节点, 遍历所有页面的所有需要更新的节点
         dataSourceManager.emit('update-data', nodes, sourceId, changeData);
     });
 

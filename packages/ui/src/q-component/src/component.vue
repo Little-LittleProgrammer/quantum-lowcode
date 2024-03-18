@@ -30,6 +30,7 @@ export default defineComponent({
             return app && app.resolveComponent(props.config.component || props.config.type);
         });
         const ifShow = computed(() => {
+            // TODO: ifShow 逻辑更改
             if (props.config.ifShow) {
                 if (js_is_function(props.config.ifShow)) {
                     return props.config.ifShow(app);
