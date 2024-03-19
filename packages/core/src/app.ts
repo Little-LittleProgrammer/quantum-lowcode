@@ -118,7 +118,7 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
                 this.page.destroy();
                 this.page = undefined;
             }
-            super.emit('page-change');
+            super.emit('page-change', field);
             return;
         }
 
@@ -251,7 +251,6 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
     // TODO: 目前是将所有的事件(未使用, 已使用)全部注册, 后续会优化此部分逻辑, 只注册已使用到的, 优化性能
     public registerEvent(key: string, fn: Fn, ds?: DataSource, node?: LowCodeNode) {
         const eventHanlder = (...args: any[]) => {
-            console.log(fn);
             fn({ app: this, dataSource: (ds || {}), }, ...args);
         };
         // 先清空
