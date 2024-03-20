@@ -326,12 +326,15 @@ export function formatConfig(config: FormSchema[]): any {
     }];
 
     config = config.map((item) => {
-        item.field = `componentProps.${item.field}`;
+        if (!item.field.includes('componentProps')) {
+            item.field = `componentProps.${item.field}`;
+        }
         if (item.component === 'Input') {
             item.helpMessage = item.helpMessage ? item.helpMessage + '; 填写${dataSourceId:fieldId} 可获取全局参数' : '填写${dataSourceId:fieldId} 可获取全局参数';
         }
         return item;
     });
+    console.log('config', config)
 
     return [
         ...defaultConf,

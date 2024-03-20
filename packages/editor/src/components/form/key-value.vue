@@ -1,18 +1,24 @@
 <!--  -->
 <template>
     <div class="q-editor-key-value">
-        <div class="q-editor-key-value-item" v-for="(item, index) in records" :key="index">
-            <a-form-item-rest>
-                <a-input v-model:value="item[0]" class="item-key" placeholder="请输入key" @change="changeData"></a-input>: 
-                <a-input v-model:value="item[1]" class="item-value" placeholder="请输入value" @change="changeData"></a-input>
-            </a-form-item-rest>
-            <a-button danger class="item-button" @click="deleteItem(index)">
-                <template #icon>
-                    <q-antd-icon type="DeleteOutlined"></q-antd-icon>
-                </template>
-            </a-button>
+        <div>
+            <div class="q-editor-key-value-item" v-for="(item, index) in records" :key="index">
+                <a-form-item-rest>
+                    <a-input v-model:value="item[0]" class="item-key" placeholder="请输入key" @change="changeData"></a-input>: 
+                    <a-input v-model:value="item[1]" class="item-value" placeholder="请输入value" @change="changeData"></a-input>
+                </a-form-item-rest>
+                <a-button size="small" danger class="item-button" @click="deleteItem(index)">
+                    <template #icon>
+                        <q-antd-icon type="DeleteOutlined"></q-antd-icon>
+                    </template>
+                </a-button>
+            </div>
         </div>
-        <a-button size="small" @click="addItem">添加</a-button>
+        <a-button size="small" class="add-button" @click="addItem">
+            <template #icon>
+                <q-antd-icon type="PlusOutlined"></q-antd-icon>
+            </template>
+        </a-button>
     </div>
 </template>
 
@@ -63,6 +69,8 @@ function changeData() {
 </script>
 <style lang='scss' scoped>
 .q-editor-key-value {
+    display: flex;
+    align-items: top;
     &-item {
         display: flex;
         align-items: center;
@@ -77,6 +85,9 @@ function changeData() {
         .item-button {
             margin-left: 10px;
         }
+    }
+    .add-button {
+        margin-top: 4px;
     }
 }
 </style>

@@ -71,7 +71,6 @@ export class DataSource extends Subscribe {
             updateData: data,
             path,
         };
-        console.log('ds change 1');
         this.emit('change', changeEvent);
     }
 
@@ -87,7 +86,6 @@ export class DataSource extends Subscribe {
     }
 
     public async init() {
-        console.log('ds init');
         this.isInit = true;
     }
 }
