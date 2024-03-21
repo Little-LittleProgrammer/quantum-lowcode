@@ -40,7 +40,7 @@ const createState = () => {
         hasHistoryUrl: false, // 是否有项目历史地址
         authorityManage: false, // 权限管理开关（默认为开启，需要配置相应的数据）
         citySelect: [] as ISelectOption[],
-        viewMode: 'new',
+        viewMode: 'classic',
     };
     return state;
 };
