@@ -53,10 +53,11 @@ defineOptions({
 })
 
 const services = inject<IServices>('services');
-const compList = computed(() => services?.componentService.getList())
+const compList = computed(() => services?.componentService.getList());
+const emits = defineEmits(['add'])
 
 function addComp(item: IComponentItem) {
-    const itemType = item.itemType
+    const itemType = item.itemType || 'add'
     const width = services?.editorService?.get('sandbox')?.designWidth;
     if (itemType === 'add') {
         services?.editorService.add({
@@ -77,6 +78,7 @@ function addComp(item: IComponentItem) {
             ...item.data
         })
     }
+    emits('add')
     
 }
 
