@@ -366,6 +366,8 @@ class EditorService extends Subscribe {
 
         const node = cloneDeep(toRaw(info.node));
 
+        config = this.dealText(config)
+
         let newConfig = await this.toggleFixedPosition(
             toRaw(config),
             node,
@@ -817,6 +819,25 @@ class EditorService extends Subscribe {
         this.addModifiedNodeField(parent.field);
         this.pushHistoryState();
 
+    }
+
+    private dealText(config: ISchemasNode) {
+        if (config.component?.toLowerCase() === 'text') {
+            if (config.componentProps?.text) {
+                let text = config.componentProps?.text;
+                const sandbox = this.get('sandbox');
+                const doc = sandbox?.renderer.contentWindow?.document;
+                if (doc) {
+                    const baseFontSize = parseFloat(doc.documentElement.style.fontSize);
+                    config.componentProps.text = text.replace(/font-size: (\d+)px/g, (_match: any, p1:string) => {
+                        let pxValue = parseFloat(p1); // 将匹配到的字符串数字转换为整数
+                        let remValue = pxValue / baseFontSize; // 假设根元素的字体大小为16px，进行转换
+                        return `font-size: ${remValue}rem`; // 返回转换后的字符串
+                    });
+                }
+            }
+        }
+        return config
     }
 
     private async pushHistoryState() {

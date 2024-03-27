@@ -26,6 +26,12 @@ export default [{
     label: '富文本',
     component: 'RichText',
     show: ({values, }) => values['componentProps.isNative'] === '2',
+    componentProps: {
+        toolbar: [
+            'fontsizeselect formatselect lineheight searchreplace bold italic underline strikethrough alignleft aligncenter alignright outdent indent  blockquote undo redo removeformat subscript superscript code codesample',
+            'hr bullist numlist link  preview anchor pagebreak insertdatetime media  forecolor backcolor fullscreen'
+        ],
+    },
     colProps: {
         span: 24,
     },
