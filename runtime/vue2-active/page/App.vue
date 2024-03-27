@@ -10,7 +10,7 @@ import { defineComponent, inject, nextTick, reactive, ref} from 'vue';
 import type { LowCodePage, LowCodeRoot } from '@qimao/quantum-core';
 import { IQuantum} from '@qimao/quantum-sandbox';
 import {Page} from '@qimao/quantum-ui-vue2';
-import { replaceChildNode } from '@qimao/quantum-utils';
+import { replaceChildNode, addParamToUrl } from '@qimao/quantum-utils';
 import { ISchemasNode } from '@qimao/quantum-schemas';
 
 declare global {
@@ -34,12 +34,7 @@ export default defineComponent({
             if (typeof page === 'string') {
                 throw new Error(`ID为${page}的页面不存在`);
             }
-            //   pageConfig.value = page.data; // 此方式不会更改url上链接的page参数
-            const url = new URL(window.location.href);
-            const { searchParams, } = url;
-            searchParams.set('page', page.data.id as string);
-            const newUrl = url.toString();
-            window.location.href = newUrl;
+            addParamToUrl({ page: page.data.field, }, window);
         });
 
         // 数据更新
