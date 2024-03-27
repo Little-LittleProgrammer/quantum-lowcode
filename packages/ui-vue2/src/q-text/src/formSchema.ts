@@ -25,7 +25,7 @@ export default [{
     field: 'text',
     label: '富文本',
     component: 'RichText',
-    ifShow: ({values, }) => values['componentProps.isNative'] === '2',
+    show: ({values, }) => values['componentProps.isNative'] === '2',
     colProps: {
         span: 24,
     },

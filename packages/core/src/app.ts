@@ -223,7 +223,8 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
 
     private calcFontsize() {
         const { width, } = document.documentElement.getBoundingClientRect();
-        const dpr = globalThis?.devicePixelRatio || 1;
+        const dpr = 1;
+        // const dpr = globalThis?.devicePixelRatio || 1;
         this.setBodyFontSize(dpr);
         const fontSize = Math.min(540, width) / 10;
         document.documentElement.style.fontSize = `${fontSize}px`;
