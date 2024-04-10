@@ -363,13 +363,9 @@ export default class DragResizeHelper {
 				js_utils_dom_offset(parentEl);
 
             left =
-				calcValueByDesignWidth(doc, targetShadowElOffsetLeft, this.designWidth) +
-				parseFloat(translateX) -
-				calcValueByDesignWidth(doc, parentLeft, this.designWidth);
+                calcValueByDesignWidth(doc, targetShadowElOffsetLeft + parseFloat(translateX) - parentLeft, this.designWidth);
             top =
-				calcValueByDesignWidth(doc, targetShadowElOffsetTop, this.designWidth) +
-				parseFloat(translateY) -
-				calcValueByDesignWidth(doc, parentTop, this.designWidth);
+                calcValueByDesignWidth(doc, targetShadowElOffsetTop + parseFloat(translateY) - parentTop, this.designWidth);
         }
 
         return { width, height, left, top, };
