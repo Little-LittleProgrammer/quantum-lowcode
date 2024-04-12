@@ -287,7 +287,16 @@ class EditorService extends Subscribe {
             root: cloneDeep(root),
         });
 
-        const newStyle = fixNodePosition(node, parent, sandbox);
+        let newStyle = fixNodePosition(node, parent, sandbox) || {} as Partial<CSSStyleDeclaration>
+        
+        const doc = sandbox?.renderer.contentWindow?.document;
+        if (doc && newStyle.top) {
+            newStyle = {
+                ...newStyle,
+                top: calcValueByDesignWidth(doc, newStyle.top, editorService.get('root')?.designWidth) as any,
+                left: calcValueByDesignWidth(doc, newStyle.left, editorService.get('root')?.designWidth) as any
+            };
+        }
 
         if (newStyle && (newStyle.top !== node.style?.top || newStyle.left !== node.style?.left)) {
             node.style = newStyle;
@@ -849,6 +858,7 @@ class EditorService extends Subscribe {
                 modifiedNodeFields: this.get('modifiedNodeFields')!,
                 nodeField: curNode.field,
             });
+            console.log(historyService)
         }
         this.isHistoryStateChange = false;
     }
