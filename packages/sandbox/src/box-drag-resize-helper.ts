@@ -362,6 +362,7 @@ export default class DragResizeHelper {
             const { left: parentLeft, top: parentTop, } =
 				js_utils_dom_offset(parentEl);
 
+            // 原来的位置 + translate 的位置 - 新父节点的offset
             left =
                 calcValueByDesignWidth(doc, targetShadowElOffsetLeft + parseFloat(translateX) - parentLeft, this.designWidth);
             top =

@@ -93,7 +93,6 @@ export class TargetShadow {
         if (!globalThis.document.getElementById(el.id)) {
             this.container.append(el);
         }
-
         return el;
     }
 

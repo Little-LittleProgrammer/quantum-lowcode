@@ -169,7 +169,6 @@ async function dropHandler(e: DragEvent) {
             left = e.clientX - containerRect.left;
         } else if (layout === Layout.ABSOLUTE) {
             position = Layout.ABSOLUTE;
-
             top = e.clientY - containerRect.top + scrollTop;
             left = e.clientX - containerRect.left + scrollLeft;
 
@@ -177,7 +176,6 @@ async function dropHandler(e: DragEvent) {
 
             if (parentEl && doc) {
                 const {left: parentLeft, top: parentTop, } = js_utils_dom_offset(parentEl as HTMLElement);
-                console.log(top, parentTop, calcValueByDesignWidth(doc, parentTop, designWidth))
                 left = left - calcValueByDesignWidth(doc, parentLeft, designWidth) * zoom.value;
                 top = top - parentTop * zoom.value;
             }

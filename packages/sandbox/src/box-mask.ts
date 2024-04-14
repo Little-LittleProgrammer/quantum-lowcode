@@ -283,6 +283,7 @@ export class BoxMask extends Rule {
         event.preventDefault();
         if (!this.page) throw new Error('page 未初始化');
 
+        // 滚轮滚动的坐标值
         const { deltaY, deltaX, } = event;
 
         if (this.page.clientHeight < this.wrapperHeight && deltaY) return;

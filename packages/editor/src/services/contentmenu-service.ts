@@ -84,7 +84,19 @@ class ContentmenuService {
     public handlePaste() {
         const nodes = editorService.get('nodes');
         if (nodes?.length) {
-            editorService.paste();
+            const $menu = globalThis.document.querySelector('.ant-dropdown');
+            if ($menu) {
+                const rect = $menu.getBoundingClientRect();
+                const sandbox  = editorService.get('sandbox')
+                const parentRect = sandbox?.container?.getBoundingClientRect();
+                const translateY = sandbox?.mask.scrollTop || 0;
+                const initialLeft = (rect.left || 0) - (parentRect?.left || 0);
+                const initialTop = (rect.top || 0) - (parentRect?.top || 0) +translateY ;
+                editorService?.paste({ left: initialLeft, top: initialTop });
+            } else {
+                editorService.paste();
+            }
+            
         }
     }
     public handleDelete() {

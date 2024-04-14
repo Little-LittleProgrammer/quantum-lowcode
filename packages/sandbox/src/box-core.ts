@@ -124,7 +124,6 @@ export class BoxCore extends Subscribe {
 	 */
     public async update(data: IUpdateData): Promise<void> {
         const { config, } = data;
-
         await this.renderer.update(data);
         // 通过setTimeout等画布中组件完成渲染更新
         setTimeout(() => {
