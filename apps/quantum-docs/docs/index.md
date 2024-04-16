@@ -2,7 +2,7 @@
 layout: home
 hero: 
     name: Quantum
-    text: 七猫页面可视化平台
+    text: 页面可视化平台
     tagline: 基于Vue3, monorepo, pnpm
     image:
         src: /loading.png

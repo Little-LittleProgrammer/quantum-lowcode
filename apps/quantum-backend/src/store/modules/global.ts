@@ -23,7 +23,7 @@ const ls = {
 // state
 const createState = () => {
     const state = {
-        systemName: '七猫低代码平台',
+        systemName: '低代码平台',
         theme: ls.get('themeMode') || 'light' as 'light' | 'dark',
         date: new Date(),
         dataLoading: false,
@@ -40,7 +40,7 @@ const createState = () => {
         hasHistoryUrl: false, // 是否有项目历史地址
         authorityManage: false, // 权限管理开关（默认为开启，需要配置相应的数据）
         citySelect: [] as ISelectOption[],
-        viewMode: 'classic',
+        viewMode: 'new',
     };
     return state;
 };
