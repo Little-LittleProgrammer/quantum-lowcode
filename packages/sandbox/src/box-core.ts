@@ -307,6 +307,7 @@ export class BoxCore extends Subscribe {
     }
     /**
 	 * 初始化ActionManager类本身抛出来的事件监听
+     * 主要是为了触发执行 editor 的事件
 	 */
     private initActionManagerEvent(): void {
         this.actionManager.on(

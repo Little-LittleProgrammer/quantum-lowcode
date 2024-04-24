@@ -465,7 +465,7 @@ class EditorService extends Subscribe {
             this.pushHistoryState();
         }
 
-        this.updateHandler();
+        // this.updateHandler();
         this.emit('update', newNodes);
         return js_is_array(config) ? newNodes : newNodes[0];
     }
