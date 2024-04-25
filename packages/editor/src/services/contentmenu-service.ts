@@ -1,12 +1,13 @@
 import { DropMenu } from '@q-front-npm/vue3-antd-pc-ui';
 import { computed, reactive } from 'vue';
-import { js_is_function } from '@qimao/quantum-utils';
+import { calcValueByDesignWidth, js_is_function } from '@qimao/quantum-utils';
 import { editorService } from './editor-service';
 import { COPY_STORAGE_KEY } from '../utils/editor';
 import { storageService } from './storage-serivce';
 import { ISchemasNode, NodeType } from '@qimao/quantum-schemas';
 import { isPage } from '../utils';
 import { LayerOffset } from '../types';
+import { uiService } from './ui-service';
 
 class ContentmenuService {
     public state = reactive<Record<string, any>>({
@@ -90,8 +91,14 @@ class ContentmenuService {
                 const sandbox  = editorService.get('sandbox')
                 const parentRect = sandbox?.container?.getBoundingClientRect();
                 const translateY = sandbox?.mask.scrollTop || 0;
-                const initialLeft = (rect.left || 0) - (parentRect?.left || 0);
-                const initialTop = (rect.top || 0) - (parentRect?.top || 0) +translateY ;
+                // const initialLeft = (rect.left || 0) - (parentRect?.left || 0);
+                // const initialTop = (rect.top || 0) - (parentRect?.top || 0) +translateY ;
+                const initialLeft =
+                    calcValueByDesignWidth(sandbox?.renderer.getDocument(), (rect.left || 0) - (parentRect?.left || 0)) /
+                    uiService.get('zoom');
+                const initialTop =
+                    calcValueByDesignWidth(sandbox?.renderer.getDocument(), (rect.top || 0) - (parentRect?.top || 0)) /
+                    uiService.get('zoom');
                 editorService?.paste({ left: initialLeft, top: initialTop });
             } else {
                 editorService.paste();

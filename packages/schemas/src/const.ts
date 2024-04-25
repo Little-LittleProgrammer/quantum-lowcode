@@ -18,3 +18,5 @@ export enum ActionType {
 }
 
 export const DEFAULT_DESIGN_WIDTH = 720;
+
+export const DEFAULT_PAGE_MAX_WIDTH = 540;

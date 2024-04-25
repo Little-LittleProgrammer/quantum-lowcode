@@ -77,7 +77,7 @@ export class TargetShadow {
 
         el.id = `${this.idPrefix}${target.id}`;
 
-        el.style.cssText = getTargetElStyle(target, this.zIndex);
+        el.style.cssText = getTargetElStyle(target, this.zIndex, Number.parseFloat(this.container.style.left));
 
         if (typeof this.updateDragEl === 'function') {
             this.updateDragEl(el, target, this.container);

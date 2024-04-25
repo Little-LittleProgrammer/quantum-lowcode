@@ -26,7 +26,8 @@ import {
     js_is_object,
     Subscribe
 } from '@qimao/quantum-utils';
-import { BoxCore, calcValueByDesignWidth } from '@qimao/quantum-sandbox';
+import { BoxCore } from '@qimao/quantum-sandbox';
+import { calcValueByDesignWidth } from '@qimao/quantum-utils';
 import { historyService } from './history-service';
 import { cloneDeep, mergeWith, uniq } from 'lodash-es';
 import { isPage } from '../utils';
@@ -750,7 +751,7 @@ class EditorService extends Subscribe {
                 node.style.left = calcValueByDesignWidth(doc, (parentEl.clientWidth - el.clientWidth) / 2, editorService.get('root')?.designWidth);
                 node.style.right = '';
             } else if (parent.style && js_is_number(parent.style?.width) && js_is_number(node.style?.width)) {
-                node.style.left = calcValueByDesignWidth(doc, (parent.style.width - node.style.width) / 2, editorService.get('root')?.designWidth);
+                node.style.left = (parent.style.width - node.style.width) / 2
                 node.style.right = '';
             }
         }

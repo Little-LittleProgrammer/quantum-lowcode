@@ -17,7 +17,8 @@ import MoveableHelper from 'moveable-helper';
 import { DRAG_EL_ID_PREFIX, GHOST_EL_ID_PREFIX, Mode, ZIndex } from './const';
 import { TargetShadow } from './target-shadow';
 import { IDragResizeHelperConfig, IRect, ITargetElement } from './types';
-import { calcValueByDesignWidth, getBorderWidth, getMarginValue } from './utils';
+import { getBorderWidth, getMarginValue } from './utils';
+import { calcValueByDesignWidth } from '@qimao/quantum-utils';
 import { js_utils_dom_offset, getAbsolutePosition } from '@qimao/quantum-utils';
 
 /**

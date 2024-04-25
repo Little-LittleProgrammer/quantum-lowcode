@@ -101,11 +101,11 @@ export class BoxMask extends Rule {
 	 */
     public pageResize(entries: ResizeObserverEntry[]): void {
         const [entry] = entries;
-        const { clientHeight, clientWidth, } = entry.target;
+        const { clientHeight, clientWidth, offsetLeft, } = entry.target;
         console.log('pageResize', clientHeight, clientWidth);
         this.setHeight(clientHeight);
         this.setWidth(clientWidth);
-
+        this.content.style.left = `${offsetLeft}px`;
         this.scroll();
     }
 

@@ -1,5 +1,5 @@
 import { ISchemasContainer, ISchemasNode, ISchemasRoot, Id } from '@qimao/quantum-schemas';
-import { getNodePath, js_is_number } from '@qimao/quantum-utils';
+import { calcValueByDesignWidth, getNodePath, js_is_number } from '@qimao/quantum-utils';
 import { Layout } from '../types';
 import { BoxCore } from '@qimao/quantum-sandbox';
 import { isPage } from './index';
@@ -80,6 +80,7 @@ export function getInitPositionStyle(style: Record<string, any> = {}, layout: La
 
 export function getMiddleTop(node: ISchemasNode, parentNode: ISchemasContainer, stage: BoxCore | null) {
     let height = node.style?.height || 0;
+    const designWidth = stage?.designWidth
 
     if (!stage || typeof node.style?.top !== 'undefined' || !parentNode.style) return node.style?.top;
 
@@ -87,25 +88,34 @@ export function getMiddleTop(node: ISchemasNode, parentNode: ISchemasContainer, 
         height = 0;
     }
 
-    const { height: parentHeight, } = parentNode.style;
-
+    const { height: parentHeight } = parentNode.style;
+    // wrapperHeight 是未 calcValue的高度, 所以要将其calcValueByFontsize一下, 否则在pad or pc端计算的结果有误
+    const { scrollTop = 0, wrapperHeight } = stage.mask;
+    const wrapperHeightDeal = calcValueByDesignWidth(stage.renderer.getDocument()!, wrapperHeight, designWidth);
+    const scrollTopDeal = calcValueByDesignWidth(stage.renderer.getDocument()!, scrollTop, designWidth);
     if (isPage(parentNode as any)) {
-        const { scrollTop = 0, wrapperHeight, } = stage.mask;
-        return (wrapperHeight - height) / 2 + scrollTop;
+      return (wrapperHeightDeal - height) / 2 + scrollTopDeal;
     }
-
-    return (parentHeight - height) / 2;
+  
+    // 如果容器的元素高度大于当前视口高度的2倍, 添加的元素居中位置也会看不见, 所以要取最小值计算
+    return (Math.min(parentHeight, wrapperHeightDeal) - height) / 2;
 }
 
-export function fixNodeLeft(config: ISchemasNode, parent:ISchemasContainer, doc?: Document) {
+export function fixNodeLeft(config: ISchemasNode, parent:ISchemasContainer, stage: BoxCore | null) {
+    let doc = stage?.renderer.getDocument();
+    let designWidth = stage?.designWidth
     if (!doc || !config.style || !js_is_number(config.style.left)) return config.style?.left;
 
     const el = doc.getElementById(config.field);
     const parentEl = doc.getElementById(parent.field);
 
     const left = Number(config.style?.left) || 0;
-    if (el && parentEl && el.offsetWidth + left > parentEl.offsetWidth) {
-        return parentEl.offsetWidth - el.offsetWidth;
+    if (el && parentEl) {
+        const calcParentOffsetWidth = calcValueByDesignWidth(doc, parentEl.offsetWidth, designWidth);
+        const calcElOffsetWidth = calcValueByDesignWidth(doc, el.offsetWidth, designWidth);
+        if (calcElOffsetWidth + left > calcParentOffsetWidth) {
+            return calcParentOffsetWidth - calcElOffsetWidth;
+        }
     }
 
     return config.style.left;
@@ -118,7 +128,7 @@ export function fixNodePosition(config: ISchemasNode, parent: ISchemasContainer,
     return {
         ...(config.style || {}),
         top: getMiddleTop(config, parent, sandbox),
-        left: fixNodeLeft(config, parent, sandbox?.renderer.contentWindow?.document),
+        left: fixNodeLeft(config, parent, sandbox),
     };
 }
 
