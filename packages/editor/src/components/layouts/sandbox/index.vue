@@ -1,15 +1,16 @@
 <!-- 画布 -->
 <template>
     <div ref="sandboxWrap" class="q-editor-sandbox">
-        <q-antd-dropdown :trigger="['contextmenu']" :dropMenuList="baseDropMenuList" @menuEvent="handleMenuEvent">
-            <div
-                ref="boxContainer"
-                class="q-sandbox-container"
-                :style="getBoxStyle"
-                @drop="dropHandler"
-                @dragover="dragoverHandler"
-            ></div>
-        </q-antd-dropdown>
+        <div class="q-sandbox-container" :style="getBoxStyle">
+            <q-antd-dropdown :trigger="['contextmenu']" :dropMenuList="baseDropMenuList" @menuEvent="handleMenuEvent">
+                <div
+                    class="q-sandbox-content"
+                    ref="boxContainer"
+                    @drop="dropHandler"
+                    @dragover="dragoverHandler"
+                ></div>
+            </q-antd-dropdown>
+        </div>
     </div>
 </template>
 
@@ -72,7 +73,7 @@ function handleMenuEvent(menu: DropMenu) {
     services?.contentmenuService.handleMenuEvent(menu)
 }
 
-watchEffect(() => {
+watchEffect(async() => {
     if (sandbox || !page.value) return;
 
     if (!boxContainer.value) return;
@@ -81,7 +82,7 @@ watchEffect(() => {
 
     services?.editorService.set('sandbox', markRaw(sandbox));
 
-    sandbox?.mount(boxContainer.value);
+    await sandbox?.mount(boxContainer.value);
     sandbox.on('runtime-ready', (rt: IRuntime) => {
         runtime = rt;
         // toRaw返回的值是一个引用而非快照，需要cloneDeep
@@ -101,7 +102,6 @@ const getBoxStyle = computed(() => {
         transform: `scale(${zoom.value})`,
     };
 });
-
 watch(zoom, (zoom) => {
     if (!sandbox || !zoom) return;
     sandbox.setZoom(zoom);
@@ -228,6 +228,10 @@ onUnmounted(() => {
 			box-sizing: content-box;
 			box-shadow: 4px 7px 7px 6px rgb(0 0 0 / 15%);
 			background-color: #fff;
+            .q-sandbox-content {
+                width: 100%;
+                height: 100%;
+            }
 		}
 	}
     [data-theme='dark'] {

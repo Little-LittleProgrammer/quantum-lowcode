@@ -14,7 +14,8 @@ const result = rollup_commpn_lib_config('quantum-core', {
     plugins: [alias({
         entries: process.env.TYPES === 'true' ? [] : [
             { find: /^@qimao\/quantum-utils/, replacement: pathResolve('../utils/index.ts'), },
-            { find: /^@qimao\/quantum-schemas/, replacement: pathResolve('../schemas/index.ts'), }
+            { find: /^@qimao\/quantum-schemas/, replacement: pathResolve('../schemas/index.ts'), },
+            { find: /^@qimao\/quantum-data/, replacement: pathResolve('../data-source/index.ts'), }
         ],
     })],
 }, pkg.version);
