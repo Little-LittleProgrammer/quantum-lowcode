@@ -112,7 +112,8 @@ export interface ISchemasRoot extends ISchemasNode {
     children: ISchemasPage[];
     name: string;
     description?: IMetaDes;
-    dataSources?: IDataSourceSchema[]; // 管理数据
+    dataSources?: IDataSourceSchema[]; // 管理数据;
+    designWidth?: number
 }
 
 /**
@@ -274,5 +275,6 @@ declare interface ISchemasRoot extends ISchemasNode {
     name: string;
     description?: IMetaDes;
     dataSources?: IDataSourceSchema[]; // 管理数据
+    designWidth?: number
 }
 `;

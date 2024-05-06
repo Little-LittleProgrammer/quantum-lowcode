@@ -37,6 +37,7 @@ export function useBox(boxOptions: IBoxOptions) {
         updateDragEl: boxOptions.updateDragEl,
         guidesOptions: boxOptions.guidesOptions,
         disabledMultiSelect: boxOptions.disabledMultiSelect,
+        designWidth: editorService.get('root')?.designWidth
     });
     watch(() => editorService.get('disabledMultiSelect'), (val) => {
         if (val) {
