@@ -955,7 +955,7 @@ class EditorService extends Subscribe {
         const finConfigs = config.map((item) => {
             const { offsetX = 0, offsetY = 0, ...positionClone } = position;
             let pastePosition = positionClone;
-            if (!js_is_empty(pastePosition) && curNode?.items) {
+            if (!js_is_empty(pastePosition) && curNode?.children) {
                 // 如果没有传入粘贴坐标则可能为键盘操作，不再转换
                 // 如果粘贴时选中了容器，则将元素粘贴到容器内，坐标需要转换为相对于容器的坐标
                 pastePosition = this.getPositionInContainer(pastePosition, curNode.field);
@@ -992,8 +992,9 @@ class EditorService extends Subscribe {
         let { left = 0, top = 0, } = position;
         const parentEl = this.get('sandbox')?.renderer?.contentWindow?.document.getElementById(`${field}`);
         const parentElRect = parentEl?.getBoundingClientRect();
-        left = left - (parentElRect?.left || 0);
-        top = top - (parentElRect?.top || 0);
+        const doc = this.get('sandbox')?.renderer.contentWindow?.document;
+        left = left - calcValueByDesignWidth(doc ,(parentElRect?.left || 0), editorService.get('root')?.designWidth);
+        top = top - calcValueByDesignWidth(doc ,(parentElRect?.top || 0), editorService.get('root')?.designWidth);
         return {
             left,
             top,
