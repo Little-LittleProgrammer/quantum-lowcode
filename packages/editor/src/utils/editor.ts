@@ -1,8 +1,7 @@
 import { ISchemasContainer, ISchemasNode, ISchemasRoot, Id } from '@qimao/quantum-schemas';
-import { calcValueByDesignWidth, getNodePath, js_is_number } from '@qimao/quantum-utils';
+import { calcValueByDesignWidth, getNodePath, isPage, js_is_number } from '@qimao/quantum-utils';
 import { Layout } from '../types';
 import { BoxCore } from '@qimao/quantum-sandbox';
-import { isPage } from './index';
 
 export const COPY_STORAGE_KEY = 'QuantumEditorCopyData';
 

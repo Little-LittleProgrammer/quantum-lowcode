@@ -20,6 +20,7 @@ import {
 import {
     getNodePath,
     isFixed,
+    isPage,
     js_is_array,
     js_is_empty,
     js_is_number,
@@ -30,7 +31,6 @@ import { BoxCore } from '@qimao/quantum-sandbox';
 import { calcValueByDesignWidth } from '@qimao/quantum-utils';
 import { historyService } from './history-service';
 import { cloneDeep, mergeWith, uniq } from 'lodash-es';
-import { isPage } from '../utils';
 import {
     COPY_STORAGE_KEY,
     change2Fixed,

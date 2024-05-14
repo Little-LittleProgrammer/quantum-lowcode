@@ -1,11 +1,10 @@
 import { DropMenu } from '@q-front-npm/vue3-antd-pc-ui';
-import { computed, reactive } from 'vue';
-import { calcValueByDesignWidth, js_is_function } from '@qimao/quantum-utils';
+import { reactive } from 'vue';
+import { calcValueByDesignWidth, isPage, js_is_function } from '@qimao/quantum-utils';
 import { editorService } from './editor-service';
 import { COPY_STORAGE_KEY } from '../utils/editor';
 import { storageService } from './storage-serivce';
 import { ISchemasNode, NodeType } from '@qimao/quantum-schemas';
-import { isPage } from '../utils';
 import { LayerOffset } from '../types';
 import { uiService } from './ui-service';
 

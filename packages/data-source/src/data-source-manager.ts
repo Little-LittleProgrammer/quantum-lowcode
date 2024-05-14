@@ -1,8 +1,9 @@
-import { IDataSourceSchema, ILowCodeRoot} from '@qimao/quantum-schemas';
+import { FieldToDepMap, IDataSourceSchema, ILowCodeRoot} from '@qimao/quantum-schemas';
 import { Subscribe, js_is_function } from '@qimao/quantum-utils';
 import { ChangeDataEvent, IDataSourceManagerData, IDataSourceManagerOptions, IHttpDataSourceSchema } from './types';
 import { DataSource } from './data-source/base';
 import { HttpDataSource } from './data-source/http';
+import { track, trigger } from './utils/deps';
 
 export class DataSourceManager extends Subscribe {
     public app: ILowCodeRoot;
@@ -10,6 +11,7 @@ export class DataSourceManager extends Subscribe {
     public useMock = false;
 
     public data: IDataSourceManagerData = {}
+    public dataSourceDep: Map<string, FieldToDepMap> = new Map() // 动态值映射 <页面id, 节点id>
     constructor({app, useMock, }: IDataSourceManagerOptions) {
         super();
         this.app = app;
@@ -58,6 +60,22 @@ export class DataSourceManager extends Subscribe {
         }
     }
 
+    public track(sourceId: string, nodeId: string, data: any) {
+        track(this.dataSourceDep, sourceId, nodeId, data);
+    }
+
+    public trigger(dataSourceId?: string, fieldId?: string) {
+        if (!dataSourceId) {
+            const keys = this.dataSourceDep.keys();
+            for (const key of keys) {
+                trigger(this, key);
+            }
+            return;
+        }
+        const nodes = trigger(this, dataSourceId, fieldId);
+        return nodes;
+    }
+
     public get(id: string) {
         return this.dataSourceMap.get(id);
     }
@@ -90,7 +108,6 @@ export class DataSourceManager extends Subscribe {
         this.data[ds.id] = ds.data;
 
         ds.on('change', (cdata: ChangeDataEvent) => {
-            console.log('ds change 2');
             this.setData(ds, cdata);
         });
     }
@@ -138,5 +155,6 @@ export class DataSourceManager extends Subscribe {
             ds.destroy();
         });
         this.dataSourceMap.clear();
+        this.dataSourceDep.clear();
     }
 }

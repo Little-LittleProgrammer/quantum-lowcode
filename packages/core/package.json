@@ -19,6 +19,7 @@
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
+    "@types/lodash-es": "^4.17.6",
     "@q-front-npm-configs/rollup": "1.2.0",
     "rollup": "^3.29.4",
     "@rollup/plugin-alias": "5.1.0"

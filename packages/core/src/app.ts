@@ -1,6 +1,6 @@
 // 核心实例对象, 接收配置, 文件以及node信息\
 import { Subscribe, fillBackgroundImage, js_is_string, style2Obj, webRequest } from '@qimao/quantum-utils';
-import { Fn, IRequestFunction, ISchemasRoot, Id, IMetaDes, ILowCodeRoot, IDepData, DEFAULT_DESIGN_WIDTH, DEFAULT_PAGE_MAX_WIDTH } from '@qimao/quantum-schemas';
+import { Fn, IRequestFunction, ISchemasRoot, Id, IMetaDes, ILowCodeRoot, DEFAULT_DESIGN_WIDTH, DEFAULT_PAGE_MAX_WIDTH } from '@qimao/quantum-schemas';
 import {LowCodePage} from './page';
 import {Env} from './env';
 import { DataSource, DataSourceManager, createDataSourceManager } from '@qimao/quantum-data';
@@ -26,8 +26,6 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
     public components = new Map();
     public request?: IRequestFunction;
     public dataSourceManager?: DataSourceManager;
-    public dataSourceDep: Map<Id, IDepData[]> = new Map() // 动态值映射 <页面id, 节点id>
-    public dataSourceCond: Map<Id, IDepData[]> = new Map() // 节点显示条件映射 <页面id, 节点id>
     public useMock = false
 
     private eventMap = new Map();
@@ -147,8 +145,6 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
     }
 
     public deletePage() {
-        this.dataSourceDep.delete(this.page!.data.field);
-        this.dataSourceCond.delete(this.page!.data.field);
         this.page = undefined;
     }
 
@@ -311,8 +307,6 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
     public destroy() {
         this.clear();
         this.page = undefined;
-        this.dataSourceDep = new Map();
-        this.dataSourceCond = new Map();
         // if (this.isH5()) {
         globalThis.removeEventListener('resize', this.calcFontsize.bind(this));
         // }

@@ -1,5 +1,5 @@
-import { js_is_array, js_is_base, js_is_function, js_is_object, js_is_reg_exp, js_is_string, js_is_un_def, js_utils_edit_attr, js_utils_find_attr, serializeToString } from '@q-front-npm/utils';
-import { Fn, ISchemasNode, Id } from '@qimao/quantum-schemas';
+import { js_is_base, js_is_function, js_is_object, js_is_reg_exp, js_is_string, js_is_un_def, js_utils_edit_attr, js_utils_find_attr, serializeToString } from '@q-front-npm/utils';
+import { Fn, ISchemasContainer, ISchemasNode, ISchemasPage, Id, NodeType } from '@qimao/quantum-schemas';
 
 export function getHost(url: string) {
     return url.match(/\/\/([^/]+)/)?.[1];
@@ -345,4 +345,17 @@ export function compliedCondition(op: string, fieldValue: any, inputValue: any, 
             break;
     }
     return false;
+}
+
+export function isPage(node?: ISchemasPage | null): boolean {
+    if (!node) return false;
+    return Boolean(node.type === NodeType.PAGE);
+}
+
+export function isContainerNode(node?: ISchemasContainer | null | string): boolean {
+    if (!node) return false;
+    if (js_is_string(node)) {
+        return node.toLowerCase().includes('container');
+    }
+    return Boolean(node.type === NodeType.CONTAINER);
 }

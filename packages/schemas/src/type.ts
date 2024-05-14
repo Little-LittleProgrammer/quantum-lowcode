@@ -1,13 +1,13 @@
 // 数组节点模型
 import { ActionType, NodeType } from './const';
-import { IDataSourceSchema, IDepData } from './event';
+import { FieldToDepMap, IDataSourceSchema, IDepData } from './event';
 export type Id = string
 export interface Fn<T = any, R = T> {
     (...arg: T[]): R;
 }
 
 export interface IfShow {
-    field: string;
+    field: string[];
     op: 'is' | 'not' | '=' | '!=' | '>' | '>=' | '<' | '<=' | 'in' | 'not in' | 'between' | 'not between';
     value: any;
     range?: number[];
@@ -50,7 +50,7 @@ export interface ILowCodeRoot {
     schemasRoot?: ISchemasRoot;
     request?: IRequestFunction;
     registerEvent?: Fn;
-    dataSourceDep: Map<Id, IDepData[]>
+    dataSourceDep: Map<Id, FieldToDepMap>
     [key: string]: any;
 }
 

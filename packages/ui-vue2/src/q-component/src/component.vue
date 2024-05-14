@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, ref, markRaw, getCurrentInstance, provide } from 'vue';
+import { computed, defineComponent, PropType, ref, markRaw, getCurrentInstance, provide, set } from 'vue';
 
 import type {Fn, ISchemasNode} from '@qimao/quantum-schemas';
 import {useApp} from '../../hooks/use-app';
@@ -38,6 +38,7 @@ export default defineComponent({
                 }
                 return props.config.ifShow !== false;
             }
+            
             return true;
         });
         const refRuntimeComp = ref();
