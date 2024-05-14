@@ -39,7 +39,6 @@ export default defineComponent({
 
         // 数据更新
         app?.dataSourceManager?.on('update-data', (nodes: ISchemasNode[], sourceId: string, data: any) => {
-            console.log(nodes);
             nodes.forEach((node) => {
                 replaceChildNode(reactive(node) as ISchemasNode, [pageConfig.value as ISchemasNode]);
             });

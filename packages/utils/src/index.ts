@@ -1,4 +1,4 @@
-import { js_is_array, js_is_base, js_is_function, js_is_object, js_is_reg_exp, js_is_string, js_utils_edit_attr, js_utils_find_attr, serializeToString } from '@q-front-npm/utils';
+import { js_is_array, js_is_base, js_is_function, js_is_object, js_is_reg_exp, js_is_string, js_is_un_def, js_utils_edit_attr, js_utils_find_attr, serializeToString } from '@q-front-npm/utils';
 import { Fn, ISchemasNode, Id } from '@qimao/quantum-schemas';
 
 export function getHost(url: string) {
@@ -312,3 +312,37 @@ export const addParamToUrl = (obj: Record<string, any>, global = globalThis, nee
     }
 };
 
+export function compliedCondition(op: string, fieldValue: any, inputValue: any, range: number[] = []): boolean {
+    if (js_is_string(fieldValue) && js_is_un_def(fieldValue)) {
+        inputValue = '';
+    }
+    switch (op) {
+        case 'is':
+            return fieldValue === inputValue;
+        case 'not':
+            return fieldValue !== inputValue;
+        case '=':
+            return fieldValue === inputValue;
+        case '!=':
+            return fieldValue !== inputValue;
+        case '>':
+            return fieldValue > inputValue;
+        case '>=':
+            return fieldValue >= inputValue;
+        case '<':
+            return fieldValue < inputValue;
+        case '<=':
+            return fieldValue <= inputValue;
+        case 'between':
+            return range.length > 1 && fieldValue >= range[0] && fieldValue <= range[1];
+        case 'not_between':
+            return range.length < 2 || fieldValue < range[0] || fieldValue > range[1];
+        case 'include':
+            return fieldValue?.includes?.(inputValue);
+        case 'not_include':
+            return typeof fieldValue === 'undefined' || !fieldValue.includes?.(inputValue);
+        default:
+            break;
+    }
+    return false;
+}
