@@ -26,7 +26,8 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
     public components = new Map();
     public request?: IRequestFunction;
     public dataSourceManager?: DataSourceManager;
-    public dataSourceDep: Map<Id, IDepData[]> = new Map() // <页面id, 节点id>
+    public dataSourceDep: Map<Id, IDepData[]> = new Map() // 动态值映射 <页面id, 节点id>
+    public dataSourceCond: Map<Id, IDepData[]> = new Map() // 节点显示条件映射 <页面id, 节点id>
     public useMock = false
 
     private eventMap = new Map();
@@ -147,6 +148,7 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
 
     public deletePage() {
         this.dataSourceDep.delete(this.page!.data.field);
+        this.dataSourceCond.delete(this.page!.data.field);
         this.page = undefined;
     }
 
@@ -310,6 +312,7 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
         this.clear();
         this.page = undefined;
         this.dataSourceDep = new Map();
+        this.dataSourceCond = new Map();
         // if (this.isH5()) {
         globalThis.removeEventListener('resize', this.calcFontsize.bind(this));
         // }

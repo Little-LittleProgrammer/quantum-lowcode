@@ -17,7 +17,7 @@ export class LowCodeNode extends Subscribe {
     public page?: LowCodePage
     public parent?: LowCodeNode;
     public root: LowCodeRoot;
-    public instance?: any
+    public instance?: any;
 
     constructor(options: INodeOptions) {
         super();

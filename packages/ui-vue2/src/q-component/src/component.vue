@@ -31,11 +31,12 @@ export default defineComponent({
             return app && app.resolveComponent(props.config.component || props.config.type);
         });
         const ifShow = computed(() => {
+            if (props.config.showResult === false) return false
             if (props.config.ifShow) {
                 if (js_is_function(props.config.ifShow)) {
                     return (props.config.ifShow as Fn)(app);
                 }
-                return props.config.ifShow;
+                return props.config.ifShow !== false;
             }
             return true;
         });

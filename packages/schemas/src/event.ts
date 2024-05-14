@@ -18,6 +18,34 @@ export interface IDataSourceSchema {
     mocks?: IMockSchema;
     options?: IHttpOptions
 }
+
+/**
+ * {
+    "key": "page_x82e",
+    "value": [
+        {
+            "field": "QLoadingPage1",
+            "key": "componentProps.state",
+            "rawValue": "${base1.loading}"
+        },
+        {
+            "field": "Text_wec3",
+            "key": "componentProps.text",
+            "rawValue": "${ds_nRJh.url}"
+        },
+        {
+            "field": "Text_dNQq",
+            "key": "componentProps.text",
+            "rawValue": "${base1.a2}"
+        },
+        {
+            "field": "Text_eMfa",
+            "key": "componentProps.text",
+            "rawValue": "${base1.a1}"
+        }
+    ]
+}
+ */
 export interface IDepData {
     /** 组件Field */
     field: Id; // nodeField

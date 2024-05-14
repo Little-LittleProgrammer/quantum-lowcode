@@ -14,7 +14,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType, ref } from 'vue';
 
-import type { ISchemasPage } from '@qimao/quantum-schemas';
+import type { Fn, ISchemasPage } from '@qimao/quantum-schemas';
 
 import Component from '../../q-component/src/component.vue';
 import { js_is_function } from '@qimao/quantum-utils';
@@ -35,7 +35,10 @@ export default defineComponent({
         const {app, } = useApp(props);
         const ifShow = computed(() => {
             if (props.config.ifShow) {
-                return props.config.ifShow;
+                if (js_is_function(props.config.ifShow)) {
+                    return (props.config.ifShow as Fn)(app);
+                }
+                return props.config.ifShow !== false;
             }
             return true;
         });

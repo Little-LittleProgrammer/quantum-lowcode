@@ -6,6 +6,13 @@ export interface Fn<T = any, R = T> {
     (...arg: T[]): R;
 }
 
+export interface IfShow {
+    field: string;
+    op: 'is' | 'not' | '=' | '!=' | '>' | '>=' | '<' | '<=' | 'in' | 'not in' | 'between' | 'not between';
+    value: any;
+    range?: number[];
+}
+
 export enum HookType {
     /** 代码块钩子标识 */
     CODE = 'code',
@@ -74,7 +81,7 @@ export interface ISchemasNode{
     /**
      * 是否展示
      */
-    ifShow?: boolean | Fn;
+    ifShow?: IfShow[] | boolean | Fn
     /**
      * 子节点
      */
