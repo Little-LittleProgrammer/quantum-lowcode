@@ -155,13 +155,25 @@
 	const componentGroupList = ref<IComponentGroup[]>([
 		{
 			text: '容器组件',
-			children: [
-				{
-					text: '容器',
-					component: 'container',
-					icon: 'FolderOpenOutlined',
-				},
-			],
+			children: [{
+                'text': '容器',
+                'component': 'container',
+                icon: 'FolderOpenOutlined',
+            },{
+                'text': '蒙层',
+                'component': 'OverlayContainer',
+                icon: 'FolderOpenOutlined',
+                data: {
+                    style: {
+                        position: 'fixed',
+                        width: '100%',
+                        height: '100%',
+                        top: 0,
+                        left: 0,
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    }, 
+                }
+            }],
 		},
 		{
 			text: '基本组件',
