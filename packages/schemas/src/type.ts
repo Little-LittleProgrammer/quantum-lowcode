@@ -54,6 +54,10 @@ export interface ILowCodeRoot {
     [key: string]: any;
 }
 
+type NumberProperties<T> = {
+    [P in keyof T]: T[P] | number;
+};
+
 /**
  * 数据组件 scheams
  */
@@ -76,7 +80,7 @@ export interface ISchemasNode{
      * 样式
      */
     // style?: Partial<CSSStyleDeclaration> | ((el: HTMLElement) => CSSStyleDeclaration)
-    style?: Partial<CSSStyleDeclaration>
+    style?: NumberProperties<Partial<CSSStyleDeclaration>>
 
     /**
      * 是否展示
@@ -142,11 +146,20 @@ declare interface IDataSourceSchema {
     /** 方法列表 */
     methods: ICodeBlockContent[];
     /** mock数据 */
-    mocks?: IMockSchema;    
+    mocks?: IMockSchema;
     options?: IHttpOptions;
     responseOptions?: {
-        dataPath?: string;
+        dataPath?: string
     };
+    autoFetch?: boolean
+}
+
+declare interface IDepData {
+    /** 组件Field */
+    field: Id; // nodeField
+    key: string; // path
+    rawValue: string 
+    type: 'data' | 'cond'
 }
 
 declare interface IDataSchema {
@@ -164,6 +177,7 @@ declare interface IDataSchema {
 }
 
 declare interface ICodeBlockContent {
+    title?: string;
     /** 代码块名称 */
     name: string;
     /** 代码块内容 */
@@ -172,6 +186,7 @@ declare interface ICodeBlockContent {
     params?: ICodeParam[] | [];
     /** 注释 */
     description?: string;
+    timing?: 'beforeInit' | 'afterInit' | 'beforeRequest' | 'afterRequest'
     /** 扩展字段 */
     [propName: string]: any;
 }
@@ -204,6 +219,13 @@ declare interface Fn<T = any, R = T> {
     (...arg: T[]): R;
 }
 
+declare interface IfShow {
+    field: string[];
+    op: 'is' | 'not' | '=' | '!=' | '>' | '>=' | '<' | '<=' | 'in' | 'not in' | 'between' | 'not between';
+    value: any;
+    range?: number[];
+}
+
 declare enum HookType {
     /** 代码块钩子标识 */
     CODE = 'code',
@@ -220,6 +242,9 @@ declare interface Hooks {
     hookType?: HookType.CODE;
     hookData?: HookData[];
 }
+type NumberProperties<T> = {
+    [P in keyof T]: T[P] | number;
+};
 declare interface ISchemasNode{
     type: NodeType.NODE | string
     /**
@@ -238,12 +263,12 @@ declare interface ISchemasNode{
     /**
      * 样式
      */
-    style?: Partial<CSSStyleDeclaration> | ((el: HTMLElement) => CSSStyleDeclaration)
+    style?: NumberProperties<Partial<CSSStyleDeclaration>> | ((el: HTMLElement) => CSSStyleDeclaration)
 
     /**
      * 是否展示
      */
-    ifShow?: boolean | Fn;
+    ifShow?: IfShow[] | boolean | Fn
     /**
      * 子节点
      */
