@@ -122,6 +122,7 @@ function addEventUni() {
         type: '',
         params: {},
     });
+    changeHandler(eventData.value)
 }
 function removeEventUni(index: number) {
     eventData.value.hookData?.splice(index, 1);

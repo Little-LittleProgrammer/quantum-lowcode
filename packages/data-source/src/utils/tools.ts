@@ -8,7 +8,7 @@ export function compliedConditions(node: ISchemasNode, data: IDataSourceManagerD
     for (const cond of node.ifShow) {
         let result = true;
         const { op, value, range, field, } = cond;
-        const sourceId = field[0];
+        const [sourceId, ...fid] = field;
 
         const dsData = data[sourceId];
 
@@ -16,7 +16,7 @@ export function compliedConditions(node: ISchemasNode, data: IDataSourceManagerD
             break;
         }
 
-        const fieldValue = js_utils_find_attr(data[sourceId], field.join('.'));
+        const fieldValue = js_utils_find_attr(dsData, fid.join('.'));
 
         if (!compliedCondition(op, fieldValue, value, range)) {
             result = false;

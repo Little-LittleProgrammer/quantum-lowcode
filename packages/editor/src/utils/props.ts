@@ -341,3 +341,24 @@ export function formatConfig(config: FormSchema[]): any {
         ...config
     ];
 }
+
+const arrayOptions = [
+    { label: '包含', value: 'include' },
+    { label: '不包含', value: 'not_include' },
+];
+
+const eqOptions = [
+    { label: '等于', value: '=' },
+    { label: '不等于', value: '!=' },
+];
+
+const numberOptions = [
+    { label: '大于', value: '>' },
+    { label: '大于等于', value: '>=' },
+    { label: '小于', value: '<' },
+    { label: '小于等于', value: '<=' },
+    { label: '在范围内', value: 'between' },
+    { label: '不在范围内', value: 'not_between' },
+];
+
+export {arrayOptions, eqOptions, numberOptions}
