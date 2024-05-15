@@ -23,8 +23,7 @@ config.ts // 将配置文件导出
 ```
 
 ## 案例 q-demo
-> 蓝色部分为重要部分
-```
+```js
 // q-demo
 // src/event.ts
 export default {
@@ -37,8 +36,8 @@ export default {
     ],
 };
 
-
-
+```
+```js
 // src/formSchema.ts
 export default [{
     field: 'api',
@@ -61,7 +60,7 @@ export default [{
 }];
 ```
 
-```
+```vue
 // src/demo.vue
 <template>
     <div @click="handlerClick" @change="handlerChange" >
@@ -147,15 +146,18 @@ export default defineComponent({
 </script>
 ```
 
-```
+```js
 // index.ts
 import Demo from './src/page.vue';
 export default Demo;
-
+```
+```js
 // components.ts
 ....
 export {default as Demo} from './q-demo';
 
+```
+```js
 // config.ts
 // schemas
 import demo from './q-demo/src/formSchema';

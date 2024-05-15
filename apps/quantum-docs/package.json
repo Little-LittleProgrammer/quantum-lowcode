@@ -15,7 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "@ant-design/icons-vue": "^6.1.0",
-    "@q-front-npm/shared": "~1.2.4-beta.0",
+    "@q-front-npm/shared": "~1.2.4",
     "ant-design-vue": "^4.0.6",
     "pinia": "^2.1.6",
     "vue": "~3.3.4"
