@@ -117,6 +117,15 @@ function createSidebar(): DefaultTheme.Sidebar {
                 text: '介绍',
                 link: '/help-code/upgrade/introduction.md'
             }, {
+                text: 'app',
+                link: '/help-code/upgrade/app.md'
+            }, {
+                text: '画布',
+                link: '/help-code/upgrade/sandbox.md'
+            }, {
+                text: '编辑器',
+                link: '/help-code/upgrade/editor.md'
+            }, {
                 text: '二次开发',
                 link: '/help-code/upgrade/sec.md'
             }]
