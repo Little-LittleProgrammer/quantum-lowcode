@@ -138,7 +138,6 @@ export const asyncLoadJs = (() => {
 })();
 
 export function calcValueByDesignWidth(doc: Document | undefined, value: number, designWidth = DEFAULT_DESIGN_WIDTH) {
-    // const { fontSize, } = doc.documentElement.style;
     if (!doc) { return value; }
 
     const maxWidth = globalThis.getComputedStyle(doc.documentElement).width;
@@ -146,11 +145,6 @@ export function calcValueByDesignWidth(doc: Document | undefined, value: number,
         const times = Math.min(globalThis.parseFloat(maxWidth), DEFAULT_PAGE_MAX_WIDTH);
         return Number((value * designWidth / times).toFixed(2));
     }
-
-    // if (fontSize) {
-    //     const times = globalThis.parseFloat(fontSize);
-    //     return Number((value / times).toFixed(2));
-    // }
 
     return value;
 }
