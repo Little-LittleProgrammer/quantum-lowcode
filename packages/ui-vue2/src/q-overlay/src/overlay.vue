@@ -46,16 +46,14 @@
         config: props.config,
         methods: {openOverlay, closeOverlay}
       });
-      const node = app?.page?.getNode(props.config.field);
-  
-      console.log('props.config',props.config, app?.page)
+      
       app?.page?.on('editor:select', (info, path) => {
         if (path.find((node: ISchemasNode) => node.field === props.config.field)) {
           openOverlay();
         } else {
           closeOverlay();
         }
-      });
+      }, true);
   
       return {
         visible,
