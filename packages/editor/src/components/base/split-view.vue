@@ -82,6 +82,9 @@
 	});
 	function dragStartHandler(e: MouseEvent) {
 		js_utils_dom_add_class(e.target, 'dragging');
+        var img = new Image();
+        img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=='; // 这是一个透明的GIF
+        e.dataTransfer.setDragImage(img, 0, 0); // 设置自定义的拖拽影子
 		originInfo.x = e.clientX;
 		originInfo.leftWidth = props.left;
 		originInfo.centerWidth = props.center;
@@ -119,21 +122,25 @@
 <style lang="scss" scoped>
 	.drag-line {
 		cursor: ew-resize;
-		width: 4px;
+		width: 6px;
 		position: relative;
 		box-shadow: none;
 		&::after {
 			background-color: #00000033;
 			border-radius: 2px;
 			content: '';
-			height: 20px;
+			height: 30px;
 			left: 50%;
 			position: absolute;
 			top: 50%;
 			transform: translate(-50%, -50%);
-			width: 2px;
+			width: 4px;
 		}
         &.dragging {
+            background-color: #00000033;
+			width: 8px;
+        }
+        &:hover {
             background-color: #00000033;
         }
 	}
