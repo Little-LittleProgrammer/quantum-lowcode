@@ -43,12 +43,14 @@ export class LowCodeNode extends Subscribe {
         if (this.page && js_is_array(data.ifShow)) {
             for (const cond of data.ifShow) {
                 const [sourceId, fieldId, ..._args] = cond.field;
-                this.root.dataSourceManager?.track(sourceId, fieldId, {
-                    field: this.data.field,
-                    rawValue: '',
-                    key: '',
-                    type: 'cond',
-                });
+                if (fieldId) {
+                    this.root.dataSourceManager?.track(sourceId, fieldId, {
+                        field: this.data.field,
+                        rawValue: '',
+                        key: '',
+                        type: 'cond',
+                    });
+                }
             }
         }
     }

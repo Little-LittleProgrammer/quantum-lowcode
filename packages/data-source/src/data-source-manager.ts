@@ -60,8 +60,8 @@ export class DataSourceManager extends Subscribe {
         }
     }
 
-    public track(sourceId: string, nodeId: string, data: any) {
-        track(this.dataSourceDep, sourceId, nodeId, data);
+    public track(sourceId: string, fieldId: string, data: any) {
+        track(this.dataSourceDep, sourceId, fieldId, data);
     }
 
     public trigger(dataSourceId?: string, fieldId?: string) {

@@ -20,7 +20,7 @@
                         </template>
                     </template>
                     <template v-else>
-                        {{ record.value?.toString() + '' +record.range?.toString() }}
+                        {{ (record.value?.toString() || '') + '' +(record.range?.toString() || '')}}
                     </template>
                 </template>
                 <template v-if="column.key === 'action'">
