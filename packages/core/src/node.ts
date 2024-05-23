@@ -3,7 +3,6 @@ import { LowCodeRoot } from './app';
 import { LowCodePage } from './page';
 import { Subscribe, js_is_function, js_is_object, compiledNode, js_is_array, stringToBoolean } from '@qimao/quantum-utils';
 import {template} from 'lodash-es';
-import {track} from '@qimao/quantum-data';
 
 interface INodeOptions {
     config: ISchemasNode | ISchemasContainer;

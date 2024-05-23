@@ -109,16 +109,10 @@
 		asyncLoadJs,
         js_is_array,
 	} from '@qimao/quantum-utils';
-	import { testSchemas, defaultSchemas } from './init-schemas';
+	import { testSchemasV1, defaultSchemas, testSchemasV2 } from './init-schemas';
 	import { RUNTIME_PATH } from '@/enums/runtimeEnum';
 	import { useRoute } from 'vue-router';
 	import { useMessage } from '@q-front-npm/hooks/vue/use-message';
-	import {
-		apiGetH5ManageDetail,
-		apiGetH5ManageList,
-		apiPutH5ManageProject,
-		apiSaveH5ManageProject,
-	} from '@/http/api/manage/h5-manage';
 	import Preview from '@/components/pagePreview/preview.vue';
 	import {
 		DEV_RECT,
@@ -209,7 +203,9 @@
 
 	const schemas = ref<ISchemasRoot>(defaultSchemas);
     if(runtimePathType === 'vue3') {
-        schemas.value = testSchemas
+        schemas.value = testSchemasV1
+    } else {
+        schemas.value = testSchemasV2
     }
 	let preSchemasStr = '';
 	let schemasStr = '';
@@ -269,45 +265,6 @@
 		return options;
 	}
 
-	async function initData() {
-		if (route.query.id) {
-			id = route.query.id as string;
-			const _res = await apiGetH5ManageDetail({
-				id: route.query.id as string,
-			});
-			if (_res.code === 200) {
-				const _json =
-					_res.data.pageJson && parseSchemas(_res.data.pageJson);
-				_json.name = _res.data.title;
-				schemas.value = _json;
-				save();
-				preSchemasStr = schemasStr;
-			}
-		} else {
-			id = null;
-		}
-        const res = await apiGetH5ManageList();
-        if (res.code === 200) {
-            let list: any[] = [];
-            if (js_is_array(res.data.list)) {
-                list = res.data.list.map(item => {
-                    return {
-                        text: item.title,
-                        icon: 'Html5Outlined',
-                        itemType: 'cover',
-                        data:item.pageJson && parseSchemas(item.pageJson) || {}
-                    }
-                })
-                componentGroupList.value.push({
-                    text: '已有活动',
-                    helpMessage: '注意: 以下组件会强制覆盖页面已有内容',
-                    children: list
-                })
-            }
-        }
-	}
-	initData();
-
 	const { createConfirm, createMessage } = useMessage();
 
 	const sandboxRect = ref(DEV_RECT.phone);
@@ -365,10 +322,7 @@
 			createMessage.error('有修改未保存，请先保存再发布');
 			return;
 		}
-		const _res = await apiPutH5ManageProject({ id: id! });
-		if (_res.code === 200) {
-			createMessage.success('发布成功');
-		}
+		createMessage.success('发布成功');
 	}
 
 	function save() {
@@ -386,14 +340,8 @@
 	}
 
 	async function saveToNet() {
-		const _res = await apiSaveH5ManageProject({
-			id: id!,
-			pageJson: schemasStr,
-		});
-		if (_res.code === 200) {
-			createMessage.success('保存成功');
-			preSchemasStr = schemasStr;
-		}
+		createMessage.success('保存成功');
+        preSchemasStr = schemasStr;
 	}
 
 	function changeMode(ui: UiService) {
