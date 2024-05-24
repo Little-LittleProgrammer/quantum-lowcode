@@ -10,6 +10,7 @@ declare module 'vue' {
     CompList: typeof import('./src/components/classic/sidebar/comp-list/index.vue')['default']
     Preview: typeof import('./src/components/pagePreview/preview.vue')['default']
     PropsList: typeof import('./src/components/classic/sidebar/props-list/index.vue')['default']
+    QAntdForm: typeof import('@q-front-npm/vue3-antd-pc-ui/es')['QAntdForm']
     QAntdIcon: typeof import('@q-front-npm/vue3-antd-pc-ui/es')['QAntdIcon']
     QAntdKeepAliveTabs: typeof import('@q-front-npm/vue3-antd-pc-ui/es')['QAntdKeepAliveTabs']
     QAntdSearch: typeof import('@q-front-npm/vue3-antd-pc-ui/es')['QAntdSearch']
