@@ -964,7 +964,19 @@ export const testSchemasV2: ISchemasRoot = {
                     title: '跳到第三页面',
                 }
             ],
-            fields: [],
+            fields: [{
+                type: 'boolean',
+                name: 'loading',
+                title: '加载',
+                description: '加载',
+                defaultValue: false,
+            }, {
+                type: 'number',
+                name: 'commonNumber',
+                title: '公共数字',
+                description: '公共数字',
+                defaultValue: 1000,
+            }],
         }
     ],
     designWidth: 720,

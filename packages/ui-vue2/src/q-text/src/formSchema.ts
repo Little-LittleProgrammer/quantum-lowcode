@@ -14,7 +14,7 @@ export default [{
 }, {
     field: 'text',
     label: '文本',
-    component: 'Input',
+    component: 'InputSelect',
     ifShow: ({values, }) => values['componentProps.isNative'] === '1',
 }, {
     field: 'multiple',

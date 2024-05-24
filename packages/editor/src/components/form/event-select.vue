@@ -47,7 +47,7 @@
                         </template>
                         <template v-else-if="item.type==='dataSource'">
                             <a-form-item label="方法">
-                                <a-tree-select v-model:value="item.field" :treeData="getDsSelect"  @change="selectDsEvent(item)"></a-tree-select>
+                                <a-tree-select v-model:value="item.field" :treeData="getDsEventSelect"  @change="selectDsEvent(item)"></a-tree-select>
                             </a-form-item>
                             <a-form-item v-if="item.field && paramsData.length" label="参数">
                                 <div class="q-editor-event-select-content-uni-params" v-for="c in paramsData">
@@ -72,6 +72,7 @@
 import { js_is_array } from '@qimao/quantum-utils';
 import { IServices } from '../../types';
 import { computed, inject, reactive, ref, watch } from 'vue';
+import { useDsList } from '../../hooks/use-ds-list';
 defineOptions({
     name: 'EventSelect',
 });
@@ -91,6 +92,7 @@ const eventKey = ref<string[]>([]);
 const uniOptions = [{label: '组件', value: 'component', }, {label: '数据源', value: 'dataSource', }];
 const service = inject<IServices>('services');
 const page = computed(() => service?.editorService.get('page'));
+const {getDsEventSelect} = useDsList(service)
 
 watch(() => props.value, () => {
     eventKey.value = Object.keys(props.value || []);
@@ -98,20 +100,6 @@ watch(() => props.value, () => {
 
 const getCompSelect = computed(() => {
     return service?.propsService.getMethods(page.value);
-});
-const getDsSelect = computed(() => {
-    return service?.editorService.get('root')?.dataSources?.map(ds => {
-        return {
-            label: `${ds.title || ''}(${ds.id})`,
-            value: ds.type === 'base' ? ds.id : `http:${ds.id}`,
-            children: ds.methods.map((method: any) => {
-                return {
-                    label: method.title || method.name,
-                    value: `${ds.id}:${method.name}`,
-                }
-            })
-        }
-    })
 });
 
 function addEvent() {

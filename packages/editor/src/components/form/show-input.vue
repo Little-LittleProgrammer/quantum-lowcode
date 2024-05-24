@@ -41,6 +41,7 @@ import { arrayOptions, eqOptions, numberOptions } from '../../utils/props';
 import { cloneDeep } from 'lodash-es';
 import { js_utils_get_uuid } from '@qimao/quantum-utils';
 import { IfShow } from '@qimao/quantum-schemas';
+import { useDsList } from '../../hooks/use-ds-list';
 defineOptions({
     name: 'ShowInput'
 })
@@ -54,6 +55,7 @@ const props = withDefaults(
 );
 const emits = defineEmits(['change','update:value', 'blur']);
 const service = inject<IServices>('services');
+const {getDsFieldsSelect} = useDsList(service)
 
 const getDataSourceProps = computed(() => {
     const data = cloneDeep(props.value)
@@ -64,21 +66,6 @@ const getDataSourceProps = computed(() => {
         return item
     })
 })
-
-const getDsSelect = computed(() => {
-    return service?.editorService.get('root')?.dataSources?.map(ds => {
-        return {
-            label: `${ds.title || ''}(${ds.id})`,
-            value: ds.id,
-            children: ds.fields.map((method: any) => {
-                return {
-                    label: method.title || method.name,
-                    value: `${method.name}`,
-                }
-            })
-        }
-    })
-});
 
 addTableEditComp('Cascader', Cascader)
 const [registerTable, {getDataSource, deleteTableDataRecord}] = useTable({
@@ -102,7 +89,7 @@ const [registerTable, {getDataSource, deleteTableDataRecord}] = useTable({
             editComponent: 'Cascader',
             editComponentProps: ({text, record, column, index}) => {
                 return {
-                    options: getDsSelect.value,
+                    options: getDsFieldsSelect.value,
                     onChange: () => {
                         record.op = '';
                         record.value = null;

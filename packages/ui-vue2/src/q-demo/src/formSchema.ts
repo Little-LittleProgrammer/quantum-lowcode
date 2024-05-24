@@ -1,7 +1,7 @@
 export default [{
     field: 'api',
     label: '请求接口',
-    component: 'Input',
+    component: 'InputSelect',
 }, {
     // 此组件支持的事件, 需要在组件中emit出来,目的为配置化界面配置事件时可以选择一下事件
     field: 'events',

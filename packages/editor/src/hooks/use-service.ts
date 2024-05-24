@@ -8,6 +8,7 @@ import DataSourceFields from '../components/form/datasource-fields.vue';
 import DataSourceMethods from '../components/form/datasource-methods.vue';
 import KeyValue from '../components/form/key-value.vue';
 import ShowInput from '../components/form/show-input.vue';
+import InputSelect from '../components/form/input-select.vue';
 import EventChoose from '../components/form/event-choose.vue';
 import { QCodeEditor, QRichText } from '@q-front-npm/vue3-pc-ui';
 
@@ -65,6 +66,7 @@ export function useServicesInit(
             useComponentRegister<'CodeEditor'>('CodeEditor', QCodeEditor);
             useComponentRegister<'RichText'>('RichText', QRichText);
             useComponentRegister<'ShowInput'>('ShowInput', ShowInput);
+            useComponentRegister<'InputSelect'>('InputSelect', InputSelect);
             useComponentRegister<'EventChoose'>('EventChoose', EventChoose);
         }
         function unRegisterFormComp() {
