@@ -85,10 +85,10 @@ function changeEvent(value: string | number) {
     display: flex;
     align-items: center;
     &-button {
-        color: $text-color-secondary;
+        color: #999;
         margin-left: 4px;
         &.select-active {
-            background-color: $primary-color;
+            background-color: #E6A817;
         }
     }
 }
