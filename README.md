@@ -42,7 +42,7 @@ pnpm i && pnpm playground
     4. 请求方法属性
   4. 事件与全局状态管理类
 ```
-// scheams最终协议, 七猫低代码协议标准,待定
+// scheams最终协议, 低代码协议标准,待定
 // scheams格式例子
 {
     type: 'root', // root | page | container

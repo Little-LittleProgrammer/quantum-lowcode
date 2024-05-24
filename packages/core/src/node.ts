@@ -17,7 +17,7 @@ export class LowCodeNode extends Subscribe {
     public page?: LowCodePage
     public parent?: LowCodeNode;
     public root: LowCodeRoot;
-    public instance?: any
+    public instance?: any;
 
     constructor(options: INodeOptions) {
         super();
@@ -34,32 +34,38 @@ export class LowCodeNode extends Subscribe {
 
     public setData(data: ISchemasNode | ISchemasContainer | ISchemasPage) {
         this.data = this.compileNode(data);
+        this.compileCond(this.data);
         this.emit('update-data');
+    }
+
+    public compileCond(data: ISchemasNode | ISchemasContainer | ISchemasPage) {
+        if (this.page && js_is_array(data.ifShow)) {
+            for (const cond of data.ifShow) {
+                const [sourceId, fieldId, ..._args] = cond.field;
+                if (fieldId) {
+                    this.root.dataSourceManager?.track(sourceId, fieldId, {
+                        field: this.data.field,
+                        rawValue: '',
+                        key: '',
+                        type: 'cond',
+                    });
+                }
+            }
+        }
     }
 
     public compileNode(data: ISchemasNode | ISchemasContainer | ISchemasPage) {
         // TODO 整个数据收集部分待优化
-        if (this.page) { // 复原node依赖
-            const ids = this.root.dataSourceDep.get(this.page?.data.field || '') || [];
-            this.root.dataSourceDep.set(this.page.data.field, ids.filter(item => item.field !== this.data.field));
-        }
         return compiledNode(data, (value, key) => {
             if (this.page) {
-                if (this.root.dataSourceDep.has(this.page.data.field)) {
-                    const ids = this.root.dataSourceDep.get(this.page.data.field)!;
-                    ids.push({
-                        field: this.data.field,
-                        key,
-                        rawValue: value,
-                    });
-                    this.root.dataSourceDep.set(this.page.data.field, ids);
-                } else {
-                    this.root.dataSourceDep.set(this.page.data.field, [{
-                        field: this.data.field,
-                        key,
-                        rawValue: value,
-                    }]);
-                }
+                const path = value.replace(/\$\{([^}]+)\}/, '\$1');
+                const [sourceId, fieldId, ..._args] = path.split('.');
+                this.root.dataSourceManager?.track(sourceId, fieldId, {
+                    field: this.data.field,
+                    rawValue: value,
+                    key: key!,
+                    type: 'data',
+                });
             }
             if (typeof value === 'string') {
                 const data = template(value)(this.root.dataSourceManager?.data);
@@ -86,7 +92,6 @@ export class LowCodeNode extends Subscribe {
                     const fn = () => {
                         for (const item of val) {
                             const { field, params = {}, } = item;
-                            console.log(this.root, field);
                             this.root.emit(`${field}`, params);
                         }
                     };

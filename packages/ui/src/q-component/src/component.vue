@@ -13,7 +13,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType, ref, markRaw } from 'vue';
 
-import type {ISchemasNode} from '@qimao/quantum-schemas';
+import type {Fn, ISchemasNode} from '@qimao/quantum-schemas';
 import {useApp} from '../../hooks/use-app';
 import {js_is_function} from '@qimao/quantum-utils';
 
@@ -29,12 +29,13 @@ export default defineComponent({
         const tagName: any = computed(() => {
             return app && app.resolveComponent(props.config.component || props.config.type);
         });
-        const ifShow = computed(() => {
+        const ifShow = computed(() => { 
+            if (props.config.showResult === false) return false
             if (props.config.ifShow) {
                 if (js_is_function(props.config.ifShow)) {
-                    return props.config.ifShow(app);
+                    return (props.config.ifShow as Fn)(app);
                 }
-                return props.config.ifShow;
+                return props.config.ifShow !== false;
             }
             return true;
         });

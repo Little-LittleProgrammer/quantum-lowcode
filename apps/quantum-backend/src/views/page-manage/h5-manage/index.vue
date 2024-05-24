@@ -71,7 +71,6 @@ function createTableActions(record: IH5ManageList):ActionItem[] {
 
 function openPreviewModal(record: IH5ManageList) {
     previewVisible.value = true;
-    // TODO change
     previewData.value = record.pageJson ? (parseSchemas(record.pageJson)) : {}
 }
 

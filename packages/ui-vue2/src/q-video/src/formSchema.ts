@@ -15,7 +15,7 @@ export default [{
 }, {
     field: 'src',
     label: '视频链接',
-    component: 'Input',
+    component: 'InputSelect',
     defaultValue: '这是一个视频',
     ifShow: ({values, }) => values['componentProps.vdType'] === '1',
 }, {

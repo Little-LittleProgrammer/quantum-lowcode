@@ -10,6 +10,7 @@ import { useDrawerInner, useForm } from '@q-front-npm/vue3-antd-pc-ui';
 import { FormConfig, IServices } from '../../../../types';
 import { inject, ref } from 'vue';
 import { IDataSourceSchema } from '@qimao/quantum-schemas';
+import { mergeWith } from 'lodash-es';
 defineOptions({
     name: 'DataEdit',
 });
@@ -39,7 +40,10 @@ const [registerDrawer, {closeDrawer, }] = useDrawerInner(async(obj: any) => {
     } else {
         drawerTitle.value = '新增';
         dataSourceConfig.value = dataSourceService?.getFormConfig(obj.type) as any;
-        await setFieldsValue({type: obj.type, });
+        await setFieldsValue(mergeWith(
+            {type: obj.type, },
+            dataSourceService?.getFormValue(obj.type) || {},
+        ));
     }
 });
 

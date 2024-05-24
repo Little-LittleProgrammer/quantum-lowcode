@@ -15,7 +15,7 @@ export default [{
 }, {
     field: 'src',
     label: '图片链接',
-    component: 'Input',
+    component: 'InputSelect',
     defaultValue: '这是一个图片',
     ifShow: ({values, }) => values['componentProps.imgType'] === '1',
 }, {

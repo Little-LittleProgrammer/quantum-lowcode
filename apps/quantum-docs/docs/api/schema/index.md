@@ -6,25 +6,88 @@
 |--|--|-- 容器节点|组件节点  
 |--|--|--|-- 容器节点|组件节点  
             ......
+
+## interface
 ```ts
+export interface IfShow {
+    field: string[];
+    op: 'is' | 'not' | '=' | '!=' | '>' | '>=' | '<' | '<=' | 'in' | 'not in' | 'between' | 'not between';
+    value: any;
+    range?: number[];
+}
+
+export enum HookType {
+    /** 代码块钩子标识 */
+    CODE = 'code',
+}
+
+export interface HookData {
+    field: Id;
+    type?: ActionType;
+    params: any;
+    [key: string]: any
+}
+
+export interface Hooks {
+    hookType?: HookType.CODE;
+    hookData?: HookData[];
+}
+
+export type Method = 'get' | 'GET' | 'delete' | 'DELETE' | 'post' | 'POST' | 'put' | 'PUT';
+export interface IHttpOptions {
+    /** 请求链接 */
+    url: string;
+    /** query参数 */
+    params?: Record<string, string>;
+    /** body数据 */
+    data?: Record<string, any>;
+    /** 请求头 */
+    headers?: Record<string, string>;
+    /** 请求方法 GET/POST */
+    method?: Method;
+    [key: string]: any;
+}
+export type IRequestFunction = (options: IHttpOptions) => Promise<any>;
+
+export interface ILowCodeRoot {
+    schemasRoot?: ISchemasRoot;
+    request?: IRequestFunction;
+    registerEvent?: Fn;
+    dataSourceDep: Map<Id, FieldToDepMap>
+    [key: string]: any;
+}
+
 /**
  * 数据组件 scheams
  */
 export interface ISchemasNode{
     type: NodeType.NODE | string
-    /**组件字段, 也为数据节点唯一值id*/
+    /**
+     * 组件字段, 也为数据节点唯一值id
+     */
     field: Id
-    /** 组件名*/
+    /**
+     * 组件名
+     */
     component?: string;
-    /**组件的属性集合*/
+    /**
+     * 组件的属性集合
+     */
     componentProps?: Record<string, any> ;
     label?: string;
-    /**样式*/
+    /**
+     * 样式
+     */
+    // style?: Partial<CSSStyleDeclaration> | ((el: HTMLElement) => CSSStyleDeclaration)
     style?: Partial<CSSStyleDeclaration>
 
-    /**是否展示*/
-    ifShow?: boolean | Fn;
-    /** 子节点*/
+    /**
+     * 是否展示
+     */
+    ifShow?: IfShow[] | boolean | Fn
+    /**
+     * 子节点
+     */
     children?: (ISchemasNode | ISchemasContainer)[]
     created?: Hooks;
     mounted?: Hooks
@@ -59,24 +122,8 @@ export interface ISchemasRoot extends ISchemasNode {
     children: ISchemasPage[];
     name: string;
     description?: IMetaDes;
-    dataSources?: IDataSourceSchema[]; // 管理数据
-}
-
-export interface IDataSourceSchema {
-    /** 数据源类型，根据类型来实例化；例如http则使用new HttpDataSource */
-    type: 'base' | 'http';
-    /** 实体ID */
-    id: string
-    /** 实体名称，用于关联时展示 */
-    title?: string;
-    /** 实体描述，鼠标hover时展示 */
-    description?: string;
-    /** 字段列表 */
-    fields: IDataSchema[];
-    /** 方法列表 */
-    methods: ICodeBlockContent[];
-    /** mock数据 */
-    mocks?: IMockSchema;
+    dataSources?: IDataSourceSchema[]; // 管理数据;
+    designWidth?: number
 }
 ```
 

@@ -10,7 +10,20 @@ export class Subscribe<T = string> {
         this.cacheOnce = new Map();
     }
     // 订阅消息
-    on(eventName: T, callBack: Callback) {
+    /**
+     *
+     * @param eventName
+     * @param callBack
+     * @param strict 是否开启严格校验
+     * @returns
+     */
+    on(eventName: T, callBack: Callback, strict = false) {
+        if (strict && (callBack as any).__id) {
+            return;
+        }
+        if (strict) {
+            callBack.__id = Symbol('id');
+        }
         const _inOnce = this.cacheOnce.get(eventName);
         if (_inOnce) {
             console.error('此事件已经在单次订阅中注册, 无法再次注册');
@@ -18,9 +31,11 @@ export class Subscribe<T = string> {
         }
         const _fns = this.cache.get(eventName);
         if (_fns) {
-            const isSubscribed = _fns.some(fn => fn.toString() === callBack.toString());
-            if (isSubscribed) { // 监测是否重复订阅
-                return;
+            if (!strict) { // 非严格去重
+                const isSubscribed = _fns.some(fn => fn.toString() === callBack.toString());
+                if (isSubscribed) { // 监测是否重复订阅
+                    return;
+                }
             }
             this.cache.set(eventName, _fns.concat(callBack));
             return;
@@ -28,7 +43,13 @@ export class Subscribe<T = string> {
         this.cache.set(eventName, [callBack]);
     }
     // 单次订阅
-    once(eventName: T, callBack: Callback) {
+    once(eventName: T, callBack: Callback, strict = false) {
+        if (strict && (callBack as any).__id) {
+            console.log(`Already subscribed to "${eventName}"`);
+        }
+        if (strict) {
+            callBack.__id = Symbol('id');
+        }
         const _inOn = this.cache.get(eventName);
         if (_inOn) {
             console.error('此事件已经在长期订阅中注册, 无法再次注册');
@@ -36,9 +57,11 @@ export class Subscribe<T = string> {
         }
         const _fns = this.cacheOnce.get(eventName);
         if (_fns) {
-            const isSubscribed = _fns.some(fn => fn.toString() === callBack.toString());
-            if (isSubscribed) { // 监测是否重复订阅
-                return;
+            if (!strict) { // 非严格去重
+                const isSubscribed = _fns.some(fn => fn.toString() === callBack.toString());
+                if (isSubscribed) { // 监测是否重复订阅
+                    return;
+                }
             }
             this.cacheOnce.set(eventName, _fns.concat(callBack));
             return;

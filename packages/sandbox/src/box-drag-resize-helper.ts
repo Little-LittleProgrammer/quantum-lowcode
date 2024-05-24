@@ -17,7 +17,8 @@ import MoveableHelper from 'moveable-helper';
 import { DRAG_EL_ID_PREFIX, GHOST_EL_ID_PREFIX, Mode, ZIndex } from './const';
 import { TargetShadow } from './target-shadow';
 import { IDragResizeHelperConfig, IRect, ITargetElement } from './types';
-import { calcValueByDesignWidth, getBorderWidth, getMarginValue } from './utils';
+import { getBorderWidth, getMarginValue } from './utils';
+import { calcValueByDesignWidth } from '@qimao/quantum-utils';
 import { js_utils_dom_offset, getAbsolutePosition } from '@qimao/quantum-utils';
 
 /**
@@ -362,14 +363,11 @@ export default class DragResizeHelper {
             const { left: parentLeft, top: parentTop, } =
 				js_utils_dom_offset(parentEl);
 
+            // 原来的位置 + translate 的位置 - 新父节点的offset
             left =
-				calcValueByDesignWidth(doc, targetShadowElOffsetLeft, this.designWidth) +
-				parseFloat(translateX) -
-				calcValueByDesignWidth(doc, parentLeft, this.designWidth);
+                calcValueByDesignWidth(doc, targetShadowElOffsetLeft + parseFloat(translateX) - parentLeft, this.designWidth);
             top =
-				calcValueByDesignWidth(doc, targetShadowElOffsetTop, this.designWidth) +
-				parseFloat(translateY) -
-				calcValueByDesignWidth(doc, parentTop, this.designWidth);
+                calcValueByDesignWidth(doc, targetShadowElOffsetTop + parseFloat(translateY) - parentTop, this.designWidth);
         }
 
         return { width, height, left, top, };

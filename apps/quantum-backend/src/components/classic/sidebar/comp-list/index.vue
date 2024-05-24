@@ -2,7 +2,15 @@
 <template>
     <div class="classic-sidebar-comp">
         <a-tabs size="small">
-            <a-tab-pane v-for="group in compList" :key="group.text" :tab="group.text">
+            <a-tab-pane v-for="group in compList" :key="group.text" >
+                <template #tab>
+                    <template v-if="group.helpMessage">
+                        <a-tooltip :title="group.helpMessage">
+                            <q-antd-icon type="InfoCircleOutlined" />
+                        </a-tooltip>
+                    </template>
+                    {{group.text}}
+                </template>
                 <div class="classic-sidebar-comp-tab">
                     <template
                         v-for="item in group.children"
@@ -45,21 +53,33 @@ defineOptions({
 })
 
 const services = inject<IServices>('services');
-const compList = computed(() => services?.componentService.getList())
+const compList = computed(() => services?.componentService.getList());
+const emits = defineEmits(['add'])
 
 function addComp(item: IComponentItem) {
-    const width = services?.editorService?.get('sandbox')?.designWidth
-    services?.editorService.add({
-        label: item.text,
-        type: item.component,
-        ...{
-            ...item.data,
-            style: {
-                height: '',
-                width: width
-            }
-        },
-    })
+    const itemType = item.itemType || 'add'
+    const width = services?.editorService?.get('sandbox')?.designWidth;
+    if (itemType === 'add') {
+        services?.editorService.add({
+            label: item.text,
+            type: item.component,
+            ...{
+                ...item.data,
+                style: {
+                    height: '',
+                    width: width
+                }
+            },
+        })
+    } else if (itemType === 'cover') {
+        services?.editorService.update({
+            type: 'root',
+            field: 'root',
+            ...item.data
+        })
+    }
+    emits('add')
+    
 }
 
 </script>

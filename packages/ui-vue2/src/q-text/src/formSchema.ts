@@ -14,7 +14,7 @@ export default [{
 }, {
     field: 'text',
     label: '文本',
-    component: 'Input',
+    component: 'InputSelect',
     ifShow: ({values, }) => values['componentProps.isNative'] === '1',
 }, {
     field: 'multiple',
@@ -25,7 +25,13 @@ export default [{
     field: 'text',
     label: '富文本',
     component: 'RichText',
-    ifShow: ({values, }) => values['componentProps.isNative'] === '2',
+    show: ({values, }) => values['componentProps.isNative'] === '2',
+    componentProps: {
+        toolbar: [
+            'fontsizeselect formatselect lineheight searchreplace bold italic underline strikethrough alignleft aligncenter alignright outdent indent  blockquote undo redo removeformat subscript superscript code codesample',
+            'hr bullist numlist link  preview anchor pagebreak insertdatetime media  forecolor backcolor fullscreen'
+        ],
+    },
     colProps: {
         span: 24,
     },

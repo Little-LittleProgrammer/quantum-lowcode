@@ -27,7 +27,6 @@ const app = new LowCodeRoot({
     ua: window.navigator.userAgent,
     config: dsls[0] || {},
     curPage: getUrlParam('page'),
-    request: requestFn,
     designWidth: DEFAULT_DESIGN_WIDTH,
 });
 

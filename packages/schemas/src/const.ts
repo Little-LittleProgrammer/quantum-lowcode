@@ -12,9 +12,11 @@ export enum EventType {
 }
 
 export enum ActionType {
-    COMP = 'comp',
+    COMP = 'component',
     /** 数据源 */
-    DATA_SOURCE = 'data-source',
+    DATA_SOURCE = 'dataSource',
 }
 
 export const DEFAULT_DESIGN_WIDTH = 720;
+
+export const DEFAULT_PAGE_MAX_WIDTH = 540;

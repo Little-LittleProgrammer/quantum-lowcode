@@ -20,16 +20,17 @@ import {
 import {
     getNodePath,
     isFixed,
+    isPage,
     js_is_array,
     js_is_empty,
     js_is_number,
     js_is_object,
     Subscribe
 } from '@qimao/quantum-utils';
-import { BoxCore, calcValueByDesignWidth } from '@qimao/quantum-sandbox';
+import { BoxCore } from '@qimao/quantum-sandbox';
+import { calcValueByDesignWidth } from '@qimao/quantum-utils';
 import { historyService } from './history-service';
 import { cloneDeep, mergeWith, uniq } from 'lodash-es';
-import { isPage } from '../utils';
 import {
     COPY_STORAGE_KEY,
     change2Fixed,
@@ -287,7 +288,7 @@ class EditorService extends Subscribe {
             root: cloneDeep(root),
         });
 
-        const newStyle = fixNodePosition(node, parent, sandbox);
+        let newStyle = fixNodePosition(node, parent, sandbox) || {} as Partial<CSSStyleDeclaration>
 
         if (newStyle && (newStyle.top !== node.style?.top || newStyle.left !== node.style?.left)) {
             node.style = newStyle;
@@ -365,6 +366,8 @@ class EditorService extends Subscribe {
         if (!info.node) throw new Error(`获取不到field为${config.field}的节点`);
 
         const node = cloneDeep(toRaw(info.node));
+
+        config = this.dealText(config)
 
         let newConfig = await this.toggleFixedPosition(
             toRaw(config),
@@ -454,7 +457,7 @@ class EditorService extends Subscribe {
             this.pushHistoryState();
         }
 
-        this.updateHandler();
+        // this.updateHandler();
         this.emit('update', newNodes);
         return js_is_array(config) ? newNodes : newNodes[0];
     }
@@ -739,7 +742,7 @@ class EditorService extends Subscribe {
                 node.style.left = calcValueByDesignWidth(doc, (parentEl.clientWidth - el.clientWidth) / 2, editorService.get('root')?.designWidth);
                 node.style.right = '';
             } else if (parent.style && js_is_number(parent.style?.width) && js_is_number(node.style?.width)) {
-                node.style.left = calcValueByDesignWidth(doc, (parent.style.width - node.style.width) / 2, editorService.get('root')?.designWidth);
+                node.style.left = (parent.style.width - node.style.width) / 2
                 node.style.right = '';
             }
         }
@@ -819,6 +822,25 @@ class EditorService extends Subscribe {
 
     }
 
+    private dealText(config: ISchemasNode) {
+        if (config.component?.toLowerCase() === 'text') {
+            if (config.componentProps?.text) {
+                let text = config.componentProps?.text;
+                const sandbox = this.get('sandbox');
+                const doc = sandbox?.renderer.contentWindow?.document;
+                if (doc) {
+                    const baseFontSize = parseFloat(doc.documentElement.style.fontSize);
+                    config.componentProps.text = text.replace(/font-size: (\d+)px/g, (_match: any, p1:string) => {
+                        let pxValue = parseFloat(p1); // 将匹配到的字符串数字转换为整数
+                        let remValue = pxValue / baseFontSize; // 假设根元素的字体大小为16px，进行转换
+                        return `font-size: ${remValue}rem`; // 返回转换后的字符串
+                    });
+                }
+            }
+        }
+        return config
+    }
+
     private async pushHistoryState() {
         const curNode = cloneDeep(toRaw(this.get('node')));
         const page = this.get('page');
@@ -828,6 +850,7 @@ class EditorService extends Subscribe {
                 modifiedNodeFields: this.get('modifiedNodeFields')!,
                 nodeField: curNode.field,
             });
+            console.log(historyService)
         }
         this.isHistoryStateChange = false;
     }
@@ -932,7 +955,7 @@ class EditorService extends Subscribe {
         const finConfigs = config.map((item) => {
             const { offsetX = 0, offsetY = 0, ...positionClone } = position;
             let pastePosition = positionClone;
-            if (!js_is_empty(pastePosition) && curNode?.items) {
+            if (!js_is_empty(pastePosition) && curNode?.children) {
                 // 如果没有传入粘贴坐标则可能为键盘操作，不再转换
                 // 如果粘贴时选中了容器，则将元素粘贴到容器内，坐标需要转换为相对于容器的坐标
                 pastePosition = this.getPositionInContainer(pastePosition, curNode.field);
@@ -969,8 +992,9 @@ class EditorService extends Subscribe {
         let { left = 0, top = 0, } = position;
         const parentEl = this.get('sandbox')?.renderer?.contentWindow?.document.getElementById(`${field}`);
         const parentElRect = parentEl?.getBoundingClientRect();
-        left = left - (parentElRect?.left || 0);
-        top = top - (parentElRect?.top || 0);
+        const doc = this.get('sandbox')?.renderer.contentWindow?.document;
+        left = left - calcValueByDesignWidth(doc ,(parentElRect?.left || 0), editorService.get('root')?.designWidth);
+        top = top - calcValueByDesignWidth(doc ,(parentElRect?.top || 0), editorService.get('root')?.designWidth);
         return {
             left,
             top,

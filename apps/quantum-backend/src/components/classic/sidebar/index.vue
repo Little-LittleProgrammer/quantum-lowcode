@@ -1,26 +1,31 @@
 <!--  -->
 <template>
     <div class="classic-sidebar">
-        <comp-list></comp-list>
-        <props-list></props-list>
+        <comp-list @add="addComp"></comp-list>
+        <props-list :isAdd="cnt"></props-list>
     </div>
 </template>
 
 <script lang='ts' setup>
 import { IServices } from '@qimao/quantum-editor';
-import { PropType, provide, reactive } from 'vue'
+import { PropType, provide, reactive, ref } from 'vue'
 import CompList from './comp-list/index.vue'
 import PropsList from './props-list/index.vue'
 defineOptions({
      name: 'Sidebar'
-})
+});
 const props = defineProps({
     services: {
         type: Object as PropType<IServices>,
         default: () => {}
     }
 })
-provide('services', props.services)
+provide('services', props.services);
+
+const cnt = ref(0)
+function addComp() {
+    cnt.value++
+}
 
 </script>
 <style lang='scss' scoped>

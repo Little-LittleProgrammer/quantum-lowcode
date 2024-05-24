@@ -1,5 +1,5 @@
-import { js_is_array, js_is_base, js_is_function, js_is_object, js_is_reg_exp, js_is_string, js_utils_edit_attr, js_utils_find_attr, serializeToString } from '@q-front-npm/utils';
-import { Fn, ISchemasNode, Id } from '@qimao/quantum-schemas';
+import { js_is_base, js_is_function, js_is_object, js_is_reg_exp, js_is_string, js_is_un_def, js_utils_edit_attr, js_utils_find_attr, serializeToString } from '@q-front-npm/utils';
+import { Fn, ISchemasContainer, ISchemasNode, ISchemasPage, Id, NodeType } from '@qimao/quantum-schemas';
 
 export function getHost(url: string) {
     return url.match(/\/\/([^/]+)/)?.[1];
@@ -94,6 +94,7 @@ export function parseSchemas(schema: string | Record<string, any>) {
     function dfs(target: any, map = new Map()) {
         if (js_is_string(target)) {
             if ((target.includes('function') || target.includes('=>'))) {
+                target = target.replace(/;/g, '\n');
                 // eslint-disable-next-line no-eval
                 return eval(`(${target})`); // 字符串转方法
             // return new Function(`return ${target}`)(); // 字符串转方法
@@ -289,4 +290,72 @@ export function compiledNode(
     //     node.children.forEach(item => compiledNode(item, compile, sourceId));
     // }
     return node;
+}
+
+/**
+ * 添加参数到URL
+ * @param obj 参数对象
+ * @param global window对象
+ * @param needReload 是否需要刷新
+ */
+export const addParamToUrl = (obj: Record<string, any>, global = globalThis, needReload = true) => {
+    const url = new URL(global.location.href);
+    const { searchParams, } = url;
+    for (const [k, v] of Object.entries(obj)) {
+        searchParams.set(k, v);
+    }
+    const newUrl = url.toString();
+    if (needReload) {
+        global.location.href = newUrl;
+    } else {
+        global.history.pushState({}, '', url);
+    }
+};
+
+export function compliedCondition(op: string, fieldValue: any, inputValue: any, range: number[] = []): boolean {
+    if (js_is_string(fieldValue) && js_is_un_def(fieldValue)) {
+        inputValue = '';
+    }
+    switch (op) {
+        case 'is':
+            return fieldValue === inputValue;
+        case 'not':
+            return fieldValue !== inputValue;
+        case '=':
+            return fieldValue === inputValue;
+        case '!=':
+            return fieldValue !== inputValue;
+        case '>':
+            return fieldValue > inputValue;
+        case '>=':
+            return fieldValue >= inputValue;
+        case '<':
+            return fieldValue < inputValue;
+        case '<=':
+            return fieldValue <= inputValue;
+        case 'between':
+            return range.length > 1 && fieldValue >= range[0] && fieldValue <= range[1];
+        case 'not_between':
+            return range.length < 2 || fieldValue < range[0] || fieldValue > range[1];
+        case 'include':
+            return fieldValue?.includes?.(inputValue);
+        case 'not_include':
+            return typeof fieldValue === 'undefined' || !fieldValue.includes?.(inputValue);
+        default:
+            break;
+    }
+    return false;
+}
+
+export function isPage(node?: ISchemasPage | null): boolean {
+    if (!node) return false;
+    return Boolean(node.type === NodeType.PAGE);
+}
+
+export function isContainerNode(node?: ISchemasContainer | null | string): boolean {
+    if (!node) return false;
+    if (js_is_string(node)) {
+        return node.toLowerCase().includes('container');
+    }
+    return Boolean(node.type === NodeType.CONTAINER);
 }

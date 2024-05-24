@@ -60,7 +60,7 @@ export class BoxMask extends Rule {
 
     constructor(options?: IRuleOptions) {
         const wrapper = createWrapper();
-        super(wrapper, options); // TODO, 画布遮罩规则, 扩展
+        super(wrapper, options); // TODO, 辅助线扩展
         this.wrapper = wrapper;
 
         this.content.addEventListener('wheel', this.mouseWheelHandler);
@@ -101,11 +101,11 @@ export class BoxMask extends Rule {
 	 */
     public pageResize(entries: ResizeObserverEntry[]): void {
         const [entry] = entries;
-        const { clientHeight, clientWidth, } = entry.target;
+        const { clientHeight, clientWidth, offsetLeft, } = entry.target;
         console.log('pageResize', clientHeight, clientWidth);
         this.setHeight(clientHeight);
         this.setWidth(clientWidth);
-
+        this.content.style.left = `${offsetLeft}px`;
         this.scroll();
     }
 
@@ -283,6 +283,7 @@ export class BoxMask extends Rule {
         event.preventDefault();
         if (!this.page) throw new Error('page 未初始化');
 
+        // 滚轮滚动的坐标值
         const { deltaY, deltaX, } = event;
 
         if (this.page.clientHeight < this.wrapperHeight && deltaY) return;

@@ -26,7 +26,7 @@ import externalGlobals from 'rollup-plugin-external-globals';
 import {resolve} from 'path';
 
 export default defineConfig(({ mode, }) => {
-    // TODO
+    // TODO 待优化
     if (['config'].includes(mode)) {
         const file = resolve(__dirname, 'node_modules/@qimao/quantum-ui/dist/es/config.js');
         return {

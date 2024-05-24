@@ -49,15 +49,27 @@ export const defaultEditorProps = {
     canSelect: (el: HTMLElement) => Boolean(el.id), // 带 id 代表这个组件是dsl配置的
     isContainer: (el: HTMLElement) => el.classList.contains('quantum-ui-container'),
     componentGroupList: [{
-        /** 显示文案 */
         text: '容器组件',
-        /** 组内列表 */
         children: [{
             'text': '容器',
             'component': 'container',
             icon: 'FolderOpenOutlined',
+        },{
+            'text': '蒙层',
+            'component': 'OverlayContainer',
+            icon: 'FolderOpenOutlined',
+            data: {
+                style: {
+                    position: 'fixed',
+                    width: '100%',
+                    height: '100%',
+                    top: 0,
+                    left: 0,
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                }, 
+            }
         }],
-    },{
+		},{
         /** 显示文案 */
         text: '基本组件',
         /** 组内列表 */
@@ -77,54 +89,6 @@ export const defaultEditorProps = {
             'text': '文本',
             'component': 'Text',
             icon: 'LineOutlined',
-        }, {
-            'text': '二维码',
-            'component': 'Button',
-            icon: 'SelectOutlined',
-        }],
-    }, {
-        text: '定制组件',
-        /** 组内列表 */
-        children: [{
-            'text': '按钮',
-            'component': 'Button',
-            icon: 'SelectOutlined',
-        }, {
-            'text': '图片',
-            'component': 'Button',
-            icon: 'SelectOutlined',
-        }, {
-            'text': '视频',
-            'component': 'Button',
-            icon: 'SelectOutlined',
-        }, {
-            'text': '文本',
-            'component': 'Button',
-            icon: 'SelectOutlined',
-        }, {
-            'text': '二维码',
-            'component': 'Button',
-            icon: 'SelectOutlined',
-        }],
-    }, {
-        text: '自定义模版',
-        /** 组内列表 */
-        children: [{
-            'text': '按钮',
-            'component': 'Button',
-            icon: 'SelectOutlined',
-        }, {
-            'text': '图片',
-            'component': 'Button',
-            icon: 'SelectOutlined',
-        }, {
-            'text': '视频',
-            'component': 'Button',
-            icon: 'SelectOutlined',
-        }, {
-            'text': '文本',
-            'component': 'Button',
-            icon: 'SelectOutlined',
         }, {
             'text': '二维码',
             'component': 'Button',

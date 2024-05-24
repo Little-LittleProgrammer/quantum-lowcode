@@ -112,6 +112,7 @@ export class BoxDragResize extends MoveableManager {
         this.target = el;
         this.mode = getMode(el);
 
+        // 生成元素Shadow
         this.dragResizeHelper.updateShadowEl(el);
         this.dragResizeHelper.setMode(this.mode);
 

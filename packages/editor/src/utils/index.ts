@@ -1,6 +1,6 @@
-import { ISchemasContainer, ISchemasPage, NodeType } from '@qimao/quantum-schemas';
+import { NodeType } from '@qimao/quantum-schemas';
 import { IInstallOptions } from '../types';
-import { js_is_string } from '@qimao/quantum-utils';
+import { isContainerNode } from '@qimao/quantum-utils';
 
 let Options: IInstallOptions = {} as any;
 export function getConfig<K extends keyof IInstallOptions>(key: K) {
@@ -9,19 +9,6 @@ export function getConfig<K extends keyof IInstallOptions>(key: K) {
 
 export function setConfig(options: IInstallOptions) {
     Options = options;
-}
-
-export function isPage(node?: ISchemasPage | null): boolean {
-    if (!node) return false;
-    return Boolean(node.type === NodeType.PAGE);
-}
-
-export function isContainerNode(node?: ISchemasContainer | null | string): boolean {
-    if (!node) return false;
-    if (js_is_string(node)) {
-        return node.toLowerCase().includes('container')
-    }
-    return Boolean(node.type === NodeType.CONTAINER);
 }
 
 export function getCompType(type: string): NodeType {
