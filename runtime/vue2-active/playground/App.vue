@@ -8,11 +8,11 @@
 <script lang="ts">
 import { computed, defineComponent, inject, nextTick, reactive, ref, watch } from 'vue';
 
-import type { Id, ISchemasRoot, ISchemasPage, ISchemasNode } from '@qimao/quantum-schemas';
-import type { LowCodeRoot } from '@qimao/quantum-core';
-import { IDeleteData, IQuantum, IUpdateData} from '@qimao/quantum-sandbox';
-import {Page} from '@qimao/quantum-ui-vue2';
-import { getNodePath, replaceChildNode } from '@qimao/quantum-utils';
+import type { Id, ISchemasRoot, ISchemasPage, ISchemasNode } from '@quantum-lowcode/schemas';
+import type { LowCodeRoot } from '@quantum-lowcode/core';
+import { IDeleteData, IQuantum, IUpdateData} from '@quantum-lowcode/sandbox';
+import {Page} from '@quantum-lowcode/ui-vue2';
+import { getNodePath, replaceChildNode } from '@quantum-lowcode/utils';
 
 declare global {
     interface Window {

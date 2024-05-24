@@ -1,6 +1,6 @@
 import { AntTreeNodeDropEvent } from 'ant-design-vue/es/tree';
 import { IServices } from '../../../../types';
-import { ISchemasContainer, ISchemasNode } from '@qimao/quantum-schemas';
+import { ISchemasContainer, ISchemasNode } from '@quantum-lowcode/schemas';
 import { Ref } from 'vue';
 import { getNodeIndex } from '../../../../utils/editor';
 

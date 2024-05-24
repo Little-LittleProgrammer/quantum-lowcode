@@ -19,7 +19,7 @@
 import { IServices } from '../../types';
 import { computed, inject, ref } from 'vue';
 import { useDsList } from '../../hooks/use-ds-list';
-import { js_is_string } from '@qimao/quantum-utils';
+import { isString } from '@quantum-lowcode/utils';
 
 const props = withDefaults(
     defineProps<{
@@ -40,7 +40,7 @@ const service = inject<IServices>('services');
 const {getDsFieldsSelect} = useDsList(service);
 
 const getSelectValue = computed(() => {
-    if (!(js_is_string(props.value) && props.value.includes('$'))) {
+    if (!(isString(props.value) && props.value.includes('$'))) {
         return ''
     }
     const path = props.value.replace(/\$\{([^}]+)\}/, '\$1');

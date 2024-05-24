@@ -2,7 +2,7 @@
 	import { computed, defineComponent, getCurrentInstance, h, inject, PropType } from 'vue';
 
 	import {useApp} from '../../hooks/use-app';
-	import type { ISchemasNode} from '@qimao/quantum-schemas';
+	import type { ISchemasNode} from '@quantum-lowcode/schemas';
 
 	export default defineComponent({
 	  props: {

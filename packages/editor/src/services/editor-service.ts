@@ -16,19 +16,19 @@ import {
     ISchemasRoot,
     Id,
     NodeType
-} from '@qimao/quantum-schemas';
+} from '@quantum-lowcode/schemas';
 import {
     getNodePath,
     isFixed,
     isPage,
-    js_is_array,
-    js_is_empty,
-    js_is_number,
-    js_is_object,
+    isArray,
+    isEmpty,
+    isNumber,
+    isObject,
     Subscribe
-} from '@qimao/quantum-utils';
-import { BoxCore } from '@qimao/quantum-sandbox';
-import { calcValueByDesignWidth } from '@qimao/quantum-utils';
+} from '@quantum-lowcode/utils';
+import { BoxCore } from '@quantum-lowcode/sandbox';
+import { calcValueByDesignWidth } from '@quantum-lowcode/utils';
 import { historyService } from './history-service';
 import { cloneDeep, mergeWith, uniq } from 'lodash-es';
 import {
@@ -76,12 +76,12 @@ class EditorService extends Subscribe {
         }
 
         if (key === 'root') {
-            if (js_is_array(value)) {
+            if (isArray(value)) {
                 throw new Error('root 不能为数组');
             }
             if (
                 value &&
-				js_is_object(value) &&
+				isObject(value) &&
 				!(value instanceof BoxCore) &&
 				!(value instanceof Map)
             ) {
@@ -308,7 +308,7 @@ class EditorService extends Subscribe {
 
         // 新增多个组件只存在于粘贴多个组件,粘贴的是一个完整的config,所以不再需要getPropsValue
         const addNodes = [];
-        if (js_is_array(addNode)) {
+        if (isArray(addNode)) {
             addNodes.push(...addNode);
         } else {
             const { type, inputEvent: _inputEvent, ...config } = addNode;
@@ -379,11 +379,11 @@ class EditorService extends Subscribe {
             if (srcVal?.events || srcVal?.backgroundSize) {
                 return srcVal;
             }
-            if (js_is_object(srcVal) && js_is_array(objVal)) {
+            if (isObject(srcVal) && isArray(objVal)) {
                 // 原来的配置是数组，新的配置是对象，则直接使用新的值
                 return srcVal;
             }
-            if (js_is_array(srcVal)) {
+            if (isArray(srcVal)) {
                 return srcVal;
             }
         });
@@ -409,7 +409,7 @@ class EditorService extends Subscribe {
         const layout = this.getLayout(node);
         console.log('layout', newLayout, layout);
         console.log('newConfig', newConfig);
-        if (js_is_array(newConfig.children) && newLayout !== layout) {
+        if (isArray(newConfig.children) && newLayout !== layout) {
             newConfig = setChildrenLayout(newConfig, newLayout);
         }
 
@@ -448,7 +448,7 @@ class EditorService extends Subscribe {
         config: ISchemasNode | ISchemasNode[]
     ): Promise<ISchemasNode | ISchemasNode[]> {
         console.log('editorService.update')
-        const nodes = js_is_array(config) ? config : [config];
+        const nodes = isArray(config) ? config : [config];
         const newNodes = await Promise.all(
             nodes.map((node) => this.updateHelper(node))
         );
@@ -459,7 +459,7 @@ class EditorService extends Subscribe {
 
         // this.updateHandler();
         this.emit('update', newNodes);
-        return js_is_array(config) ? newNodes : newNodes[0];
+        return isArray(config) ? newNodes : newNodes[0];
     }
 
     public async deleteHelper(node: ISchemasNode) {
@@ -472,7 +472,7 @@ class EditorService extends Subscribe {
 
         const index = getNodeIndex(curNode.field, parent);
 
-        if (!js_is_number(index) || index < 0) throw new Error('找不要删除的节点');
+        if (!isNumber(index) || index < 0) throw new Error('找不要删除的节点');
 
         parent.children?.splice(index, 1);
 
@@ -512,7 +512,7 @@ class EditorService extends Subscribe {
     public async delete(
         nodeOrNodeList: ISchemasNode | ISchemasNode[]
     ): Promise<void> {
-        const nodes = js_is_array(nodeOrNodeList)
+        const nodes = isArray(nodeOrNodeList)
             ? nodeOrNodeList
             : [nodeOrNodeList];
 
@@ -582,7 +582,7 @@ class EditorService extends Subscribe {
      * @param config 组件节点配置
      */
     public copy(config: ISchemasNode | ISchemasNode[]) {
-        storageService.setItem(COPY_STORAGE_KEY, js_is_array(config) ? config : [config], {
+        storageService.setItem(COPY_STORAGE_KEY, isArray(config) ? config : [config], {
             protocol: Protocol.OBJECT,
         });
     }
@@ -600,7 +600,7 @@ class EditorService extends Subscribe {
      */
     public paste(position: IPastePosition = {}) {
         const config = storageService.getItem(COPY_STORAGE_KEY);
-        if (!js_is_array(config)) return;
+        if (!isArray(config)) return;
 
         const node = this.get('node');
 
@@ -691,7 +691,7 @@ class EditorService extends Subscribe {
             const layout = this.getLayout(targetContainer);
 
             const newConfig = mergeWith(cloneDeep(node), config, (o,n) => {
-                if (js_is_array(n)) {
+                if (isArray(n)) {
                     return n
                 }
             })
@@ -741,7 +741,7 @@ class EditorService extends Subscribe {
             if (parentEl && el) {
                 node.style.left = calcValueByDesignWidth(doc, (parentEl.clientWidth - el.clientWidth) / 2, editorService.get('root')?.designWidth);
                 node.style.right = '';
-            } else if (parent.style && js_is_number(parent.style?.width) && js_is_number(node.style?.width)) {
+            } else if (parent.style && isNumber(parent.style?.width) && isNumber(node.style?.width)) {
                 node.style.left = (parent.style.width - node.style.width) / 2
                 node.style.right = '';
             }
@@ -755,7 +755,7 @@ class EditorService extends Subscribe {
      * @returns 当前组件节点配置
      */
     public async alignCenter(config:ISchemasNode | ISchemasNode[]) {
-        const nodes = js_is_array(config) ? config : [config];
+        const nodes = isArray(config) ? config : [config];
         const sandbox = this.get('sandbox');
 
         const newNodes = nodes.map((node) => {
@@ -777,7 +777,7 @@ class EditorService extends Subscribe {
         if (!newParent ) {
             return;
         }
-        if (!js_is_array(newParent.children)) {
+        if (!isArray(newParent.children)) {
             newParent.children = []
         };
         const { parent, node: curNode } = this.getNodeInfo(config.field, false);
@@ -955,7 +955,7 @@ class EditorService extends Subscribe {
         const finConfigs = config.map((item) => {
             const { offsetX = 0, offsetY = 0, ...positionClone } = position;
             let pastePosition = positionClone;
-            if (!js_is_empty(pastePosition) && curNode?.children) {
+            if (!isEmpty(pastePosition) && curNode?.children) {
                 // 如果没有传入粘贴坐标则可能为键盘操作，不再转换
                 // 如果粘贴时选中了容器，则将元素粘贴到容器内，坐标需要转换为相对于容器的坐标
                 pastePosition = this.getPositionInContainer(pastePosition, curNode.field);

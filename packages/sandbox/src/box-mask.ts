@@ -4,7 +4,7 @@ import {
     createElement,
     isFixedParent,
     getScrollParent
-} from '@qimao/quantum-utils';
+} from '@quantum-lowcode/utils';
 import { IRuleOptions } from './types';
 
 const wrapperClassName = 'editor-mask-wrapper';

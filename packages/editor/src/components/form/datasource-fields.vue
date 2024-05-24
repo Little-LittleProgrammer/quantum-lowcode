@@ -13,9 +13,9 @@
 </template>
 
 <script lang="ts" setup>
-import { useTable } from '@q-front-npm/vue3-antd-pc-ui';
-import { IDataSchema } from '@qimao/quantum-schemas';
-import { js_utils_get_uuid } from '@qimao/quantum-utils';
+import { useTable } from '@quantum-design/vue3-antd-pc-ui';
+import { IDataSchema } from '@quantum-lowcode/schemas';
+import { js_utils_get_uuid } from '@quantum-lowcode/utils';
 import { cloneDeep } from 'lodash-es';
 import { computed, nextTick, unref } from 'vue';
 

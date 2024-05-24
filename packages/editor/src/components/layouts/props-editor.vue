@@ -26,7 +26,7 @@
 <script lang="ts" setup>
 import { computed, inject, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { IFormValue, IServices } from '../../types';
-import { js_is_array, js_is_number } from '@qimao/quantum-utils';
+import { isArray, isNumber } from '@quantum-lowcode/utils';
 defineOptions({
     name: 'PropsEditor',
 });
@@ -52,7 +52,7 @@ const curStyleSwitch = ref(1);
 
 const init = async(changeNode=false) => {
     curStyleSwitch.value = 1
-    if (js_is_array(valuesFn.value)) {
+    if (isArray(valuesFn.value)) {
         for (const item of valuesFn.value) {
             await item.reset?.();
         }
@@ -90,7 +90,7 @@ watch(() => node.value, (val, oldVal) => {
 });
 
 function changeValue(value) {
-    if (js_is_number(value.customStyleSwitch)) {
+    if (isNumber(value.customStyleSwitch)) {
         if (value.customStyleSwitch !== curStyleSwitch.value) {
             curStyleSwitch.value = value.customStyleSwitch
             return

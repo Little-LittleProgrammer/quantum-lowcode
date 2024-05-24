@@ -11,7 +11,7 @@ hero:
           link: /help-code/guide/introduction.md
           theme: brand
         - text: Github 🔗
-          link: https://codeup.aliyun.com/qimao/front/quantum-lowcode/tree/main
+          link: https://github.com/Little-LittleProgrammer/quantum-lowcode
           theme: alt
 
 features:

@@ -1,9 +1,9 @@
-import { LowCodeRoot } from '@qimao/quantum-core';
+import { LowCodeRoot } from '@quantum-lowcode/core';
 import { createApp } from 'vue';
-import * as components from '@qimao/quantum-ui';
+import * as components from '@quantum-lowcode/ui';
 import App from './App.vue';
 if (import.meta.env.PROD) {
-    import('@qimao/quantum-ui/dist/es/style/index.css');
+    import('@quantum-lowcode/ui/dist/es/style/index.css');
 }
 
 const app = new LowCodeRoot({});

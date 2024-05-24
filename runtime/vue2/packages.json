@@ -1,5 +1,5 @@
 {
-    "name": "@qimao/quantum-render-vue2",
+    "name": "@quantum-lowcode/render-vue2",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",

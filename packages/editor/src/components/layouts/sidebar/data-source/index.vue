@@ -43,12 +43,12 @@
 </template>
 
 <script lang='ts' setup>
-import { IDataSourceSchema } from '@qimao/quantum-schemas';
-import { js_is_array } from '@qimao/quantum-utils';
+import { IDataSourceSchema } from '@quantum-lowcode/schemas';
+import { isArray } from '@quantum-lowcode/utils';
 import { IServices } from '../../../../types';
 import { computed, inject, ref } from 'vue';
 import {Modal} from 'ant-design-vue';
-import { useDrawer } from '@q-front-npm/vue3-antd-pc-ui';
+import { useDrawer } from '@quantum-design/vue3-antd-pc-ui';
 import DataEdit from './data-edit.vue';
 
 defineOptions({
@@ -69,7 +69,7 @@ const datasourceTypeList = computed(() =>
 );
 
 function formatTree(type: 'fields' | 'methods', ds: IDataSourceSchema) {
-    if (js_is_array(ds[type]) && ds[type].length > 0) {
+    if (isArray(ds[type]) && ds[type].length > 0) {
         const enums = {
             fields: '数据',
             methods: '方法',

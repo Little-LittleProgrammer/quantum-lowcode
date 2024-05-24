@@ -1,6 +1,6 @@
 
 import {getConfig} from '../utils';
-import { serializeToString } from '@qimao/quantum-utils';
+import { serializeToString } from '@quantum-lowcode/utils';
 
 interface Options {
     namespace?: string;

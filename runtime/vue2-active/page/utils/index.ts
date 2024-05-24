@@ -16,8 +16,8 @@
  * limitations under the License.
  */
 
-import { ISchemasRoot } from '@qimao/quantum-schemas';
-import { parseSchemas } from '@qimao/quantum-utils';
+import { ISchemasRoot } from '@quantum-lowcode/schemas';
+import { parseSchemas } from '@quantum-lowcode/utils';
 
 export const getLocalConfig = (): ISchemasRoot[] => {
     const configStr = localStorage.getItem('PAGE_JSON');

@@ -7,7 +7,7 @@
   import { PropType, defineComponent, ref } from 'vue';
   import Container from '../../q-container/src/container.vue';
   
-  import type { ISchemasNode} from '@qimao/quantum-schemas';
+  import type { ISchemasNode} from '@quantum-lowcode/schemas';
   
   import {useApp} from '../../hooks/use-app';
   

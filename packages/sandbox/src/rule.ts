@@ -1,4 +1,4 @@
-import { Subscribe } from '@qimao/quantum-utils';
+import { Subscribe } from '@quantum-lowcode/utils';
 import { IRuleOptions } from './types';
 import { GuidesType } from './const';
 

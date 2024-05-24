@@ -1,4 +1,4 @@
-// import { addTableEditComp } from "@q-front-npm/vue3-antd-pc-ui";
+// import { addTableEditComp } from "@quantum-design/vue3-antd-pc-ui";
 // import { Cascader } from "ant-design-vue";
 import { IServices } from "../types";
 import { computed } from "vue";

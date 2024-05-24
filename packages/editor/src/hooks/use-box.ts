@@ -1,10 +1,10 @@
-import { BoxCore } from '@qimao/quantum-sandbox';
+import { BoxCore } from '@quantum-lowcode/sandbox';
 import { editorService } from '../services/editor-service';
 import { uiService } from '../services/ui-service';
 import { computed, watch } from 'vue';
 import { UI_SELECT_MODE_EVENT_NAME, IBoxOptions } from '../types';
-import { IRemoveEventData, IUpdateEventData } from '@qimao/quantum-sandbox/src/types';
-import { ISchemasNode } from '@qimao/quantum-schemas';
+import { IRemoveEventData, IUpdateEventData } from '@quantum-lowcode/sandbox/src/types';
+import { ISchemasNode } from '@quantum-lowcode/schemas';
 
 const root = computed(() => editorService.get('root'));
 const page = computed(() => editorService.get('page'));

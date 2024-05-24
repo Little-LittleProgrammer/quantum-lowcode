@@ -1,5 +1,5 @@
-import { js_is_base, js_is_function, js_is_object, js_is_reg_exp, js_is_string, js_is_un_def, js_utils_edit_attr, js_utils_find_attr, serializeToString } from '@q-front-npm/utils';
-import { Fn, ISchemasContainer, ISchemasNode, ISchemasPage, Id, NodeType } from '@qimao/quantum-schemas';
+import { isBase, isFunction, isObject, isRegExp, isString, isUnDef, js_utils_edit_attr, js_utils_find_attr, serializeToString } from '@quantum-design/utils';
+import { Fn, ISchemasContainer, ISchemasNode, ISchemasPage, Id, NodeType } from '@quantum-lowcode/schemas';
 
 export function getHost(url: string) {
     return url.match(/\/\/([^/]+)/)?.[1];
@@ -73,7 +73,7 @@ export function stringToBoolean(val: string) {
 
 export function parseSchemas(schema: string | Record<string, any>) {
     let firstDeal: Record<string, any> = {};
-    if (!js_is_object(schema)) {
+    if (!isObject(schema)) {
         if (!schema.startsWith('(')) {
             schema = `(${schema}`;
         }
@@ -92,7 +92,7 @@ export function parseSchemas(schema: string | Record<string, any>) {
         return new _c();
     }
     function dfs(target: any, map = new Map()) {
-        if (js_is_string(target)) {
+        if (isString(target)) {
             if ((target.includes('function') || target.includes('=>'))) {
                 target = target.replace(/;/g, '\n');
                 // eslint-disable-next-line no-eval
@@ -105,7 +105,7 @@ export function parseSchemas(schema: string | Record<string, any>) {
             //     return +target;
             // }
         }
-        if (js_is_base(target) || js_is_reg_exp(target) || js_is_function(target)) {
+        if (isBase(target) || isRegExp(target) || isFunction(target)) {
             return target;
         }
         const _temp = check_temp(target);
@@ -127,7 +127,7 @@ export function parseSchemas(schema: string | Record<string, any>) {
 
 export function parseFunction(func: string | Fn, ...agrs: string[]) {
     let _fn = '';
-    if (js_is_function(func)) {
+    if (isFunction(func)) {
         _fn = serializeToString(func);
     }
     const _lastIndex = _fn.lastIndexOf('}');
@@ -151,7 +151,7 @@ export function getDefaultValueFromFields(obj: Record<string, any>[]) {
         boolean: false,
         number: 0,
         null: null,
-        any: undefined,
+        any: undefined
     };
 
     obj.forEach((field: any) => {
@@ -161,7 +161,7 @@ export function getDefaultValueFromFields(obj: Record<string, any>[]) {
                 return;
             }
 
-            if (field.type === 'object' && !js_is_object(field.defaultValue)) {
+            if (field.type === 'object' && !isObject(field.defaultValue)) {
                 if (typeof field.defaultValue === 'string') {
                     try {
                         data[field.name] = JSON.parse(field.defaultValue);
@@ -241,11 +241,11 @@ export const getNeedKey = (node: ISchemasNode) => {
     const keys: string[] = [];
     function dfs(obj: Record<string, any>, path = '') {
         for (const key in obj) {
-            if (js_is_object(obj[key])) {
+            if (isObject(obj[key])) {
                 dfs(obj[key], `${path}${key}.`);
             } else {
                 const finKey = key;
-                if (js_is_string(obj[key]) && obj[finKey].includes('${') && obj[finKey].includes('}')) {
+                if (isString(obj[key]) && obj[finKey].includes('${') && obj[finKey].includes('}')) {
                     keys.push(`${path}${key}`);
                 }
             }
@@ -286,7 +286,7 @@ export function compiledNode(
         js_utils_edit_attr(key, newValue, node);
     });
 
-    // if (js_is_array(node.children)) {
+    // if (isArray(node.children)) {
     //     node.children.forEach(item => compiledNode(item, compile, sourceId));
     // }
     return node;
@@ -300,7 +300,7 @@ export function compiledNode(
  */
 export const addParamToUrl = (obj: Record<string, any>, global = globalThis, needReload = true) => {
     const url = new URL(global.location.href);
-    const { searchParams, } = url;
+    const { searchParams } = url;
     for (const [k, v] of Object.entries(obj)) {
         searchParams.set(k, v);
     }
@@ -313,7 +313,7 @@ export const addParamToUrl = (obj: Record<string, any>, global = globalThis, nee
 };
 
 export function compliedCondition(op: string, fieldValue: any, inputValue: any, range: number[] = []): boolean {
-    if (js_is_string(fieldValue) && js_is_un_def(fieldValue)) {
+    if (isString(fieldValue) && isUnDef(fieldValue)) {
         inputValue = '';
     }
     switch (op) {
@@ -354,7 +354,7 @@ export function isPage(node?: ISchemasPage | null): boolean {
 
 export function isContainerNode(node?: ISchemasContainer | null | string): boolean {
     if (!node) return false;
-    if (js_is_string(node)) {
+    if (isString(node)) {
         return node.toLowerCase().includes('container');
     }
     return Boolean(node.type === NodeType.CONTAINER);

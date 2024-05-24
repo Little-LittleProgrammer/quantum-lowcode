@@ -1,4 +1,4 @@
-import { isFixedParent, js_utils_get_uuid } from '@qimao/quantum-utils';
+import { isFixedParent, js_utils_get_uuid } from '@quantum-lowcode/utils';
 import { Mode, ZIndex } from './const';
 import { ITargetElement, ITargetShadowConfig, IUpdateDragEl } from './types';
 import { getTargetElStyle } from './utils';

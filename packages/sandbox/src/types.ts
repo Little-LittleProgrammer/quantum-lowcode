@@ -1,10 +1,10 @@
-import type { LowCodeRoot } from '@qimao/quantum-core';
+import type { LowCodeRoot } from '@quantum-lowcode/core';
 import type {
     ISchemasContainer,
     ISchemasNode,
     ISchemasRoot,
     Id
-} from '@qimao/quantum-schemas';
+} from '@quantum-lowcode/schemas';
 import type { MoveableOptions as GlobalMoveableOptions } from 'moveable';
 import { ContainerHighlightType, GuidesType, ZIndex } from './const';
 import DragResizeHelper from './box-drag-resize-helper';

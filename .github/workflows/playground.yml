@@ -1,0 +1,52 @@
+name: Build Playground
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/playground/**'
+      - 'apps/**'
+      - 'packages/**'
+      - 'runtime/**'
+      - 'turbo.json'
+      - 'package.json'
+      - '.github/workflows/playground.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install pnpm
+      uses: pnpm/action-setup@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18' # 使用适合你项目的Node.js版本
+        cache: 'pnpm'
+
+    - run: pnpm i
+
+    - name: Build Playground
+      run: pnpm build --filter=playground
+
+    - name: Build docs
+      run: pnpm build --filter=quantum-docs
+
+    - name: mkdir dist
+      run: mkdir dist && mkdir dist/docs && mkdir dist/playground
+    
+    - name: move to dist
+      run: mv apps/quantum-docs/dist/* dist/docs && mv apps/playground/dist/* dist/playground
+
+    - name: Deploy to GitHub Pages
+      uses: crazy-max/ghaction-github-pages@v2
+      with:
+        target_branch: gh-pages
+        build_dir: dist
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -14,9 +14,9 @@
 <script lang="ts">
 import { computed, defineComponent, PropType, ref, markRaw, getCurrentInstance, provide, set } from 'vue';
 
-import type {Fn, ISchemasNode} from '@qimao/quantum-schemas';
+import type {Fn, ISchemasNode} from '@quantum-lowcode/schemas';
 import {useApp} from '../../hooks/use-app';
-import {js_is_function, js_is_object} from '@qimao/quantum-utils';
+import {isFunction, isObject} from '@quantum-lowcode/utils';
 
 export default defineComponent({
     props: {
@@ -33,7 +33,7 @@ export default defineComponent({
         const ifShow = computed(() => {
             if (props.config.showResult === false) return false
             if (props.config.ifShow) {
-                if (js_is_function(props.config.ifShow)) {
+                if (isFunction(props.config.ifShow)) {
                     return (props.config.ifShow as Fn)(app);
                 }
                 return props.config.ifShow !== false;
@@ -43,7 +43,7 @@ export default defineComponent({
         });
         const refRuntimeComp = ref();
         const getStyle = computed(() => {
-            if (props.config.style && js_is_function(props.config.style)) {
+            if (props.config.style && isFunction(props.config.style)) {
                 (props.config.style as any)(refRuntimeComp.value?.$el);
                 return {};
             }
@@ -51,7 +51,7 @@ export default defineComponent({
         });
         const propsBind = computed(() => {
             const obj: Record<string, any> = {};
-            if (props.config.componentProps && js_is_object(props.config.componentProps)) {
+            if (props.config.componentProps && isObject(props.config.componentProps)) {
                 for (const [key, val] of Object.entries(props.config.componentProps)) {
                     if (!key.startsWith('on')) {
                         obj[key] = val;
@@ -62,7 +62,7 @@ export default defineComponent({
         });
         const propsOn = computed(() => {
             const obj: Record<string, any> = {};
-            if (props.config.componentProps && js_is_object(props.config.componentProps)) {
+            if (props.config.componentProps && isObject(props.config.componentProps)) {
                 for (const [key, val] of Object.entries(props.config.componentProps)) {
                     if (key.startsWith('on')) {
                         const _subKey = key.slice(2).toLowerCase();

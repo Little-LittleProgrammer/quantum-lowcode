@@ -1,6 +1,6 @@
 import { IInstallOptions } from './src/types';
 import { setConfig } from './src/utils';
-import { parseSchemas } from '@qimao/quantum-utils';
+import { parseSchemas } from '@quantum-lowcode/utils';
 
 export * from './src/hooks';
 export * from './src/types';

@@ -4,7 +4,7 @@ import {
     js_utils_dom_remove_class,
     js_utils_throttle_event,
     getDocument
-} from '@qimao/quantum-utils';
+} from '@quantum-lowcode/utils';
 import {
     GetContainer,
     GetElementsFromPoint,
@@ -20,7 +20,7 @@ import {
     IsContainer
 } from './types';
 import { BoxHighlight } from './box-highlight';
-import { Id } from '@qimao/quantum-schemas';
+import { Id } from '@quantum-lowcode/schemas';
 import { BoxDragResize } from './box-drag-resize';
 import {
     BoxDragStatus,
@@ -35,7 +35,7 @@ import {
 import { MoveableOptions, OnDragStart } from 'moveable';
 import { BoxMultiDragResize } from './box-multi-drag-resize';
 import DragResizeHelper from './box-drag-resize-helper';
-import { Env } from '@qimao/quantum-core';
+import { Env } from '@quantum-lowcode/core';
 import KeyController from 'keycon';
 import { isMoveableButton } from './utils';
 

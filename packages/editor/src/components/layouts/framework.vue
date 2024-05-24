@@ -37,8 +37,8 @@ import { computed, inject } from 'vue';
 import splitView from '../base/split-view.vue';
 import {getConfig} from '../../utils';
 import { Empty } from 'ant-design-vue';
-import { serializeToString } from '@qimao/quantum-utils';
-import { ISchemasRoot } from '@qimao/quantum-schemas';
+import { serializeToString } from '@quantum-lowcode/utils';
+import { ISchemasRoot } from '@quantum-lowcode/schemas';
 import { IServices } from '../../types';
 defineOptions({
     name: 'QEditorFramework',
