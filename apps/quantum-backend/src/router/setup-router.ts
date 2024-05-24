@@ -33,7 +33,7 @@ function cancel_page_loading(router: Router) {
 
 // 设置进度条
 function set_progress(router: Router) {
-    const {getShowNProgress} = useProjectSetting();
+    const {getShowNProgress, } = useProjectSetting();
     if (getShowNProgress.value) {
         router.beforeEach(async() => {
             NProgress.start();
@@ -72,23 +72,13 @@ function create_permission_route(router: Router) { // 是否包含权限管理
         const _initRouter:RouteRecordRaw[] = [
             {
                 path: '/',
-                redirect: '/backend',
+                redirect: '/backend/editor/editor-page?runtimePathType=vue2',
                 name: 'first',
                 meta: {
                     title: '第一初始页面',
                     pid: '0',
-                    id: 'first'
-                }
-            },
-            {
-                path: '/backend',
-                redirect: '/backend/manage', // 默认初始页面
-                name: 'home',
-                meta: {
-                    title: '初始页面',
-                    pid: 'first',
-                    id: 'home'
-                }
+                    id: 'first',
+                },
             }
         ];
         _initRouter.forEach(route => {
@@ -98,7 +88,7 @@ function create_permission_route(router: Router) { // 是否包含权限管理
             const isInitPath = router.currentRoute.value.fullPath.split('/').length === 2;
             if (isInitPath) {
                 router.push({
-                    path: '/'
+                    path: '/',
                 });
             }
         }, 1500);

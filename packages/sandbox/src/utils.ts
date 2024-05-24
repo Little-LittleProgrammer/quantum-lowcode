@@ -40,13 +40,14 @@ export function removeSelectedClassName(doc: Document) {
 }
 
 // 将蒙层占位节点覆盖在原节点上方
-export function getTargetElStyle(el: ITargetElement, zIndex?: ZIndex) {
+export function getTargetElStyle(el: ITargetElement, zIndex?: ZIndex, sub?: number) {
+    sub = sub || 0;
     const offset = js_utils_dom_offset(el as HTMLElement);
     const { transform, border, } = getComputedStyle(el);
     return `
       position: absolute;
       transform: ${transform};
-      left: ${offset.left}px;
+      left: ${offset.left - sub}px;
       top: ${offset.top}px;
       width: ${el.clientWidth}px;
       height: ${el.clientHeight}px;
@@ -54,24 +55,6 @@ export function getTargetElStyle(el: ITargetElement, zIndex?: ZIndex) {
       opacity: 0;
       ${typeof zIndex !== 'undefined' ? `z-index: ${zIndex};` : ''}
     `;
-}
-
-export function calcValueByDesignWidth(doc: Document, value: number, designWidth = DEFAULT_DESIGN_WIDTH) {
-    // const { fontSize, } = doc.documentElement.style;
-
-    const maxWidth = globalThis.getComputedStyle(doc.documentElement).width;
-    console.log(designWidth);
-    if (maxWidth) {
-        const times = globalThis.parseFloat(maxWidth);
-        return Number((value * designWidth / times).toFixed(2));
-    }
-
-    // if (fontSize) {
-    //     const times = globalThis.parseFloat(fontSize);
-    //     return Number((value / times).toFixed(2));
-    // }
-
-    return value;
 }
 
 export function getMarginValue(el: Element) {

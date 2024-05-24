@@ -167,11 +167,14 @@ export interface IComponentGroupState {
 export interface IComponentGroup {
     /** 显示文案 */
     text: string;
+    helpMessage?: string;
     /** 组内列表 */
     children: IComponentItem[];
 }
 
 export interface IComponentItem {
+    /**类型 */
+    itemType?: 'add' | 'cover'
     /** 显示文案 */
     text: string;
     /** 详情，用于tooltip */

@@ -42,23 +42,23 @@ importers:
         specifier: 6.1.0
         version: 6.1.0(vue@3.3.13)
       '@q-front-npm-configs/vite':
-        specifier: ~1.2.5-beta.1
-        version: 1.2.5-beta.1(@types/node@20.2.5)(postcss@8.4.35)(rollup@2.79.1)(typescript@5.1.3)(vite@4.5.2)(vue@3.3.13)(workbox-build@7.0.0)(workbox-window@7.0.0)
+        specifier: ~1.2.5
+        version: 1.2.5(@types/node@20.2.5)(postcss@8.4.35)(rollup@2.79.1)(typescript@5.1.3)(vite@4.5.2)(vue@3.3.13)(workbox-build@7.0.0)(workbox-window@7.0.0)
       '@q-front-npm/hooks':
-        specifier: ~1.2.5-beta.1
-        version: 1.2.5-beta.1(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(vue-router@4.2.5)(vue@3.3.13)
+        specifier: ~1.2.5
+        version: 1.2.5(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(vue-router@4.2.5)(vue@3.3.13)
       '@q-front-npm/http':
-        specifier: ~1.2.9-beta.2
-        version: 1.2.9-beta.2
+        specifier: ~1.2.9
+        version: 1.2.9
       '@q-front-npm/shared':
-        specifier: ~1.2.4-beta.0
-        version: 1.2.4-beta.0
+        specifier: ~1.2.4
+        version: 1.2.4
       '@q-front-npm/vue3-antd-pc-ui':
-        specifier: ~1.2.10-beta.5
-        version: 1.2.10-beta.5(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(pinia@2.1.7)(vue-router@4.2.5)(vue@3.3.13)
+        specifier: ~1.2.10
+        version: 1.2.10(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(pinia@2.1.7)(vue-router@4.2.5)(vue@3.3.13)
       '@q-front-npm/vue3-pc-ui':
-        specifier: ~1.2.5-beta.5
-        version: 1.2.5-beta.5(vue-router@4.2.5)(vue@3.3.13)
+        specifier: ~1.2.5
+        version: 1.2.5(vue-router@4.2.5)(vue@3.3.13)
       '@qimao/quantum-core':
         specifier: workspace:*
         version: link:../../packages/core
@@ -87,7 +87,7 @@ importers:
         specifier: 1.2.4
         version: 1.2.4
       lodash-es:
-        specifier: 4.17.21
+        specifier: ^4.17.21
         version: 4.17.21
       monaco-editor:
         specifier: ^0.44.0
@@ -169,8 +169,8 @@ importers:
         specifier: ^6.1.0
         version: 6.1.0(vue@3.3.13)
       '@q-front-npm/shared':
-        specifier: ~1.2.4-beta.0
-        version: 1.2.4-beta.0
+        specifier: ~1.2.4
+        version: 1.2.4
       ant-design-vue:
         specifier: ^4.0.6
         version: 4.0.8(vue@3.3.13)
@@ -215,6 +215,9 @@ importers:
       '@rollup/plugin-alias':
         specifier: 5.1.0
         version: 5.1.0(rollup@3.29.4)
+      '@types/lodash-es':
+        specifier: ^4.17.6
+        version: 4.17.6
       rollup:
         specifier: ^3.29.4
         version: 3.29.4
@@ -241,14 +244,14 @@ importers:
   packages/editor:
     dependencies:
       '@q-front-npm-configs/vite':
-        specifier: ~1.2.5-beta.1
-        version: 1.2.5-beta.1(@types/node@20.2.5)(postcss@8.4.35)(typescript@5.1.3)(vite@4.5.2)(vue@3.3.13)(workbox-build@7.0.0)(workbox-window@7.0.0)
+        specifier: ~1.2.5
+        version: 1.2.5(@types/node@20.2.5)(postcss@8.4.35)(typescript@5.1.3)(vite@4.5.2)(vue@3.3.13)(workbox-build@7.0.0)(workbox-window@7.0.0)
       '@q-front-npm/vue3-antd-pc-ui':
-        specifier: ~1.2.10-beta.5
-        version: 1.2.10-beta.5(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(pinia@2.1.7)(vue-router@4.2.5)(vue@3.3.13)
+        specifier: ~1.2.10
+        version: 1.2.10(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(pinia@2.1.7)(vue-router@4.2.5)(vue@3.3.13)
       '@q-front-npm/vue3-pc-ui':
-        specifier: ~1.2.5-beta.5
-        version: 1.2.5-beta.5(vue-router@4.2.5)(vue@3.3.13)
+        specifier: ~1.2.5
+        version: 1.2.5(vue-router@4.2.5)(vue@3.3.13)
       '@qimao/quantum-core':
         specifier: workspace:*
         version: link:../core
@@ -354,8 +357,8 @@ importers:
   packages/ui:
     dependencies:
       '@q-front-npm/vue3-antd-pc-ui':
-        specifier: ~1.2.10-beta.5
-        version: 1.2.10-beta.5(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(pinia@2.1.7)(vue-router@4.2.5)(vue@3.3.13)
+        specifier: ~1.2.10
+        version: 1.2.10(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(pinia@2.1.7)(vue-router@4.2.5)(vue@3.3.13)
       '@qimao/quantum-core':
         specifier: workspace:*
         version: link:../core
@@ -370,8 +373,8 @@ importers:
         specifier: ^6.1.0
         version: 6.1.0(vue@3.3.13)
       '@q-front-npm-configs/vite':
-        specifier: ~1.2.5-beta.1
-        version: 1.2.5-beta.1(@types/node@20.2.5)(postcss@8.4.35)(typescript@5.1.3)(vite@4.5.2)(vue@3.3.13)(workbox-build@7.0.0)(workbox-window@7.0.0)
+        specifier: ~1.2.5
+        version: 1.2.5(@types/node@20.2.5)(postcss@8.4.35)(typescript@5.1.3)(vite@4.5.2)(vue@3.3.13)(workbox-build@7.0.0)(workbox-window@7.0.0)
       '@q-front-npm/types':
         specifier: ~1.2.1
         version: 1.2.1
@@ -407,8 +410,8 @@ importers:
         version: link:../utils
     devDependencies:
       '@q-front-npm/shared':
-        specifier: ~1.2.4-beta.0
-        version: 1.2.4-beta.0
+        specifier: ~1.2.4
+        version: 1.2.4
       '@q-front-npm/types':
         specifier: ~1.2.1
         version: 1.2.1
@@ -434,8 +437,8 @@ importers:
   packages/utils:
     dependencies:
       '@q-front-npm/utils':
-        specifier: ~1.2.5-beta.1
-        version: 1.2.5-beta.1
+        specifier: ~1.2.5
+        version: 1.2.5
       '@qimao/quantum-schemas':
         specifier: workspace:*
         version: link:../schemas
@@ -450,8 +453,8 @@ importers:
   runtime/vue2-active:
     dependencies:
       '@q-front-npm/http':
-        specifier: ^1.2.9-beta.2
-        version: 1.2.9-beta.2
+        specifier: ^1.2.9
+        version: 1.2.9
       '@q-front-npm/vue2-active-ui':
         specifier: 1.0.1-beta.0
         version: 1.0.1-beta.0(postcss-pxtorem@6.1.0)(vue@2.7.16)
@@ -481,8 +484,8 @@ importers:
         version: 2.7.16
     devDependencies:
       '@q-front-npm/shared':
-        specifier: ~1.2.4-beta.0
-        version: 1.2.4-beta.0
+        specifier: ~1.2.4
+        version: 1.2.4
       '@vitejs/plugin-vue2':
         specifier: ^2.2.0
         version: 2.3.1(vite@4.5.2)(vue@2.7.16)
@@ -496,11 +499,11 @@ importers:
   runtime/vue3-backend:
     dependencies:
       '@q-front-npm/http':
-        specifier: ^1.2.9-beta.2
-        version: 1.2.9-beta.2
+        specifier: ^1.2.9
+        version: 1.2.9
       '@q-front-npm/vue3-antd-pc-ui':
-        specifier: ~1.2.10-beta.5
-        version: 1.2.10-beta.5(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(pinia@2.1.7)(vue-router@4.2.5)(vue@3.3.13)
+        specifier: ~1.2.10
+        version: 1.2.10(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(pinia@2.1.7)(vue-router@4.2.5)(vue@3.3.13)
       '@qimao/quantum-core':
         specifier: workspace:*
         version: link:../../packages/core
@@ -527,8 +530,8 @@ importers:
         version: 3.3.13(typescript@5.1.3)
     devDependencies:
       '@q-front-npm/shared':
-        specifier: ~1.2.4-beta.0
-        version: 1.2.4-beta.0
+        specifier: ~1.2.4
+        version: 1.2.4
       '@vitejs/plugin-vue':
         specifier: ^4.3.4
         version: 4.6.2(vite@4.5.2)(vue@3.3.13)
@@ -2229,14 +2232,14 @@ packages:
     resolution: {integrity: sha512-By7QVBvVkP4FbwWEFhNauT/65UBrQD8drgbKoVzAGshNh+kUDaaRYXTu9tKrrRdbNS7vmi/asKobotsYCY9eag==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm-configs/tsconfig/-/@q-front-npm-configs/tsconfig-1.0.0.tgz}
     dev: true
 
-  /@q-front-npm-configs/vite@1.2.5-beta.1(@types/node@20.2.5)(postcss@8.4.35)(rollup@2.79.1)(typescript@5.1.3)(vite@4.5.2)(vue@3.3.13)(workbox-build@7.0.0)(workbox-window@7.0.0):
-    resolution: {integrity: sha512-MxpbRUjVcP4itlPOnDE9NHhpCfZUo+EirMvWFIgJZlcM3Fw4kqeSdrcZtkrffMkcKP6csUa3/iDGUBIzhSnNVw==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm-configs/vite/-/@q-front-npm-configs/vite-1.2.5-beta.1.tgz}
+  /@q-front-npm-configs/vite@1.2.5(@types/node@20.2.5)(postcss@8.4.35)(rollup@2.79.1)(typescript@5.1.3)(vite@4.5.2)(vue@3.3.13)(workbox-build@7.0.0)(workbox-window@7.0.0):
+    resolution: {integrity: sha512-wtbYto78OVZAnfiNqaGoqGIah1DyYqANrifiC56rZ1DS8jWQdg1m9tSdIBmJTJXpqkreXKT2b6Nbs+RbmQUToA==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm-configs/vite/-/@q-front-npm-configs/vite-1.2.5.tgz}
     peerDependencies:
       vite: ^4.5.1
       vue: ^3.3.0
     dependencies:
-      '@q-front-npm/shared': 1.2.4-beta.0
-      '@q-front-npm/utils': 1.2.5-beta.1
+      '@q-front-npm/shared': 1.2.4
+      '@q-front-npm/utils': 1.2.5
       '@sentry/vite-plugin': 2.14.3
       '@vitejs/plugin-vue': 4.6.2(vite@4.5.2)(vue@3.3.13)
       '@vitejs/plugin-vue-jsx': 3.1.0(vite@4.5.2)(vue@3.3.13)
@@ -2260,14 +2263,14 @@ packages:
       - workbox-window
     dev: false
 
-  /@q-front-npm-configs/vite@1.2.5-beta.1(@types/node@20.2.5)(postcss@8.4.35)(typescript@5.1.3)(vite@4.5.2)(vue@3.3.13)(workbox-build@7.0.0)(workbox-window@7.0.0):
-    resolution: {integrity: sha512-MxpbRUjVcP4itlPOnDE9NHhpCfZUo+EirMvWFIgJZlcM3Fw4kqeSdrcZtkrffMkcKP6csUa3/iDGUBIzhSnNVw==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm-configs/vite/-/@q-front-npm-configs/vite-1.2.5-beta.1.tgz}
+  /@q-front-npm-configs/vite@1.2.5(@types/node@20.2.5)(postcss@8.4.35)(typescript@5.1.3)(vite@4.5.2)(vue@3.3.13)(workbox-build@7.0.0)(workbox-window@7.0.0):
+    resolution: {integrity: sha512-wtbYto78OVZAnfiNqaGoqGIah1DyYqANrifiC56rZ1DS8jWQdg1m9tSdIBmJTJXpqkreXKT2b6Nbs+RbmQUToA==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm-configs/vite/-/@q-front-npm-configs/vite-1.2.5.tgz}
     peerDependencies:
       vite: ^4.5.1
       vue: ^3.3.0
     dependencies:
-      '@q-front-npm/shared': 1.2.4-beta.0
-      '@q-front-npm/utils': 1.2.5-beta.1
+      '@q-front-npm/shared': 1.2.4
+      '@q-front-npm/utils': 1.2.5
       '@sentry/vite-plugin': 2.14.3
       '@vitejs/plugin-vue': 4.6.2(vite@4.5.2)(vue@3.3.13)
       '@vitejs/plugin-vue-jsx': 3.1.0(vite@4.5.2)(vue@3.3.13)
@@ -2290,8 +2293,8 @@ packages:
       - workbox-build
       - workbox-window
 
-  /@q-front-npm/hooks@1.2.5-beta.1(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(vue-router@4.2.5)(vue@3.3.13):
-    resolution: {integrity: sha512-nx3n7HN1Q1AwydV/TfWr4RqlymN2NBA7VUYc2gT7eGs5PtXU7EbyyU5sc74JPCKRLMtW6b0mpcsek5VTai+XvQ==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/hooks/-/@q-front-npm/hooks-1.2.5-beta.1.tgz}
+  /@q-front-npm/hooks@1.2.5(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(vue-router@4.2.5)(vue@3.3.13):
+    resolution: {integrity: sha512-dEqg8a1JhiH7KAGm05Cm+NMwXmF5mBnOXKbnUGX66l4zCTs/47mQQfnf1bxsjRS8A5ooOXkGKs538bkSgNTpwg==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/hooks/-/@q-front-npm/hooks-1.2.5.tgz}
     peerDependencies:
       '@ant-design/icons-vue': ^6.1.0
       ant-design-vue: ^4.0.6
@@ -2299,9 +2302,9 @@ packages:
       vue-router: ^4.2.4
     dependencies:
       '@ant-design/icons-vue': 6.1.0(vue@3.3.13)
-      '@q-front-npm/shared': 1.2.4-beta.0
+      '@q-front-npm/shared': 1.2.4
       '@q-front-npm/types': 1.2.2
-      '@q-front-npm/utils': 1.2.5-beta.1
+      '@q-front-npm/utils': 1.2.5
       ant-design-vue: 4.0.8(vue@3.3.13)
       vue: 3.3.13(typescript@5.1.3)
       vue-router: 4.2.5(vue@3.3.13)
@@ -2316,11 +2319,11 @@ packages:
       - debug
     dev: false
 
-  /@q-front-npm/http@1.2.9-beta.2:
-    resolution: {integrity: sha512-7EVfciQmdZgH8M6p5/oJ3rEWxlZlaK2+YJwB/adKs93yHlgDZBPMyznkH3YIZ9jjHDNqMV82ErY4wcrcE5LByA==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/http/-/@q-front-npm/http-1.2.9-beta.2.tgz}
+  /@q-front-npm/http@1.2.9:
+    resolution: {integrity: sha512-COxn4jYp1WeJIMVFpWgmEGKh/lwegTaykUNKIUGdPZzC5oXy7hMiqnTqBDSnjw4X2A0L10FQ0S8Fn5msWw+xoA==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/http/-/@q-front-npm/http-1.2.9.tgz}
     dependencies:
-      '@q-front-npm/shared': 1.2.4-beta.0
-      '@q-front-npm/utils': 1.2.5-beta.1
+      '@q-front-npm/shared': 1.2.4
+      '@q-front-npm/utils': 1.2.5
       axios: 0.27.2
       crypto-js: 4.2.0
       lodash-es: 4.17.21
@@ -2329,8 +2332,8 @@ packages:
       - debug
     dev: false
 
-  /@q-front-npm/shared@1.2.4-beta.0:
-    resolution: {integrity: sha512-8XYJgh3HIKQbvaMUVOu65gVtAvvkr2Wq1fs66Udm1DxeRNH14jTnjjjbA0PIhf1ZeCIAVt5hR1v3+qPfI65QLw==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/shared/-/@q-front-npm/shared-1.2.4-beta.0.tgz}
+  /@q-front-npm/shared@1.2.4:
+    resolution: {integrity: sha512-CkmPzi2IUnmbohWviJaL+aDzfbzj3SDMkW8SdhjCtJJ6vA1pEWy6MuteJJG7ZeU4J3rRvHAzj0LCwEk1jQsn1Q==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/shared/-/@q-front-npm/shared-1.2.4.tgz}
 
   /@q-front-npm/types@1.2.1:
     resolution: {integrity: sha512-wfRwfLmlVL8aERFipMcFhW3yponh06M/N3jxWXnv3IB3A0rehBGP6GJTjIp9bdjOQPv1zvZDbFY1aX+12RjpnQ==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/types/-/@q-front-npm/types-1.2.1.tgz}
@@ -2346,10 +2349,10 @@ packages:
       md5: 2.3.0
     dev: false
 
-  /@q-front-npm/utils@1.2.5-beta.1:
-    resolution: {integrity: sha512-Tmki4Tcy3fmkvtKKhgDIJ/JBjXsdvi3LwZaI7tsmj5H8J/UMA8QtWVtKCG+bZ2XOjowBxyfmhdh/I0FuqOPfIA==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/utils/-/@q-front-npm/utils-1.2.5-beta.1.tgz}
+  /@q-front-npm/utils@1.2.5:
+    resolution: {integrity: sha512-gKr992tNqIFL6nhpsDg5yZ+bOW26Epybkxg4T0M0gnOPh2Fncoqnn25hFY7GspWfm6LMiX0qAQjmtDwl0PbDvw==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/utils/-/@q-front-npm/utils-1.2.5.tgz}
     dependencies:
-      '@q-front-npm/shared': 1.2.4-beta.0
+      '@q-front-npm/shared': 1.2.4
 
   /@q-front-npm/vue2-active-ui@1.0.1-beta.0(postcss-pxtorem@6.1.0)(vue@2.7.16):
     resolution: {integrity: sha512-CLwyV5Ro8u/ESt/1cj/nbGODOtwEhAqwlPZ8OjP4//HU93lCa2mFYIESELCAX2CZ2+FjXFWAD0Cffs8875foiQ==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/vue2-active-ui/-/@q-front-npm/vue2-active-ui-1.0.1-beta.0.tgz}
@@ -2365,17 +2368,17 @@ packages:
       - debug
     dev: false
 
-  /@q-front-npm/vue3-antd-pc-ui@1.2.10-beta.5(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(pinia@2.1.7)(vue-router@4.2.5)(vue@3.3.13):
-    resolution: {integrity: sha512-N4hLXoOtIFoZdT5lkXt3Ks+rilzro84NBi/uH4ceACrUu217mgojBAL9qEJYEggvHxhBgKE1Kx0vgpurYu4nrA==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/vue3-antd-pc-ui/-/@q-front-npm/vue3-antd-pc-ui-1.2.10-beta.5.tgz}
+  /@q-front-npm/vue3-antd-pc-ui@1.2.10(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(pinia@2.1.7)(vue-router@4.2.5)(vue@3.3.13):
+    resolution: {integrity: sha512-cyKBiv06eX+oxZ0Di5/6FwQUKQn3dOaFsNFmA7FwhZNETQjdSB0QRO7N+2iKgsbo6s7C0aFfYkz2vS/iVfhexQ==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/vue3-antd-pc-ui/-/@q-front-npm/vue3-antd-pc-ui-1.2.10.tgz}
     peerDependencies:
       pinia: ^2.0.30
       vue: ~3.3.0
       vue-router: ^4.2.4
     dependencies:
-      '@q-front-npm/hooks': 1.2.5-beta.1(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(vue-router@4.2.5)(vue@3.3.13)
-      '@q-front-npm/shared': 1.2.4-beta.0
-      '@q-front-npm/utils': 1.2.5-beta.1
-      '@q-front-npm/vue3-pc-ui': 1.2.5-beta.5(vue-router@4.2.5)(vue@3.3.13)
+      '@q-front-npm/hooks': 1.2.5(@ant-design/icons-vue@6.1.0)(ant-design-vue@4.0.8)(vue-router@4.2.5)(vue@3.3.13)
+      '@q-front-npm/shared': 1.2.4
+      '@q-front-npm/utils': 1.2.5
+      '@q-front-npm/vue3-pc-ui': 1.2.5(vue-router@4.2.5)(vue@3.3.13)
       lodash-es: 4.17.21
       pinia: 2.1.7(typescript@5.1.3)(vue@3.3.13)
       sortablejs: 1.15.2
@@ -2386,14 +2389,14 @@ packages:
       - ant-design-vue
     dev: false
 
-  /@q-front-npm/vue3-pc-ui@1.2.5-beta.5(vue-router@4.2.5)(vue@3.3.13):
-    resolution: {integrity: sha512-Bc/ERWRaU8vMa/ANbREfawCqu/WjVcUiE1nwi/Xl6AfWaPsb/w2rYYPWz+hUpL0BLe/6qrIdIIahMAuLcsV9Dw==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/vue3-pc-ui/-/@q-front-npm/vue3-pc-ui-1.2.5-beta.5.tgz}
+  /@q-front-npm/vue3-pc-ui@1.2.5(vue-router@4.2.5)(vue@3.3.13):
+    resolution: {integrity: sha512-TG5YNsKecbenAXSoOvVLqrbS8OajS4QK73pS6zHstAXiYV0vcEoTqB6gqU2Uy7QHsch45ZCB/QfDpTdLnGDFAg==, tarball: https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/@q-front-npm/vue3-pc-ui/-/@q-front-npm/vue3-pc-ui-1.2.5.tgz}
     peerDependencies:
       vue: ~3.3.0
       vue-router: ^4.2.4
     dependencies:
-      '@q-front-npm/shared': 1.2.4-beta.0
-      '@q-front-npm/utils': 1.2.5-beta.1
+      '@q-front-npm/shared': 1.2.4
+      '@q-front-npm/utils': 1.2.5
       vue: 3.3.13(typescript@5.1.3)
       vue-router: 4.2.5(vue@3.3.13)
     dev: false

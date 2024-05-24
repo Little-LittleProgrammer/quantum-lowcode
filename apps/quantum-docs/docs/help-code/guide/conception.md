@@ -29,7 +29,7 @@
 ### 页面
 页面是 Quantum 作为一个可视化编辑器经过配置后，最终得到的呈现结果. 搭建后的页面会被发布上线, 供用户访问
 
-### lowcodeSchemas
+### DSL
 lowcodeSchemas 是编辑器搭建页面的最终产物, 其中包含了所有的信息(组件, 页面, 公共事件, 数据等等), 所有的操作行为都会映射到schemas上, 格式: [schemas](../../api/schema/index.md)
 
 ### 画布

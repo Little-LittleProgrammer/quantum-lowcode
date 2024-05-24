@@ -361,30 +361,6 @@ export class ActionManager extends Subscribe {
         return undefined;
     }
 
-    private mouseMoveHandler = (event: MouseEvent) => {
-        js_utils_throttle_event(
-            async(event: MouseEvent): Promise<void> => {
-                if (
-                    (event.target as HTMLDivElement)?.classList?.contains(
-                        'moveable-direction'
-                    )
-                ) {
-                    return;
-                }
-
-                const el = await this.getElementFromPoint(event);
-                if (!el) {
-                    this.clearHighlight();
-                    return;
-                }
-
-                this.emit('mousemove', event);
-                this.highlight(el);
-            },
-            { time: throttleTime, context: this, args: [event], }
-        );
-    };
-
     public getDragStatus() {
         return this.dr.getDragStatus();
     }
@@ -615,6 +591,7 @@ export class ActionManager extends Subscribe {
 	 * 在down事件中集中cpu处理画布中选中操作渲染，在up事件中再通知外面的编辑器更新
 	 */
     private mouseDownHandler = async(event: MouseEvent): Promise<void> => {
+        console.log('mouseDownHandler');
         this.clearHighlight();
         event.stopImmediatePropagation();
         event.stopPropagation();
@@ -636,6 +613,31 @@ export class ActionManager extends Subscribe {
             this.emit('before-select', el, event);
         }
         getDocument().addEventListener('mouseup', this.mouseUpHandler);
+    };
+
+    private mouseMoveHandler = (event: MouseEvent) => {
+        js_utils_throttle_event(
+            async(event: MouseEvent): Promise<void> => {
+                console.log('mouseMoveHandler');
+                if (
+                    (event.target as HTMLDivElement)?.classList?.contains(
+                        'moveable-direction'
+                    )
+                ) {
+                    return;
+                }
+
+                const el = await this.getElementFromPoint(event);
+                if (!el) {
+                    this.clearHighlight();
+                    return;
+                }
+
+                this.emit('mousemove', event);
+                this.highlight(el);
+            },
+            { time: throttleTime, context: this, args: [event], }
+        );
     };
 
     private isStopTriggerSelect(event: MouseEvent): boolean {
@@ -669,6 +671,7 @@ export class ActionManager extends Subscribe {
 	 * 在up事件中负责对外通知选中事件，通知画布之外的编辑器更新
 	 */
     private mouseUpHandler = (event: MouseEvent): void => {
+        console.log('mouseUpHandler');
         getDocument().removeEventListener('mouseup', this.mouseUpHandler);
         this.container.addEventListener('mousemove', this.mouseMoveHandler);
         if (this.isMultiSelectStatus) {

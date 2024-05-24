@@ -1,5 +1,5 @@
 import { ActionType } from './const';
-import { Id } from './type';
+import { IHttpOptions, Id } from './type';
 
 export interface IDataSourceSchema {
     /** 数据源类型，根据类型来实例化；例如http则使用new HttpDataSource */
@@ -16,12 +16,31 @@ export interface IDataSourceSchema {
     methods: ICodeBlockContent[];
     /** mock数据 */
     mocks?: IMockSchema;
+    options?: IHttpOptions
 }
+
+/**
+ * {
+ *  key: dataSourceId,
+ *  value: {
+ *      key: fieldId,
+ *      value: Set({
+ *          "field": nodeId
+ *          "key": "componentProps.text",
+ *          "rawValue": "${ds_nRJh.url}",
+ *          type: 'data'
+ *      })
+ *  }
+ * }
+ */
+
+export type FieldToDepMap = Map<string, Set<IDepData | string>>;
 export interface IDepData {
     /** 组件Field */
     field: Id; // nodeField
     key: string; // path
     rawValue: string // ${base1.a1}
+    type: 'data' | 'cond'
 }
 
 export interface IDataSchema {

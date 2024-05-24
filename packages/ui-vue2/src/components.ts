@@ -6,3 +6,4 @@ export {default as Button} from './q-button';
 export {default as Img} from './q-img';
 export {default as Text} from './q-text';
 export {default as Video} from './q-video';
+export {default as OverlayContainer} from './q-overlay';

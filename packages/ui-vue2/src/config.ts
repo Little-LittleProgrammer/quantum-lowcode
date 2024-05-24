@@ -10,6 +10,7 @@ import Text from './q-text/src/formSchema';
 // events
 import pageEvents from './q-page/src/event';
 import demoEvents from './q-demo/src/event';
+import overlayEvents from './q-overlay/src/event';
 
 const formSchemas = { // 和组件导出名保持一致
     Page,
@@ -24,6 +25,7 @@ const formSchemas = { // 和组件导出名保持一致
 const events = { // 和组件导出名保持一致
     'Page': pageEvents,
     'Demo': demoEvents,
+    'OverlayContainer': overlayEvents,
 };
 
 export {

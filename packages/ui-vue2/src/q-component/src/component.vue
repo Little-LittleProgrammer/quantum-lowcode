@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, ref, markRaw, getCurrentInstance, provide } from 'vue';
+import { computed, defineComponent, PropType, ref, markRaw, getCurrentInstance, provide, set } from 'vue';
 
 import type {Fn, ISchemasNode} from '@qimao/quantum-schemas';
 import {useApp} from '../../hooks/use-app';
@@ -31,12 +31,14 @@ export default defineComponent({
             return app && app.resolveComponent(props.config.component || props.config.type);
         });
         const ifShow = computed(() => {
+            if (props.config.showResult === false) return false
             if (props.config.ifShow) {
                 if (js_is_function(props.config.ifShow)) {
                     return (props.config.ifShow as Fn)(app);
                 }
-                return props.config.ifShow;
+                return props.config.ifShow !== false;
             }
+            
             return true;
         });
         const refRuntimeComp = ref();

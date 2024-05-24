@@ -26,7 +26,7 @@ import postCssPxtorem from 'postcss-pxtorem';
 import { resolve } from 'path';
 
 export default defineConfig(({ mode, }) => {
-    // TODO
+    // TODO 待优化
     if (['config'].includes(mode)) {
         const file = resolve(
             __dirname,
@@ -87,11 +87,7 @@ export default defineConfig(({ mode, }) => {
             publicDir: '../public',
 
             base:
-				mode === 'playground'
-				    ? `/quantum-editor/runtime/vue2/${mode}`
-				    : isCI
-				        ? baseBuild
-				        : `/quantum-editor/runtime/vue2/${mode}`,
+				mode === 'playground' ? `/quantum-editor/runtime/vue2/${mode}` : isCI ? baseBuild : `/quantum-editor/runtime/vue2/${mode}`,
 
             build: {
                 emptyOutDir: true,

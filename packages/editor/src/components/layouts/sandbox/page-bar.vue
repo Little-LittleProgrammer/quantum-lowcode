@@ -37,7 +37,7 @@ const root = computed(() => editorService?.get('root'));
 
 const page = computed(() => editorService?.get('page'));
 
-const dropDownList = ref([
+const dropDownList = computed(() => [
     {
         icon: 'CopyOutlined',
         event: 'copy',

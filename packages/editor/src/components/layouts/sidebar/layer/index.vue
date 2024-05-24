@@ -27,7 +27,7 @@
 
 <script lang="ts" setup>
 import { IServices } from '../../../../types';
-import { computed, inject, ref } from 'vue';
+import { computed, inject, nextTick, ref } from 'vue';
 import {useDrag} from './use-drag';
 import { cloneDeep } from 'lodash-es';
 import { DropMenu } from '@q-front-npm/vue3-antd-pc-ui';
@@ -78,8 +78,9 @@ const selectedKeys = computed(() => {
 });
 const fieldNames = {children: 'children', title: 'label', key: 'field', };
 
-function selectNode(e: string[]) {
+async function selectNode(e: string[]) {
     services?.editorService?.select(e[0]);
+    await nextTick()
     services?.editorService?.get('sandbox')?.select(e[0]);
 }
 

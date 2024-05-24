@@ -13,6 +13,7 @@ export class LowCodePage extends LowCodeNode {
         super(options);
         this.setNode(options.config.field, this);
         this.initNode(options.config, this);
+        // this.root.dataSourceManager?.trigger();
     }
 
     public initNode(config: ISchemasContainer | ISchemasNode, parent: LowCodeNode) {
@@ -39,19 +40,6 @@ export class LowCodePage extends LowCodeNode {
 
     public deleteNode(field: Id) {
         this.nodes.delete(field);
-        if (this.root.dataSourceDep.has(this.data.field)) {
-            const deps = this.root.dataSourceDep.get(this.data.field) || [];
-            for (let i = deps.length - 1; i > 0; i--) {
-                if (deps[i].field === field) {
-                    deps.splice(i, 1);
-                }
-            }
-            if (deps.length === 0) {
-                this.root.dataSourceDep.delete(this.data.field);
-            } else {
-                this.root.dataSourceDep.set(this.data.field, deps);
-            }
-        }
     }
 
     public destroy(): void {

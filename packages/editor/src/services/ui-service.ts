@@ -61,7 +61,7 @@ class UiService {
         // 60/80是为了不要让画布太过去贴住四周（这样好看些）
         return Math.min(
             (width - 60) / sWidth || 1,
-            (height - 80) / sHeight || 1
+            (height - 20) / sHeight || 1
         );
     }
 
