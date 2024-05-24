@@ -1,28 +1,11 @@
-# 使用
 
-## 启动项目
-
-```
-pnpm i && pnpm playground
-```
-
-## 组件开发
-
-目录: [组件开发目录](packages/ui-vue2)
-
-### demo
-
-目录: [demo](packages/ui-vue2/src/q-demo)
-
-### 组件调试
-
-直接通过 页面编辑器进行输入
-
-## schemas标准
-
-查看: [schemas标准](apps/quantum-docs/docs/api/schema/index.md)
 
 # 概览
+
+## palyground
+
+[文档](https://little-littleprogrammer.github.io/quantum-lowcode/docs/index.html)
+[项目](https://little-littleprogrammer.github.io/quantum-lowcode/playground/index.html)
 
 ## 目的
 
@@ -170,3 +153,28 @@ pnpm i && pnpm playground
 2. 可供外部二次封装,将核心能力封装, 如需再次开发, 可直接下载npm包进行开发
 3. 可实现前台后台h5项目的开发
 4. 接入gpt, 可通过gpt的prompt方式提问生成schemas
+
+
+# 使用
+
+## 启动项目
+
+```
+pnpm i && pnpm playground
+```
+
+## 组件开发
+
+目录: [组件开发目录](packages/ui-vue2)
+
+### demo
+
+目录: [demo](packages/ui-vue2/src/q-demo)
+
+### 组件调试
+
+直接通过 页面编辑器进行输入
+
+## schemas标准
+
+查看: [schemas标准](apps/quantum-docs/docs/api/schema/index.md)

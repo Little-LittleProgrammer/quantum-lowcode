@@ -12,7 +12,7 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
     const _common = vite_common_vue_config({ command, mode });
     return {
         ..._common,
-        base: '/quantum-editor/',
+        base: '/quantum-lowcode/playground/',
         define: {
             cssData: antdCssData
         },
@@ -47,12 +47,12 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
             port: 8198,
             strictPort: true,
             proxy: {
-                '^/quantum-editor/runtime/vue2': {
+                '^/quantum-lowcode/playground/runtime/vue2': {
                     target: 'http://127.0.0.1:8178',
                     changeOrigin: true,
                     prependPath: false
                 },
-                '^/quantum-editor/runtime/vue3': {
+                '^/quantum-lowcode/playground/runtime/vue3': {
                     target: 'http://127.0.0.1:8179',
                     changeOrigin: true,
                     prependPath: false
@@ -64,7 +64,7 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
                     secure: false
                 }
             },
-            open: '/quantum-editor/'
+            open: '/quantum-lowcode/playground/'
         }
     };
 };

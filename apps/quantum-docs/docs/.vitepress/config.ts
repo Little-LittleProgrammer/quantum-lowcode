@@ -9,7 +9,7 @@ const _baseScssFile = "@import '@quantum-design/shared/style/base/base.scss'; @i
 
 
 export default defineConfig({
-    base: '/',
+    base: '/quantum-lowcode/docs/',
     title: 'Quantum Editor',
     lang: 'zh-CN',
     description: '一个开箱即用的前端框架',
