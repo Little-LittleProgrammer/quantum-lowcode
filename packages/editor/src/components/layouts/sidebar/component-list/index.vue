@@ -38,10 +38,10 @@
                             <div class="q-editor-component-list-item-icon">
                                 <a-tooltip placement="right" :title="item.desc">
                                     <template v-if="item.icon">
-                                        <template v-if="js_is_string(item.icon) && item.icon.startsWith('http')">
+                                        <template v-if="isString(item.icon) && item.icon.startsWith('http')">
                                             <img :src="item.icon" >
                                         </template>
-                                        <template v-else-if="js_is_string(item.icon)">
+                                        <template v-else-if="isString(item.icon)">
                                             <q-antd-icon :type="item.icon"/>
                                         </template>
                                         <template v-else>
@@ -63,12 +63,12 @@
 import { DragType, IBoxOptions, IComponentGroup, IComponentItem, IServices } from '../../../../types';
 import { computed, inject, ref, toRaw } from 'vue';
 import { Divider } from 'ant-design-vue';
-import {js_utils_dom_remove_class, serializeToString} from '@qimao/quantum-utils';
+import {js_utils_dom_remove_class, serializeToString} from '@quantum-lowcode/utils';
 
 defineOptions({
     name: 'ComponentList',
 });
-import { js_is_string } from '@qimao/quantum-utils';
+import { isString } from '@quantum-lowcode/utils';
 
 const services = inject<IServices>('services');
 const boxOptions = inject<IBoxOptions>('boxOptions');

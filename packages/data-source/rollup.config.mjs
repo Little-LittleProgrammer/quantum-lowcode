@@ -1,4 +1,4 @@
-import { rollup_commpn_lib_config } from '@q-front-npm-configs/rollup';
+import { rollup_commpn_lib_config } from '@quantum-design-configs/rollup';
 import { createRequire } from 'node:module';
 import alias from '@rollup/plugin-alias';
 import {resolve} from 'path';
@@ -11,10 +11,10 @@ function pathResolve(dir) {
 }
 
 const result = rollup_commpn_lib_config('quantum-data', {
-    external: ['@qimao/quantum-utils', 'lodash-es'],
+    external: ['@quantum-lowcode/utils', 'lodash-es'],
     plugins: [alias({
         entries: process.env.TYPES === 'true' ? [] : [
-            { find: /^@qimao\/quantum-utils/, replacement: pathResolve('../utils/index.ts'), }
+            { find: /^@quantum-lowcode\/utils/, replacement: pathResolve('../utils/index.ts'), }
         ],
     })],
 }, pkg.version);

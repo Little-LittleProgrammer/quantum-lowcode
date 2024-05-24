@@ -1,4 +1,4 @@
-import { ILowCodeRoot} from '@qimao/quantum-schemas';
+import { ILowCodeRoot} from '@quantum-lowcode/schemas';
 import { DataSourceManager } from './data-source-manager';
 import { ChangeDataEvent } from './types';
 /**

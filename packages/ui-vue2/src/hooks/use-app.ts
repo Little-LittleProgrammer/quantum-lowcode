@@ -1,5 +1,5 @@
 import {inject, onMounted, onUnmounted} from 'vue';
-import {LowCodeRoot} from '@qimao/quantum-core';
+import {LowCodeRoot} from '@quantum-lowcode/core';
 
 export function useApp(props: any) {
     const app: LowCodeRoot | undefined = inject('app');

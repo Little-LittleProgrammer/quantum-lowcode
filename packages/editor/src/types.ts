@@ -1,11 +1,11 @@
-import type { BoxCore, MoveableOptions, IGuidesOptions, ContainerHighlightType, ICustomizeMoveableOptionsCallbackConfig, IUpdateDragEl} from '@qimao/quantum-sandbox';
+import type { BoxCore, MoveableOptions, IGuidesOptions, ContainerHighlightType, ICustomizeMoveableOptionsCallbackConfig, IUpdateDragEl} from '@quantum-lowcode/sandbox';
 import type { EditorService } from './services/editor-service';
 import type { PropsService } from './services/props-service';
 import type { UiService } from './services/ui-service';
-import { ISchemasRoot, ISchemasPage, ISchemasContainer, ISchemasNode, Id, Fn, IDataSourceSchema } from '@qimao/quantum-schemas';
+import { ISchemasRoot, ISchemasPage, ISchemasContainer, ISchemasNode, Id, Fn, IDataSourceSchema } from '@quantum-lowcode/schemas';
 import { UndoRedo } from './utils/undo-redo';
 import { HistoryService } from './services/history-service';
-import type {FormSchema} from '@q-front-npm/vue3-antd-pc-ui';
+import type {FormSchema} from '@quantum-design/vue3-antd-pc-ui';
 import { Component } from 'vue';
 import { ComponentService } from './services/component-service';
 import { DataSourceService } from './services/datasource-service';

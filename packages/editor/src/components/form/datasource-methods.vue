@@ -51,9 +51,9 @@
 		useDrawerInner,
 		useForm,
 		useTable,
-	} from '@q-front-npm/vue3-antd-pc-ui';
-	import { ICodeBlockContent } from '@qimao/quantum-schemas';
-	import { js_is_array, js_utils_get_uuid, parseSchemas } from '@qimao/quantum-utils';
+	} from '@quantum-design/vue3-antd-pc-ui';
+	import { ICodeBlockContent } from '@quantum-lowcode/schemas';
+	import { isArray, js_utils_get_uuid, parseSchemas } from '@quantum-lowcode/utils';
 	import { cloneDeep } from 'lodash-es';
     import { getConfig } from '../../utils';
 	import { computed, nextTick, ref, unref } from 'vue';
@@ -344,7 +344,7 @@
 	}
 
     function addParamsData(model, field) {
-        if (js_is_array(model[field])) {
+        if (isArray(model[field])) {
             model[field].push({
                 id: js_utils_get_uuid(4),
                 name: '',
@@ -366,7 +366,7 @@
 	async function handlerOk() {
 		await validate();
 		const values = getFieldsValue();
-		if (js_is_array(values.params)) {
+		if (isArray(values.params)) {
 			values.params = values.params.map((item) =>
 				unref(item.editValueRefs)
 			);

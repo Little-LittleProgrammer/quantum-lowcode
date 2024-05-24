@@ -1,14 +1,14 @@
 import {
     Subscribe,
-    js_is_array,
+    isArray,
     js_utils_get_uuid
-} from '@qimao/quantum-utils';
+} from '@quantum-lowcode/utils';
 import { IPropsState } from '../types';
 import { reactive } from 'vue';
-import { FormSchema } from '@q-front-npm/vue3-antd-pc-ui';
+import { FormSchema } from '@quantum-design/vue3-antd-pc-ui';
 import { formatConfig, otherConfigMap } from '../utils/props';
 import { cloneDeep, mergeWith } from 'lodash-es';
-import { DEFAULT_DESIGN_WIDTH, ISchemasNode, ISchemasPage, Id } from '@qimao/quantum-schemas';
+import { DEFAULT_DESIGN_WIDTH, ISchemasNode, ISchemasPage, Id } from '@quantum-lowcode/schemas';
 import { editorService } from './editor-service';
 import { getCompType } from '../utils';
 
@@ -157,7 +157,7 @@ class PropsService extends Subscribe {
             config.field = newField;
         }
 
-        if (config.children && js_is_array(config.children)) {
+        if (config.children && isArray(config.children)) {
             config.children.forEach((child: ISchemasNode) => {
                 this.setNewField(child);
             });

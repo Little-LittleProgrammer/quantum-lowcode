@@ -1,4 +1,4 @@
-import { IDataSourceSchema } from '@qimao/quantum-schemas';
+import { IDataSourceSchema } from '@quantum-lowcode/schemas';
 import { FormConfig } from '../types';
 
 const baseFormConfig: FormConfig = [

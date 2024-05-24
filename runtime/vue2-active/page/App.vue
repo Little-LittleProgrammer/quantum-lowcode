@@ -7,11 +7,11 @@
 <script lang="ts">
 import { defineComponent, inject, nextTick, reactive, ref} from 'vue';
 
-import type { LowCodePage, LowCodeRoot } from '@qimao/quantum-core';
-import { IQuantum} from '@qimao/quantum-sandbox';
-import {Page} from '@qimao/quantum-ui-vue2';
-import { replaceChildNode, addParamToUrl } from '@qimao/quantum-utils';
-import { ISchemasNode } from '@qimao/quantum-schemas';
+import type { LowCodePage, LowCodeRoot } from '@quantum-lowcode/core';
+import { IQuantum} from '@quantum-lowcode/sandbox';
+import {Page} from '@quantum-lowcode/ui-vue2';
+import { replaceChildNode, addParamToUrl } from '@quantum-lowcode/utils';
+import { ISchemasNode } from '@quantum-lowcode/schemas';
 
 declare global {
     interface Window {

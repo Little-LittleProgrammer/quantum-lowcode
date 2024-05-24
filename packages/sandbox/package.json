@@ -1,5 +1,5 @@
 {
-  "name": "@qimao/quantum-sandbox",
+  "name": "@quantum-lowcode/sandbox",
   "version": "1.0.0",
   "description": "",
   "main": "dist/quantum-sandbox.cjs.min.js",
@@ -13,16 +13,16 @@
   "author": "Evan Wu",
   "license": "ISC",
   "dependencies": {
-    "@qimao/quantum-utils": "workspace:*",
-    "@qimao/quantum-core": "workspace:*",
-    "@qimao/quantum-schemas": "workspace:*",
+    "@quantum-lowcode/utils": "workspace:*",
+    "@quantum-lowcode/core": "workspace:*",
+    "@quantum-lowcode/schemas": "workspace:*",
     "keycon": "^1.4.0",
     "moveable": "^0.51.1",
     "moveable-helper": "^0.4.0"
   },
   "devDependencies": {
     "rollup": "^3.29.4",
-    "@q-front-npm-configs/rollup": "1.2.0",
+    "@quantum-design-configs/rollup": "~1.1.0",
     "@rollup/plugin-alias": "5.1.0"
   }
 }

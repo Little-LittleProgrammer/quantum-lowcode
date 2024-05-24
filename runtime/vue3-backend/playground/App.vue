@@ -5,11 +5,11 @@
 <script lang="ts">
 import { computed, defineComponent, inject, nextTick, reactive, ref, watch } from 'vue';
 
-import type { LowCodeRoot } from '@qimao/quantum-core';
-import type { Id, ISchemasRoot, ISchemasPage } from '@qimao/quantum-schemas';
-import { IQuantum, IUpdateData} from '@qimao/quantum-sandbox';
-import {Page} from '@qimao/quantum-ui';
-import { replaceChildNode } from '@qimao/quantum-utils';
+import type { LowCodeRoot } from '@quantum-lowcode/core';
+import type { Id, ISchemasRoot, ISchemasPage } from '@quantum-lowcode/schemas';
+import { IQuantum, IUpdateData} from '@quantum-lowcode/sandbox';
+import {Page} from '@quantum-lowcode/ui';
+import { replaceChildNode } from '@quantum-lowcode/utils';
 
 declare global {
     interface Window {

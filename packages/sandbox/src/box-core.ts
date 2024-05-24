@@ -4,7 +4,7 @@
  * 管理: StageRender
  */
 
-import { Subscribe } from '@qimao/quantum-utils';
+import { Subscribe } from '@quantum-lowcode/utils';
 import { BoxRender } from './box-render';
 import { BoxMask } from './box-mask';
 import {
@@ -18,7 +18,7 @@ import {
     IUpdateData,
     IUpdateEventData
 } from './types';
-import { DEFAULT_DESIGN_WIDTH, Id } from '@qimao/quantum-schemas';
+import { DEFAULT_DESIGN_WIDTH, Id } from '@quantum-lowcode/schemas';
 import { DEFAULT_ZOOM } from './const';
 import { ActionManager } from './action-manager';
 import { MoveableOptions, OnDragStart } from 'moveable';

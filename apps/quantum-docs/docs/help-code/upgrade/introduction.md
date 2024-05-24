@@ -2,7 +2,7 @@
 ## 目录结构
 ```
 ├── apps
-│   ├── quantum-backend // 低代码后台
+│   ├── playground // 低代码后台
 │   ├── quantum-docs // 文档
 │── packages
 │   ├── core // 核心库, 对节点操作、全局事件、数据进行统一管理

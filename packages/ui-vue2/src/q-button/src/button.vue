@@ -9,7 +9,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 
-import type { ISchemasNode} from '@qimao/quantum-schemas';
+import type { ISchemasNode} from '@quantum-lowcode/schemas';
 import {useApp} from '../../hooks/use-app';
 
 export default defineComponent({

@@ -1,13 +1,13 @@
-import { LowCodeRoot } from '@qimao/quantum-core';
+import { LowCodeRoot } from '@quantum-lowcode/core';
 import { createApp } from 'vue';
-import * as components from '@qimao/quantum-ui';
+import * as components from '@quantum-lowcode/ui';
 import { requestFn } from './utils/http';
-import { getUrlParam, parseSchemas } from '@qimao/quantum-utils';
+import { getUrlParam, parseSchemas } from '@quantum-lowcode/utils';
 import { getLocalConfig } from './utils';
 import App from './App.vue';
-import { DEFAULT_DESIGN_WIDTH } from '@qimao/quantum-schemas';
+import { DEFAULT_DESIGN_WIDTH } from '@quantum-lowcode/schemas';
 if (import.meta.env.PROD) {
-    import('@qimao/quantum-ui/dist/es/style/index.css');
+    import('@quantum-lowcode/ui/dist/es/style/index.css');
 }
 
 const dsls = (getUrlParam('localPreview') ? getLocalConfig() : [parseSchemas(window.PAGE_JSON)]) || [];

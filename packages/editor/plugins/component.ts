@@ -114,12 +114,12 @@ const defaultOptions: QResolverOptions[] = [{
     importStyle: 'css',
     prefix: 'Q',
     notPrefix: ['QAntd', 'QEle'],
-    packageName: '@q-front-npm/vue3-pc-ui',
+    packageName: '@quantum-design/vue3-pc-ui',
     moduleType: 'es',
 }, {
     importStyle: 'css',
     prefix: 'QAntd',
-    packageName: '@q-front-npm/vue3-antd-pc-ui',
+    packageName: '@quantum-design/vue3-antd-pc-ui',
     moduleType: 'es',
 }];
 

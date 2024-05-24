@@ -1,8 +1,8 @@
-import { Subscribe } from '@qimao/quantum-utils';
+import { Subscribe } from '@quantum-lowcode/utils';
 
 import {IHistoryState, StepValue} from '../types';
 import { reactive } from 'vue';
-import { ISchemasPage } from '@qimao/quantum-schemas';
+import { ISchemasPage } from '@quantum-lowcode/schemas';
 import { UndoRedo } from '../utils/undo-redo';
 
 class HistoryService extends Subscribe {

@@ -7,9 +7,9 @@ import {
     js_utils_dom_add_class,
     js_utils_dom_offset,
     js_utils_dom_remove_class
-} from '@qimao/quantum-utils';
+} from '@quantum-lowcode/utils';
 import { ISortEventData, ITargetElement } from './types';
-import {DEFAULT_DESIGN_WIDTH} from '@qimao/quantum-schemas';
+import {DEFAULT_DESIGN_WIDTH} from '@quantum-lowcode/schemas';
 
 export function addSelectedClassName(el: Element, doc: Document) {
     js_utils_dom_add_class(el, SELECTED_CLASS);

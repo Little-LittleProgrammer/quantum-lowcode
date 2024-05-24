@@ -2,10 +2,10 @@ import { defineConfig, DefaultTheme } from 'vitepress';
 import fs from 'fs'
 import path from 'path'
 
-const _antdCssStrTemp = fs.readFileSync(path.resolve('node_modules/@q-front-npm/shared/style/antd/base.scss'), 'utf-8').toString().split('// antdend')[0].match(/\$(.*);/g)!.join(',').replace(/;,/g, '",').replace(/;/g, '"').replace(/: /g, '": "').replace(/\$/g, '"');
+const _antdCssStrTemp = fs.readFileSync(path.resolve('node_modules/@quantum-design/shared/style/antd/base.scss'), 'utf-8').toString().split('// antdend')[0].match(/\$(.*);/g)!.join(',').replace(/;,/g, '",').replace(/;/g, '"').replace(/: /g, '": "').replace(/\$/g, '"');
 const _antdCssData = JSON.parse('{' + _antdCssStrTemp + '}');
 
-const _baseScssFile = "@import '@q-front-npm/shared/style/base/base.scss'; @import '@q-front-npm/shared/style/base/mixin.scss'; @import '../docs/.vitepress/theme/styles/custom.scss';";
+const _baseScssFile = "@import '@quantum-design/shared/style/base/base.scss'; @import '@quantum-design/shared/style/base/mixin.scss'; @import '../docs/.vitepress/theme/styles/custom.scss';";
 
 
 export default defineConfig({
@@ -30,7 +30,7 @@ export default defineConfig({
         lastUpdatedText: '最后更新时间',
         footer: {
             message: 'MIT Licensed',
-            copyright: 'Copyright © qimao',
+            copyright: 'Copyright © quantum',
         },
         outlineTitle: '锚点',
         docFooter: {
@@ -38,11 +38,11 @@ export default defineConfig({
             next: '下一篇'
         },
         socialLinks: [
-            { icon: 'github', link: 'https://codeup.aliyun.com/qimao/front/quantum-lowcode/tree/main' }
+            { icon: 'github', link: 'https://codeup.aliyun.com/quantum/front/quantum-lowcode/tree/main' }
         ],
         editLink: {
             text: '编辑此页',
-            pattern: 'https://codeup.aliyun.com/qimao/front/quantum-lowcode/tree/main/apps/quantum-docs/docs/:path'
+            pattern: 'https://codeup.aliyun.com/quantum/front/quantum-lowcode/tree/main/apps/quantum-docs/docs/:path'
         }
     },
     vite: {

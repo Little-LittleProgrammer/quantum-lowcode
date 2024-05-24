@@ -1,6 +1,6 @@
-import { NodeType } from '@qimao/quantum-schemas';
+import { NodeType } from '@quantum-lowcode/schemas';
 import { IInstallOptions } from '../types';
-import { isContainerNode } from '@qimao/quantum-utils';
+import { isContainerNode } from '@quantum-lowcode/utils';
 
 let Options: IInstallOptions = {} as any;
 export function getConfig<K extends keyof IInstallOptions>(key: K) {

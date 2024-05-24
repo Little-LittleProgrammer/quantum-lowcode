@@ -14,9 +14,9 @@
 <script lang="ts">
 import { computed, defineComponent, PropType, ref } from 'vue';
 
-import type { ISchemasPage } from '@qimao/quantum-schemas';
+import type { ISchemasPage } from '@quantum-lowcode/schemas';
 
-import { js_is_function } from '@qimao/quantum-utils';
+import { isFunction } from '@quantum-lowcode/utils';
 import Component from '../../q-component/src/component.vue';
 import {useApp} from '../../hooks/use-app';
 //   import {useApp} from '../hooks/use-app';
@@ -41,7 +41,7 @@ export default defineComponent({
         });
         const refRuntimeContainer = ref();
         const getStyle = computed(() => {
-            if (js_is_function(props.config.style)) {
+            if (isFunction(props.config.style)) {
                 props.config.style(refRuntimeContainer.value?.$el);
                 return {};
             }

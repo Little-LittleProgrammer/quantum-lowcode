@@ -1,7 +1,7 @@
-import { ICodeBlockContent, IDataSchema, ILowCodeRoot } from '@qimao/quantum-schemas';
-import { Subscribe, js_utils_edit_attr } from '@qimao/quantum-utils';
+import { ICodeBlockContent, IDataSchema, ILowCodeRoot } from '@quantum-lowcode/schemas';
+import { Subscribe, js_utils_edit_attr } from '@quantum-lowcode/utils';
 import { ChangeDataEvent, IDataSourceOption } from '../types';
-import { getDefaultValueFromFields } from '@qimao/quantum-utils';
+import { getDefaultValueFromFields } from '@quantum-lowcode/utils';
 
 export class DataSource extends Subscribe {
     public isInit = false;

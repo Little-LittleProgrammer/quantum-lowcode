@@ -1,4 +1,4 @@
-import { ISchemasContainer, ISchemasNode, ISchemasPage, Id } from '@qimao/quantum-schemas';
+import { ISchemasContainer, ISchemasNode, ISchemasPage, Id } from '@quantum-lowcode/schemas';
 import { LowCodeRoot } from './app';
 import { LowCodeNode } from './node';
 

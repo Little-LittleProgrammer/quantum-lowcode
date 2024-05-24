@@ -51,7 +51,7 @@ import { uiService } from './services/ui-service';
 import { editorService } from './services/editor-service';
 import { componentService } from './services/component-service';
 import { IEditorProps, defaultEditorProps } from './props';
-import { ISchemasRoot } from '@qimao/quantum-schemas';
+import { ISchemasRoot } from '@quantum-lowcode/schemas';
 import { useServicesInit } from './hooks/use-service';
 import { historyService } from './services/history-service';
 import navMenu from './components/layouts/nav-menu.vue';

@@ -1,5 +1,5 @@
-import { FieldToDepMap, IDepData, ILowCodeRoot, ISchemasNode, ISchemasRoot, Id } from '@qimao/quantum-schemas';
-import { getNodePath, isPage, js_is_array, js_utils_edit_attr } from '@qimao/quantum-utils';
+import { FieldToDepMap, IDepData, ILowCodeRoot, ISchemasNode, ISchemasRoot, Id } from '@quantum-lowcode/schemas';
+import { getNodePath, isPage, isArray, js_utils_edit_attr } from '@quantum-lowcode/utils';
 import { compliedConditions } from './tools';
 import { IDataSourceManagerData } from '../types';
 
@@ -65,7 +65,7 @@ export function trigger(sourceManage: ISourceManage, dataSourceId: Id, fieldId?:
     if (!dep) {
         return [];
     }
-    const effects = js_is_array(dep) ? dep : [...dep];
+    const effects = isArray(dep) ? dep : [...dep];
     for (let eff of effects) {
         eff = JSON.parse(eff);
         const {key, rawValue, field, } = eff as IDepEffect;

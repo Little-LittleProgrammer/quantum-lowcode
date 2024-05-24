@@ -1,7 +1,7 @@
-import { ISchemasNode, ISchemasRoot, Id } from '@qimao/quantum-schemas';
+import { ISchemasNode, ISchemasRoot, Id } from '@quantum-lowcode/schemas';
 import { IComponentGroup, IDatasourceTypeOption, IEditorNodeInfo, ISandboxRect } from './types';
-import { CONTAINER_HIGHLIGHT_CLASS_NAME, CONTAINER_HIGHLIGHT_DELAY_TIME, ContainerHighlightType, ICustomizeMoveableOptionsCallbackConfig, IGuidesOptions, IUpdateDragEl, MoveableOptions } from '@qimao/quantum-sandbox';
-import type { DropMenu, FormSchema } from '@q-front-npm/vue3-antd-pc-ui';
+import { CONTAINER_HIGHLIGHT_CLASS_NAME, CONTAINER_HIGHLIGHT_DELAY_TIME, ContainerHighlightType, ICustomizeMoveableOptionsCallbackConfig, IGuidesOptions, IUpdateDragEl, MoveableOptions } from '@quantum-lowcode/sandbox';
+import type { DropMenu, FormSchema } from '@quantum-design/vue3-antd-pc-ui';
 
 export interface IEditorProps {
     // root节点

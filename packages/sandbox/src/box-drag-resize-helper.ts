@@ -18,8 +18,8 @@ import { DRAG_EL_ID_PREFIX, GHOST_EL_ID_PREFIX, Mode, ZIndex } from './const';
 import { TargetShadow } from './target-shadow';
 import { IDragResizeHelperConfig, IRect, ITargetElement } from './types';
 import { getBorderWidth, getMarginValue } from './utils';
-import { calcValueByDesignWidth } from '@qimao/quantum-utils';
-import { js_utils_dom_offset, getAbsolutePosition } from '@qimao/quantum-utils';
+import { calcValueByDesignWidth } from '@quantum-lowcode/utils';
+import { js_utils_dom_offset, getAbsolutePosition } from '@quantum-lowcode/utils';
 
 /**
  * 拖拽/改变大小等操作发生时，moveable会抛出各种状态事件，DragResizeHelper负责响应这些事件，对目标节点target和拖拽节点targetShadow进行修改；

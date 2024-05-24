@@ -1,8 +1,8 @@
-import { Subscribe, js_utils_get_uuid } from '@qimao/quantum-utils';
+import { Subscribe, js_utils_get_uuid } from '@quantum-lowcode/utils';
 import { IDataSourceStateKey, IDataSourceState, FormConfig, EventOption } from '../types';
 import { reactive } from 'vue';
 import { getFormConfig, getFormValue } from '../utils/data-source';
-import { IDataSourceSchema } from '@qimao/quantum-schemas';
+import { IDataSourceSchema } from '@quantum-lowcode/schemas';
 import { cloneDeep } from 'lodash-es';
 
 class DataSourceService extends Subscribe {

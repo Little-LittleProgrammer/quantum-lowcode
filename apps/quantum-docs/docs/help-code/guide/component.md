@@ -73,7 +73,7 @@ export default [{
 <script lang="ts">
 import { computed, defineComponent, PropType, ref } from 'vue';
 
-import type { ISchemasNode} from '@qimao/quantum-schemas';
+import type { ISchemasNode} from '@quantum-lowcode/schemas';
 
 import {useApp} from '../../hooks/use-app';
 import { emit } from 'process';
@@ -118,10 +118,10 @@ export default defineComponent({
                 const _res = await app.request({
                     url: props.api,
                     params: {
-                        name: 'qimao',
+                        name: 'quantum',
                     },
                     data: {
-                        name: 'qimao',
+                        name: 'quantum',
                     },
                     method: 'get',
                     headers: {}

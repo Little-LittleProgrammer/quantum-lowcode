@@ -1,8 +1,8 @@
-import { IDataSourceSchema, ISchemasPage, ISchemasRoot } from '@qimao/quantum-schemas';
+import { IDataSourceSchema, ISchemasPage, ISchemasRoot } from '@quantum-lowcode/schemas';
 import { IEditorProps } from 'src/props';
 import { IServices } from 'src/types';
 import { nextTick, onBeforeUnmount, toRaw, watch } from 'vue';
-import {useComponentRegister, delComponentRegister} from '@q-front-npm/vue3-antd-pc-ui';
+import {useComponentRegister, delComponentRegister} from '@quantum-design/vue3-antd-pc-ui';
 import EventSelect from '../components/form/event-select.vue';
 import DataSourceFields from '../components/form/datasource-fields.vue';
 import DataSourceMethods from '../components/form/datasource-methods.vue';
@@ -10,7 +10,7 @@ import KeyValue from '../components/form/key-value.vue';
 import ShowInput from '../components/form/show-input.vue';
 import InputSelect from '../components/form/input-select.vue';
 import EventChoose from '../components/form/event-choose.vue';
-import { QCodeEditor, QRichText } from '@q-front-npm/vue3-pc-ui';
+import { QCodeEditor, QRichText } from '@quantum-design/vue3-pc-ui';
 
 export function useServicesInit(
     props: IEditorProps,

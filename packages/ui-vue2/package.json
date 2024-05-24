@@ -1,5 +1,5 @@
 {
-    "name": "@qimao/quantum-ui-vue2",
+    "name": "@quantum-lowcode/ui-vue2",
     "version": "1.0.0",
     "description": "",
     "main": "dist/lib/index.js",
@@ -36,15 +36,15 @@
       "./*": "./*"
     },
     "dependencies": {
-        "@qimao/quantum-core": "workspace:*",
-        "@qimao/quantum-utils": "workspace:*",
-        "@qimao/quantum-schemas": "workspace:*"
+        "@quantum-lowcode/core": "workspace:*",
+        "@quantum-lowcode/utils": "workspace:*",
+        "@quantum-lowcode/schemas": "workspace:*"
     },
     "devDependencies": {
-        "@q-front-npm/shared": "~1.2.4",
+        "@quantum-design/shared": "~1.1.0",
         "@vitejs/plugin-vue2": "^2.2.0",
         "@vitejs/plugin-vue2-jsx": "^1.1.0",
-        "@q-front-npm/types": "~1.2.1",
+        "@quantum-design/types": "~1.1.0",
         "sass": "^1.63.3",
         "prettier": "~3.1.0",
         "vue": "^2.7.4",

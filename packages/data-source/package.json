@@ -1,5 +1,5 @@
 {
-  "name": "@qimao/quantum-data",
+  "name": "@quantum-lowcode/data",
   "version": "1.0.0",
   "description": "",
   "main": "dist/quantum-data.cjs.min.js",
@@ -13,11 +13,11 @@
   "author": "Evan Wu",
   "license": "ISC",
   "dependencies": {
-    "@qimao/quantum-utils": "workspace:*",
-    "@qimao/quantum-schemas": "workspace:*"
+    "@quantum-lowcode/utils": "workspace:*",
+    "@quantum-lowcode/schemas": "workspace:*"
   },
   "devDependencies": {
-    "@q-front-npm-configs/rollup": "1.2.0",
+    "@quantum-design-configs/rollup": "~1.1.0",
     "rollup": "^3.29.4",
     "@rollup/plugin-alias": "5.1.0"
   }

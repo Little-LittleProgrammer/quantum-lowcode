@@ -1,5 +1,5 @@
-import { FieldToDepMap, IDataSourceSchema, ILowCodeRoot} from '@qimao/quantum-schemas';
-import { Subscribe, js_is_function } from '@qimao/quantum-utils';
+import { FieldToDepMap, IDataSourceSchema, ILowCodeRoot} from '@quantum-lowcode/schemas';
+import { Subscribe, isFunction } from '@quantum-lowcode/utils';
 import { ChangeDataEvent, IDataSourceManagerData, IDataSourceManagerOptions, IHttpDataSourceSchema } from './types';
 import { DataSource } from './data-source/base';
 import { HttpDataSource } from './data-source/http';
@@ -12,7 +12,7 @@ export class DataSourceManager extends Subscribe {
 
     public data: IDataSourceManagerData = {}
     public dataSourceDep: Map<string, FieldToDepMap> = new Map() // 动态值映射 <页面id, 节点id>
-    constructor({app, useMock, }: IDataSourceManagerOptions) {
+    constructor({app, useMock }: IDataSourceManagerOptions) {
         super();
         this.app = app;
         this.useMock = !!useMock;
@@ -36,7 +36,7 @@ export class DataSourceManager extends Subscribe {
         }
 
         ds.methods.forEach((method) => {
-            if (!js_is_function(method.content)) return;
+            if (!isFunction(method.content)) return;
 
             // 注册全局事件, 放在此处注册, 优化性能
             this.app.registerEvent && this.app.registerEvent(`${ds.id}:${method.name}`, method.content, ds);
@@ -50,13 +50,13 @@ export class DataSourceManager extends Subscribe {
         });
 
         for (const method of beforeInit) {
-            await method({ dataSource: ds, app: this.app, });
+            await method({ dataSource: ds, app: this.app });
         }
 
         await ds.init();
 
         for (const method of afterInit) {
-            await method({ dataSource: ds, app: this.app, });
+            await method({ dataSource: ds, app: this.app });
         }
     }
 
@@ -90,7 +90,7 @@ export class DataSourceManager extends Subscribe {
                 app: this.app,
                 schema: config as IHttpDataSourceSchema,
                 useMock: this.useMock,
-                request: this.app.request,
+                request: this.app.request
             });
         } else {
             // 如果是基本类型
@@ -99,7 +99,7 @@ export class DataSourceManager extends Subscribe {
             ds = new DataSourceClass({
                 app: this.app,
                 schema: config,
-                useMock: this.useMock,
+                useMock: this.useMock
             });
         }
 

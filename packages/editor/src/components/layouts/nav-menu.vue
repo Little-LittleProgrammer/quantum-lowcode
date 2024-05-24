@@ -13,7 +13,7 @@
                         </template>
                         <template v-if="item.type === 'button'">
                             <Tooltip :title="item.tooltip">
-                                <Button :disabled="js_is_function(item.disabled) ? (item.disabled as Function)?.() : item.disabled" size="small" type="text" @click="item.onClick">
+                                <Button :disabled="isFunction(item.disabled) ? (item.disabled as Function)?.() : item.disabled" size="small" type="text" @click="item.onClick">
                                     <template #icon >
                                         <q-antd-icon :type="item.icon"></q-antd-icon>
                                     </template>
@@ -38,9 +38,9 @@
 <script lang='ts' setup>
 import { IMenuButton, IMenuItem, IServices } from '../../types';
 import { computed, inject } from 'vue';
-import { NodeType } from '@qimao/quantum-schemas';
+import { NodeType } from '@quantum-lowcode/schemas';
 import { Divider, Button, Tooltip } from 'ant-design-vue';
-import { js_is_function } from '@qimao/quantum-utils';
+import { isFunction } from '@quantum-lowcode/utils';
 defineOptions({
     name: 'QEditorNavMenu',
 });

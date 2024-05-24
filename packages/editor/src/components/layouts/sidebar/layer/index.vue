@@ -30,7 +30,7 @@ import { IServices } from '../../../../types';
 import { computed, inject, nextTick, ref } from 'vue';
 import {useDrag} from './use-drag';
 import { cloneDeep } from 'lodash-es';
-import { DropMenu } from '@q-front-npm/vue3-antd-pc-ui';
+import { DropMenu } from '@quantum-design/vue3-antd-pc-ui';
 
 defineOptions({
     name: 'Layer',

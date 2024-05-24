@@ -28,13 +28,13 @@ import {resolve} from 'path';
 export default defineConfig(({ mode, }) => {
     // TODO 待优化
     if (['config'].includes(mode)) {
-        const file = resolve(__dirname, 'node_modules/@qimao/quantum-ui/dist/es/config.js');
+        const file = resolve(__dirname, 'node_modules/@quantum-lowcode/ui/dist/es/config.js');
         return {
             publicDir: '../public',
             build: {
                 cssCodeSplit: false,
                 target: 'esnext',
-                outDir: `../../apps/quantum-backend/public/entry/vue3/`,
+                outDir: `../../apps/playground/public/entry/vue3/`,
                 lib: {
                     entry: file,
                     name: `quantumCompConfigs`,
@@ -63,11 +63,11 @@ export default defineConfig(({ mode, }) => {
 
             build: {
                 emptyOutDir: true,
-                outDir: path.resolve(process.cwd(), `../../apps/quantum-backend/public/runtime/vue3/${mode}`),
+                outDir: path.resolve(process.cwd(), `../../apps/playground/public/runtime/vue3/${mode}`),
                 rollupOptions: {
                     output: {
                         manualChunks: {
-                            'library': ['@q-front-npm/vue3-antd-pc-ui'],
+                            'library': ['@quantum-design/vue3-antd-pc-ui'],
                         },
                     },
                     external: ['vue'],

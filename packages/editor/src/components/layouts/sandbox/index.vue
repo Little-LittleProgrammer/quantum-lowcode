@@ -27,15 +27,15 @@ import {
     nextTick,
     onMounted
 } from 'vue';
-import { BoxCore } from '@qimao/quantum-sandbox';
+import { BoxCore } from '@quantum-lowcode/sandbox';
 import { DragType, IBoxOptions, IServices, Layout } from '../../../types';
-import { IRuntime } from '@qimao/quantum-sandbox/src/types';
+import { IRuntime } from '@quantum-lowcode/sandbox/src/types';
 import { cloneDeep } from 'lodash-es';
-import { ISchemasPage, ISchemasRoot } from '@qimao/quantum-schemas';
+import { ISchemasPage, ISchemasRoot } from '@quantum-lowcode/schemas';
 import { useBox } from '../../../hooks';
-import { js_utils_dom_offset, parseSchemas } from '@qimao/quantum-utils';
-import { calcValueByDesignWidth } from '@qimao/quantum-utils';
-import { DropMenu } from '@q-front-npm/vue3-antd-pc-ui';
+import { js_utils_dom_offset, parseSchemas } from '@quantum-lowcode/utils';
+import { calcValueByDesignWidth } from '@quantum-lowcode/utils';
+import { DropMenu } from '@quantum-design/vue3-antd-pc-ui';
 
 defineOptions({
     name: 'QEditorSandBox',

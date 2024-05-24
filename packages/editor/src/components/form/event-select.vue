@@ -69,7 +69,7 @@
 </template>
 
 <script lang='ts' setup>
-import { js_is_array } from '@qimao/quantum-utils';
+import { isArray } from '@quantum-lowcode/utils';
 import { IServices } from '../../types';
 import { computed, inject, reactive, ref, watch } from 'vue';
 import { useDsList } from '../../hooks/use-ds-list';
@@ -177,7 +177,7 @@ function selectDsEvent(item:any) {
     item.params = {}
     for (let child of list) {
         if (child.id === id) {
-            if (js_is_array(child.methods)) {
+            if (isArray(child.methods)) {
                 for (let sub of child.methods) {
                     if (sub.name === name) {
                         for (let tri of (sub.params || [])) {

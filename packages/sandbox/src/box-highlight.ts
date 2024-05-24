@@ -1,4 +1,4 @@
-import { Subscribe } from '@qimao/quantum-utils';
+import { Subscribe } from '@quantum-lowcode/utils';
 import Moveable from 'moveable';
 import { TargetShadow } from './target-shadow';
 import { GetContainer, IBoxHighlightConfig } from './types';

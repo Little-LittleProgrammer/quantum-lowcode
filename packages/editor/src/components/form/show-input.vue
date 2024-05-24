@@ -33,14 +33,14 @@
 </template>
 
 <script lang='ts' setup>
-import { useTable, addTableEditComp } from '@q-front-npm/vue3-antd-pc-ui';
+import { useTable, addTableEditComp } from '@quantum-design/vue3-antd-pc-ui';
 import { IServices } from '../../types';
 import { computed, inject, nextTick, unref } from 'vue';
 import {Cascader} from 'ant-design-vue'
 import { arrayOptions, eqOptions, numberOptions } from '../../utils/props';
 import { cloneDeep } from 'lodash-es';
-import { js_utils_get_uuid } from '@qimao/quantum-utils';
-import { IfShow } from '@qimao/quantum-schemas';
+import { js_utils_get_uuid } from '@quantum-lowcode/utils';
+import { IfShow } from '@quantum-lowcode/schemas';
 import { useDsList } from '../../hooks/use-ds-list';
 defineOptions({
     name: 'ShowInput'
