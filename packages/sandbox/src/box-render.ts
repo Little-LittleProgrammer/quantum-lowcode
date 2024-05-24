@@ -1,8 +1,8 @@
 // 基于iframe加载传入进来的RuntimeUrl，并支持增删改查组件
 
-import { Subscribe, getHost, injectStyle, isSameDomain } from '@qimao/quantum-utils';
+import { Subscribe, getHost, injectStyle, isSameDomain } from '@quantum-lowcode/utils';
 import { IBoxCoreConfig, IDeleteData, IPoint, IRuntime, IRuntimeWindow, IUpdateData } from './types';
-import { Id } from '@qimao/quantum-schemas';
+import { Id } from '@quantum-lowcode/schemas';
 import { DEFAULT_ZOOM } from './const';
 import { addSelectedClassName, removeSelectedClassName } from './utils';
 

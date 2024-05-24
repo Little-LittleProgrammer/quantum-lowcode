@@ -5,7 +5,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType, ref } from 'vue';
 
-import type { ISchemasNode} from '@qimao/quantum-schemas';
+import type { ISchemasNode} from '@quantum-lowcode/schemas';
 
 import {useApp} from '../../hooks/use-app';
 

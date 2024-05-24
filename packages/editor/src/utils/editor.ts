@@ -1,7 +1,7 @@
-import { ISchemasContainer, ISchemasNode, ISchemasRoot, Id } from '@qimao/quantum-schemas';
-import { calcValueByDesignWidth, getNodePath, isPage, js_is_number } from '@qimao/quantum-utils';
+import { ISchemasContainer, ISchemasNode, ISchemasRoot, Id } from '@quantum-lowcode/schemas';
+import { calcValueByDesignWidth, getNodePath, isPage, isNumber } from '@quantum-lowcode/utils';
 import { Layout } from '../types';
-import { BoxCore } from '@qimao/quantum-sandbox';
+import { BoxCore } from '@quantum-lowcode/sandbox';
 
 export const COPY_STORAGE_KEY = 'QuantumEditorCopyData';
 
@@ -83,7 +83,7 @@ export function getMiddleTop(node: ISchemasNode, parentNode: ISchemasContainer, 
 
     if (!stage || typeof node.style?.top !== 'undefined' || !parentNode.style) return node.style?.top;
 
-    if (!js_is_number(height)) {
+    if (!isNumber(height)) {
         height = 0;
     }
 
@@ -103,7 +103,7 @@ export function getMiddleTop(node: ISchemasNode, parentNode: ISchemasContainer, 
 export function fixNodeLeft(config: ISchemasNode, parent:ISchemasContainer, stage: BoxCore | null) {
     let doc = stage?.renderer.getDocument();
     let designWidth = stage?.designWidth
-    if (!doc || !config.style || !js_is_number(config.style.left)) return config.style?.left;
+    if (!doc || !config.style || !isNumber(config.style.left)) return config.style?.left;
 
     const el = doc.getElementById(config.field);
     const parentEl = doc.getElementById(parent.field);

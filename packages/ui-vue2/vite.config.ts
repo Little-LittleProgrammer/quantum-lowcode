@@ -16,7 +16,7 @@ export default ({ command, mode, }: ConfigEnv):UserConfig => {
         isComponentsBuild: true,
         target: 'modules',
         rollupOptions: {
-            external: ['vue', '@qimao/quantum-utils', '@qimao/quantum-core', '@qimao/quantum-schemas'],
+            external: ['vue', '@quantum-lowcode/utils', '@quantum-lowcode/core', '@quantum-lowcode/schemas'],
         },
         buildOptions: {
             cssCodeSplit: true,
@@ -31,17 +31,17 @@ export default ({ command, mode, }: ConfigEnv):UserConfig => {
         // css: {
         //     preprocessorOptions: {
         //         scss: {
-        //             additionalData: "@use 'sass:math'; @import '@q-front-npm/shared/style/base/base.scss'; @import '@q-front-npm/shared/style/base/mixin.scss';",
+        //             additionalData: "@use 'sass:math'; @import '@quantum-design/shared/style/base/base.scss'; @import '@quantum-design/shared/style/base/mixin.scss';",
         //         },
         //     },
         // },
         resolve: {
             alias: process.env.NODE_ENV === 'production' ? [] : [
                 { find: /^@\//, replacement: pathResolve('./src/'), },
-                { find: /^@qimao\/quantum-utils/, replacement: pathResolve('../utils/index.ts'), },
-                { find: /^@qimao\/quantum-core/, replacement: pathResolve('../core/index.ts'), },
-                { find: /^@qimao\/quantum-sandbox/, replacement: pathResolve('../sandbox/index.ts'), },
-                { find: /^@qimao\/quantum-schemas/, replacement: pathResolve('../schemas/index.ts'), }
+                { find: /^@quantum-lowcode\/utils/, replacement: pathResolve('../utils/index.ts'), },
+                { find: /^@quantum-lowcode\/core/, replacement: pathResolve('../core/index.ts'), },
+                { find: /^@quantum-lowcode\/sandbox/, replacement: pathResolve('../sandbox/index.ts'), },
+                { find: /^@quantum-lowcode\/schemas/, replacement: pathResolve('../schemas/index.ts'), }
             ],
         },
     };

@@ -1,5 +1,5 @@
-import { FormSchema } from '@q-front-npm/vue3-antd-pc-ui';
-import { parseSchemas } from '@qimao/quantum-utils';
+import { FormSchema } from '@quantum-design/vue3-antd-pc-ui';
+import { parseSchemas } from '@quantum-lowcode/utils';
 
 const styleSchemas:FormSchema<any, 'CodeEditor' | 'InputSelect'>[] = [
     {

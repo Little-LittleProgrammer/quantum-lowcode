@@ -1,5 +1,5 @@
-import { js_utils_dom_offset } from '@q-front-npm/utils';
-import { DEFAULT_DESIGN_WIDTH, DEFAULT_PAGE_MAX_WIDTH } from '@qimao/quantum-schemas';
+import { js_utils_dom_offset } from '@quantum-design/utils';
+import { DEFAULT_DESIGN_WIDTH, DEFAULT_PAGE_MAX_WIDTH } from '@quantum-lowcode/schemas';
 
 export function injectStyle(doc: Document, style: string) {
     const styleEl = doc.createElement('style');

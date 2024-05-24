@@ -1,6 +1,6 @@
 import { ISandboxRect, IUiState } from '../types';
 import { reactive } from 'vue';
-import { convertToNumber } from '@qimao/quantum-utils';
+import { convertToNumber } from '@quantum-lowcode/utils';
 import { editorService } from './editor-service';
 
 class UiService {

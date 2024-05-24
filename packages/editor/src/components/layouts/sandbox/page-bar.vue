@@ -24,8 +24,8 @@
 import { IServices } from '../../../types';
 import { computed, inject, ref, toRaw } from 'vue';
 import {Tabs as ATabs, TabPane} from 'ant-design-vue';
-import { DropMenu } from '@q-front-npm/vue3-antd-pc-ui';
-import { ISchemasPage, NodeType } from '@qimao/quantum-schemas';
+import { DropMenu } from '@quantum-design/vue3-antd-pc-ui';
+import { ISchemasPage, NodeType } from '@quantum-lowcode/schemas';
 defineOptions({
     name: 'QEditorPageBar',
 });

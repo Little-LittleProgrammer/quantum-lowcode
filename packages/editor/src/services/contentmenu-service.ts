@@ -1,10 +1,10 @@
-import { DropMenu } from '@q-front-npm/vue3-antd-pc-ui';
+import { DropMenu } from '@quantum-design/vue3-antd-pc-ui';
 import { reactive } from 'vue';
-import { calcValueByDesignWidth, isPage, js_is_function } from '@qimao/quantum-utils';
+import { calcValueByDesignWidth, isPage, isFunction } from '@quantum-lowcode/utils';
 import { editorService } from './editor-service';
 import { COPY_STORAGE_KEY } from '../utils/editor';
 import { storageService } from './storage-serivce';
-import { ISchemasNode, NodeType } from '@qimao/quantum-schemas';
+import { ISchemasNode, NodeType } from '@quantum-lowcode/schemas';
 import { LayerOffset } from '../types';
 import { uiService } from './ui-service';
 
@@ -165,7 +165,7 @@ class ContentmenuService {
                 break;
             }
         }
-        if (js_is_function(this.state.extraDropEvent)) {
+        if (isFunction(this.state.extraDropEvent)) {
             const node = editorService.get('node')
             if (node) {
                 const nodeInfo = editorService.getNodeInfo(node.field)

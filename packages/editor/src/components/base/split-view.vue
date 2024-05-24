@@ -35,7 +35,7 @@
 	import {
 		js_utils_dom_add_class,
 		js_utils_dom_remove_class,
-	} from '@qimao/quantum-utils';
+	} from '@quantum-lowcode/utils';
 	import { IServices } from '../../types';
 	import { computed, inject, onMounted, reactive, ref } from 'vue';
 	defineOptions({

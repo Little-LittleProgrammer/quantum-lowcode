@@ -1,3 +1,3 @@
 {
-  "extends": "@q-front-npm-configs/tsconfig/lib.json"
+  "extends": "@quantum-design-configs/tsconfig/lib.json"
 }

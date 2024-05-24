@@ -1,7 +1,7 @@
-import { IHttpOptions, IRequestFunction } from '@qimao/quantum-schemas';
+import { IHttpOptions, IRequestFunction } from '@quantum-lowcode/schemas';
 import { IHttpDataSourceOption, IHttpDataSourceSchema } from '../types';
 import { DataSource } from './base';
-import { js_is_function, js_utils_find_attr, webRequest } from '@qimao/quantum-utils';
+import { isFunction, js_utils_find_attr, webRequest } from '@quantum-lowcode/utils';
 
 /**
  * HTTP 数据源
@@ -27,20 +27,20 @@ export class HttpDataSource extends DataSource {
 
     #type = 'http';
     constructor(options: IHttpDataSourceOption) {
-        const { options: httpOptions, } = options.schema;
+        const { options: httpOptions } = options.schema;
         super(options);
 
         this.schema = options.schema;
         this.httpOptions = httpOptions;
 
-        if (js_is_function(options.request)) {
+        if (isFunction(options.request)) {
             this.#fetch = options.request;
         } else if (typeof globalThis.fetch === 'function') {
             this.#fetch = webRequest;
         }
 
         this.methods.forEach((method) => {
-            if (!js_is_function(method.content)) return;
+            if (!isFunction(method.content)) return;
             switch (method.timing) {
                 case 'beforeRequest':
                     this.#beforeRequest.push(method.content as (...args: any[]) => any);
@@ -69,24 +69,24 @@ export class HttpDataSource extends DataSource {
     public async request(options: Partial<IHttpOptions> = {}) {
         this.isLoading = true;
 
-        let reqOptions = {...this.httpOptions, ...options, };
+        let reqOptions = {...this.httpOptions, ...options };
         try {
             for (const method of this.#beforeRequest) {
-                await method({ options: reqOptions, params: {}, dataSource: this, app: this.app, });
+                await method({ options: reqOptions, params: {}, dataSource: this, app: this.app });
             }
 
             if (typeof this.schema.beforeRequest === 'function') {
-                reqOptions = this.schema.beforeRequest(reqOptions, { app: this.app, dataSource: this, });
+                reqOptions = this.schema.beforeRequest(reqOptions, { app: this.app, dataSource: this });
             }
 
             let res = this.mockData ? this.mockData : await this.#fetch?.(reqOptions);
 
             for (const method of this.#afterRequest) {
-                await method({ res, options: reqOptions, dataSource: this, app: this.app, });
+                await method({ res, options: reqOptions, dataSource: this, app: this.app });
             }
 
             if (typeof this.schema.afterResponse === 'function') {
-                res = this.schema.afterResponse(res, { app: this.app, dataSource: this, });
+                res = this.schema.afterResponse(res, { app: this.app, dataSource: this });
             }
 
             if (this.schema.responseOptions?.dataPath) {
@@ -98,7 +98,7 @@ export class HttpDataSource extends DataSource {
             this.error = undefined;
         } catch (error: any) {
             this.error = {
-                msg: error.message,
+                msg: error.message
             };
             this.emit('error', error);
         } finally {
@@ -108,14 +108,14 @@ export class HttpDataSource extends DataSource {
     public get(options: Partial<IHttpOptions> & { url: string }) {
         return this.request({
             ...options,
-            method: 'GET',
+            method: 'GET'
         });
     }
 
     public post(options: Partial<IHttpOptions> & { url: string }) {
         return this.request({
             ...options,
-            method: 'POST',
+            method: 'POST'
         });
     }
 }

@@ -7,7 +7,7 @@
 
 ### 添加依赖
 ```bash
-pnpm i @qimao/quantum-core @qimao/quantum-schemas @qimao/quantum-sandbox 
+pnpm i @quantum-lowcode/core @quantum-lowcode/schemas @quantum-lowcode/sandbox 
 pnpm i 自己的组件库
 ```
 
@@ -24,9 +24,9 @@ pnpm i 自己的组件库
 <script lang="ts">
 import { computed, defineComponent, inject, nextTick, ref, watch } from 'vue';
 
-import type { Id, ISchemasRoot, ISchemasPage } from '@qimao/quantum-schemas';
-import type { LowCodeRoot } from '@qimao/quantum-core';
-import { IQuantum} from '@qimao/quantum-sandbox';
+import type { Id, ISchemasRoot, ISchemasPage } from '@quantum-lowcode/schemas';
+import type { LowCodeRoot } from '@quantum-lowcode/core';
+import { IQuantum} from '@quantum-lowcode/sandbox';
 import Page from '../src/page/index.vue';
 
 export default defineComponent({
@@ -94,7 +94,7 @@ window.quantum?.onRuntimeReady({
 
 ### 添加依赖
 ```bash
-pnpm i @qimao/quantum-core @qimao/quantum-schemas @qimao/quantum-editor @qimao/quantum-sandbox @qimao/quantum-ui
+pnpm i @quantum-lowcode/core @quantum-lowcode/schemas @quantum-lowcode/editor @quantum-lowcode/sandbox @quantum-lowcode/ui
 ```
 
 ### 编写编辑器
@@ -115,8 +115,8 @@ pnpm i @qimao/quantum-core @qimao/quantum-schemas @qimao/quantum-editor @qimao/q
 
 <script lang='ts' setup>
 import { computed, nextTick, reactive, ref, toRaw, watch } from 'vue'
-import {QuantumEditor} from '@qimao/quantum-editor'
-import { ISchemasRoot } from '@qimao/quantum-schemas';
+import {QuantumEditor} from '@quantum-lowcode/editor'
+import { ISchemasRoot } from '@quantum-lowcode/schemas';
 defineOptions({ 
      name: 'Editor'
 })

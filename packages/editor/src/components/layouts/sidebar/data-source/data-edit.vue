@@ -6,10 +6,10 @@
 </template>
 
 <script lang='ts' setup>
-import { useDrawerInner, useForm } from '@q-front-npm/vue3-antd-pc-ui';
+import { useDrawerInner, useForm } from '@quantum-design/vue3-antd-pc-ui';
 import { FormConfig, IServices } from '../../../../types';
 import { inject, ref } from 'vue';
-import { IDataSourceSchema } from '@qimao/quantum-schemas';
+import { IDataSourceSchema } from '@quantum-lowcode/schemas';
 import { mergeWith } from 'lodash-es';
 defineOptions({
     name: 'DataEdit',

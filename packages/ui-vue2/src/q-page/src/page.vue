@@ -13,11 +13,11 @@
 <script lang="ts">
 import { computed, defineComponent, PropType, ref } from 'vue';
 
-import type { ISchemasPage } from '@qimao/quantum-schemas';
+import type { ISchemasPage } from '@quantum-lowcode/schemas';
 
 import Component from '../../q-component/src/component.vue';
 import {useApp} from '../../hooks/use-app';
-import {js_is_function} from '@qimao/quantum-utils';
+import {isFunction} from '@quantum-lowcode/utils';
 
 export default defineComponent({
     components: {
@@ -39,7 +39,7 @@ export default defineComponent({
         });
         const refRuntimePage = ref();
         const getStyle = computed(() => {
-            if (js_is_function(props.config.style)) {
+            if (isFunction(props.config.style)) {
                 (props.config.style as any)(refRuntimePage.value?.$el);
                 return {};
             }

@@ -1,5 +1,5 @@
 {
-    "name": "@qimao/quantum-runtime-vue3",
+    "name": "@quantum-lowcode/runtime-vue3",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
@@ -15,21 +15,21 @@
     "author": "Evan Wu",
     "license": "ISC",
     "dependencies": {
-        "@qimao/quantum-core": "workspace:*",
-        "@qimao/quantum-data": "workspace:*",
-        "@qimao/quantum-schemas": "workspace:*",
-        "@qimao/quantum-sandbox": "workspace:*",
-        "@qimao/quantum-utils": "workspace:*",
-        "@qimao/quantum-ui": "workspace:*",
-        "@q-front-npm/vue3-antd-pc-ui": "~1.2.10",
-        "@q-front-npm/http": "^1.2.9",
+        "@quantum-lowcode/core": "workspace:*",
+        "@quantum-lowcode/data": "workspace:*",
+        "@quantum-lowcode/schemas": "workspace:*",
+        "@quantum-lowcode/sandbox": "workspace:*",
+        "@quantum-lowcode/utils": "workspace:*",
+        "@quantum-lowcode/ui": "workspace:*",
+        "@quantum-design/vue3-antd-pc-ui": "~1.1.0",
+        "@quantum-design/http": "~1.1.0",
         "axios": "^0.27.2",
         "vue": "^3.3.4"
     },
     "devDependencies": {
         "@vitejs/plugin-vue": "^4.3.4",
         "@vitejs/plugin-vue-jsx": "^3.0.2",
-        "@q-front-npm/shared": "~1.2.4",
+        "@quantum-design/shared": "~1.1.0",
         "rollup-plugin-external-globals": "^0.6.1"
     }
   }

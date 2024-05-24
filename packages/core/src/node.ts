@@ -1,7 +1,7 @@
-import { ISchemasContainer, ISchemasNode, ISchemasPage } from '@qimao/quantum-schemas';
+import { ISchemasContainer, ISchemasNode, ISchemasPage } from '@quantum-lowcode/schemas';
 import { LowCodeRoot } from './app';
 import { LowCodePage } from './page';
-import { Subscribe, js_is_function, js_is_object, compiledNode, js_is_array, stringToBoolean } from '@qimao/quantum-utils';
+import { Subscribe, isFunction, isObject, compiledNode, isArray, stringToBoolean } from '@quantum-lowcode/utils';
 import {template} from 'lodash-es';
 
 interface INodeOptions {
@@ -39,7 +39,7 @@ export class LowCodeNode extends Subscribe {
     }
 
     public compileCond(data: ISchemasNode | ISchemasContainer | ISchemasPage) {
-        if (this.page && js_is_array(data.ifShow)) {
+        if (this.page && isArray(data.ifShow)) {
             for (const cond of data.ifShow) {
                 const [sourceId, fieldId, ..._args] = cond.field;
                 if (fieldId) {
@@ -47,7 +47,7 @@ export class LowCodeNode extends Subscribe {
                         field: this.data.field,
                         rawValue: '',
                         key: '',
-                        type: 'cond',
+                        type: 'cond'
                     });
                 }
             }
@@ -64,7 +64,7 @@ export class LowCodeNode extends Subscribe {
                     field: this.data.field,
                     rawValue: value,
                     key: key!,
-                    type: 'data',
+                    type: 'data'
                 });
             }
             if (typeof value === 'string') {
@@ -75,7 +75,7 @@ export class LowCodeNode extends Subscribe {
     }
 
     public setEvents(config: ISchemasNode | ISchemasContainer) {
-        if (config.componentProps && js_is_object(config.componentProps)) {
+        if (config.componentProps && isObject(config.componentProps)) {
             for (const [key, val] of Object.entries(config.componentProps)) {
                 /**
                  * 事件绑定, 覆盖两种方式
@@ -83,15 +83,15 @@ export class LowCodeNode extends Subscribe {
                  * 2. onClick: [{field: 'nodeId:funcName', params: {}}, {field: 'datasourceId:funcName', params: {}}] 适用于配置模式
                  *  */
                 // if (key.startsWith('on') || key.endsWith('Func')) {
-                if (js_is_function(val)) {
+                if (isFunction(val)) {
                     const fn = (...args: any[]) => {
                         val(this.root, ...args);
                     };
                     config.componentProps[key] = fn;
-                } else if (js_is_array(val) && val[0]?.field) {
+                } else if (isArray(val) && val[0]?.field) {
                     const fn = () => {
                         for (const item of val) {
-                            const { field, params = {}, } = item;
+                            const { field, params = {} } = item;
                             this.root.emit(`${field}`, params);
                         }
                     };
@@ -110,7 +110,7 @@ export class LowCodeNode extends Subscribe {
         this.once('created', async(instance: any) => {
             this.once('destroy', () => {
                 this.instance = null;
-                if (js_is_function(this.data.destroy)) {
+                if (isFunction(this.data.destroy)) {
                     this.data.destroy();
                 }
 
@@ -136,13 +136,13 @@ export class LowCodeNode extends Subscribe {
 
     // 生命周期方法触发
     private async runCode(hook: string) {
-        if (js_is_function(this.data[hook])) {
+        if (isFunction(this.data[hook])) {
             await this.data[hook](this);
             return;
         }
         if (this.data[hook]) {
             for (const item of this.data[hook].hookData) {
-                const { field, params = {}, } = item;
+                const { field, params = {} } = item;
                 this.root.emit(`${field}`, params);
             }
         }
