@@ -6,9 +6,9 @@ on:
       - main
     paths:
       - 'apps/playground/**'
-      - 'configs/**'
+      - 'apps/**'
       - 'packages/**'
-      - 'docs/**'
+      - 'runtime/**'
       - 'turbo.json'
       - 'package.json'
       - '.github/workflows/playground.yml'
