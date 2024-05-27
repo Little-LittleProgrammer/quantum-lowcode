@@ -75,7 +75,7 @@ export default defineConfig(({ mode }) => {
 
             publicDir: '../public',
 
-            base: `/quantum-editor/runtime/vue2/${mode}`,
+            base: `/quantum-lowcode/playground/runtime/vue2/${mode}`,
 
             build: {
                 emptyOutDir: true,

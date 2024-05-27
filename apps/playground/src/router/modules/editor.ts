@@ -2,7 +2,7 @@ import { RouteRecordRaw } from 'vue-router';
 import { LAYOUT } from '../base';
 
 export const editorRoute: RouteRecordRaw = {
-    path: '/backend/editor',
+    path: '/editor',
     component: LAYOUT,
     name: 'Editor',
     meta: {
@@ -12,7 +12,7 @@ export const editorRoute: RouteRecordRaw = {
         id: 'editor',
         pid: '0'
     },
-    redirect: '/backend/editor/editor-page',
+    redirect: '/editor/editor-page',
     children: [
         {
             path: 'editor-page',

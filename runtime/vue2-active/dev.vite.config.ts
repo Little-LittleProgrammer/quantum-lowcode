@@ -53,7 +53,7 @@ export default defineConfig({
 
     root: './',
 
-    base: '/quantum-editor/runtime/vue2/',
+    base: '/quantum-lowcode/playground/runtime/vue2/',
 
     server: {
         host: true,

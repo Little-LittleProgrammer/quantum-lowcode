@@ -29,23 +29,23 @@ export default defineConfig({
 
     resolve: {
         alias: process.env.NODE_ENV === 'production' ? [] : [
-            { find: /^@\//, replacement: pathResolve('./src/'), },
-            { find: /^@quantum-lowcode\/utils/, replacement: pathResolve('../../packages/utils/index.ts'), },
-            { find: /^@quantum-lowcode\/core/, replacement: pathResolve('../../packages/core/index.ts'), },
-            { find: /^@quantum-lowcode\/data/, replacement: pathResolve('../../packages/data-source/index.ts'), },
-            { find: /^@quantum-lowcode\/sandbox/, replacement: pathResolve('../../packages/sandbox/index.ts'), },
-            { find: /^@quantum-lowcode\/ui/, replacement: pathResolve('../../packages/ui/index.ts'), }
-        ],
+            { find: /^@\//, replacement: pathResolve('./src/') },
+            { find: /^@quantum-lowcode\/utils/, replacement: pathResolve('../../packages/utils/index.ts') },
+            { find: /^@quantum-lowcode\/core/, replacement: pathResolve('../../packages/core/index.ts') },
+            { find: /^@quantum-lowcode\/data/, replacement: pathResolve('../../packages/data-source/index.ts') },
+            { find: /^@quantum-lowcode\/sandbox/, replacement: pathResolve('../../packages/sandbox/index.ts') },
+            { find: /^@quantum-lowcode\/ui/, replacement: pathResolve('../../packages/ui/index.ts') }
+        ]
     },
 
     root: './',
 
-    base: '/quantum-editor/runtime/vue3/',
+    base: '/quantum-lowcode/playground/runtime/vue3/',
 
     server: {
         host: true,
         port: 8179,
-        strictPort: true,
+        strictPort: true
     },
 
     build: {
@@ -54,11 +54,11 @@ export default defineConfig({
         rollupOptions: {
             input: {
                 page: './page/index.html',
-                playground: './playground/index.html',
+                playground: './playground/index.html'
             },
             output: {
-                entryFileNames: 'assets/[name].js',
-            },
-        },
-    },
+                entryFileNames: 'assets/[name].js'
+            }
+        }
+    }
 });

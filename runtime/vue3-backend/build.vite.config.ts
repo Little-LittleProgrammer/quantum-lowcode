@@ -25,7 +25,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import externalGlobals from 'rollup-plugin-external-globals';
 import {resolve} from 'path';
 
-export default defineConfig(({ mode, }) => {
+export default defineConfig(({ mode }) => {
     // TODO 待优化
     if (['config'].includes(mode)) {
         const file = resolve(__dirname, 'node_modules/@quantum-lowcode/ui/dist/es/config.js');
@@ -39,9 +39,9 @@ export default defineConfig(({ mode, }) => {
                     entry: file,
                     name: `quantumCompConfigs`,
                     fileName: 'config',
-                    formats: ['umd'],
-                },
-            },
+                    formats: ['umd']
+                }
+            }
         };
     }
     if (['page', 'playground'].includes(mode)) {
@@ -52,14 +52,14 @@ export default defineConfig(({ mode, }) => {
                 // legacy({
                 //     targets: ['defaults', 'not IE 11'],
                 // }),
-                externalGlobals({ vue: 'Vue', }, { exclude: [`./${mode}/index.html`], })
+                externalGlobals({ vue: 'Vue' }, { exclude: [`./${mode}/index.html`] })
             ],
 
             root: `./${mode}/`,
 
             publicDir: '../public',
 
-            base: `/quantum-editor/runtime/vue3/${mode}`,
+            base: `/quantum-lowcode/playground/runtime/vue3/${mode}`,
 
             build: {
                 emptyOutDir: true,
@@ -67,12 +67,12 @@ export default defineConfig(({ mode, }) => {
                 rollupOptions: {
                     output: {
                         manualChunks: {
-                            'library': ['@quantum-design/vue3-antd-pc-ui'],
-                        },
+                            'library': ['@quantum-design/vue3-antd-pc-ui']
+                        }
                     },
-                    external: ['vue'],
-                },
-            },
+                    external: ['vue']
+                }
+            }
         };
     }
 

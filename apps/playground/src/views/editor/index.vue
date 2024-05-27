@@ -364,7 +364,7 @@
 		}, 500);
 	}
 
-	asyncLoadJs(`/quantum-editor/entry/${runtimePathType}/config.umd.js`).then(
+	asyncLoadJs(`/quantum-lowcode/playground/entry/${runtimePathType}/config.umd.js`).then(
 		() => {
 			propsConfigs.value = (
 				globalThis as any

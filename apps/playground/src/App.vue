@@ -58,10 +58,10 @@ export default defineComponent({
                 //     sysStore.menuDataLoadingEnd = true;
                 //     sysStore.set_format_route_list(_res.data.list);
                 //     getSearchButton.value && get_net_router(sysStore.mainMenuData as Required<IMenuData>[]);
-                //     if (!window.location.href.includes('/backend/')) {
+                //     if (!window.location.href.includes('/')) {
                 //         if (_res.data.init_path == '') {
                 //             router.replace({
-                //                 path: '/backend'
+                //                 path: ''
                 //             });
                 //             createMessage.error('请通知管理员设置初始页面');
                 //         } else {
@@ -74,7 +74,7 @@ export default defineComponent({
             } else {
                 const _res = import('@/menus/index');
                 const _list = (await _res).default;
-                sysStore.initMenuData = '/quantum-editor/';
+                sysStore.initMenuData = '/quantum-lowcode/playground/';
                 sysStore.set_format_route_list(_list);
                 sysStore.menuDataLoadingEnd = true;
                 getSearchButton.value && get_net_router(sysStore.mainMenuData as Required<IMenuData>[]);

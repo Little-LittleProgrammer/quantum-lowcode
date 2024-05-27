@@ -4,11 +4,9 @@ import { redirectRoute } from './modules/reload';
 import { flat_multi_level_routes } from './utils';
 import { App } from 'vue';
 import { editorRoute } from './modules/editor';
-import { manageRoute } from './modules/manage';
 
 let routerData = [
-    editorRoute,
-    manageRoute
+    editorRoute
 ];
 
 // 添加error路由数据
@@ -25,7 +23,7 @@ console.log(routerData);
 const router = createRouter({
     history: createWebHistory(import.meta.env.VITE_BASE_PATH as string),
     routes: routerData,
-    strict: true,
+    strict: true
 });
 
 export function setup_router(app: App) {

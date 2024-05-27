@@ -7,14 +7,14 @@ import {
 
 const _router: RouteRecordRaw[] = [
     {
-        path: '/backend/error',
-        name: '/backend/error',
+        path: '/error',
+        name: '/error',
         component: LAYOUT,
-        redirect: '/backend/error/404',
+        redirect: '/error/404',
         meta: {
             title: 'error',
             pid: '0',
-            id: 'error',
+            id: 'error'
         },
         children: [
             {
@@ -23,23 +23,23 @@ const _router: RouteRecordRaw[] = [
                 meta: {
                     title: '404',
                     pid: 'error',
-                    id: 'error2',
+                    id: 'error2'
                 },
-                name: 'error2',
+                name: 'error2'
             }
-        ],
+        ]
     },
     {
-        path: '/backend/:pathMatch(.*)*',
+        path: '/:pathMatch(.*)*',
         name: 'NotFound',
         component: LAYOUT,
-        redirect: '/backend/error/404',
+        redirect: '/error/404',
         meta: {
             title: 'error',
             pid: '0',
-            id: 'error/*',
+            id: 'error/*'
         },
-        children: [],
+        children: []
     }
 ];
 
