@@ -1,0 +1,1 @@
+import{_ as e,o as a,c as t}from"./chunks/framework.7bfedb2b.js";const _=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"api/schema/page.md","filePath":"api/schema/page.md","lastUpdated":1716776943000}'),s={name:"api/schema/page.md"};function p(c,r,o,n,i,d){return a(),t("div")}const f=e(s,[["render",p]]);export{_ as __pageData,f as default};
