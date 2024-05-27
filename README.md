@@ -4,8 +4,8 @@
 
 ## palyground
 
-[文档](https://little-littleprogrammer.github.io/quantum-lowcode/docs/index.html)
-[项目](https://little-littleprogrammer.github.io/quantum-lowcode/playground/index.html)
+[文档](https://little-littleprogrammer.github.io/quantum-lowcode/docs/)
+[项目](https://little-littleprogrammer.github.io/quantum-lowcode/playground/)
 
 ## 目的
 
