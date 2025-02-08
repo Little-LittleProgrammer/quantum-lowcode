@@ -16,20 +16,20 @@
     "author": "Evan Wu",
     "license": "ISC",
     "dependencies": {
-        "@quantum-design/http": "~1.1.0",
+        "@quantum-design/http": "catalog:",
         "@quantum-lowcode/core": "workspace:*",
         "@quantum-lowcode/sandbox": "workspace:*",
         "@quantum-lowcode/data": "workspace:*",
         "@quantum-lowcode/utils": "workspace:*",
         "@quantum-lowcode/schemas": "workspace:*",
         "@quantum-lowcode/ui-vue2": "workspace:*",
-        "axios": "^0.27.2",
+        "axios": "catalog:",
         "vue": "^2.7.4"
     },
     "devDependencies": {
-        "@quantum-design/shared": "~1.1.0",
-        "@vitejs/plugin-vue2": "^2.2.0",
-        "postcss-pxtorem": "^6.0.0",
-        "rollup-plugin-external-globals": "^0.6.1"
+        "@quantum-design/shared": "catalog:",
+        "@vitejs/plugin-vue2": "catalog:",
+        "postcss-pxtorem": "catalog:",
+        "rollup-plugin-external-globals": "catalog:"
     }
 }

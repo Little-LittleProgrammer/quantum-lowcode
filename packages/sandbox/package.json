@@ -16,13 +16,13 @@
     "@quantum-lowcode/utils": "workspace:*",
     "@quantum-lowcode/core": "workspace:*",
     "@quantum-lowcode/schemas": "workspace:*",
-    "keycon": "^1.4.0",
-    "moveable": "^0.51.1",
-    "moveable-helper": "^0.4.0"
+    "keycon": "catalog:",
+    "moveable": "catalog:",
+    "moveable-helper": "catalog:"
   },
   "devDependencies": {
-    "rollup": "^3.29.4",
-    "@quantum-design-configs/rollup": "~1.1.0",
-    "@rollup/plugin-alias": "5.1.0"
+    "rollup": "catalog:",
+    "@quantum-design-configs/rollup": "catalog:",
+    "@rollup/plugin-alias": "catalog:"
   }
 }

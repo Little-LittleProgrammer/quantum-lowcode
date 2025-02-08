@@ -4,6 +4,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "baseUrl": ".",
+    "verbatimModuleSyntax": false,
     "target": "ESNext"
   },
   "include": ["src", "index.ts"],

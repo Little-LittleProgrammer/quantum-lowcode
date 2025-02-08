@@ -5,6 +5,7 @@
     "main": "dist/lib/index.js",
     "module": "dist/es/index.js",
     "typings": "dist/index.d.ts",
+    "type": "module",
     "scripts": {
       "build": "vite build"
     },
@@ -41,14 +42,13 @@
         "@quantum-lowcode/schemas": "workspace:*"
     },
     "devDependencies": {
-        "@quantum-design/shared": "~1.1.0",
-        "@vitejs/plugin-vue2": "^2.2.0",
-        "@vitejs/plugin-vue2-jsx": "^1.1.0",
-        "@quantum-design/types": "~1.1.0",
-        "sass": "^1.63.3",
-        "prettier": "~3.1.0",
+        "@quantum-design/shared": "catalog:",
+        "@vitejs/plugin-vue2": "catalog:",
+        "@vitejs/plugin-vue2-jsx": "catalog:",
+        "@quantum-design/types": "catalog:",
+        "sass": "catalog:",
         "vue": "^2.7.4",
-        "vite-plugin-dts": "3.6.4"
+        "vite-plugin-dts": "catalog:"
     },
     "peerDependencies": {
         "vue": "^2.7.4"

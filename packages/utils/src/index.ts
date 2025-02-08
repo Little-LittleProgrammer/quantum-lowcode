@@ -1,4 +1,4 @@
-import { isBase, isFunction, isObject, isRegExp, isString, isUnDef, js_utils_edit_attr, js_utils_find_attr, serializeToString } from '@quantum-design/utils';
+import { isBase, isFunction, isBoolean, isObject, isRegExp, isString, isUnDef, js_utils_edit_attr, js_utils_find_attr, serializeToString } from '@quantum-design/utils';
 import { Fn, ISchemasContainer, ISchemasNode, ISchemasPage, Id, NodeType } from '@quantum-lowcode/schemas';
 
 export function getHost(url: string) {
@@ -59,10 +59,6 @@ export const getUrlParam = (param: string, url?: string) => {
     }
     return '';
 };
-
-export function isBoolean(val: any): boolean {
-    return typeof val === 'boolean' || val === 'true' || val === 'false';
-}
 
 export function stringToBoolean(val: string) {
     if (isBoolean(val)) {

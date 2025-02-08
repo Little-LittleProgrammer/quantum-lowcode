@@ -50,7 +50,7 @@ export interface ILowCodeRoot {
     schemasRoot?: ISchemasRoot;
     request?: IRequestFunction;
     registerEvent?: Fn;
-    dataSourceDep: Map<Id, FieldToDepMap>
+    // dataSourceDep: Map<Id, FieldToDepMap>
     [key: string]: any;
 }
 

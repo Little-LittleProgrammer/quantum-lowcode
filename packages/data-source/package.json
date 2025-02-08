@@ -17,8 +17,8 @@
     "@quantum-lowcode/schemas": "workspace:*"
   },
   "devDependencies": {
-    "@quantum-design-configs/rollup": "~1.1.0",
-    "rollup": "^3.29.4",
-    "@rollup/plugin-alias": "5.1.0"
+    "@quantum-design-configs/rollup": "catalog:",
+    "rollup": "catalog:",
+    "@rollup/plugin-alias": "catalog:"
   }
 }
