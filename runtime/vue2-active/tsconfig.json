@@ -4,6 +4,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "baseUrl": ".",
+    "verbatimModuleSyntax": false,
   },
   "include": ["src", "playground", "page", "types"],
   "exclude": ["dist", "node_modules"]

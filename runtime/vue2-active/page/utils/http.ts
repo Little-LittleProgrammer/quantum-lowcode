@@ -1,6 +1,6 @@
 import {createAxios} from '@quantum-design/http';
 import { gContentTypeEnum } from '@quantum-design/shared/enums';
-import { IHttpOptions } from '@quantum-lowcode/schemas';
+import type { IHttpOptions } from '@quantum-lowcode/schemas';
 
 // const _requestNum = 0; // 请求数量
 // const _requestPageUrl = ''; // 请求地址所在页面

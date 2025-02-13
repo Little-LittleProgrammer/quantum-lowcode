@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-import { ISchemasRoot } from '@quantum-lowcode/schemas';
+import type { ISchemasRoot } from '@quantum-lowcode/schemas';
 import { parseSchemas } from '@quantum-lowcode/utils';
 
 export const getLocalConfig = (): ISchemasRoot[] => {

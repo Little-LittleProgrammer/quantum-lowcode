@@ -5,3 +5,7 @@ clean:
 	find . -name '.turbo' -type d -prune -exec rm -rf '{}' +
 	find . -name '.output' -type d -prune -exec rm -rf '{}' +
 	find . -name '.nuxt' -type d -prune -exec rm -rf '{}' +
+
+install:
+	pnpm install
+	pnpm store prune

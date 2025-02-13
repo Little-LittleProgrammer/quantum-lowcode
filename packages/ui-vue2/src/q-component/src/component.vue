@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, ref, markRaw, getCurrentInstance, provide, set } from 'vue';
+import { computed, defineComponent, type PropType, ref, markRaw, getCurrentInstance, provide, set } from 'vue';
 
 import type {Fn, ISchemasNode} from '@quantum-lowcode/schemas';
 import {useApp} from '../../hooks/use-app';

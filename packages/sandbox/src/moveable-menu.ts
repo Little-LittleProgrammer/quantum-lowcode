@@ -1,4 +1,4 @@
-import { MoveableManagerInterface, Renderer } from 'moveable';
+import type { MoveableManagerInterface, Renderer } from 'moveable';
 
 import { AbleActionEventType } from './const';
 

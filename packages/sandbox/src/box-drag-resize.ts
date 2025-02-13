@@ -1,8 +1,8 @@
-import Moveable, { MoveableOptions } from 'moveable';
+import Moveable, { type MoveableOptions } from 'moveable';
 import { MoveableManager } from './moveable-manager';
 import { BoxDragStatus, Mode } from './const';
 import DragResizeHelper from './box-drag-resize-helper';
-import {
+import type {
     DelayedMarkContainer,
     GetContainer,
     GetRenderDocument,

@@ -7,7 +7,7 @@
 import { Subscribe } from '@quantum-lowcode/utils';
 import { BoxRender } from './box-render';
 import { BoxMask } from './box-mask';
-import {
+import type {
     IActionManagerConfig,
     IBoxCoreConfig,
     IDeleteData,
@@ -18,10 +18,10 @@ import {
     IUpdateData,
     IUpdateEventData
 } from './types';
-import { DEFAULT_DESIGN_WIDTH, Id } from '@quantum-lowcode/schemas';
+import { DEFAULT_DESIGN_WIDTH, type Id } from '@quantum-lowcode/schemas';
 import { DEFAULT_ZOOM } from './const';
 import { ActionManager } from './action-manager';
-import { MoveableOptions, OnDragStart } from 'moveable';
+import type { MoveableOptions, OnDragStart } from 'moveable';
 
 /**
  * 负责管理画布, 管理renderer,mask, actionManage 并负责统一对外通信，包括提供接口和抛事件

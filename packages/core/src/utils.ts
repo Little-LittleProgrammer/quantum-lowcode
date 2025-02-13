@@ -1,4 +1,4 @@
-import { DEFAULT_DESIGN_WIDTH, Fn } from '@quantum-lowcode/schemas';
+import { DEFAULT_DESIGN_WIDTH, type Fn } from '@quantum-lowcode/schemas';
 import {
     fillBackgroundImage,
     isString,
@@ -46,14 +46,14 @@ export function defaultTransformStyle(style: Record<string, any> | string | Fn, 
     if (isString(style)) {
         styleObj = style2Obj(style);
     } else {
-        styleObj = { ...style };
+        styleObj = { ...style, };
     }
 
     const whiteList = ['zIndex', 'opacity', 'fontWeight'];
     Object.entries(styleObj).forEach(([key, value]) => {
         if (key === 'scale' && !results.transform) {
             // if (key === 'scale' && !results.transform && isHippy) {
-            results.transform = [{ scale: value }];
+            results.transform = [{ scale: value, }];
         } else if (key === 'backgroundImage') {
             value && (results[key] = fillBackgroundImage(value));
         } else if (key === 'transform' && typeof value !== 'string') {

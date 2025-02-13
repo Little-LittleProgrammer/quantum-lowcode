@@ -32,23 +32,24 @@ export default defineConfig({
 
     resolve: {
         alias: process.env.NODE_ENV === 'production' ? [] : [
-            { find: /^@\//, replacement: pathResolve('./src/') },
-            { find: /^@quantum-lowcode\/utils/, replacement: pathResolve('../../packages/utils/index.ts') },
-            { find: /^@quantum-lowcode\/core/, replacement: pathResolve('../../packages/core/index.ts') },
-            { find: /^@quantum-lowcode\/data/, replacement: pathResolve('../../packages/data-source/index.ts') },
-            { find: /^@quantum-lowcode\/sandbox/, replacement: pathResolve('../../packages/sandbox/index.ts') },
-            { find: /^@quantum-lowcode\/ui-vue2/, replacement: pathResolve('../../packages/ui-vue2/index.ts') },
-            { find: /^@quantum-lowcode\/ui/, replacement: pathResolve('../../packages/ui/index.ts') }
-        ]
+            { find: /^@\//, replacement: pathResolve('./src/'), },
+            { find: /^@quantum-lowcode\/utils/, replacement: pathResolve('../../packages/utils/index.ts'), },
+            { find: /^@quantum-lowcode\/core/, replacement: pathResolve('../../packages/core/index.ts'), },
+            { find: /^@quantum-lowcode\/data/, replacement: pathResolve('../../packages/data-source/index.ts'), },
+            { find: /^@quantum-lowcode\/sandbox/, replacement: pathResolve('../../packages/sandbox/index.ts'), },
+            { find: /^@quantum-lowcode\/ui-vue2\/dist\/es\/style\/index.css/, replacement: pathResolve('../../packages/ui-vue2/dist/es/style/index.css'), },
+            { find: /^@quantum-lowcode\/ui-vue2/, replacement: pathResolve('../../packages/ui-vue2/index.ts'), },
+            { find: /^@quantum-lowcode\/ui/, replacement: pathResolve('../../packages/ui/index.ts'), }
+        ],
     },
 
     css: {
         postcss: {
             plugins: [postCssPxtorem({
                 rootValue: 75,
-                propList: ['*']
-            })]
-        }
+                propList: ['*'],
+            })],
+        },
     },
 
     root: './',
@@ -58,7 +59,7 @@ export default defineConfig({
     server: {
         host: true,
         port: 8178,
-        strictPort: true
+        strictPort: true,
     },
 
     build: {
@@ -67,11 +68,11 @@ export default defineConfig({
         rollupOptions: {
             input: {
                 page: './page/index.html',
-                playground: './playground/index.html'
+                playground: './playground/index.html',
             },
             output: {
-                entryFileNames: 'assets/[name].js'
-            }
-        }
-    }
+                entryFileNames: 'assets/[name].js',
+            },
+        },
+    },
 });

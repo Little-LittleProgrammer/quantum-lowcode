@@ -1,5 +1,5 @@
 import { Subscribe } from '@quantum-lowcode/utils';
-import { IRuleOptions } from './types';
+import type { IRuleOptions } from './types';
 import { GuidesType } from './const';
 
 // 辅助线,移动线规则

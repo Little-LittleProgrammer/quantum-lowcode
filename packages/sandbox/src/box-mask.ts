@@ -5,7 +5,7 @@ import {
     isFixedParent,
     getScrollParent
 } from '@quantum-lowcode/utils';
-import { IRuleOptions } from './types';
+import type { IRuleOptions } from './types';
 
 const wrapperClassName = 'editor-mask-wrapper';
 function createWrapper(): HTMLDivElement {

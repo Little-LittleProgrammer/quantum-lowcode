@@ -7,13 +7,13 @@ import {
     js_utils_dom_offset
 } from '@quantum-lowcode/utils';
 import { AbleActionEventType, GuidesType, Mode } from './const';
-import {
+import type {
     ElementGuidelineValueOption,
     MoveableOptions,
     MoveableRefType
 } from 'moveable';
-import { GetContainer, IMoveableManagerConfig } from './types';
-import { Fn } from '@quantum-lowcode/schemas';
+import type { GetContainer, IMoveableManagerConfig } from './types';
+import type { Fn } from '@quantum-lowcode/schemas';
 import { moveableMenu } from './moveable-menu';
 
 export class MoveableManager extends Subscribe {
@@ -132,8 +132,8 @@ export class MoveableManager extends Subscribe {
                 top: 0,
                 left: 0,
                 right: this.container.clientWidth,
-                bottom: isSortable ? undefined : this.container.clientHeight
-            }
+                bottom: isSortable ? undefined : this.container.clientHeight,
+            },
         };
         const differenceOptions = isMultiSelect
             ? this.getMultiOptions()
@@ -165,21 +165,21 @@ export class MoveableManager extends Subscribe {
                 bottom: isAbsolute,
                 left: isAbsolute,
                 center: isAbsolute,
-                middle: isAbsolute
+                middle: isAbsolute,
             },
             elementSnapDirections: {
                 top: isAbsolute,
                 right: isAbsolute,
                 bottom: isAbsolute,
-                left: isAbsolute
+                left: isAbsolute,
             },
             isDisplayInnerSnapDigit: true,
             dragTarget: '.moveable-drag-area-button',
             dragTargetSelf: true,
             props: {
-                actions: true
+                actions: true,
             },
-            ables: [moveableMenu(this.actionHandler.bind(this))]
+            ables: [moveableMenu(this.actionHandler.bind(this))],
         };
     }
 
@@ -194,7 +194,7 @@ export class MoveableManager extends Subscribe {
             startDragRotate: 0,
             throttleDragRotate: 0,
             origin: true,
-            padding: { left: 0, top: 0, right: 0, bottom: 0 }
+            padding: { left: 0, top: 0, right: 0, bottom: 0, },
         };
     }
 
@@ -240,15 +240,15 @@ export class MoveableManager extends Subscribe {
 
             if (this.isInElementList(node as Element, selectedElList)) continue;
 
-            const { width, height } = (node as Element).getBoundingClientRect();
+            const { width, height, } = (node as Element).getBoundingClientRect();
 
             if (!width || !height) continue;
 
-            const { left, top } = js_utils_dom_offset(node as HTMLElement);
+            const { left, top, } = js_utils_dom_offset(node as HTMLElement);
 
             const elementGuideline = createElement({
                 cssText: `position: absolute;width: ${width}px;height: ${height}px;top: ${top}px;left: ${left}px`,
-                className: ''
+                className: '',
             });
             this.elementGuidelines.push(elementGuideline);
             frame.append(elementGuideline);

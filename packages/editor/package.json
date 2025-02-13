@@ -5,7 +5,7 @@
   "type": "module",
   "main": "dist/quantum-editor.umd.cjs",
   "module": "dist/quantum-editor.js",
-  "style": "dist/style.css",
+  "style": "dist/quantum-editor.css",
   "types": "./dist/types/index.d.ts",
   "exports": {
     ".": {
@@ -13,9 +13,9 @@
       "import": "./dist/quantum-editor.js",
       "require": "./dist/quantum-editor.umd.cjs"
     },
-    "./dist/style.css": {
-      "import": "./dist/style.css",
-      "require": "./dist/style.css"
+    "./dist/quantum-editor.css": {
+      "import": "./dist/quantum-editor.css",
+      "require": "./dist/quantum-editor.css"
     },
     "./*": "./"
   },
@@ -36,6 +36,7 @@
     "@quantum-design/vue3-antd-pc-ui": "catalog:",
     "@quantum-design/vue3-pc-ui": "catalog:",
     "@quantum-design-configs/vite": "catalog:",
+    "@quantum-design/styles": "catalog:",
     "lodash-es": "catalog:",
     "monaco-editor": "catalog:",
     "tinymce": "catalog:",

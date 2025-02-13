@@ -1,7 +1,7 @@
 import Moveable from 'moveable';
 import { BoxDragStatus, DRAG_EL_ID_PREFIX, Mode } from './const';
 import DragResizeHelper from './box-drag-resize-helper';
-import {
+import type {
     DelayedMarkContainer,
     GetContainer,
     GetRenderDocument,

@@ -1,6 +1,6 @@
-import { ISchemasNode } from '@quantum-lowcode/schemas';
+import type { ISchemasNode } from '@quantum-lowcode/schemas';
 import { compliedCondition, isArray, js_utils_find_attr } from '@quantum-lowcode/utils';
-import { IDataSourceManagerData } from '../types';
+import type { IDataSourceManagerData } from '../types';
 
 export function compliedConditions(node: ISchemasNode, data: IDataSourceManagerData) {
     if (!node.ifShow || !isArray(node.ifShow) || !node.ifShow.length) return true;

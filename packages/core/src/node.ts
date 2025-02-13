@@ -1,4 +1,4 @@
-import { ISchemasContainer, ISchemasNode, ISchemasPage } from '@quantum-lowcode/schemas';
+import type { ISchemasContainer, ISchemasNode, ISchemasPage } from '@quantum-lowcode/schemas';
 import { LowCodeRoot } from './app';
 import { LowCodePage } from './page';
 import { Subscribe, isFunction, isObject, compiledNode, isArray, stringToBoolean } from '@quantum-lowcode/utils';
@@ -14,7 +14,7 @@ interface INodeOptions {
 
 export class LowCodeNode extends Subscribe {
     public data: ISchemasNode | ISchemasContainer | ISchemasPage;
-    public page?: LowCodePage
+    public page?: LowCodePage;
     public parent?: LowCodeNode;
     public root: LowCodeRoot;
     public instance?: any;
@@ -47,7 +47,7 @@ export class LowCodeNode extends Subscribe {
                         field: this.data.field,
                         rawValue: '',
                         key: '',
-                        type: 'cond'
+                        type: 'cond',
                     });
                 }
             }
@@ -64,7 +64,7 @@ export class LowCodeNode extends Subscribe {
                     field: this.data.field,
                     rawValue: value,
                     key: key!,
-                    type: 'data'
+                    type: 'data',
                 });
             }
             if (typeof value === 'string') {
@@ -91,7 +91,7 @@ export class LowCodeNode extends Subscribe {
                 } else if (isArray(val) && val[0]?.field) {
                     const fn = () => {
                         for (const item of val) {
-                            const { field, params = {} } = item;
+                            const { field, params = {}, } = item;
                             this.root.emit(`${field}`, params);
                         }
                     };
@@ -142,7 +142,7 @@ export class LowCodeNode extends Subscribe {
         }
         if (this.data[hook]) {
             for (const item of this.data[hook].hookData) {
-                const { field, params = {} } = item;
+                const { field, params = {}, } = item;
                 this.root.emit(`${field}`, params);
             }
         }

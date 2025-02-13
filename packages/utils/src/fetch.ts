@@ -1,4 +1,4 @@
-import { IHttpOptions } from '@quantum-lowcode/schemas';
+import type { IHttpOptions } from '@quantum-lowcode/schemas';
 
 /**
  * 将json对象转换为urlencoded字符串

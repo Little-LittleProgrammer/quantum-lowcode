@@ -1,6 +1,6 @@
 // 数组节点模型
 import { ActionType, NodeType } from './const';
-import { FieldToDepMap, IDataSourceSchema } from './event';
+import type { FieldToDepMap, IDataSourceSchema } from './event';
 export type Id = string
 export interface Fn<T = any, R = T> {
     (...arg: T[]): R;

@@ -8,7 +8,7 @@ import {
     js_utils_dom_offset,
     js_utils_dom_remove_class
 } from '@quantum-lowcode/utils';
-import { ISortEventData, ITargetElement } from './types';
+import type { ISortEventData, ITargetElement } from './types';
 import {DEFAULT_DESIGN_WIDTH} from '@quantum-lowcode/schemas';
 
 export function addSelectedClassName(el: Element, doc: Document) {

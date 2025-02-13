@@ -1,8 +1,8 @@
 // 基于iframe加载传入进来的RuntimeUrl，并支持增删改查组件
 
 import { Subscribe, getHost, injectStyle, isSameDomain } from '@quantum-lowcode/utils';
-import { IBoxCoreConfig, IDeleteData, IPoint, IRuntime, IRuntimeWindow, IUpdateData } from './types';
-import { Id } from '@quantum-lowcode/schemas';
+import type { IBoxCoreConfig, IDeleteData, IPoint, IRuntime, IRuntimeWindow, IUpdateData } from './types';
+import type { Id } from '@quantum-lowcode/schemas';
 import { DEFAULT_ZOOM } from './const';
 import { addSelectedClassName, removeSelectedClassName } from './utils';
 
@@ -16,7 +16,7 @@ export class BoxRender extends Subscribe {
     public runtime: IRuntime | null = null; // 运行时实例
     public iframe?: HTMLIFrameElement; // iframe
 
-    private runtimeUrl?: string // iframe 的 src
+    private runtimeUrl?: string; // iframe 的 src
     private zoom = DEFAULT_ZOOM;
     constructor({runtimeUrl, zoom, }:IBoxCoreConfig) {
         super();
@@ -163,7 +163,7 @@ export class BoxRender extends Subscribe {
         }
     }
 
-    private loadHandler= async() => {
+    private loadHandler = async() => {
         // 如果 contentWindow 未初始化, 返回
         if (!this.contentWindow) return;
 
@@ -189,7 +189,7 @@ export class BoxRender extends Subscribe {
             min-height: 50px;
           }
         `);
-    }
+    };
 
     private postQuantumRuntimeReady() {
         this.contentWindow = this.iframe?.contentWindow as IRuntimeWindow;
