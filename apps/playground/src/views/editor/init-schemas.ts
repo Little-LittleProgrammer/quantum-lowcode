@@ -3,6 +3,7 @@ import { ISchemasRoot } from '@quantum-lowcode/schemas';
 export const defaultSchemas: ISchemasRoot = {
     type: 'root',
     name: 'test',
+    field: 'root',
     children: [
         {
             type: 'page',
@@ -20,6 +21,7 @@ export const defaultSchemas: ISchemasRoot = {
 export const testSchemasV1: ISchemasRoot = {
     type: 'root',
     name: 'test',
+    field: 'root',
     dataSources: [
         {
             type: 'base',
@@ -204,6 +206,7 @@ export const testSchemasV1: ISchemasRoot = {
 export const testSchemasV2: ISchemasRoot = {
     type: 'root',
     name: 'test2',
+    field: 'root',
     children: [
         {
             type: 'page',
