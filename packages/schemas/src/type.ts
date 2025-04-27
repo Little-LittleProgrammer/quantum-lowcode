@@ -1,6 +1,6 @@
 // 数组节点模型
 import { ActionType, NodeType } from './const';
-import { FieldToDepMap, IDataSourceSchema } from './event';
+import type { FieldToDepMap, IDataSourceSchema } from './event';
 export type Id = string
 export interface Fn<T = any, R = T> {
     (...arg: T[]): R;
@@ -50,7 +50,7 @@ export interface ILowCodeRoot {
     schemasRoot?: ISchemasRoot;
     request?: IRequestFunction;
     registerEvent?: Fn;
-    dataSourceDep: Map<Id, FieldToDepMap>
+    // dataSourceDep: Map<Id, FieldToDepMap>
     [key: string]: any;
 }
 

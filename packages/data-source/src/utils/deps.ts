@@ -1,7 +1,7 @@
-import { FieldToDepMap, IDepData, ILowCodeRoot, ISchemasNode, ISchemasRoot, Id } from '@quantum-lowcode/schemas';
+import type { FieldToDepMap, IDepData, ILowCodeRoot, ISchemasNode, ISchemasRoot, Id } from '@quantum-lowcode/schemas';
 import { getNodePath, isPage, isArray, js_utils_edit_attr } from '@quantum-lowcode/utils';
 import { compliedConditions } from './tools';
-import { IDataSourceManagerData } from '../types';
+import type { IDataSourceManagerData } from '../types';
 
 interface ISourceManage {
     app: ILowCodeRoot;
@@ -10,10 +10,10 @@ interface ISourceManage {
 }
 
 export class IDepEffect implements IDepData {
-    public field: Id // 节点id
-    public key: string // 属性路径
-    public rawValue: string // 原始值
-    public type: 'data' | 'cond' // 依赖类型
+    public field: Id; // 节点id
+    public key: string; // 属性路径
+    public rawValue: string; // 原始值
+    public type: 'data' | 'cond'; // 依赖类型
     constructor(options: IDepData) {
         this.field = options.field;
         this.key = options.key;

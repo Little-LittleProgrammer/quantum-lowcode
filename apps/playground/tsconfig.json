@@ -6,7 +6,8 @@
         "paths": {
             "@/*": ["src/*"],
             "#/*": ["types/*"]
-        }
+        },
+        "verbatimModuleSyntax": false,
     },
     "include": [
         "src/**/*.ts", 

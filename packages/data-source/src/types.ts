@@ -1,4 +1,4 @@
-import {IDataSourceSchema, IHttpOptions, ILowCodeRoot, IRequestFunction} from '@quantum-lowcode/schemas';
+import type { IDataSourceSchema, IHttpOptions, ILowCodeRoot, IRequestFunction } from '@quantum-lowcode/schemas';
 
 import {HttpDataSource} from './data-source/http';
 

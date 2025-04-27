@@ -1,13 +1,13 @@
 import { Subscribe } from '@quantum-lowcode/utils';
 import Moveable from 'moveable';
 import { TargetShadow } from './target-shadow';
-import { GetContainer, IBoxHighlightConfig } from './types';
+import type { GetContainer, IBoxHighlightConfig } from './types';
 import { HIGHLIGHT_EL_ID_PREFIX, ZIndex } from './const';
 
 export class BoxHighlight extends Subscribe {
     public container:HTMLElement;
     public target?: HTMLElement;
-    public moveable?: Moveable
+    public moveable?: Moveable;
     public targetShadow?: TargetShadow;
     private getRootContainer: GetContainer;
 

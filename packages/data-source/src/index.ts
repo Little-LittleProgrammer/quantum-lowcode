@@ -1,6 +1,6 @@
-import { ILowCodeRoot} from '@quantum-lowcode/schemas';
+import type { ILowCodeRoot } from '@quantum-lowcode/schemas';
 import { DataSourceManager } from './data-source-manager';
-import { ChangeDataEvent } from './types';
+import type { ChangeDataEvent } from './types';
 /**
  * 创建数据源管理器
  * @param app ILowCodeRoot

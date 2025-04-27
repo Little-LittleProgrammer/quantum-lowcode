@@ -1,4 +1,4 @@
-import { ISchemasContainer, ISchemasNode, ISchemasPage, Id } from '@quantum-lowcode/schemas';
+import type { ISchemasContainer, ISchemasNode, ISchemasPage, Id } from '@quantum-lowcode/schemas';
 import { LowCodeRoot } from './app';
 import { LowCodeNode } from './node';
 
@@ -42,7 +42,7 @@ export class LowCodePage extends LowCodeNode {
         this.nodes.delete(field);
     }
 
-    public destroy(): void {
+    public override destroy(): void {
         super.destroy();
         this.nodes.clear();
     }

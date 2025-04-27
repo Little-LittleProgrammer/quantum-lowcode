@@ -1,5 +1,5 @@
-import { isBase, isFunction, isObject, isRegExp, isString, isUnDef, js_utils_edit_attr, js_utils_find_attr, serializeToString } from '@quantum-design/utils';
-import { Fn, ISchemasContainer, ISchemasNode, ISchemasPage, Id, NodeType } from '@quantum-lowcode/schemas';
+import { isBase, isFunction, isBoolean, isObject, isRegExp, isString, isUnDef, js_utils_edit_attr, js_utils_find_attr, serializeToString } from '@quantum-design/utils';
+import { type Fn, type ISchemasContainer, type ISchemasNode, type ISchemasPage, type Id, NodeType } from '@quantum-lowcode/schemas';
 
 export function getHost(url: string) {
     return url.match(/\/\/([^/]+)/)?.[1];
@@ -59,10 +59,6 @@ export const getUrlParam = (param: string, url?: string) => {
     }
     return '';
 };
-
-export function isBoolean(val: any): boolean {
-    return typeof val === 'boolean' || val === 'true' || val === 'false';
-}
 
 export function stringToBoolean(val: string) {
     if (isBoolean(val)) {
@@ -151,7 +147,7 @@ export function getDefaultValueFromFields(obj: Record<string, any>[]) {
         boolean: false,
         number: 0,
         null: null,
-        any: undefined
+        any: undefined,
     };
 
     obj.forEach((field: any) => {
@@ -300,7 +296,7 @@ export function compiledNode(
  */
 export const addParamToUrl = (obj: Record<string, any>, global = globalThis, needReload = true) => {
     const url = new URL(global.location.href);
-    const { searchParams } = url;
+    const { searchParams, } = url;
     for (const [k, v] of Object.entries(obj)) {
         searchParams.set(k, v);
     }

@@ -8,7 +8,7 @@
 
 <script lang='ts' setup>
 import { IServices } from '@quantum-lowcode/editor';
-import { PropType, provide, reactive, ref } from 'vue'
+import { type PropType, provide, reactive, ref } from 'vue'
 import CompList from './comp-list/index.vue'
 import PropsList from './props-list/index.vue'
 defineOptions({

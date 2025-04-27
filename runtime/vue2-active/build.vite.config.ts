@@ -25,7 +25,7 @@ import externalGlobals from 'rollup-plugin-external-globals';
 import postCssPxtorem from 'postcss-pxtorem';
 import { resolve } from 'path';
 
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, }) => {
     // TODO 待优化
     if (['config'].includes(mode)) {
         const file = resolve(
@@ -42,9 +42,9 @@ export default defineConfig(({ mode }) => {
                     entry: file,
                     name: `quantumCompConfigs`,
                     fileName: 'config',
-                    formats: ['umd']
-                }
-            }
+                    formats: ['umd'],
+                },
+            },
         };
     }
 
@@ -56,8 +56,8 @@ export default defineConfig(({ mode }) => {
                 //     targets: ['defaults', 'not IE 11'],
                 // }),
                 externalGlobals(
-                    { vue: 'Vue' },
-                    { exclude: [`./${mode}/index.html`] }
+                    { vue: 'Vue', },
+                    { exclude: [`./${mode}/index.html`], }
                 )
             ],
             css: {
@@ -65,10 +65,10 @@ export default defineConfig(({ mode }) => {
                     plugins: [
                         postCssPxtorem({
                             rootValue: 75,
-                            propList: ['*']
+                            propList: ['*'],
                         })
-                    ]
-                }
+                    ],
+                },
             },
 
             root: `./${mode}/`,
@@ -84,9 +84,9 @@ export default defineConfig(({ mode }) => {
                     `../../apps/playground/public/runtime/vue2/${mode}`
                 ),
                 rollupOptions: {
-                    external: ['vue']
-                }
-            }
+                    external: ['vue'],
+                },
+            },
         };
     }
 

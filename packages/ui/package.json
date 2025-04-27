@@ -2,6 +2,7 @@
   "name": "@quantum-lowcode/ui",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "dist/lib/index.js",
   "module": "dist/es/index.js",
   "typings": "dist/index.d.ts",
@@ -41,21 +42,21 @@
   "dependencies": {
     "@quantum-lowcode/utils": "workspace:*",
     "@quantum-lowcode/core": "workspace:*",
-    "@quantum-design/vue3-antd-pc-ui": "~1.1.0",
+    "@quantum-design/vue3-antd-pc-ui": "catalog:",
+    "@quantum-design/styles": "catalog:",
     "@quantum-lowcode/schemas": "workspace:*"
   },
   "peerDependencies": {
-    "vue": "~3.3.4"
+    "vue": "^3.3.4"
   },    
   "devDependencies": {
-    "@quantum-design-configs/vite": "~1.1.0",
-    "@quantum-design/types": "~1.1.0",
-    "sass": "^1.63.3",
-    "@ant-design/icons-vue": "^6.1.0",
-    "vue-types": "^3.0.2",
-    "csstype": "~3.1.2",
-    "prettier": "~3.1.0",
-    "vue": "~3.3.4",
-    "vite-plugin-dts": "3.6.4"
+    "@quantum-design-configs/vite": "catalog:",
+    "@quantum-design/types": "catalog:",
+    "sass": "catalog:",
+    "@ant-design/icons-vue": "catalog:",
+    "vue-types": "catalog:",
+    "csstype": "catalog:",
+    "vue": "catalog:",
+    "vite-plugin-dts": "catalog:"
   }
 }

@@ -1,4 +1,4 @@
-import {
+import type {
     OnDrag,
     OnDragGroup,
     OnDragGroupStart,
@@ -16,7 +16,7 @@ import MoveableHelper from 'moveable-helper';
 
 import { DRAG_EL_ID_PREFIX, GHOST_EL_ID_PREFIX, Mode, ZIndex } from './const';
 import { TargetShadow } from './target-shadow';
-import { IDragResizeHelperConfig, IRect, ITargetElement } from './types';
+import type { IDragResizeHelperConfig, IRect, ITargetElement } from './types';
 import { getBorderWidth, getMarginValue } from './utils';
 import { calcValueByDesignWidth } from '@quantum-lowcode/utils';
 import { js_utils_dom_offset, getAbsolutePosition } from '@quantum-lowcode/utils';
@@ -47,7 +47,7 @@ export default class DragResizeHelper {
     private framesSnapShot: { left: number; top: number; id: string }[] = [];
     /** 布局方式：流式布局、绝对定位、固定定位 */
     private mode: Mode = Mode.ABSOLUTE;
-    private designWidth: number
+    private designWidth: number;
 
     constructor(config: IDragResizeHelperConfig) {
         this.designWidth = config.designWidth;

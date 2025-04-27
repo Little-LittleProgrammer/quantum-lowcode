@@ -1,6 +1,6 @@
-import { ICodeBlockContent, IDataSchema, ILowCodeRoot } from '@quantum-lowcode/schemas';
+import type { ICodeBlockContent, IDataSchema, ILowCodeRoot } from '@quantum-lowcode/schemas';
 import { Subscribe, js_utils_edit_attr } from '@quantum-lowcode/utils';
-import { ChangeDataEvent, IDataSourceOption } from '../types';
+import type { ChangeDataEvent, IDataSourceOption } from '../types';
 import { getDefaultValueFromFields } from '@quantum-lowcode/utils';
 
 export class DataSource extends Subscribe {

@@ -5,7 +5,7 @@ import {
     js_utils_throttle_event,
     getDocument
 } from '@quantum-lowcode/utils';
-import {
+import type {
     GetContainer,
     GetElementsFromPoint,
     GetRenderDocument,
@@ -20,7 +20,7 @@ import {
     IsContainer
 } from './types';
 import { BoxHighlight } from './box-highlight';
-import { Id } from '@quantum-lowcode/schemas';
+import type { Id } from '@quantum-lowcode/schemas';
 import { BoxDragResize } from './box-drag-resize';
 import {
     BoxDragStatus,
@@ -32,7 +32,7 @@ import {
     PAGE_CLASS,
     SelectStatus
 } from './const';
-import { MoveableOptions, OnDragStart } from 'moveable';
+import type { MoveableOptions, OnDragStart } from 'moveable';
 import { BoxMultiDragResize } from './box-multi-drag-resize';
 import DragResizeHelper from './box-drag-resize-helper';
 import { Env } from '@quantum-lowcode/core';

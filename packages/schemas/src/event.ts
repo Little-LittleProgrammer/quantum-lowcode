@@ -1,5 +1,5 @@
 import { ActionType } from './const';
-import { IHttpOptions, Id } from './type';
+import type { IHttpOptions, Id } from './type';
 
 export interface IDataSourceSchema {
     /** 数据源类型，根据类型来实例化；例如http则使用new HttpDataSource */
