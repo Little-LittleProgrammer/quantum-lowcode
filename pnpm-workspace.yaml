@@ -98,7 +98,7 @@ catalog:
   "@quantum-design/hooks": "~2.0.2-beta.0"
   "@quantum-design/http": "~2.0.2-beta.0"
   "@quantum-design/shared": "~2.0.2-beta.0"
-  "@quantum-design/vue3-antd-pc-ui": "~2.0.2-beta.0"
+  "@quantum-design/vue3-antd-pc-ui": "~2.0.3-beta.0"
   "@quantum-design/vue3-pc-ui": "~2.0.2-beta.0"
   "@quantum-design/types": "~2.0.2-beta.0"
   "@quantum-design-configs/rollup": "~2.0.2-beta.0"

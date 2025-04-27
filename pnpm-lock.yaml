@@ -40,8 +40,8 @@ catalogs:
       specifier: ~2.0.2-beta.0
       version: 2.0.2-beta.0
     '@quantum-design/vue3-antd-pc-ui':
-      specifier: ~2.0.2-beta.0
-      version: 2.0.2-beta.0
+      specifier: ~2.0.3-beta.0
+      version: 2.0.3-beta.0
     '@quantum-design/vue3-pc-ui':
       specifier: ~2.0.2-beta.0
       version: 2.0.2-beta.0
@@ -256,7 +256,7 @@ importers:
         version: 2.0.2-beta.0
       '@quantum-design/vue3-antd-pc-ui':
         specifier: 'catalog:'
-        version: 2.0.2-beta.0(@ant-design/icons-vue@7.0.1(vue@3.5.13(typescript@5.7.3)))(ant-design-vue@4.2.6(vue@3.5.13(typescript@5.7.3)))(pinia@2.3.1(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3)))(vue-router@4.5.0(vue@3.5.13(typescript@5.7.3)))(vue@3.5.13(typescript@5.7.3))
+        version: 2.0.3-beta.0(@ant-design/icons-vue@7.0.1(vue@3.5.13(typescript@5.7.3)))(ant-design-vue@4.2.6(vue@3.5.13(typescript@5.7.3)))(pinia@2.3.1(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3)))(vue-router@4.5.0(vue@3.5.13(typescript@5.7.3)))(vue@3.5.13(typescript@5.7.3))
       '@quantum-design/vue3-pc-ui':
         specifier: 'catalog:'
         version: 2.0.2-beta.0(vue-router@4.5.0(vue@3.5.13(typescript@5.7.3)))(vue@3.5.13(typescript@5.7.3))
@@ -452,7 +452,7 @@ importers:
         version: 2.0.2-beta.0
       '@quantum-design/vue3-antd-pc-ui':
         specifier: 'catalog:'
-        version: 2.0.2-beta.0(@ant-design/icons-vue@7.0.1(vue@3.5.13(typescript@5.7.3)))(ant-design-vue@4.2.6(vue@3.5.13(typescript@5.7.3)))(pinia@2.3.1(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3)))(vue-router@4.5.0(vue@3.5.13(typescript@5.7.3)))(vue@3.5.13(typescript@5.7.3))
+        version: 2.0.3-beta.0(@ant-design/icons-vue@7.0.1(vue@3.5.13(typescript@5.7.3)))(ant-design-vue@4.2.6(vue@3.5.13(typescript@5.7.3)))(pinia@2.3.1(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3)))(vue-router@4.5.0(vue@3.5.13(typescript@5.7.3)))(vue@3.5.13(typescript@5.7.3))
       '@quantum-design/vue3-pc-ui':
         specifier: 'catalog:'
         version: 2.0.2-beta.0(vue-router@4.5.0(vue@3.5.13(typescript@5.7.3)))(vue@3.5.13(typescript@5.7.3))
@@ -565,7 +565,7 @@ importers:
         version: 2.0.2-beta.0
       '@quantum-design/vue3-antd-pc-ui':
         specifier: 'catalog:'
-        version: 2.0.2-beta.0(@ant-design/icons-vue@7.0.1(vue@3.5.13(typescript@5.7.3)))(ant-design-vue@4.2.6(vue@3.5.13(typescript@5.7.3)))(pinia@2.3.1(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3)))(vue-router@4.5.0(vue@3.5.13(typescript@5.7.3)))(vue@3.5.13(typescript@5.7.3))
+        version: 2.0.3-beta.0(@ant-design/icons-vue@7.0.1(vue@3.5.13(typescript@5.7.3)))(ant-design-vue@4.2.6(vue@3.5.13(typescript@5.7.3)))(pinia@2.3.1(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3)))(vue-router@4.5.0(vue@3.5.13(typescript@5.7.3)))(vue@3.5.13(typescript@5.7.3))
       '@quantum-lowcode/core':
         specifier: workspace:*
         version: link:../core
@@ -701,7 +701,7 @@ importers:
         version: 2.0.2-beta.0
       '@quantum-design/vue3-antd-pc-ui':
         specifier: 'catalog:'
-        version: 2.0.2-beta.0(@ant-design/icons-vue@7.0.1(vue@3.5.13(typescript@5.7.3)))(ant-design-vue@4.2.6(vue@3.5.13(typescript@5.7.3)))(pinia@2.3.1(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3)))(vue-router@4.5.0(vue@3.5.13(typescript@5.7.3)))(vue@3.5.13(typescript@5.7.3))
+        version: 2.0.3-beta.0(@ant-design/icons-vue@7.0.1(vue@3.5.13(typescript@5.7.3)))(ant-design-vue@4.2.6(vue@3.5.13(typescript@5.7.3)))(pinia@2.3.1(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3)))(vue-router@4.5.0(vue@3.5.13(typescript@5.7.3)))(vue@3.5.13(typescript@5.7.3))
       '@quantum-lowcode/core':
         specifier: workspace:*
         version: link:../../packages/core
@@ -1881,6 +1881,14 @@ packages:
       vite: ~6.0.5
       vue: ^3.4.0
 
+  '@quantum-design/hooks@2.0.2':
+    resolution: {integrity: sha512-DESURI+GegiQtXPpNTldxn17q8cFuhEf0HKfPh1OaRg/O3h10C9ybbdd4aJyBlhx6YvWzVC+ittiLy2mekSPBw==}
+    peerDependencies:
+      '@ant-design/icons-vue': ^7.0.1
+      ant-design-vue: ^4.2.6
+      vue: ^3.5.0
+      vue-router: ^4.5.0
+
   '@quantum-design/hooks@2.0.2-beta.0':
     resolution: {integrity: sha512-BvjAhQoX8tyHQXTDaKHhPAZ0XetpbJ/TsQpG0b7SuBvPQL1Y+0tjWb8aqypRMGg4TyheHnumLE3L4+I/uJ0RSQ==}
     peerDependencies:
@@ -1892,23 +1900,41 @@ packages:
   '@quantum-design/http@2.0.2-beta.0':
     resolution: {integrity: sha512-mXiFOiswfUkBMBC7Yv6W2iWJmVThk3d18p5QyTvX0BK41W3apS/t97lnKcuIYsVCQIu2PA2Y8+itlkE+BQtaGA==}
 
+  '@quantum-design/shared@2.0.2':
+    resolution: {integrity: sha512-ulRRNLPzeZL/5VDvlaBD7qXMaa3t6GWFGVs4VvlimVMICPtCWYCNC0bUHfg2948wvtnzXmxEud4ijxmUjq19BQ==}
+
   '@quantum-design/shared@2.0.2-beta.0':
     resolution: {integrity: sha512-fK2fTIMejrVVjzONBDhGKfiIpWdV04jnFVvWAwF3aVgBK4DSeDi88hBgdOosod1VobH4kdg2N5epZK9/IaCPyQ==}
+
+  '@quantum-design/styles@2.0.2':
+    resolution: {integrity: sha512-0L93dfyCgeir/3ewLovuiTXWRV3BjDOUz6tw2XeEsIUtClCZM2O89LB9yJWm5Eq2M9Ezw41Si8pJtPU1E94Z+g==}
 
   '@quantum-design/styles@2.0.2-beta.0':
     resolution: {integrity: sha512-S77qG3JEWk0Au48FtDejYZBa/k9S3abJ1MMFFMZeLuXhu2Wcpu5WiBmygfUqHya+JFcY2JF0iy2z9RG0k4m/Sw==}
 
+  '@quantum-design/types@2.0.2':
+    resolution: {integrity: sha512-Yp3GkTfLttSxw9SK+PI3M+GQyQeCIzpO9HfU+cctohN4zFtjEXG7cIeqVYSXD5D6T6iWYWB2o2VJSO2sQ7I3Eg==}
+
   '@quantum-design/types@2.0.2-beta.0':
     resolution: {integrity: sha512-QdBDmEfeSiUMr+qgVnztftgII+M3tqoUJ/7c11WiAAmmvIzIQdgPGr7Wsyd35kdVuCWKQIifhjnOHMuTBYyCfw==}
+
+  '@quantum-design/utils@2.0.2':
+    resolution: {integrity: sha512-P/8EIpVRiFUmg4AsRAZ8yu0ij/K0v4Uut5vFVwArMu+e7ZtEGydlAv7v3Glp9BaMtzWfr6fphuRHro95lngylA==}
 
   '@quantum-design/utils@2.0.2-beta.0':
     resolution: {integrity: sha512-5zDI8F9PYYx75/TqzgFw2Z514ucbJJ23dgGStGGz6Dfz0GZk8u24QouE+4lqicGuJ7E4ih95en0/rBcVsZiDcg==}
 
-  '@quantum-design/vue3-antd-pc-ui@2.0.2-beta.0':
-    resolution: {integrity: sha512-WjH7TEngQurbzwKHhzhKzI9XIfd36YHEkSr3UBXbi5kuYKQnpJpyrrdzFatsARMJFRlQRJZcYf+rleQuTkspiw==}
+  '@quantum-design/vue3-antd-pc-ui@2.0.3-beta.0':
+    resolution: {integrity: sha512-Jp7J1FqzZr4aeQmDtkWQf1htdWBcOHs9JIHnSrSuZLssJRqoXwle8mHNMSNaBH+8R1iK+riSnELDi10etaSgrA==}
     peerDependencies:
       pinia: ^2.2.2
       vue: ^3.5.0
+      vue-router: ^4.4.0
+
+  '@quantum-design/vue3-pc-ui@2.0.2':
+    resolution: {integrity: sha512-Uw4rmRKQDdVyFrPrnZJR6a3q4B/F7YhMEd8pr1Dij+qGbVJVO6sTUXl3ktaTFC9hTwu0h1SqakPYHcyxR1ldgw==}
+    peerDependencies:
+      vue: ^3.4.0
       vue-router: ^4.4.0
 
   '@quantum-design/vue3-pc-ui@2.0.2-beta.0':
@@ -6368,6 +6394,16 @@ snapshots:
       - workbox-build
       - workbox-window
 
+  '@quantum-design/hooks@2.0.2(@ant-design/icons-vue@7.0.1(vue@3.5.13(typescript@5.7.3)))(ant-design-vue@4.2.6(vue@3.5.13(typescript@5.7.3)))(vue-router@4.5.0(vue@3.5.13(typescript@5.7.3)))(vue@3.5.13(typescript@5.7.3))':
+    dependencies:
+      '@ant-design/icons-vue': 7.0.1(vue@3.5.13(typescript@5.7.3))
+      '@quantum-design/shared': 2.0.2
+      '@quantum-design/types': 2.0.2
+      '@quantum-design/utils': 2.0.2
+      ant-design-vue: 4.2.6(vue@3.5.13(typescript@5.7.3))
+      vue: 3.5.13(typescript@5.7.3)
+      vue-router: 4.5.0(vue@3.5.13(typescript@5.7.3))
+
   '@quantum-design/hooks@2.0.2-beta.0(@ant-design/icons-vue@7.0.1(vue@3.5.13(typescript@5.7.3)))(ant-design-vue@4.2.6(vue@3.5.13(typescript@5.7.3)))(vue-router@4.5.0(vue@3.5.13(typescript@5.7.3)))(vue@3.5.13(typescript@5.7.3))':
     dependencies:
       '@ant-design/icons-vue': 7.0.1(vue@3.5.13(typescript@5.7.3))
@@ -6389,23 +6425,33 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
+  '@quantum-design/shared@2.0.2': {}
+
   '@quantum-design/shared@2.0.2-beta.0': {}
+
+  '@quantum-design/styles@2.0.2': {}
 
   '@quantum-design/styles@2.0.2-beta.0': {}
 
+  '@quantum-design/types@2.0.2': {}
+
   '@quantum-design/types@2.0.2-beta.0': {}
+
+  '@quantum-design/utils@2.0.2':
+    dependencies:
+      '@quantum-design/shared': 2.0.2
 
   '@quantum-design/utils@2.0.2-beta.0':
     dependencies:
       '@quantum-design/shared': 2.0.2-beta.0
 
-  '@quantum-design/vue3-antd-pc-ui@2.0.2-beta.0(@ant-design/icons-vue@7.0.1(vue@3.5.13(typescript@5.7.3)))(ant-design-vue@4.2.6(vue@3.5.13(typescript@5.7.3)))(pinia@2.3.1(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3)))(vue-router@4.5.0(vue@3.5.13(typescript@5.7.3)))(vue@3.5.13(typescript@5.7.3))':
+  '@quantum-design/vue3-antd-pc-ui@2.0.3-beta.0(@ant-design/icons-vue@7.0.1(vue@3.5.13(typescript@5.7.3)))(ant-design-vue@4.2.6(vue@3.5.13(typescript@5.7.3)))(pinia@2.3.1(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3)))(vue-router@4.5.0(vue@3.5.13(typescript@5.7.3)))(vue@3.5.13(typescript@5.7.3))':
     dependencies:
-      '@quantum-design/hooks': 2.0.2-beta.0(@ant-design/icons-vue@7.0.1(vue@3.5.13(typescript@5.7.3)))(ant-design-vue@4.2.6(vue@3.5.13(typescript@5.7.3)))(vue-router@4.5.0(vue@3.5.13(typescript@5.7.3)))(vue@3.5.13(typescript@5.7.3))
-      '@quantum-design/shared': 2.0.2-beta.0
-      '@quantum-design/styles': 2.0.2-beta.0
-      '@quantum-design/utils': 2.0.2-beta.0
-      '@quantum-design/vue3-pc-ui': 2.0.2-beta.0(vue-router@4.5.0(vue@3.5.13(typescript@5.7.3)))(vue@3.5.13(typescript@5.7.3))
+      '@quantum-design/hooks': 2.0.2(@ant-design/icons-vue@7.0.1(vue@3.5.13(typescript@5.7.3)))(ant-design-vue@4.2.6(vue@3.5.13(typescript@5.7.3)))(vue-router@4.5.0(vue@3.5.13(typescript@5.7.3)))(vue@3.5.13(typescript@5.7.3))
+      '@quantum-design/shared': 2.0.2
+      '@quantum-design/styles': 2.0.2
+      '@quantum-design/utils': 2.0.2
+      '@quantum-design/vue3-pc-ui': 2.0.2(vue-router@4.5.0(vue@3.5.13(typescript@5.7.3)))(vue@3.5.13(typescript@5.7.3))
       lodash-es: 4.17.21
       pinia: 2.3.1(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3))
       sortablejs: 1.15.6
@@ -6414,6 +6460,16 @@ snapshots:
     transitivePeerDependencies:
       - '@ant-design/icons-vue'
       - ant-design-vue
+
+  '@quantum-design/vue3-pc-ui@2.0.2(vue-router@4.5.0(vue@3.5.13(typescript@5.7.3)))(vue@3.5.13(typescript@5.7.3))':
+    dependencies:
+      '@quantum-design/styles': 2.0.2
+      '@quantum-design/utils': 2.0.2
+      vue: 3.5.13(typescript@5.7.3)
+      vue-router: 4.5.0(vue@3.5.13(typescript@5.7.3))
+    optionalDependencies:
+      monaco-editor: 0.52.2
+      tinymce: 5.10.9
 
   '@quantum-design/vue3-pc-ui@2.0.2-beta.0(vue-router@4.5.0(vue@3.5.13(typescript@5.7.3)))(vue@3.5.13(typescript@5.7.3))':
     dependencies:

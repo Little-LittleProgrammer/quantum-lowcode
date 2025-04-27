@@ -50,8 +50,8 @@ const curFormSchemas = ref<any>({});
 
 const curStyleSwitch = ref(1);
 
-const init = async(changeNode=false) => {
-    curStyleSwitch.value = 1
+const init = async(changeNode = false) => {
+    curStyleSwitch.value = 1;
     if (isArray(valuesFn.value)) {
         for (const item of valuesFn.value) {
             await item.reset?.();
@@ -70,56 +70,54 @@ const init = async(changeNode=false) => {
             ifShow: services?.propsService.getConfig('ifShow'),
             lifeHooks: services?.propsService.getConfig('lifeHooks'),
         };
-    } 
+    }
     nextTick(async() => {
         formModel.value = {
             ...node.value,
             customStyleSwitch: curStyleSwitch.value,
-            customStyle: node.value?.style
-        }|| {};
+            customStyle: node.value?.style,
+        } || {};
     });
 };
 
 services?.propsService.on('props-configs-change', init);
 
 watch(() => node.value, (val, oldVal) => {
-    if (val?.field !==oldVal?.field) {
-        curFormSchemas.value = {}
+    if (val?.field !== oldVal?.field) {
+        curFormSchemas.value = {};
     }
-    init(val?.field !==oldVal?.field);
+    init(val?.field !== oldVal?.field);
 });
 
 function changeValue(value) {
     if (isNumber(value.customStyleSwitch)) {
         if (value.customStyleSwitch !== curStyleSwitch.value) {
-            curStyleSwitch.value = value.customStyleSwitch
-            return
+            curStyleSwitch.value = value.customStyleSwitch;
+            return;
         }
-        Reflect.deleteProperty(value, 'customStyleSwitch')
+        Reflect.deleteProperty(value, 'customStyleSwitch');
     }
     value.style = {
         ...value.customStyle,
         ...value.style,
-    }
-    if(value.customStyle) {
-        Reflect.deleteProperty(value, 'customStyle')
+    };
+    if (value.customStyle) {
+        Reflect.deleteProperty(value, 'customStyle');
     }
     const finValue = {
         ...node.value,
-        ...value
-    }
+        ...value,
+    };
     if (finValue.componentProps?.events) {
         finValue.componentProps = {
             ...finValue.componentProps,
             ...finValue.componentProps.events,
         };
     }
-    console.log('finValue',finValue, value)
-    
+    console.log('finValue', finValue, value);
+
     services?.editorService.update(finValue);
 }
-
-
 
 onMounted(() => {
     formRef.value.length &&

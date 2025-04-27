@@ -16,7 +16,7 @@ export default class Flexible {
         } else {
             globalThis.document.addEventListener(
                 'DOMContentLoaded',
-                this.setBodyFontSizeMate,
+                this.setBodyFontSizeMate.bind(this),
                 false
             );
         }
@@ -37,7 +37,7 @@ export default class Flexible {
     public destroy() {
         globalThis.document.removeEventListener(
             'DOMContentLoaded',
-            this.setBodyFontSizeMate,
+            this.setBodyFontSizeMate.bind(this),
             false
         );
         globalThis.removeEventListener('resize', this.resizeHandler, false);
@@ -61,7 +61,7 @@ export default class Flexible {
         this.setBodyFontSize(this.dpr);
     }
     private calcFontsize() {
-        const { width } = document.documentElement.getBoundingClientRect();
+        const { width, } = document.documentElement.getBoundingClientRect();
         const dpr = 1;
         // const dpr = globalThis?.devicePixelRatio || 1;
         this.setBodyFontSize(dpr);
