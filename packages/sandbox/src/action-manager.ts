@@ -618,7 +618,6 @@ export class ActionManager extends Subscribe {
     private mouseMoveHandler = (event: MouseEvent) => {
         js_utils_throttle_event(
             async(event: MouseEvent): Promise<void> => {
-                console.log('mouseMoveHandler');
                 if (
                     (event.target as HTMLDivElement)?.classList?.contains(
                         'moveable-direction'
@@ -671,7 +670,6 @@ export class ActionManager extends Subscribe {
 	 * 在up事件中负责对外通知选中事件，通知画布之外的编辑器更新
 	 */
     private mouseUpHandler = (event: MouseEvent): void => {
-        console.log('mouseUpHandler');
         getDocument().removeEventListener('mouseup', this.mouseUpHandler);
         this.container.addEventListener('mousemove', this.mouseMoveHandler);
         if (this.isMultiSelectStatus) {
