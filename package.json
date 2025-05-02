@@ -18,6 +18,10 @@
     "turbo": "latest",
     "vite": "^4.4.9"
   },
-  "packageManager": "pnpm@8.6.10",
-  "name": "lowcode-engine"
+  "packageManager": "pnpm@8.15.9",
+  "name": "lowcode-engine",
+  "volta": {
+    "node": "18.18.2",
+    "pnpm": "8.15.9"
+  }
 }
