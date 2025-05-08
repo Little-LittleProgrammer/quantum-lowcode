@@ -2,7 +2,7 @@ import { RouteRecordRaw } from 'vue-router';
 import { LAYOUT } from '../base';
 
 export const editorRoute: RouteRecordRaw = {
-    path: '/editor',
+    path: '/',
     component: LAYOUT,
     name: 'Editor',
     meta: {
@@ -10,9 +10,9 @@ export const editorRoute: RouteRecordRaw = {
         // hideBreadcrumb: true,
         // hideMenu: true,
         id: 'editor',
-        pid: '0'
+        pid: '0',
     },
-    redirect: '/editor/editor-page',
+    redirect: '/editor-page?runtimePathType=vue2',
     children: [
         {
             path: 'editor-page',
@@ -21,8 +21,8 @@ export const editorRoute: RouteRecordRaw = {
             meta: {
                 title: '编辑器',
                 id: 'editorPage',
-                pid: 'editor'
-            }
+                pid: 'editor',
+            },
         }
-    ]
+    ],
 };
