@@ -1,0 +1,1 @@
+import{i as f,j as l,u as h}from"./index-EpuTCbWd.js";function r(t){console.error(t)}function g(t){let s;s=h();const{push:u,replace:c}=s;function a(e,n=!1,i=!1){if(e)if(f(e))n?c(e).catch(r):u(e).catch(r);else{i&&l(e,{query:{t:Date.now()}});const o=e;n?c(o).catch(r):u(o).catch(r)}}return a}export{g as u};
