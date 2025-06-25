@@ -21,7 +21,7 @@ export function style2Obj(style: string) {
 
         key = key
             .split('-')
-            .map((v, i) => (i > 0 ? `${v[0].toUpperCase()}${v.substr(1)}` : v))
+            .map((v, i) => (i > 0 ? `${v[0]?.toUpperCase()}${v.substr(1)}` : v))
             .join('');
 
         obj[key] = value;

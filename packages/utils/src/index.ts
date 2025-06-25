@@ -136,55 +136,86 @@ export function parseFunction(func: string | Fn, ...agrs: string[]) {
     return parseSchemas(_fn + '};');
 }
 
-// 获取默认值
+/**
+ * 根据字段配置数组生成默认值对象
+ * 该方法主要用于表单初始化或组件属性默认值设置
+ *
+ * @param obj 字段配置对象数组，每个对象包含字段的元信息（name、type、defaultValue等）
+ * @returns 返回包含所有字段默认值的对象
+ *
+ * @example
+ * const fields = [
+ *   { name: 'title', type: 'string', defaultValue: 'Hello' },
+ *   { name: 'count', type: 'number' },
+ *   { name: 'config', type: 'object', fields: [
+ *     { name: 'enabled', type: 'boolean', defaultValue: true }
+ *   ]}
+ * ];
+ * const result = getDefaultValueFromFields(fields);
+ * // result: { title: 'Hello', count: 0, config: { enabled: true } }
+ */
 export function getDefaultValueFromFields(obj: Record<string, any>[]) {
+    // 存储最终生成的默认值对象
     const data: Record<string, any> = {};
 
+    // 定义各种数据类型对应的默认值映射
     const defaultValue: Record<string, any> = {
-        string: '',
-        object: {},
-        array: [],
-        boolean: false,
-        number: 0,
-        null: null,
-        any: undefined,
+        string: '', // 字符串默认为空字符串
+        object: {}, // 对象默认为空对象
+        array: [], // 数组默认为空数组
+        boolean: false, // 布尔值默认为false
+        number: 0, // 数字默认为0
+        null: null, // null类型默认为null
+        any: undefined, // any类型默认为undefined
     };
 
+    // 遍历每个字段配置
     obj.forEach((field: any) => {
+        // 情况1：字段显式定义了默认值
         if (typeof field.defaultValue !== 'undefined') {
+            // 对于数组类型，如果defaultValue不是数组，则使用空数组
             if (field.type === 'array' && !Array.isArray(field.defaultValue)) {
                 data[field.name] = defaultValue.array;
                 return;
             }
 
+            // 对于对象类型，如果defaultValue不是对象，需要特殊处理
             if (field.type === 'object' && !isObject(field.defaultValue)) {
+                // 如果defaultValue是字符串，尝试JSON解析
                 if (typeof field.defaultValue === 'string') {
                     try {
                         data[field.name] = JSON.parse(field.defaultValue);
                     } catch (e) {
+                        // JSON解析失败，使用空对象
                         data[field.name] = defaultValue.object;
                     }
                     return;
                 }
 
+                // 其他情况使用空对象
                 data[field.name] = defaultValue.object;
                 return;
             }
 
+            // 直接使用字段定义的默认值
             data[field.name] = field.defaultValue;
             return;
         }
 
+        // 情况2：对象类型但没有显式默认值
         if (field.type === 'object') {
+            // 如果有子字段配置，递归生成子对象的默认值；否则使用空对象
             data[field.name] = field.fields ? getDefaultValueFromFields(field.fields || []) : defaultValue.object;
             return;
         }
 
+        // 情况3：有字段类型定义，使用对应类型的默认值
         if (field.type) {
             data[field.name] = defaultValue[field.type];
             return;
         }
 
+        // 情况4：没有类型定义和默认值，设为undefined
         data[field.name] = undefined;
     });
 

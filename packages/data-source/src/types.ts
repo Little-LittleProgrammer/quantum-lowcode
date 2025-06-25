@@ -20,13 +20,13 @@ export interface IHttpDataSourceOption extends IDataSourceOption{
 
 export interface IHttpDataSourceSchema extends IDataSourceSchema {
     type: 'http';
-    options: IHttpOptions;
+    options: IHttpOptions; // 请求配置
     responseOptions?: {
-        dataPath?: string;
+        dataPath?: string; // 数据路径
     };
-    autoFetch?: boolean;
-    beforeRequest: string | ((options: IHttpOptions, content: { app: ILowCodeRoot; dataSource: HttpDataSource }) => IHttpOptions);
-    afterResponse: string | ((response: any, content: { app: ILowCodeRoot; dataSource: HttpDataSource }) => any);
+    autoFetch?: boolean; // 是否自动请求
+    beforeRequest: string | ((options: IHttpOptions, content: { app: ILowCodeRoot; dataSource: HttpDataSource }) => IHttpOptions); // 请求拦截器
+    afterResponse: string | ((response: any, content: { app: ILowCodeRoot; dataSource: HttpDataSource }) => any); // 响应拦截器
 }
 
 export interface IDataSourceManagerData {

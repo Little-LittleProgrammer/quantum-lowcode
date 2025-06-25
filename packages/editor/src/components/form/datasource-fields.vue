@@ -1,7 +1,7 @@
 <!--  -->
 <template>
-	<div>
-		<q-antd-table @register="registerTable">
+    <div>
+        <q-antd-table @register="registerTable">
             <template #bodyCell="{ column, record }">
                 <template v-if="column.key === 'action'">
                     <q-antd-table-action :actions="createActions(record)" />
@@ -9,13 +9,13 @@
             </template>
         </q-antd-table>
         <div> <a-button size="small" type="link" @click="updateData">添加</a-button></div>
-	</div>
+    </div>
 </template>
 
 <script lang="ts" setup>
 import { useTable } from '@quantum-design/vue3-antd-pc-ui';
 import { IDataSchema } from '@quantum-lowcode/schemas';
-import { js_utils_get_uuid } from '@quantum-lowcode/utils';
+import { isArray, js_utils_get_uuid } from '@quantum-lowcode/utils';
 import { cloneDeep } from 'lodash-es';
 import { computed, nextTick, unref } from 'vue';
 
@@ -28,23 +28,23 @@ const props = withDefaults(
         value: Partial<IDataSchema & {id: string}>[];
     }>(),
     {
-        value: [],
+        value: [] as any,
     }
 );
 
-const emits = defineEmits(['change','update:value']);
+const emits = defineEmits(['change', 'update:value']);
 
 const getDataSourceProps = computed(() => {
-    const data = cloneDeep(props.value)
+    const data = cloneDeep(props.value);
     return data.map(item => {
         if (!item.id) {
-            item.id = js_utils_get_uuid(4)
+            item.id = js_utils_get_uuid(4);
         }
-        return item
-    })
-})
+        return item;
+    });
+});
 
-const [registerTable, {getDataSource, deleteTableDataRecord}] = useTable({
+const [registerTable, {getDataSource, deleteTableDataRecord, insertTableDataRecord, setTableData, }] = useTable({
     pagination: false,
     rowKey: 'id',
     dataSource: getDataSourceProps,
@@ -58,7 +58,7 @@ const [registerTable, {getDataSource, deleteTableDataRecord}] = useTable({
             sorter: false,
             editRow: true,
             editRule: true,
-            width: 100
+            width: 100,
         },
         {
             title: '属性名称',
@@ -68,7 +68,7 @@ const [registerTable, {getDataSource, deleteTableDataRecord}] = useTable({
             editRow: true,
             editComponent: 'Input',
             editRule: true,
-            width: 100
+            width: 100,
         },
         {
             title: '数据类型',
@@ -80,16 +80,16 @@ const [registerTable, {getDataSource, deleteTableDataRecord}] = useTable({
             editComponent: 'Select',
             editComponentProps: {
                 options: [
-                    { label: '字符串', value: 'string' },
-                    { label: '数字', value: 'number' },
-                    { label: '布尔值', value: 'boolean' },
-                    { label: '对象', value: 'object' },
-                    { label: '数组', value: 'array' },
-                    { label: 'null', value: 'null' },
-                    { label: 'any', value: 'any' },
+                    { label: '字符串', value: 'string', },
+                    { label: '数字', value: 'number', },
+                    { label: '布尔值', value: 'boolean', },
+                    { label: '对象', value: 'object', },
+                    { label: '数组', value: 'array', },
+                    { label: 'null', value: 'null', },
+                    { label: 'any', value: 'any', }
                 ],
             },
-            width: 100
+            width: 100,
         },
         {
             title: '描述',
@@ -99,7 +99,7 @@ const [registerTable, {getDataSource, deleteTableDataRecord}] = useTable({
             sorter: false,
             editRow: true,
             editComponent: 'Input',
-            width: 250
+            width: 250,
         },
         {
             title: '默认值',
@@ -109,8 +109,8 @@ const [registerTable, {getDataSource, deleteTableDataRecord}] = useTable({
             editRow: true,
             sorter: false,
             editComponent: 'Input',
-            width: 100
-        },
+            width: 100,
+        }
     ],
     canResize: false,
 });
@@ -130,7 +130,7 @@ function createActions(record:any) {
                     title: '是否删除数据',
                     confirm: () => {
                         deleteTableDataRecord(record.id);
-                        nextTick(() => updateData())
+                        nextTick(() => updateData());
                     },
                 },
             }
@@ -141,7 +141,7 @@ function createActions(record:any) {
             label: '保存',
             onClick: () => {
                 record.onSubmit();
-                nextTick(() => updateData())
+                nextTick(() => updateData());
             },
         },
         {
@@ -159,10 +159,10 @@ function createActions(record:any) {
     ];
 }
 
-function updateData(data?: any) {
+function updateData() {
     const dataSource = getDataSource().map(item => unref(item.editValueRefs));
-    if (data) {
-        dataSource.push({
+    if (isArray(dataSource) && dataSource.length > 0) {
+        insertTableDataRecord({
             id: js_utils_get_uuid(4),
             name: '',
             title: '',
@@ -171,9 +171,21 @@ function updateData(data?: any) {
             defaultValue: '',
             editable: true,
         });
+    } else {
+        setTableData([{
+            id: js_utils_get_uuid(4),
+            name: '',
+            title: '',
+            type: 'string',
+            description: '',
+            defaultValue: '',
+            editable: true,
+        }]);
     }
-    emits('update:value', dataSource)
-    emits('change', dataSource)
+    const data = getDataSource();
+    console.log(data);
+    emits('update:value', dataSource);
+    emits('change', dataSource);
 }
 
 </script>

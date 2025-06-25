@@ -78,7 +78,7 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
         this.schemasRoot = config;
 
         if (!curPage && config.children.length) {
-            curPage = config.children[0].field;
+            curPage = config.children[0]!.field;
         }
 
         if (this.dataSourceManager) {
@@ -99,7 +99,7 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
             globalThis.document.title = config.name;
             const metaTags = globalThis.document.getElementsByTagName('meta');
             while (metaTags.length > 0) {
-                metaTags[0].parentNode!.removeChild(metaTags[0]);
+                metaTags[0]?.parentNode?.removeChild(metaTags[0]);
             }
             if (config.description) {
                 config.description.keywords &&
@@ -117,7 +117,7 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
                 const metaTags = globalThis.document.createElement('meta');
                 metaTags.name = key;
                 metaTags.content = str;
-                header.insertBefore(metaTags, header.firstChild);
+                header?.insertBefore(metaTags, header.firstChild);
             }
         }
     }
