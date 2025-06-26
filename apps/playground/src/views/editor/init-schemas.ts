@@ -278,12 +278,12 @@ export const testSchemasV2: ISchemasRoot = {
                             },
                             label: '按钮',
                             componentProps: {
-                                text: '用户功能及权限',
+                                text: '${ds_2rp3.reactiveTitle}',
                                 events: {
                                     onClick: [
                                         {
                                             type: 'dataSource',
-                                            field: 'http:ds_aHlz',
+                                            field: 'ds_2rp3:change_data',
                                             params: {}
                                         }
                                     ]
@@ -291,7 +291,7 @@ export const testSchemasV2: ISchemasRoot = {
                                 onClick: [
                                     {
                                         type: 'dataSource',
-                                        field: 'http:ds_aHlz',
+                                        field: 'ds_2rp3:change_data',
                                         params: {}
                                     }
                                 ]
@@ -1002,6 +1002,11 @@ export const testSchemasV2: ISchemasRoot = {
                     content: "({app, dataSource, }, params) => { ;    app.setPage('page_XEzk'); }",
                     name: 'jump_to_c',
                     title: '跳到第三页面'
+                },
+                {
+                    content: '({app, dataSource, }, params) => { ;console.log(app,dataSource);   dataSource.setData({reactiveTitle: "我改变了"+dataSource.data.commonNumber, commonNumber:dataSource.data.commonNumber+1}) }',
+                    name: 'change_data',
+                    title: '改变数据'
                 }
             ],
             fields: [{
@@ -1016,6 +1021,12 @@ export const testSchemasV2: ISchemasRoot = {
                 title: '公共数字',
                 description: '公共数字',
                 defaultValue: 1000
+            }, {
+                type: 'string',
+                name: 'reactiveTitle',
+                title: '响应式标题',
+                description: '响应式标题',
+                defaultValue: '点击测试响应式'
             }]
         },
         {
