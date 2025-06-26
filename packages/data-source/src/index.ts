@@ -8,15 +8,16 @@ import type { ChangeDataEvent } from './types';
  * @returns DataSourceManager | undefined
  */
 export function createDataSourceManager(app: ILowCodeRoot, useMock?:boolean) {
-    const {schemasRoot, } = app;
+    const {schemasRoot } = app;
     if (!schemasRoot?.dataSources) return;
 
     const dataSourceManager = new DataSourceManager({
         app,
-        useMock,
+        useMock
     });
 
     dataSourceManager.on('change', (sourceId: string, changeData: ChangeDataEvent) => {
+        console.log('change', sourceId, changeData);
         const fieldId = changeData.path?.split('.')?.[0];
         const nodes = dataSourceManager.trigger(sourceId, fieldId);
         dataSourceManager.emit('update-data', nodes, sourceId, changeData);

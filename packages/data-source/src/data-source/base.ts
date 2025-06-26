@@ -69,7 +69,7 @@ export class DataSource extends Subscribe {
         }
         const changeEvent: ChangeDataEvent = {
             updateData: data,
-            path,
+            path
         };
         this.emit('change', changeEvent);
     }

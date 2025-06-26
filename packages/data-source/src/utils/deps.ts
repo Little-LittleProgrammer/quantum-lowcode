@@ -29,6 +29,7 @@ export function createDep(deps?: IDepEffect[]) {
 
 // 收集依赖
 export function track(dataSourceDep: Map<Id, FieldToDepMap>, dataSourceId: Id, fieldId: string, data: IDepData) {
+    console.log('收集依赖', dataSourceDep, dataSourceId, fieldId, data);
     let depsMap = dataSourceDep.get(dataSourceId);
     if (!depsMap) {
         dataSourceDep.set(dataSourceId, depsMap = new Map());
@@ -44,7 +45,8 @@ export function track(dataSourceDep: Map<Id, FieldToDepMap>, dataSourceId: Id, f
 
 // 触发依赖
 export function trigger(sourceManage: ISourceManage, dataSourceId: Id, fieldId?: string): ISchemasNode[] {
-    const {data, dataSourceDep, app, } = sourceManage;
+    console.log('触发依赖', sourceManage, dataSourceId, fieldId);
+    const {data, dataSourceDep, app } = sourceManage;
     // 依据 target 获取存储的 map 实例
     const depsMap = dataSourceDep.get(dataSourceId);
     // 如果 map 不存在，则直接 return
@@ -68,7 +70,7 @@ export function trigger(sourceManage: ISourceManage, dataSourceId: Id, fieldId?:
     const effects = isArray(dep) ? dep : [...dep];
     for (let eff of effects) {
         eff = JSON.parse(eff);
-        const {key, rawValue, field, } = eff as IDepEffect;
+        const {key, rawValue, field } = eff as IDepEffect;
         const paths = getNodePath(field, app.schemasRoot?.children || []);
         if (paths.length) {
             const curNode = paths.pop();

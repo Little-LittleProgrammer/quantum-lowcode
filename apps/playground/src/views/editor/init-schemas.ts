@@ -1,25 +1,24 @@
-import { ISchemasRoot } from '@quantum-lowcode/schemas';
+import { ISchemasRoot, NodeType, HookType } from '@quantum-lowcode/schemas';
 
 export const defaultSchemas: ISchemasRoot = {
-    type: 'root',
+    type: NodeType.ROOT,
     name: 'test',
     field: 'root',
     children: [
         {
-            type: 'page',
+            type: NodeType.PAGE,
             field: 'page_abcd',
             style: {
                 width: '100%',
                 height: '100%',
-                margin: '0 auto',
+                margin: '0 auto'
             },
-            children: [
-            ],
+            children: []
         }
-    ],
+    ]
 };
 export const testSchemasV1: ISchemasRoot = {
-    type: 'root',
+    type: NodeType.ROOT,
     name: 'test',
     field: 'root',
     dataSources: [
@@ -34,7 +33,7 @@ export const testSchemasV1: ISchemasRoot = {
                     type: 'string',
                     title: 'a1',
                     description: 'a1',
-                    defaultValue: '标题1',
+                    defaultValue: '标题1'
                 }
             ],
             methods: [
@@ -44,18 +43,18 @@ export const testSchemasV1: ISchemasRoot = {
                     params: [
                         {
                             name: 'a1',
-                            type: 'boolean',
+                            type: 'boolean'
                         }
                     ],
-                    content: (...params) => { console.log(params); },
+                    content: (...params) => { console.log(params); }
                 },
                 {
                     name: 'test2',
                     description: '方法2',
                     params: [],
-                    content: ({app, dataSource, }, params) => { dataSource.data.a1 = params; },
+                    content: ({app, dataSource }, params) => { dataSource.data.a1 = params; }
                 }
-            ],
+            ]
         }
     ],
     children: [
@@ -63,7 +62,7 @@ export const testSchemasV1: ISchemasRoot = {
             type: 'page',
             field: 'page1',
             style: {
-                padding: '10px',
+                padding: '10px'
             },
             children: [
                 {
@@ -75,11 +74,11 @@ export const testSchemasV1: ISchemasRoot = {
                             field: 'form1',
                             componentProps: {
                                 actionColOptions: {
-                                    span: 24,
+                                    span: 24
                                 },
                                 baseColProps: {
-                                    span: 24,
-                                },
+                                    span: 24
+                                }
                             },
                             created: {
                                 hookType: 'code',
@@ -87,17 +86,17 @@ export const testSchemasV1: ISchemasRoot = {
                                     {
                                         field: 'base1:test1',
                                         params: {
-                                            a: 123123,
-                                        },
+                                            a: 123123
+                                        }
                                     }
-                                ],
+                                ]
                             },
                             children: [
                                 {
                                     type: 'node',
                                     component: 'Divider',
                                     label: '${base1.a1}',
-                                    field: 'Divider',
+                                    field: 'Divider'
                                 },
                                 {
                                     type: 'node',
@@ -108,31 +107,31 @@ export const testSchemasV1: ISchemasRoot = {
                                         options: [
                                             {
                                                 label: 'yes',
-                                                value: 1,
+                                                value: 1
                                             },
                                             {
                                                 label: 'no',
-                                                value: 2,
+                                                value: 2
                                             }
                                         ],
-                                        onChange: (app, e) => { console.log(app); app.emit('base1:test1', e); app.emit('page1:refresh'); },
-                                    },
+                                        onChange: (app, e) => { console.log(app); app.emit('base1:test1', e); app.emit('page1:refresh'); }
+                                    }
                                 },
                                 {
                                     type: 'node',
                                     field: 'name1',
                                     component: 'Input',
                                     label: '你好',
-                                    ifShow: ({values, }) => values.a === 1,
+                                    ifShow: ({values }) => values.a === 1,
                                     componentProps: {
-                                        onChange: (app, e) => { app.emit('base1:test2', e.target.value); },
-                                    },
+                                        onChange: (app, e) => { app.emit('base1:test2', e.target.value); }
+                                    }
                                 },
                                 {
                                     type: 'node',
                                     component: 'Divider',
                                     label: '标题2',
-                                    field: 'Divider',
+                                    field: 'Divider'
                                 },
                                 {
                                     type: 'node',
@@ -143,27 +142,27 @@ export const testSchemasV1: ISchemasRoot = {
                                         options: [
                                             {
                                                 label: 'yes',
-                                                value: 1,
+                                                value: 1
                                             },
                                             {
                                                 label: 'no',
-                                                value: 2,
+                                                value: 2
                                             }
-                                        ],
-                                    },
+                                        ]
+                                    }
                                 },
                                 {
                                     type: 'node',
                                     field: 'name2',
                                     component: 'Input',
                                     label: '你好2',
-                                    ifShow: ({values, }) => values.a2 === 1,
+                                    ifShow: ({values }) => values.a2 === 1
                                 }
-                            ],
+                            ]
                         }
-                    ],
+                    ]
                 }
-            ],
+            ]
         },
         {
             type: 'page',
@@ -178,30 +177,30 @@ export const testSchemasV1: ISchemasRoot = {
                             component: 'img',
                             field: 'img1',
                             style: {
-                                width: '100%',
+                                width: '100%'
                             },
                             componentProps: {
-                                src: 'https://cn.vitejs.dev/logo-with-shadow.png',
-                            },
+                                src: 'https://cn.vitejs.dev/logo-with-shadow.png'
+                            }
                         },
                         {
                             type: 'node',
                             component: 'button',
                             field: 'button2',
                             componentProps: {
-                                onClick: '(e)=>{;alert(e);;}',
-                            },
+                                onClick: '(e)=>{;alert(e);;}'
+                            }
                         },
                         {
                             type: 'node',
                             component: 'button',
-                            field: 'button23333',
+                            field: 'button23333'
                         }
-                    ],
+                    ]
                 }
-            ],
+            ]
         }
-    ],
+    ]
 };
 export const testSchemasV2: ISchemasRoot = {
     type: 'root',
@@ -218,7 +217,7 @@ export const testSchemasV2: ISchemasRoot = {
                 borderStyle: 'none',
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: '100% 100%',
-                textAlign: 'left',
+                textAlign: 'left'
             },
             children: [
                 {
@@ -234,7 +233,7 @@ export const testSchemasV2: ISchemasRoot = {
                         borderStyle: 'none',
                         backgroundRepeat: 'no-repeat',
                         backgroundSize: '100% 100%',
-                        textAlign: 'left',
+                        textAlign: 'left'
                     },
                     label: '容器',
                     children: [
@@ -251,13 +250,13 @@ export const testSchemasV2: ISchemasRoot = {
                                 borderStyle: 'none',
                                 backgroundRepeat: 'no-repeat',
                                 backgroundSize: '100% 100%',
-                                textAlign: 'left',
+                                textAlign: 'left'
                             },
                             label: '图片',
                             componentProps: {
                                 imgType: '1',
-                                src: 'https://act-webstatic.mihoyo.com/puzzle/hk4e/pz_K_ZByIfMVN/resource/puzzle/2024/04/16/39d0a9861824acc8a29b388c8d43dc92_6645154952564232631.png?x-oss-process=image/format,webp/quality,Q_90',
-                            },
+                                src: 'https://act-webstatic.mihoyo.com/puzzle/hk4e/pz_K_ZByIfMVN/resource/puzzle/2024/04/16/39d0a9861824acc8a29b388c8d43dc92_6645154952564232631.png?x-oss-process=image/format,webp/quality,Q_90'
+                            }
                         },
                         {
                             field: 'Button_YB67',
@@ -275,12 +274,28 @@ export const testSchemasV2: ISchemasRoot = {
                                 textAlign: 'left',
                                 backgroundColor: 'transparent',
                                 color: '#ccc',
-                                fontSize: '20',
+                                fontSize: '20'
                             },
                             label: '按钮',
                             componentProps: {
                                 text: '用户功能及权限',
-                            },
+                                events: {
+                                    onClick: [
+                                        {
+                                            type: 'dataSource',
+                                            field: 'http:ds_aHlz',
+                                            params: {}
+                                        }
+                                    ]
+                                },
+                                onClick: [
+                                    {
+                                        type: 'dataSource',
+                                        field: 'http:ds_aHlz',
+                                        params: {}
+                                    }
+                                ]
+                            }
                         },
                         {
                             field: 'Img_PAJ0',
@@ -291,7 +306,7 @@ export const testSchemasV2: ISchemasRoot = {
                                 height: 71.04,
                                 position: 'absolute',
                                 top: 1215.36,
-                                left: 57.6,
+                                left: 57.6
                             },
                             label: '图片',
                             componentProps: {
@@ -302,18 +317,18 @@ export const testSchemasV2: ISchemasRoot = {
                                         {
                                             type: 'dataSource',
                                             field: 'ds_2rp3:download_app',
-                                            params: {},
+                                            params: {}
                                         }
-                                    ],
+                                    ]
                                 },
                                 onClick: [
                                     {
                                         type: 'dataSource',
                                         field: 'ds_2rp3:download_app',
-                                        params: {},
+                                        params: {}
                                     }
-                                ],
-                            },
+                                ]
+                            }
                         },
                         {
                             field: 'Img_DGVM',
@@ -324,7 +339,7 @@ export const testSchemasV2: ISchemasRoot = {
                                 height: 71.04,
                                 position: 'absolute',
                                 top: 1215.36,
-                                left: 422.4,
+                                left: 422.4
                             },
                             label: '图片',
                             componentProps: {
@@ -335,18 +350,18 @@ export const testSchemasV2: ISchemasRoot = {
                                         {
                                             type: 'dataSource',
                                             field: 'ds_2rp3:download_app',
-                                            params: {},
+                                            params: {}
                                         }
-                                    ],
+                                    ]
                                 },
                                 onClick: [
                                     {
                                         type: 'dataSource',
                                         field: 'ds_2rp3:download_app',
-                                        params: {},
+                                        params: {}
                                     }
-                                ],
-                            },
+                                ]
+                            }
                         },
                         {
                             field: 'Img_IrfJ',
@@ -357,13 +372,13 @@ export const testSchemasV2: ISchemasRoot = {
                                 height: 253.44,
                                 position: 'absolute',
                                 top: 961.92,
-                                left: 0,
+                                left: 0
                             },
                             label: '图片',
                             componentProps: {
                                 imgType: '1',
-                                src: 'https://act-webstatic.mihoyo.com/puzzle/hk4e/pz_K_ZByIfMVN/resource/puzzle/2024/04/15/fbabd2e4f063955dccb96ca8ba5ab060_3912249417591099421.png?x-oss-process=image/format,webp/quality,Q_90',
-                            },
+                                src: 'https://act-webstatic.mihoyo.com/puzzle/hk4e/pz_K_ZByIfMVN/resource/puzzle/2024/04/15/fbabd2e4f063955dccb96ca8ba5ab060_3912249417591099421.png?x-oss-process=image/format,webp/quality,Q_90'
+                            }
                         },
                         {
                             field: 'Button_X0nT',
@@ -381,7 +396,7 @@ export const testSchemasV2: ISchemasRoot = {
                                 textAlign: 'left',
                                 backgroundColor: 'transparent',
                                 color: '#ccc',
-                                fontSize: '20',
+                                fontSize: '20'
                             },
                             label: '按钮',
                             componentProps: {
@@ -391,18 +406,40 @@ export const testSchemasV2: ISchemasRoot = {
                                         {
                                             type: 'dataSource',
                                             field: 'ds_2rp3:jump_to_c',
-                                            params: {},
+                                            params: {}
                                         }
-                                    ],
+                                    ]
                                 },
                                 onClick: [
                                     {
                                         type: 'dataSource',
                                         field: 'ds_2rp3:jump_to_c',
-                                        params: {},
+                                        params: {}
                                     }
-                                ],
+                                ]
+                            }
+                        },
+                        {
+                            field: 'Text_UOK7',
+                            type: 'node',
+                            component: 'Text',
+                            style: {
+                                width: 360,
+                                height: 50,
+                                position: 'absolute',
+                                top: 447.36,
+                                left: 192,
+                                borderStyle: 'none',
+                                backgroundRepeat: 'no-repeat',
+                                backgroundSize: '100% 100%',
+                                textAlign: 'left',
+                                color: '#fff'
                             },
+                            label: '文本',
+                            componentProps: {
+                                text: '${ds_aHlz.randomTitle}',
+                                isNative: '1'
+                            }
                         },
                         {
                             field: 'Img_6src',
@@ -413,7 +450,7 @@ export const testSchemasV2: ISchemasRoot = {
                                 height: 113.28,
                                 position: 'absolute',
                                 top: 46.08,
-                                left: 38.4,
+                                left: 38.4
                             },
                             label: '图片',
                             componentProps: {
@@ -426,9 +463,9 @@ export const testSchemasV2: ISchemasRoot = {
                                             field: 'OverlayContainer_o2j1:openOverlay',
                                             params: {},
                                             comp: 'OverlayContainer&&&OverlayContainer_o2j1',
-                                            event: 'openOverlay',
+                                            event: 'openOverlay'
                                         }
-                                    ],
+                                    ]
                                 },
                                 onClick: [
                                     {
@@ -436,12 +473,12 @@ export const testSchemasV2: ISchemasRoot = {
                                         field: 'OverlayContainer_o2j1:openOverlay',
                                         params: {},
                                         comp: 'OverlayContainer&&&OverlayContainer_o2j1',
-                                        event: 'openOverlay',
+                                        event: 'openOverlay'
                                     }
-                                ],
-                            },
+                                ]
+                            }
                         }
-                    ],
+                    ]
                 },
                 {
                     field: 'container_lDAE',
@@ -457,7 +494,7 @@ export const testSchemasV2: ISchemasRoot = {
                         backgroundRepeat: 'no-repeat',
                         backgroundSize: '100% 100%',
                         textAlign: 'left',
-                        backgroundImage: 'https://act-webstatic.mihoyo.com/puzzle/hk4e/pz_K_ZByIfMVN/resource/puzzle/2024/04/16/2266ddeeea905cf4f2d00ed2fac6db9d_6843942146740787760.png?x-oss-process=image/format,webp/quality,Q_90',
+                        backgroundImage: 'https://act-webstatic.mihoyo.com/puzzle/hk4e/pz_K_ZByIfMVN/resource/puzzle/2024/04/16/2266ddeeea905cf4f2d00ed2fac6db9d_6843942146740787760.png?x-oss-process=image/format,webp/quality,Q_90'
                     },
                     label: '容器',
                     children: [
@@ -474,13 +511,13 @@ export const testSchemasV2: ISchemasRoot = {
                                 borderStyle: 'none',
                                 backgroundRepeat: 'no-repeat',
                                 backgroundSize: '100% 100%',
-                                textAlign: 'left',
+                                textAlign: 'left'
                             },
                             label: '图片',
                             componentProps: {
                                 imgType: '1',
-                                src: 'https://act-webstatic.mihoyo.com/puzzle/hk4e/pz_K_ZByIfMVN/resource/puzzle/2024/04/15/26fb4bb4dd65fb86e742b6d964597fc4_4642326700176908289.png?x-oss-process=image/format,webp/quality,Q_90',
-                            },
+                                src: 'https://act-webstatic.mihoyo.com/puzzle/hk4e/pz_K_ZByIfMVN/resource/puzzle/2024/04/15/26fb4bb4dd65fb86e742b6d964597fc4_4642326700176908289.png?x-oss-process=image/format,webp/quality,Q_90'
+                            }
                         },
                         {
                             field: 'Img_o9O0',
@@ -491,13 +528,13 @@ export const testSchemasV2: ISchemasRoot = {
                                 height: 389.76,
                                 position: 'absolute',
                                 top: 2186.88,
-                                left: 539.52,
+                                left: 539.52
                             },
                             label: '图片',
                             componentProps: {
                                 imgType: '1',
-                                src: 'https://act-webstatic.mihoyo.com/puzzle/hk4e/pz_K_ZByIfMVN/resource/puzzle/2024/04/16/f25b8ca4c98317f2f3171cc4cf0b29bf_4037084131550990063.png?x-oss-process=image/format,webp/quality,Q_90',
-                            },
+                                src: 'https://act-webstatic.mihoyo.com/puzzle/hk4e/pz_K_ZByIfMVN/resource/puzzle/2024/04/16/f25b8ca4c98317f2f3171cc4cf0b29bf_4037084131550990063.png?x-oss-process=image/format,webp/quality,Q_90'
+                            }
                         },
                         {
                             field: 'Img_nh6P',
@@ -512,13 +549,13 @@ export const testSchemasV2: ISchemasRoot = {
                                 borderStyle: 'none',
                                 backgroundRepeat: 'no-repeat',
                                 backgroundSize: '100% 100%',
-                                textAlign: 'left',
+                                textAlign: 'left'
                             },
                             label: '图片',
                             componentProps: {
                                 imgType: '1',
-                                src: 'https://act-webstatic.mihoyo.com/puzzle/hk4e/pz_K_ZByIfMVN/resource/puzzle/2024/04/19/152f1762303063d7e4192fe891a298c8_1594904799711905844.mp4?x-oss-process=video/snapshot,t_1,f_jpg,m_fast',
-                            },
+                                src: 'https://act-webstatic.mihoyo.com/puzzle/hk4e/pz_K_ZByIfMVN/resource/puzzle/2024/04/19/152f1762303063d7e4192fe891a298c8_1594904799711905844.mp4?x-oss-process=video/snapshot,t_1,f_jpg,m_fast'
+                            }
                         },
                         {
                             field: 'Img_9bBq',
@@ -529,13 +566,13 @@ export const testSchemasV2: ISchemasRoot = {
                                 height: 426.24,
                                 position: 'absolute',
                                 top: 1365.12,
-                                left: 180.48,
+                                left: 180.48
                             },
                             label: '图片',
                             componentProps: {
                                 imgType: '1',
-                                src: 'https://act-webstatic.mihoyo.com/puzzle/hk4e/pz_K_ZByIfMVN/resource/puzzle/2024/04/16/0b05bde566f897357edaf009e6e63668_2803810017653320915.png?x-oss-process=image/format,webp/quality,Q_90',
-                            },
+                                src: 'https://act-webstatic.mihoyo.com/puzzle/hk4e/pz_K_ZByIfMVN/resource/puzzle/2024/04/16/0b05bde566f897357edaf009e6e63668_2803810017653320915.png?x-oss-process=image/format,webp/quality,Q_90'
+                            }
                         },
                         {
                             field: 'Img_75l6',
@@ -546,13 +583,13 @@ export const testSchemasV2: ISchemasRoot = {
                                 height: 389.76,
                                 position: 'absolute',
                                 top: 2789.76,
-                                left: 520.32,
+                                left: 520.32
                             },
                             label: '图片',
                             componentProps: {
                                 imgType: '1',
-                                src: 'https://act-webstatic.mihoyo.com/puzzle/hk4e/pz_K_ZByIfMVN/resource/puzzle/2024/04/16/f25b8ca4c98317f2f3171cc4cf0b29bf_4037084131550990063.png?x-oss-process=image/format,webp/quality,Q_90',
-                            },
+                                src: 'https://act-webstatic.mihoyo.com/puzzle/hk4e/pz_K_ZByIfMVN/resource/puzzle/2024/04/16/f25b8ca4c98317f2f3171cc4cf0b29bf_4037084131550990063.png?x-oss-process=image/format,webp/quality,Q_90'
+                            }
                         },
                         {
                             field: 'Img_jlxk',
@@ -567,13 +604,13 @@ export const testSchemasV2: ISchemasRoot = {
                                 borderStyle: 'none',
                                 backgroundRepeat: 'no-repeat',
                                 backgroundSize: '100% 100%',
-                                textAlign: 'left',
+                                textAlign: 'left'
                             },
                             label: '图片',
                             componentProps: {
                                 imgType: '1',
-                                src: 'https://act-webstatic.mihoyo.com/puzzle/hk4e/pz_K_ZByIfMVN/resource/puzzle/2024/04/16/d97ae2e4c5950e0ea8e985ba94581f0a_7209508888773729311.png?x-oss-process=image/format,webp/quality,Q_90',
-                            },
+                                src: 'https://act-webstatic.mihoyo.com/puzzle/hk4e/pz_K_ZByIfMVN/resource/puzzle/2024/04/16/d97ae2e4c5950e0ea8e985ba94581f0a_7209508888773729311.png?x-oss-process=image/format,webp/quality,Q_90'
+                            }
                         },
                         {
                             field: 'Video_HcuH',
@@ -588,13 +625,13 @@ export const testSchemasV2: ISchemasRoot = {
                                 borderStyle: 'none',
                                 backgroundRepeat: 'no-repeat',
                                 backgroundSize: '100% 100%',
-                                textAlign: 'left',
+                                textAlign: 'left'
                             },
                             label: '视频',
                             componentProps: {
                                 src: 'https://act-webstatic.mihoyo.com/puzzle/hk4e/pz_K_ZByIfMVN/resource/puzzle/2024/04/19/152f1762303063d7e4192fe891a298c8_1594904799711905844.mp4',
-                                vdType: '1',
-                            },
+                                vdType: '1'
+                            }
                         },
                         {
                             field: 'Img_0xjI',
@@ -609,13 +646,13 @@ export const testSchemasV2: ISchemasRoot = {
                                 borderStyle: 'none',
                                 backgroundRepeat: 'no-repeat',
                                 backgroundSize: '100% 100%',
-                                textAlign: 'left',
+                                textAlign: 'left'
                             },
                             label: '图片',
                             componentProps: {
                                 imgType: '1',
-                                src: 'https://act-webstatic.mihoyo.com/puzzle/hk4e/pz_K_ZByIfMVN/resource/puzzle/2024/04/19/dd934aa572f9817f2f93aabb1a250cd7_8021310320524304231.mp4?x-oss-process=video/snapshot,t_1,f_jpg,m_fast',
-                            },
+                                src: 'https://act-webstatic.mihoyo.com/puzzle/hk4e/pz_K_ZByIfMVN/resource/puzzle/2024/04/19/dd934aa572f9817f2f93aabb1a250cd7_8021310320524304231.mp4?x-oss-process=video/snapshot,t_1,f_jpg,m_fast'
+                            }
                         },
                         {
                             field: 'Img_Cf2R',
@@ -630,13 +667,13 @@ export const testSchemasV2: ISchemasRoot = {
                                 borderStyle: 'none',
                                 backgroundRepeat: 'no-repeat',
                                 backgroundSize: '100% 100%',
-                                textAlign: 'left',
+                                textAlign: 'left'
                             },
                             label: '图片',
                             componentProps: {
                                 imgType: '1',
-                                src: 'https://act-webstatic.mihoyo.com/puzzle/hk4e/pz_K_ZByIfMVN/resource/puzzle/2024/04/16/d97ae2e4c5950e0ea8e985ba94581f0a_7209508888773729311.png?x-oss-process=image/format,webp/quality,Q_90',
-                            },
+                                src: 'https://act-webstatic.mihoyo.com/puzzle/hk4e/pz_K_ZByIfMVN/resource/puzzle/2024/04/16/d97ae2e4c5950e0ea8e985ba94581f0a_7209508888773729311.png?x-oss-process=image/format,webp/quality,Q_90'
+                            }
                         },
                         {
                             field: 'Img_bkQ4',
@@ -651,13 +688,13 @@ export const testSchemasV2: ISchemasRoot = {
                                 borderStyle: 'none',
                                 backgroundRepeat: 'no-repeat',
                                 backgroundSize: '100% 100%',
-                                textAlign: 'left',
+                                textAlign: 'left'
                             },
                             label: '图片',
                             componentProps: {
                                 imgType: '1',
-                                src: 'https://act-webstatic.mihoyo.com/puzzle/hk4e/pz_K_ZByIfMVN/resource/puzzle/2024/04/17/5857a10c196bb7c54a21f74955a42e12_6562581757168344696.png?x-oss-process=image/format,webp/quality,Q_90',
-                            },
+                                src: 'https://act-webstatic.mihoyo.com/puzzle/hk4e/pz_K_ZByIfMVN/resource/puzzle/2024/04/17/5857a10c196bb7c54a21f74955a42e12_6562581757168344696.png?x-oss-process=image/format,webp/quality,Q_90'
+                            }
                         },
                         {
                             field: 'Img_ylYo',
@@ -672,13 +709,13 @@ export const testSchemasV2: ISchemasRoot = {
                                 borderStyle: 'none',
                                 backgroundRepeat: 'no-repeat',
                                 backgroundSize: '100% 100%',
-                                textAlign: 'left',
+                                textAlign: 'left'
                             },
                             label: '图片',
                             componentProps: {
                                 imgType: '1',
-                                src: 'https://act-webstatic.mihoyo.com/puzzle/hk4e/pz_K_ZByIfMVN/resource/puzzle/2024/04/17/5857a10c196bb7c54a21f74955a42e12_6562581757168344696.png?x-oss-process=image/format,webp/quality,Q_90',
-                            },
+                                src: 'https://act-webstatic.mihoyo.com/puzzle/hk4e/pz_K_ZByIfMVN/resource/puzzle/2024/04/17/5857a10c196bb7c54a21f74955a42e12_6562581757168344696.png?x-oss-process=image/format,webp/quality,Q_90'
+                            }
                         },
                         {
                             field: 'Img_byOg',
@@ -693,7 +730,7 @@ export const testSchemasV2: ISchemasRoot = {
                                 borderStyle: 'none',
                                 backgroundRepeat: 'no-repeat',
                                 backgroundSize: '100% 100%',
-                                textAlign: 'left',
+                                textAlign: 'left'
                             },
                             label: '图片',
                             componentProps: {
@@ -708,9 +745,9 @@ export const testSchemasV2: ISchemasRoot = {
                                             field: 'OverlayContainer_kQmu:openOverlay',
                                             params: {},
                                             comp: 'OverlayContainer&&&OverlayContainer_kQmu',
-                                            event: 'openOverlay',
+                                            event: 'openOverlay'
                                         }
-                                    ],
+                                    ]
                                 },
                                 onClick: [
                                     {
@@ -718,12 +755,12 @@ export const testSchemasV2: ISchemasRoot = {
                                         field: 'OverlayContainer_kQmu:openOverlay',
                                         params: {},
                                         comp: 'OverlayContainer&&&OverlayContainer_kQmu',
-                                        event: 'openOverlay',
+                                        event: 'openOverlay'
                                     }
-                                ],
-                            },
+                                ]
+                            }
                         }
-                    ],
+                    ]
                 },
                 {
                     field: 'OverlayContainer_o2j1',
@@ -739,7 +776,7 @@ export const testSchemasV2: ISchemasRoot = {
                         borderStyle: 'none',
                         backgroundRepeat: 'no-repeat',
                         backgroundSize: '100% 100%',
-                        textAlign: 'left',
+                        textAlign: 'left'
                     },
                     label: '蒙层',
                     children: [
@@ -756,13 +793,13 @@ export const testSchemasV2: ISchemasRoot = {
                                 borderStyle: 'none',
                                 backgroundRepeat: 'no-repeat',
                                 backgroundSize: '100% 100%',
-                                textAlign: 'left',
+                                textAlign: 'left'
                             },
                             label: '图片',
                             componentProps: {
                                 imgType: '1',
-                                src: 'https://webstatic.mihoyo.com/upload/puzzle/2021/11/19/f5df41a0db9d7f0faf531e636bd97598_1120669910144657351.jpg?x-oss-process=image/format,webp/quality,Q_90',
-                            },
+                                src: 'https://webstatic.mihoyo.com/upload/puzzle/2021/11/19/f5df41a0db9d7f0faf531e636bd97598_1120669910144657351.jpg?x-oss-process=image/format,webp/quality,Q_90'
+                            }
                         },
                         {
                             field: 'Button_yXAb',
@@ -779,7 +816,7 @@ export const testSchemasV2: ISchemasRoot = {
                                 backgroundSize: '100% 100%',
                                 textAlign: 'left',
                                 backgroundColor: 'transparent',
-                                fontSize: '50',
+                                fontSize: '50'
                             },
                             label: '按钮',
                             componentProps: {
@@ -791,9 +828,9 @@ export const testSchemasV2: ISchemasRoot = {
                                             field: 'OverlayContainer_o2j1:closeOverlay',
                                             params: {},
                                             comp: 'OverlayContainer&&&OverlayContainer_o2j1',
-                                            event: 'closeOverlay',
+                                            event: 'closeOverlay'
                                         }
-                                    ],
+                                    ]
                                 },
                                 onClick: [
                                     {
@@ -801,13 +838,13 @@ export const testSchemasV2: ISchemasRoot = {
                                         field: 'OverlayContainer_o2j1:closeOverlay',
                                         params: {},
                                         comp: 'OverlayContainer&&&OverlayContainer_o2j1',
-                                        event: 'closeOverlay',
+                                        event: 'closeOverlay'
                                     }
-                                ],
-                            },
+                                ]
+                            }
                         }
                     ],
-                    component: 'OverlayContainer',
+                    component: 'OverlayContainer'
                 },
                 {
                     field: 'OverlayContainer_kQmu',
@@ -823,7 +860,7 @@ export const testSchemasV2: ISchemasRoot = {
                         borderStyle: 'none',
                         backgroundRepeat: 'no-repeat',
                         backgroundSize: '100% 100%',
-                        textAlign: 'left',
+                        textAlign: 'left'
                     },
                     label: '蒙层',
                     children: [
@@ -840,14 +877,14 @@ export const testSchemasV2: ISchemasRoot = {
                                 borderStyle: 'none',
                                 backgroundRepeat: 'no-repeat',
                                 backgroundSize: '100% 100%',
-                                textAlign: 'left',
+                                textAlign: 'left'
                             },
                             label: '视频',
                             componentProps: {
                                 vdType: '1',
                                 src: 'https://fastcdn.mihoyo.com/content-v2/hk4e/123401/124a3679c64c4f65c30b6a5e34bc619d_5553679192264566999.mp4',
-                                controls: true,
-                            },
+                                controls: true
+                            }
                         },
                         {
                             field: 'Button_S4nX',
@@ -865,7 +902,7 @@ export const testSchemasV2: ISchemasRoot = {
                                 textAlign: 'left',
                                 backgroundColor: 'transparent',
                                 fontSize: '50',
-                                color: 'white',
+                                color: 'white'
                             },
                             label: '按钮',
                             componentProps: {
@@ -877,9 +914,9 @@ export const testSchemasV2: ISchemasRoot = {
                                             field: 'OverlayContainer_kQmu:closeOverlay',
                                             params: {},
                                             comp: 'OverlayContainer&&&OverlayContainer_kQmu',
-                                            event: 'closeOverlay',
+                                            event: 'closeOverlay'
                                         }
-                                    ],
+                                    ]
                                 },
                                 onClick: [
                                     {
@@ -887,16 +924,16 @@ export const testSchemasV2: ISchemasRoot = {
                                         field: 'OverlayContainer_kQmu:closeOverlay',
                                         params: {},
                                         comp: 'OverlayContainer&&&OverlayContainer_kQmu',
-                                        event: 'closeOverlay',
+                                        event: 'closeOverlay'
                                     }
-                                ],
-                            },
+                                ]
+                            }
                         }
                     ],
-                    component: 'OverlayContainer',
+                    component: 'OverlayContainer'
                 }
             ],
-            layout: 'relative',
+            layout: 'relative'
         },
         {
             field: 'page_XEzk',
@@ -913,7 +950,7 @@ export const testSchemasV2: ISchemasRoot = {
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: '100% 100%',
                 textAlign: 'left',
-                backgroundColor: '#000',
+                backgroundColor: '#000'
             },
             label: 'page',
             children: [
@@ -931,15 +968,15 @@ export const testSchemasV2: ISchemasRoot = {
                         backgroundRepeat: 'no-repeat',
                         backgroundSize: '100% 100%',
                         textAlign: 'left',
-                        color: '#fff',
+                        color: '#fff'
                     },
                     label: '文本',
                     componentProps: {
                         isNative: '2',
-                        text: '<p style="text-align: center;"><span style="font-size: 14pt;">《原神用户个人信息及隐私保护政策》</span></p>\n<p>（以下简称"《隐私政策》"）由您（以 下亦称"用户"或"您"）与上海米哈游影铁科技有限公司（下文亦称"米哈游"或 "我们"）共同缔结，本《隐私政策》具有合同效力。 欢迎您使用米哈游为您提供的服务，包括您与米哈游的交互行为及/或您注册 和使用米哈游游戏及/或注册和使用米哈游提供的产品或服务（以下统称"米哈 游服务"或"服务"）。</p>\n<p><span style="color: #e03e2d;">为保障用户在使用米哈游服务期间的隐私权，米哈游特 此制定本《隐私政策》，用以向您说明在使用米哈游服务时，我们如何收集、 使用、储存和分享您的个人信息，以及我们为您提供的访问、更新、控制和保 护这些信息的方式。 本《隐私政策》适用于我们为您提供的米哈游的服务。当您使用我们提供的服 务时，我们将按照本《隐私政策》的约定处理和保护您的个人信息。 若您是未满 18 周岁的未成年人（特别是未满十四周岁的儿童），米哈游特别 提请您注意，您需要在您的监护人的陪同下阅读本《隐私政策》，我们已使 用加粗字体标注未成年人（特别是未满十四周岁的儿童）个人信息的相关的 条款，请您和您的监护人务必仔细阅读；请您在取得您的监护人对本《隐私 政策》全部条款的同意之后，使用米哈游服务。 儿童特别说明： 我们建议：任何儿童参加网上活动都应事先取得监护人的同意。</span></p>\n<p><span style="color: #e03e2d;">如果您是不 满十四周岁的儿童，请通知您的监护人共同阅读本《隐私政策》，并在您提 交个人信息、使用米哈游服务之前，寻求并取得您的监护人的同意和指导。 您点击同意本《隐私政策》，或者您使用/继续使用米哈游服务、提交个人信 息，都表示您已获得您的监护人的许可，且您的监护人亦同意受本《隐私政 策》。 </span></p>\n<p>我们可能会适时对本《隐私政策》进行修订。当本《隐私政策》的条款发生变 更时，我们会在版本更新时以页面提示、弹窗、网站公告等适当的方式向您提</p>',
-                    },
+                        text: '<p style="text-align: center;"><span style="font-size: 14pt;">《原神用户个人信息及隐私保护政策》</span></p>\n<p>（以下简称"《隐私政策》"）由您（以 下亦称"用户"或"您"）与上海米哈游影铁科技有限公司（下文亦称"米哈游"或 "我们"）共同缔结，本《隐私政策》具有合同效力。 欢迎您使用米哈游为您提供的服务，包括您与米哈游的交互行为及/或您注册 和使用米哈游游戏及/或注册和使用米哈游提供的产品或服务（以下统称"米哈 游服务"或"服务"）。</p>\n<p><span style="color: #e03e2d;">为保障用户在使用米哈游服务期间的隐私权，米哈游特 此制定本《隐私政策》，用以向您说明在使用米哈游服务时，我们如何收集、 使用、储存和分享您的个人信息，以及我们为您提供的访问、更新、控制和保 护这些信息的方式。 本《隐私政策》适用于我们为您提供的米哈游的服务。当您使用我们提供的服 务时，我们将按照本《隐私政策》的约定处理和保护您的个人信息。 若您是未满 18 周岁的未成年人（特别是未满十四周岁的儿童），米哈游特别 提请您注意，您需要在您的监护人的陪同下阅读本《隐私政策》，我们已使 用加粗字体标注未成年人（特别是未满十四周岁的儿童）个人信息的相关的 条款，请您和您的监护人务必仔细阅读；请您在取得您的监护人对本《隐私 政策》全部条款的同意之后，使用米哈游服务。 儿童特别说明： 我们建议：任何儿童参加网上活动都应事先取得监护人的同意。</span></p>\n<p><span style="color: #e03e2d;">如果您是不 满十四周岁的儿童，请通知您的监护人共同阅读本《隐私政策》，并在您提 交个人信息、使用米哈游服务之前，寻求并取得您的监护人的同意和指导。 您点击同意本《隐私政策》，或者您使用/继续使用米哈游服务、提交个人信 息，都表示您已获得您的监护人的许可，且您的监护人亦同意受本《隐私政 策》。 </span></p>\n<p>我们可能会适时对本《隐私政策》进行修订。当本《隐私政策》的条款发生变 更时，我们会在版本更新时以页面提示、弹窗、网站公告等适当的方式向您提</p>'
+                    }
                 }
-            ],
+            ]
         }
     ],
     dataSources: [
@@ -953,18 +990,18 @@ export const testSchemasV2: ISchemasRoot = {
                     content: "({app, dataSource, }, params) => {;    window.location.href='https://ys-api.mihoyo.com/event/download_porter/link/ys_cn/official/android_adbdsem'; }",
                     name: 'download_app',
                     title: '下载应用',
-                    id: 'YF2J',
+                    id: 'YF2J'
                 },
                 {
                     content: "({app, dataSource, }, params) => { ;    app.setPage('page_c6W8'); }",
                     name: 'jump_to_b',
                     title: '跳到第二页面',
-                    id: 'hflR',
+                    id: 'hflR'
                 },
                 {
                     content: "({app, dataSource, }, params) => { ;    app.setPage('page_XEzk'); }",
                     name: 'jump_to_c',
-                    title: '跳到第三页面',
+                    title: '跳到第三页面'
                 }
             ],
             fields: [{
@@ -972,14 +1009,49 @@ export const testSchemasV2: ISchemasRoot = {
                 name: 'loading',
                 title: '加载',
                 description: '加载',
-                defaultValue: false,
+                defaultValue: false
             }, {
                 type: 'number',
                 name: 'commonNumber',
                 title: '公共数字',
                 description: '公共数字',
-                defaultValue: 1000,
-            }],
+                defaultValue: 1000
+            }]
+        },
+        {
+            type: 'http',
+            beforeRequest: '(options, context) => {return options}',
+            afterResponse: '(response, context) => {\n      /**\n       * 用户可以直接编写函数，在原始接口返回之后，会运行该函数，将这个函数的返回值作为该数据源接口的返回\n    \n        * context：上下文对象\n        *\n        * interface Content {\n        *  app: ILowCodeRoot\n\n        *  dataSource: HttpDataSource\n\n        * }\n        *\n        */\n    \n      // 此处的返回值会作为这个接口的返回值\n      return {\n        allData: response,\n        randomTitle: response[0].title\n      }\n\n    }',
+            title: '测试通讯',
+            options: {
+                url: 'http://jsonplaceholder.typicode.com/posts',
+                method: 'GET'
+            },
+            description: '测试通讯',
+            fields: [
+                {
+                    name: 'randomTitle',
+                    title: 'randomTitle',
+                    type: 'string',
+                    description: '随机数名字',
+                    defaultValue: ''
+                },
+                {
+                    name: 'allData',
+                    title: '全部数据',
+                    type: 'array',
+                    description: '全部数据',
+                    defaultValue: '[]'
+                }
+            ],
+            methods: [
+                {
+                    content: '({app, dataSource, }, params) => { console.log(app, dataSource, params) }',
+                    name: 'updateTitle',
+                    title: '更新 title'
+                }
+            ],
+            id: 'ds_aHlz'
         }
     ],
     designWidth: 720,
@@ -991,6 +1063,6 @@ export const testSchemasV2: ISchemasRoot = {
         description: [
             '全新4.6版本「两界为火，赤夜将熄」现已推出！《原神》是由米哈游自研的一款开放世界冒险RPG。你将在游戏中探索一个被称作「提瓦特」的幻想世界。在这广阔的世界中，你可以踏遍七国，邂逅性格各异、能力独特的同伴，与他们一同对抗强敌，踏上寻回血亲之路；也可以不带目的地漫游，沉浸在充满生机的世界里，让好奇心驱使自己发掘各个角落的奥秘……直到你与分离的血亲重聚，在终点见证一切事物的沉淀。',
             'test3'
-        ],
-    },
+        ]
+    }
 };

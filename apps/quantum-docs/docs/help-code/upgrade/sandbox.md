@@ -245,3 +245,273 @@ BoxDragResize、BoxMultiDragResize的父类，负责管理Moveable的配置
 *   其中目标节点是DragResizeHelper直接改的，targetShadow作为直接被操作的拖拽框，是调用moveableHelper改的；
 *   有个特殊情况是流式布局下，moveableHelper不支持，targetShadow也是DragResizeHelper直接改的
 
+# 沙箱画布 (Sandbox)
+
+## 概述
+
+沙箱画布是Quantum低代码平台的核心模块之一，负责在编辑器和运行时之间建立通信桥梁。它基于iframe技术实现页面隔离，提供拖拽、选择、高亮等交互功能。
+
+## 核心架构
+
+### BoxCore
+BoxCore是沙箱的核心管理类，负责统一对外接口和事件管理。
+
+**主要职责**:
+- 管理BoxRender、BoxMask、ActionManager三个核心类
+- 提供编辑器调用接口
+- 对外抛出组件选中、多选、高亮、更新等事件
+- 管理画布缩放、参考线、标尺等功能
+
+**关键API**:
+```typescript
+interface IBoxCoreConfig {
+    runtimeUrl: string;           // 运行时URL
+    zoom?: number;               // 缩放比例
+    designWidth?: number;        // 设计稿宽度
+    autoScrollIntoView?: boolean; // 自动滚动到视图
+    guidesOptions?: IGuidesOptions; // 参考线配置
+}
+
+class BoxCore extends Subscribe {
+    public container?: HTMLDivElement;
+    public renderer: BoxRender;
+    public mask: BoxMask;
+    public actionManager: ActionManager;
+    public designWidth: number;
+    
+    // 核心方法
+    public mount(container: HTMLDivElement): void;
+    public select(id: Id): Promise<void>;
+    public add(data: IUpdateData): void;
+    public update(data: IUpdateData): void;
+    public delete(data: IDeleteData): void;
+    public setZoom(zoom: number): void;
+}
+```
+
+### BoxRender
+BoxRender负责iframe的管理和与运行时的通信。
+
+**核心功能**:
+- 基于iframe加载运行时URL
+- 提供组件增删改查操作
+- 获取指定坐标下的所有DOM节点
+- 管理iframe的生命周期
+
+**关键特性**:
+- **隔离性**: 通过iframe实现运行时环境隔离
+- **通信机制**: 基于postMessage实现跨iframe通信
+- **元素定位**: 提供`getElementsFromPoint` API获取坐标下的组件
+
+### BoxMask
+BoxMask是覆盖在画布区域的蒙层。
+
+**主要作用**:
+- 隔绝鼠标事件，避免组件本身事件被触发
+- 在滚动时与画布保持同步
+- 提供统一的交互事件监听
+
+**实现细节**:
+```typescript
+class BoxMask extends Subscribe {
+    private container?: HTMLDivElement;
+    private mask?: HTMLDivElement;
+    
+    // 蒙层管理
+    public setContainer(container: HTMLDivElement): void;
+    public syncPosition(): void; // 同步位置
+    public show(): void;
+    public hide(): void;
+}
+```
+
+### ActionManager
+ActionManager负责监听用户交互事件，实现选择、拖拽、高亮等行为。
+
+**核心功能**:
+- 监听蒙层上的鼠标和键盘事件
+- 通过BoxRender.getElementsFromPoint计算鼠标下方的组件
+- 管理单选、多选、高亮状态
+- 协调各个交互类的工作
+
+**管理的子类**:
+- **BoxDragResize**: 单选相关逻辑，拖拽、改变大小、旋转
+- **BoxMultiDragResize**: 多选拖拽逻辑
+- **BoxHighlight**: 组件高亮功能
+
+## 交互功能详解
+
+### 选择功能
+```typescript
+// 单选
+boxCore.select('componentId');
+
+// 多选
+boxCore.multiSelect(['id1', 'id2', 'id3']);
+
+// 清除选择
+boxCore.clearSelection();
+```
+
+### 拖拽功能
+基于开源库Moveable实现，特点：
+- 不直接操作组件本身
+- 在蒙层上创建同等大小的边框div
+- 拖拽过程中同步更新组件位置
+
+### 高亮功能
+- 鼠标经过画布组件时触发
+- 鼠标经过组件树时触发
+- 基于Moveable实现高亮框
+
+## 使用示例
+
+### 基本初始化
+```typescript
+import { BoxCore } from '@quantum-lowcode/sandbox';
+
+const boxCore = new BoxCore({
+    runtimeUrl: 'http://localhost:3000/runtime',
+    zoom: 1,
+    designWidth: 375,
+    autoScrollIntoView: true,
+    guidesOptions: {
+        snapToGrid: true,
+        gridSize: 10
+    }
+});
+
+// 挂载到容器
+const container = document.getElementById('sandbox-container');
+boxCore.mount(container);
+
+// 监听事件
+boxCore.on('select', (node) => {
+    console.log('选中组件:', node);
+});
+
+boxCore.on('update', (data) => {
+    console.log('组件更新:', data);
+});
+```
+
+### 组件操作
+```typescript
+// 添加组件
+boxCore.add({
+    config: {
+        field: 'button1',
+        component: 'Button',
+        componentProps: {
+            text: '按钮'
+        }
+    },
+    parentId: 'container1',
+    root: rootSchema
+});
+
+// 更新组件
+boxCore.update({
+    config: {
+        field: 'button1',
+        componentProps: {
+            text: '更新后的按钮'
+        }
+    },
+    root: rootSchema
+});
+
+// 删除组件
+boxCore.delete({
+    id: 'button1',
+    parentId: 'container1',
+    root: rootSchema
+});
+```
+
+## 事件系统
+
+### 事件类型
+```typescript
+interface ISandboxEvents {
+    'runtime-ready': (runtime: IRuntime) => void;
+    'select': (node: ISchemasNode) => void;
+    'multi-select': (nodes: ISchemasNode[]) => void;
+    'highlight': (node: ISchemasNode | null) => void;
+    'update': (data: IUpdateEventData) => void;
+    'remove': (data: IRemoveEventData) => void;
+    'guides-change': (data: IGuidesEventData) => void;
+}
+```
+
+### 事件监听
+```typescript
+// 运行时就绪
+boxCore.on('runtime-ready', (runtime) => {
+    console.log('运行时已准备就绪', runtime);
+});
+
+// 组件选择
+boxCore.on('select', (node) => {
+    // 更新属性面板
+    updatePropsPanel(node);
+});
+
+// 组件更新
+boxCore.on('update', (data) => {
+    // 同步更新schema
+    updateSchema(data);
+});
+```
+
+## 最佳实践
+
+### 1. 性能优化
+- 避免频繁的DOM操作
+- 使用防抖处理高频事件
+- 合理使用缓存机制
+
+### 2. 错误处理
+```typescript
+boxCore.on('error', (error) => {
+    console.error('沙箱错误:', error);
+    // 显示错误提示
+    showErrorMessage(error.message);
+});
+```
+
+### 3. 内存管理
+```typescript
+// 组件销毁时清理资源
+onUnmounted(() => {
+    boxCore.destroy();
+});
+```
+
+## 扩展开发
+
+### 自定义交互行为
+```typescript
+class CustomActionManager extends ActionManager {
+    protected handleCustomEvent(event: MouseEvent) {
+        // 自定义交互逻辑
+        super.handleMouseEvent(event);
+    }
+}
+
+const boxCore = new BoxCore({
+    // ... 其他配置
+    actionManagerClass: CustomActionManager
+});
+```
+
+### 自定义渲染器
+```typescript
+class CustomBoxRender extends BoxRender {
+    protected setupIframe() {
+        super.setupIframe();
+        // 自定义iframe设置
+    }
+}
+```
+

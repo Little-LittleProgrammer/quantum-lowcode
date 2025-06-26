@@ -1,168 +1,519 @@
-# core
+# 核心库 (Core)
 
-## 简介
+## 概述
 
-处理 DSL, 存储处理后的DSL数据 , 可供 runtime 和ui库 调用api, 主要应用场景 runtime 过程
+Core是Quantum低代码平台的核心库，负责数据模型管理、组件跨框架管理、事件系统和数据绑定等核心功能。它为整个低代码平台提供了统一的底层支撑。
 
-## app
+## 核心功能
 
-### 功能
+### 1. 数据模型管理
 
-1.  处理根 DSL
-2.  转换样式, px, deg, url
-3.  订阅事件、注册组件
-4.  声明 datasource
-5.  处理 seo
+Core库定义了完整的Schema数据模型，支持组件树的构建和管理。
 
-### 样式处理
-
-1.  需要处理的样式类型: `scale`, `backgroundImage`, `rotate`, `px => rem`
-2.  `transform`: `rotate`增加deg
-3.  `backgroundImage`: 增加`url()`
-4.  `px => rem`: `${parseInt(value) / this.designWidth * 10}rem`
-
-### 订阅事件
-
-```js
-this.eventMap.set(key, eventHanlder);
-this.on(key, eventHanlder);
-```
-
-### interface
-
-```ts
-interface IAppOptionsConfig {
-    config?: ISchemasRoot; // DSl
-    designWidth?: number; // 设计稿大小
-    ua?: string; // ua头
-    curPage?: Id; // 当前页面id
-    platform?: 'mobile' | 'pc'; 
-    transformStyle?: (style: Record<string, any>) => Record<string, any>; // 处理 obj样式成style样式,包括 px => rem
-    request?: IRequestFunction; 自定义请求方法
-    useMock?: boolean;
+#### 数据模型结构
+```typescript
+// 根节点
+interface ISchemasRoot extends ISchemasNode {
+    type: NodeType.ROOT;
+    children: ISchemasPage[];
+    name: string;
+    description?: IMetaDes;
+    dataSources?: IDataSourceSchema[];
+    designWidth?: number;
 }
-export declare class LowCodeRoot extends Subscribe implements ILowCodeRoot {
-    env: Env;
-    schemasRoot?: ISchemasRoot;
-    page?: LowCodePage; // 当前激活的page
-    designWidth: number; // 设计图大小, 用来计算 rem
-    platform: string;
-    components: Map<any, any>; // 物料库组件
-    request?: IRequestFunction;
-    dataSourceManager?: DataSourceManager; // 数据源管理
-    dataSourceDep: Map<Id, IDepData[]>; // 映射关系 ${a.b.c}
-    useMock: boolean;
-    private eventMap; // 事件存储
-    constructor(options: IAppOptionsConfig);
-    setEnv(ua?: string): void;
-    setConfig(config: ISchemasRoot, curPage?: Id): void;
-    private dealDescribe;
-    private setDescribe;
-    setPage(field?: Id): void; // 设置当前配置
-    getPage(field?: Id): LowCodePage | undefined;
-    deletePage(): void;
-    setDesignWidth(width: number): void;
-    transformStyle(style: Record<string, any> | string | Fn): Record<string, any>; // (value / designWidth * 10)
-    isH5(): boolean;
-    private getTransform;
-    private calcFontsize;  // width / 10
-    private setBodyFontSize; // 12 * dpr
-    emit(name: string, ...args: any[]): void;
-    registerEvent(key: string, fn: Fn, ds?: DataSource, node?: LowCodeNode): void; // dataSource调用, 注册事件
-    removeEvents(): void;
-    registerComponent(type: string, comp: any): void;
-    unregisterComponent(type: string): void;
-    resolveComponent(type: string): any;
-    destroy(): void;
+
+// 页面节点
+interface ISchemasPage extends ISchemasContainer {
+    type: NodeType.PAGE;
+}
+
+// 容器节点
+interface ISchemasContainer extends ISchemasNode {
+    type: NodeType.CONTAINER | string;
+    children: (ISchemasNode | ISchemasContainer)[];
+}
+
+// 基础节点
+interface ISchemasNode {
+    type: NodeType.NODE | string;
+    field: Id;                          // 唯一标识
+    component?: string;                 // 组件名
+    componentProps?: Record<string, any>; // 组件属性
+    label?: string;                     // 标签
+    style?: Partial<CSSStyleDeclaration>; // 样式
+    ifShow?: IfShow[] | boolean | Fn;   // 显示条件
+    children?: (ISchemasNode | ISchemasContainer)[];
+    created?: Hooks;                    // 创建钩子
+    mounted?: Hooks;                    // 挂载钩子
+    [key: string]: any;
 }
 ```
 
-## page
+### 2. 应用实例管理
 
-### 功能
-
-1.  处理 page 和 node DSL
-2.  处理 datasourceDep影射, 节点删除后, 删除影射关系
-
-### interface
-
-```ts
-export declare class LowCodePage extends LowCodeNode {
-    nodes: Map<string, LowCodeNode>;
-    constructor(options: IConfigOptions);
-    initNode(config: ISchemasContainer | ISchemasNode, parent: LowCodeNode): void;
-    getNode(field: Id): LowCodeNode | undefined;
-    setNode(field: Id, node: LowCodeNode): void;
-    deleteNode(field: Id): void;
-    destroy(): void;
+#### App类核心方法
+```typescript
+class App extends Subscribe {
+    public dataSourceManager: DataSourceManager;
+    public schemasRoot?: ISchemasRoot;
+    
+    // 页面管理
+    public setPages(pages: ISchemasPage[]): void;
+    public getPage(field: Id): ISchemasPage | undefined;
+    public setPage(page: ISchemasPage): void;
+    public deletePage(field: Id): void;
+    
+    // 组件管理
+    public registerComponent(name: string, component: any): void;
+    public unregisterComponent(name: string): void;
+    public resolveComponent(name: string): any;
+    
+    // 请求管理
+    public request(options: IHttpOptions): Promise<any>;
+    
+    // 事件系统
+    public emit(event: string, ...args: any[]): void;
+    public on(event: string, handler: Function): void;
+    public off(event: string, handler?: Function): void;
+    
+    // 数据管理
+    public setData(path: string, data: any): void;
+    public getData(path: string): any;
 }
 ```
 
-## node
+### 3. 组件注册与管理
 
-### 功能
+#### 组件注册机制
+```typescript
+// 注册组件
+app.registerComponent('Button', {
+    component: ButtonComponent,
+    props: {
+        text: {
+            type: 'string',
+            default: '按钮',
+            description: '按钮文本'
+        },
+        type: {
+            type: 'select',
+            options: ['primary', 'default', 'danger'],
+            default: 'default',
+            description: '按钮类型'
+        }
+    },
+    events: {
+        onClick: {
+            description: '点击事件',
+            params: ['event']
+        }
+    }
+});
 
-1.  setData时 编译`compileNode`, 并且记录到 `dataSourceDep`
-2.  setEvents, 处理 `componentProps`里的方法与数组事件, 当执行方法时, 可发布订阅在app中的datasource事件
-3.  listenLifeSafe: 通过订阅发布, 执行dsl中的 created 和 mounted 生命周期, 并在 mounted中注册组件暴露出来的事件
+// 解析组件
+const ButtonComponent = app.resolveComponent('Button');
+```
 
-# datasource
+#### 跨框架支持
+Core库提供了跨框架的组件适配机制：
 
-## 简介
+```typescript
+// Vue3适配器
+class Vue3Adapter implements IComponentAdapter {
+    createComponent(config: IComponentConfig): any {
+        return defineComponent({
+            props: config.props,
+            setup(props, { emit }) {
+                return () => h(config.component, props);
+            }
+        });
+    }
+}
 
-1.  处理 dsl中 datasource 部分, 包含 base 和 http 数据, 数据和方法
+// Vue2适配器
+class Vue2Adapter implements IComponentAdapter {
+    createComponent(config: IComponentConfig): any {
+        return Vue.extend({
+            props: config.props,
+            render(h) {
+                return h(config.component, {
+                    props: this.$props,
+                    on: this.$listeners
+                });
+            }
+        });
+    }
+}
+```
 
-### field
+### 4. 事件系统
 
-1.  更新数据时 通过 ds.setData 方法更新, 在 page中订阅 ds的change事件, 来触发节点替换更新
+#### 事件类型定义
+```typescript
+// 组件事件
+interface IComponentEvent {
+    type: 'component';
+    target: Id;         // 目标组件ID
+    method: string;     // 方法名
+    params?: any[];     // 参数
+}
 
-### methods
+// 数据源事件
+interface IDataSourceEvent {
+    type: 'dataSource';
+    target: Id;         // 数据源ID
+    method: string;     // 方法名
+    params?: any[];     // 参数
+}
 
-1.  调用 app的 `registerEvent`, 将所有方法订阅在app中
+// 路由事件
+interface INavigationEvent {
+    type: 'navigation';
+    url: string;        // 跳转URL
+    params?: Record<string, any>; // 参数
+}
+```
 
-## 数据响应式原理
-> 每层步骤间通过 `emit, on` 触发
+#### 事件处理器
+```typescript
+// 事件绑定
+{
+    component: 'Button',
+    componentProps: {
+        onClick: {
+            type: 'component',
+            target: 'modal1',
+            method: 'show'
+        }
+    }
+}
 
-### 响应式也包括两个部分:
-1. 响应数据的依赖收集
-2. 响应数据的依赖触发
+// 事件处理
+app.on('component:button1:click', (event) => {
+    // 处理按钮点击事件
+    console.log('按钮被点击', event);
+});
+```
 
-#### 依赖的收集
-1. 初始化页面时, 需要递归 dsl生成 对应节点类, 当递归到节点数据时, 判断数据是否是`${a.b.c}`的格式, 如果是的话, 收集此依赖
-2. 依赖收集格式
-```js
-Map{
-    key: 'sourceID',
-    value: Map{
-        key: 'fieldID',
-        value: Set[{
-            field: NodeId;
-            key: string;
-            rawValue: string;
-            type: 'data' | 'cond';
+### 5. 数据绑定系统
+
+#### 数据绑定语法
+```typescript
+// 基础数据绑定
+{
+    component: 'Text',
+    componentProps: {
+        value: '${dataSource.userInfo.name}' // 绑定用户名
+    }
+}
+
+// 条件绑定
+{
+    component: 'Button',
+    ifShow: {
+        field: ['dataSource', 'user', 'isLogin'],
+        op: '=',
+        value: true
+    }
+}
+
+// 计算属性绑定
+{
+    component: 'Text',
+    componentProps: {
+        value: '${computed.fullName}' // 绑定计算属性
+    }
+}
+```
+
+#### 数据响应式更新
+```typescript
+// 数据变化监听
+app.on('data:change', (path, newValue, oldValue) => {
+    console.log(`数据 ${path} 从 ${oldValue} 变更为 ${newValue}`);
+    
+    // 触发相关组件更新
+    updateRelatedComponents(path);
+});
+
+// 设置数据
+app.setData('user.name', '新用户名');
+app.setData('user.age', 25);
+```
+
+### 6. 钩子系统
+
+#### 生命周期钩子
+```typescript
+interface Hooks {
+    hookType?: HookType.CODE;
+    hookData?: HookData[];
+}
+
+interface HookData {
+    field: Id;
+    type?: ActionType;
+    params: any;
+    [key: string]: any;
+}
+
+// 使用示例
+{
+    component: 'UserProfile',
+    created: {
+        hookType: HookType.CODE,
+        hookData: [{
+            field: 'fetchUserData',
+            type: 'method',
+            params: { userId: '${route.params.id}' }
+        }]
+    },
+    mounted: {
+        hookType: HookType.CODE,
+        hookData: [{
+            field: 'initChart',
+            type: 'method',
+            params: {}
         }]
     }
 }
 ```
 
-#### 依赖触发
-1. 当数据更新时, 根据收集依赖的`sourceID`, `fieldID`, 找到所有依赖的节点
-2. 循环遍历依赖的节点, 根据`NodeId`获取原始节点, 根据 `type` 判断到底是 数据 还是 显示隐藏控制 类型
-3. 进行下面步骤
+## 使用示例
 
+### 基本使用
+```typescript
+import { App } from '@quantum-lowcode/core';
 
-### 数据响应式分为两部分:
-1. 页面数据的更新
-2. 页面节点的显示隐藏控制
+// 创建应用实例
+const app = new App({
+    schemasRoot: {
+        type: 'root',
+        name: 'myApp',
+        children: []
+    },
+    request: async (options) => {
+        return await fetch(options.url, {
+            method: options.method,
+            headers: options.headers,
+            body: JSON.stringify(options.data)
+        }).then(res => res.json());
+    }
+});
 
-#### 页面数据的更新
-1. 当数据更新时, 触发(trigger)收集的依赖, 将已经转化为基本数据的依赖项, 通过`key(path)`, `rawValue(${a.b.c})` 还原成`${a.b.c}`的形式
-2. 再通过 `node`的`compileNode`将还原的数据解析成更新后的数据
-3. 更新节点
-4. 将新节点对页面进行替换
+// 注册组件
+app.registerComponent('CustomButton', CustomButtonComponent);
 
-#### 页面的显示隐藏控制
-1. 当数据更新时, 触发(trigger)收集的依赖, 收集的依赖包括依赖此响应式数据的节点
-2. 获取节点, 根据节点的`ifShow`字段判断新数据是否符合此显示条件, 将结果赋值在 `showResult`上
-3. 更新节点
-4. 将新节点对页面进行替换
+// 设置页面
+app.setPage({
+    type: 'page',
+    field: 'homePage',
+    children: [
+        {
+            field: 'button1',
+            component: 'CustomButton',
+            componentProps: {
+                text: '点击我',
+                onClick: {
+                    type: 'dataSource',
+                    target: 'userApi',
+                    method: 'fetchUsers'
+                }
+            }
+        }
+    ]
+});
+```
+
+### 数据源集成
+```typescript
+// 添加数据源
+app.dataSourceManager.addDataSource({
+    id: 'userApi',
+    type: 'http',
+    title: '用户API',
+    config: {
+        baseURL: 'https://api.example.com'
+    },
+    methods: [
+        {
+            name: 'fetchUsers',
+            description: '获取用户列表',
+            params: [],
+            content: async ({ app }) => {
+                const response = await app.request({
+                    url: '/users',
+                    method: 'GET'
+                });
+                
+                // 更新数据
+                app.setData('users', response.data);
+                return response;
+            }
+        }
+    ]
+});
+```
+
+### 自定义事件处理
+```typescript
+// 注册全局事件处理器
+app.registerEvent('showModal', (modalId, config) => {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = 'block';
+        // 应用配置
+        Object.assign(modal, config);
+    }
+});
+
+// 在组件中触发事件
+{
+    component: 'Button',
+    componentProps: {
+        onClick: {
+            type: 'event',
+            name: 'showModal',
+            params: ['userModal', { title: '用户信息' }]
+        }
+    }
+}
+```
+
+## 高级功能
+
+### 1. 插件系统
+```typescript
+interface ICorePlugin {
+    name: string;
+    version: string;
+    install(app: App): void;
+    uninstall?(app: App): void;
+}
+
+// 示例插件
+class ValidationPlugin implements ICorePlugin {
+    name = 'ValidationPlugin';
+    version = '1.0.0';
+    
+    install(app: App) {
+        // 扩展验证功能
+        app.addValidator = (name, validator) => {
+            this.validators[name] = validator;
+        };
+        
+        // 验证组件属性
+        app.on('component:validate', (component) => {
+            this.validateComponent(component);
+        });
+    }
+    
+    private validateComponent(component: ISchemasNode) {
+        // 验证逻辑
+    }
+}
+
+// 使用插件
+app.use(ValidationPlugin);
+```
+
+### 2. 性能优化
+
+#### 虚拟化支持
+```typescript
+// 大列表虚拟化
+{
+    component: 'VirtualList',
+    componentProps: {
+        dataSource: '${dataSource.largeList}',
+        itemHeight: 50,
+        renderItem: {
+            component: 'ListItem',
+            componentProps: {
+                title: '${item.title}',
+                description: '${item.description}'
+            }
+        }
+    }
+}
+```
+
+#### 懒加载机制
+```typescript
+// 组件懒加载
+app.registerComponent('LazyChart', {
+    component: () => import('./components/Chart.vue'),
+    loading: LoadingComponent,
+    error: ErrorComponent,
+    delay: 200,
+    timeout: 3000
+});
+```
+
+### 3. 错误处理
+
+#### 全局错误捕获
+```typescript
+app.on('error', (error, errorInfo) => {
+    console.error('应用错误:', error);
+    
+    // 错误上报
+    reportError(error, errorInfo);
+    
+    // 显示错误边界
+    showErrorBoundary(error.message);
+});
+
+// 组件错误边界
+{
+    component: 'ErrorBoundary',
+    componentProps: {
+        fallback: {
+            component: 'ErrorMessage',
+            componentProps: {
+                message: '组件加载失败'
+            }
+        }
+    },
+    children: [
+        // 可能出错的组件
+    ]
+}
+```
+
+## 最佳实践
+
+### 1. 数据流设计
+- 单向数据流原则
+- 避免循环依赖
+- 合理使用计算属性
+
+### 2. 性能优化
+- 组件懒加载
+- 数据虚拟化
+- 事件防抖处理
+
+### 3. 错误处理
+- 全局错误捕获
+- 组件错误边界
+- 优雅降级策略
+
+### 4. 内存管理
+```typescript
+// 组件销毁时清理资源
+onUnmounted(() => {
+    app.cleanup();
+});
+
+// 手动清理
+app.cleanup = () => {
+    // 清理事件监听器
+    app.off();
+    
+    // 清理数据源
+    app.dataSourceManager.destroy();
+    
+    // 清理其他资源
+    clearInterval(timers);
+};
+```
