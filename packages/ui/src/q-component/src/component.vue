@@ -21,21 +21,21 @@ export default defineComponent({
     props: {
         config: {
             type: Object as PropType<ISchemasNode>,
-            default: () => ({}),
-        },
+            default: () => ({})
+        }
     },
     setup(props) {
-        const {app, } = useApp(props);
+        const {app } = useApp(props);
         const tagName: any = computed(() => {
             return app && app.resolveComponent(props.config.component || props.config.type);
         });
-        const ifShow = computed(() => { 
-            if (props.config.showResult === false) return false
+        const ifShow = computed(() => {
+            if (props.config.showResult === false) return false;
             if (props.config.ifShow) {
                 if (isFunction(props.config.ifShow)) {
                     return (props.config.ifShow as Fn)(app);
                 }
-                return props.config.ifShow !== false;
+                return props.config.ifShow;
             }
             return true;
         });
@@ -44,14 +44,14 @@ export default defineComponent({
             if (props.config.style && isFunction(props.config.style)) {
                 return (props.config.style as any)(refRuntimeComp.value?.$el);
             }
-            return props.config.style;
+            return app?.transformStyle(props.config.style || {});
         });
         return {
             tagName: tagName,
             style: getStyle,
-            display: ifShow,
+            display: ifShow
         };
-    },
+    }
 });
 </script>
 

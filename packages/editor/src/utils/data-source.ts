@@ -5,30 +5,30 @@ const baseFormConfig: FormConfig = [
     {
         field: 'options',
         label: '基础信息',
-        component: 'Divider',
+        component: 'Divider'
     },
     {
         label: 'id',
         field: 'id',
         component: 'Text',
-        ifShow: ({values, }) => values.id,
+        ifShow: ({values }) => values.id
     },
     {
         label: '类型',
         field: 'type',
         component: 'Text',
-        defaultValue: 'base',
+        defaultValue: 'base'
     },
     {
         label: '名称',
         field: 'title',
         component: 'Input',
-        required: true,
+        required: true
     },
     {
         label: '描述',
         field: 'description',
-        component: 'Input',
+        component: 'Input'
     }
 ];
 
@@ -36,23 +36,23 @@ const httpFormConfig: FormConfig = [
     {
         field: 'autoFetch',
         label: '自动请求',
-        component: 'Switch',
+        component: 'Switch'
     },
     {
         field: 'responseOptions.dataPath',
         label: '数据路径',
         component: 'Input',
-        helpMessage: '服务端返回数据所需数据的层级, 一般情况下是res.data',
+        helpMessage: '服务端返回数据所需数据的层级, 一般情况下是res.data'
     },
     {
         field: 'options',
         label: '请求设置',
-        component: 'Divider',
+        component: 'Divider'
     },
     {
         field: 'options.url',
         label: 'url',
-        component: 'Input',
+        component: 'Input'
     },
     {
         field: 'options.method',
@@ -60,33 +60,33 @@ const httpFormConfig: FormConfig = [
         component: 'Select',
         componentProps: {
             options: [
-                { label: 'GET', value: 'GET', },
-                { label: 'POST', value: 'POST', },
-                { label: 'PUT', value: 'PUT', },
-                { label: 'DELETE', value: 'DELETE', }
-            ],
-        },
+                { label: 'GET', value: 'GET' },
+                { label: 'POST', value: 'POST' },
+                { label: 'PUT', value: 'PUT' },
+                { label: 'DELETE', value: 'DELETE' }
+            ]
+        }
     },
     {
         field: 'options.headers',
         label: '请求头',
         component: 'KeyValue',
         helpMessage:
-			'请求头, 例如: Authorization: Bearer token, 填写${dataSourceId:fieldId} 可动态设置请求参数',
+			'请求头, 例如: Authorization: Bearer token, 填写${dataSourceId:fieldId} 可动态设置请求参数'
     },
     {
         field: 'options.params',
         label: '参数',
         component: 'KeyValue',
         helpMessage:
-			'请求参数, 例如: {id: 1}, 填写${dataSourceId:fieldId} 可动态设置请求参数',
+			'请求参数, 例如: {id: 1}, 填写${dataSourceId:fieldId} 可动态设置请求参数'
     },
     {
         field: 'options.data',
         label: '请求体',
         component: 'KeyValue',
         helpMessage:
-			'请求参数, 例如: {id: 1}, 填写${dataSourceId:fieldId} 可动态设置请求参数',
+			'请求参数, 例如: {id: 1}, 填写${dataSourceId:fieldId} 可动态设置请求参数'
     }
 ];
 
@@ -97,23 +97,23 @@ function formatConfig(config: FormConfig): FormConfig {
         {
             field: 'options',
             label: '数据拓展',
-            component: 'Divider',
+            component: 'Divider'
         },
         {
             label: '数据定义',
             field: 'fields',
-            component: 'DataSourceFields',
+            component: 'DataSourceFields'
         },
         {
             label: '方法定义',
             field: 'methods',
-            component: 'DataSourceMethods',
+            component: 'DataSourceMethods'
         },
         {
             label: '请求拦截器',
             field: 'beforeRequest',
             component: 'CodeEditor',
-            ifShow: ({ values, }) => values.type === 'http',
+            ifShow: ({ values }) => values.type === 'http',
             componentProps: {
                 style: {height: '500px'}
             }
@@ -122,7 +122,7 @@ function formatConfig(config: FormConfig): FormConfig {
             label: '响应拦截器',
             field: 'afterResponse',
             component: 'CodeEditor',
-            ifShow: ({ values, }) => values.type === 'http',
+            ifShow: ({ values }) => values.type === 'http',
             componentProps: {
                 style: {height: '500px'}
             }
@@ -198,6 +198,6 @@ export function getFormValue(type: string, values: Partial<IDataSourceSchema>) {
       // 此处的返回值会作为这个接口的返回值
       return response;
     }`,
-        ...values,
+        ...values
     };
 }

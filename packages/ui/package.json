@@ -42,8 +42,6 @@
   "dependencies": {
     "@quantum-lowcode/utils": "workspace:*",
     "@quantum-lowcode/core": "workspace:*",
-    "@quantum-design/vue3-antd-pc-ui": "catalog:",
-    "@quantum-design/styles": "catalog:",
     "@quantum-lowcode/schemas": "workspace:*"
   },
   "peerDependencies": {

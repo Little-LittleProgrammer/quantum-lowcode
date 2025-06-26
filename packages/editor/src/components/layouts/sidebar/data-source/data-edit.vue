@@ -12,26 +12,26 @@ import { inject, ref } from 'vue';
 import { IDataSourceSchema } from '@quantum-lowcode/schemas';
 import { mergeWith } from 'lodash-es';
 defineOptions({
-    name: 'DataEdit',
+    name: 'DataEdit'
 });
-const { dataSourceService, } = inject<IServices>('services') || {};
+const { dataSourceService } = inject<IServices>('services') || {};
 
 const values = ref<Partial<IDataSourceSchema>>({});
 const dataSourceConfig = ref<FormConfig>([]);
 const drawerTitle = ref('');
 
-defineEmits(['register'])
+defineEmits(['register']);
 
-const [registerForm, {setFieldsValue, getFieldsValue, validate, resetFields, }] = useForm({
+const [registerForm, {setFieldsValue, getFieldsValue, validate, resetFields }] = useForm({
     labelWidth: 100,
     schemas: dataSourceConfig as any,
     showActionButtonGroup: false,
     baseColProps: {
-        span: 24,
-    },
+        span: 24
+    }
 });
 
-const [registerDrawer, {closeDrawer, }] = useDrawerInner(async(obj: any) => {
+const [registerDrawer, {closeDrawer }] = useDrawerInner(async(obj: any) => {
     if (obj.key) {
         values.value = dataSourceService?.getDataSourceById(obj.key) || {};
         dataSourceConfig.value = dataSourceService?.getFormConfig(values.value.type) as any;
@@ -41,8 +41,8 @@ const [registerDrawer, {closeDrawer, }] = useDrawerInner(async(obj: any) => {
         drawerTitle.value = '新增';
         dataSourceConfig.value = dataSourceService?.getFormConfig(obj.type) as any;
         await setFieldsValue(mergeWith(
-            {type: obj.type, },
-            dataSourceService?.getFormValue(obj.type) || {},
+            {type: obj.type },
+            dataSourceService?.getFormValue(obj.type) || {}
         ));
     }
 });
@@ -50,11 +50,12 @@ const [registerDrawer, {closeDrawer, }] = useDrawerInner(async(obj: any) => {
 async function editSave() {
     await validate();
     const values = getFieldsValue();
+    console.log('values', values);
     if (!values.fields) {
-        values.fields = []
+        values.fields = [];
     }
     if (!values.methods) {
-        values.methods = []
+        values.methods = [];
     }
     if (values.id) {
         dataSourceService?.update(values as IDataSourceSchema);

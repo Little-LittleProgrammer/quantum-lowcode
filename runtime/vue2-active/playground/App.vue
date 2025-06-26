@@ -23,7 +23,7 @@ declare global {
 
 export default defineComponent({
     components: {
-        page: Page,
+        page: Page
     },
     setup() {
         const app = inject<LowCodeRoot | undefined>('app');
@@ -72,7 +72,7 @@ export default defineComponent({
                 return nextTick().then(() => document.getElementById(`${field}`) as HTMLElement);
             },
 
-            add({ config, parentId, }: IUpdateData) {
+            add({ config, parentId }: IUpdateData) {
                 console.log('runtime.add', config);
                 if (!root.value) throw new Error('error');
                 if (!selectedId.value) throw new Error('error');
@@ -95,7 +95,7 @@ export default defineComponent({
                 }
             },
 
-            update({config, parentId, }: IUpdateData) {
+            update({config, parentId }: IUpdateData) {
                 if (!root.value || !app) throw new Error('未初始化');
                 replaceChildNode(reactive(config), [root.value as any], parentId);
 
@@ -106,7 +106,7 @@ export default defineComponent({
                 console.log('runtime.update', config, root.value);
             },
 
-            delete({id, parentId, }: IDeleteData) {
+            delete({id, parentId }: IDeleteData) {
                 console.log('runtime.delete');
                 if (!root.value) throw new Error('未初始化');
 
@@ -125,14 +125,14 @@ export default defineComponent({
                 const index = parent.children?.findIndex((child: ISchemasNode) => child.field === node.field);
 
                 parent.children?.splice(index, 1);
-            },
+            }
 
         });
 
         return {
-            pageConfig,
+            pageConfig
         };
-    },
+    }
 });
 </script>
 

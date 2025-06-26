@@ -208,7 +208,16 @@ export interface IDatasourceTypeOption {
     /** 数据源名称 */
     label: string;
 }
-export type FormConfig = FormSchema<any, 'DataSourceFields' | 'DataSourceMethods' | 'KeyValue' | 'CodeEditor'>[]
+
+//  'DataSourceFields' | 'DataSourceMethods' | 'KeyValue' | 'CodeEditor'
+interface IExtraFormComponent {
+    DataSourceFields: Record<string, any>,
+    DataSourceMethods: Record<string, any>,
+    KeyValue: Record<string, any>,
+    CodeEditor: Record<string, any>
+}
+
+export type FormConfig = FormSchema<any, IExtraFormComponent>[]
 
 export interface IDataSourceState {
     datasourceTypeList: IDatasourceTypeOption[]

@@ -1,0 +1,37 @@
+{
+    "name": "@quantum-lowcode/runtime-vue3",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "vite --config dev.vite.config.ts",
+        "build": "pnpm build:libs && pnpm build:page && pnpm build:playground",
+        "playground": "pnpm build:libs && vite --config dev.vite.config.ts",
+        "build:page": "vite build --config build.vite.config.ts --mode page",
+        "build:playground": "vite build --config build.vite.config.ts --mode playground",
+        "build:libs": "vite build --config build.vite.config.ts --mode config"
+    },
+    "keywords": [],
+    "author": "Evan Wu",
+    "license": "ISC",
+    "dependencies": {
+        "@quantum-lowcode/core": "workspace:*",
+        "@quantum-lowcode/data": "workspace:*",
+        "@quantum-lowcode/schemas": "workspace:*",
+        "@quantum-lowcode/sandbox": "workspace:*",
+        "@quantum-lowcode/utils": "workspace:*",
+        "@quantum-lowcode/ui": "workspace:*",
+        "@quantum-design/http": "catalog:",
+        "axios": "catalog:",
+        "vue": "catalog:"
+    },
+    "devDependencies": {
+        "postcss-pxtorem": "catalog:",
+        "@vitejs/plugin-vue": "catalog:",
+        "@vitejs/plugin-vue-jsx": "catalog:",
+        "@quantum-design/shared": "catalog:",
+        "rollup-plugin-external-globals": "catalog:"
+    }
+  }
+  

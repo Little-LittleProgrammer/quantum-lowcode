@@ -23,16 +23,16 @@ import {useApp} from '../../hooks/use-app';
 
 export default defineComponent({
     components: {
-        'runtime-component': Component,
+        'runtime-component': Component
     },
     props: {
         config: {
             type: Object as PropType<ISchemasPage>,
-            default: () => ({}),
-        },
+            default: () => ({})
+        }
     },
     setup(props) {
-        const {app, } = useApp(props);
+        const {app } = useApp(props);
         const ifShow = computed(() => {
             if (props.config.ifShow) {
                 return props.config.ifShow;
@@ -45,13 +45,14 @@ export default defineComponent({
                 props.config.style(refRuntimeContainer.value?.$el);
                 return {};
             }
+            console.log('app', app?.transformStyle(props.config.style || {}));
             return app?.transformStyle(props.config.style || {});
         });
 
         return {
             style: getStyle,
-            display: ifShow,
+            display: ifShow
         };
-    },
+    }
 });
 </script>

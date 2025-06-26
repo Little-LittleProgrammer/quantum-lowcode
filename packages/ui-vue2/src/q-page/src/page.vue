@@ -21,19 +21,19 @@ import {isFunction} from '@quantum-lowcode/utils';
 
 export default defineComponent({
     components: {
-        'runtime-component': Component,
+        'runtime-component': Component
     },
     props: {
         config: {
             type: Object as PropType<ISchemasPage>,
-            default: () => ({}),
-        },
+            default: () => ({})
+        }
     },
     setup(props) {
         const refresh = () => {
             window.location.reload();
         };
-        const {app, } = useApp({
+        const {app } = useApp({
             config: props.config,
             methods: {refresh}
         });
@@ -46,8 +46,8 @@ export default defineComponent({
             return app?.transformStyle(props.config.style || {});
         });
         return {
-            style: getStyle,
+            style: getStyle
         };
-    },
+    }
 });
 </script>

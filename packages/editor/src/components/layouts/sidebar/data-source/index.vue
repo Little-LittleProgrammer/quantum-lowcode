@@ -52,10 +52,10 @@ import { useDrawer } from '@quantum-design/vue3-antd-pc-ui';
 import DataEdit from './data-edit.vue';
 
 defineOptions({
-    name: 'DataSource',
+    name: 'DataSource'
 });
 
-const { editorService, dataSourceService, } = inject<IServices>('services') || {};
+const { editorService, dataSourceService } = inject<IServices>('services') || {};
 
 const dataSources = computed(() => dataSourceService?.get('dataSources') || []);
 
@@ -63,8 +63,8 @@ const searchText = ref();
 
 const datasourceTypeList = computed(() =>
     [
-        { label: '基础', value: 'base', },
-        { label: 'HTTP', value: 'http', }
+        { label: '基础', value: 'base' },
+        { label: 'HTTP', value: 'http' }
     ].concat(dataSourceService?.get('datasourceTypeList') ?? [])
 );
 
@@ -72,7 +72,7 @@ function formatTree(type: 'fields' | 'methods', ds: IDataSourceSchema) {
     if (isArray(ds[type]) && ds[type].length > 0) {
         const enums = {
             fields: '数据',
-            methods: '方法',
+            methods: '方法'
         };
         const obj = {
             title: enums[type],
@@ -80,9 +80,9 @@ function formatTree(type: 'fields' | 'methods', ds: IDataSourceSchema) {
             children: ds[type].map((f) => {
                 return {
                     title: (f.title ?? '') + `(${f.name})`,
-                    key: f.name,
+                    key: f.name
                 };
-            }),
+            })
         };
         return obj;
     }
@@ -103,20 +103,20 @@ const dataSourceList = computed(() => {
         return {
             title: ds.title + `(${ds.id})`,
             key: 'root' + ds.id,
-            children,
+            children
         };
     });
 });
 
 function addDataSource(type: string) {
     openDrawer(true, {
-        type,
+        type
     });
 }
 function EditDataSource(key: string) {
     const realKey = key.replace('root', '');
     openDrawer(true, {
-        key: realKey,
+        key: realKey
     });
 }
 function deleteDataSource(key: string) {
@@ -125,11 +125,11 @@ function deleteDataSource(key: string) {
         title: '是否删除此条数据',
         onOk: () => {
             dataSourceService?.delete(realKey);
-        },
+        }
     });
 }
 
-const [registerDrawer, {openDrawer, }] = useDrawer();
+const [registerDrawer, {openDrawer }] = useDrawer();
 
 </script>
 <style lang='scss' scoped>

@@ -53,7 +53,7 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
 
         this.setEnv(options.ua);
         options.platform && (this.platform = options.platform);
-        this.flexible = new Flexible({ designWidth: options.designWidth, });
+        this.flexible = new Flexible({ designWidth: options.designWidth });
         if (options.config) {
             this.setConfig(options.config, options.curPage);
         }
@@ -144,7 +144,7 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
             this.page.destroy();
         }
 
-        this.page = new LowCodePage({ config: pageConfig, root: this, });
+        this.page = new LowCodePage({ config: pageConfig, root: this });
         super.emit('page-change', this.page);
         // this.bindEvents();
     }
@@ -201,7 +201,7 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
         node?: LowCodeNode
     ) {
         const eventHanlder = (...args: any[]) => {
-            fn({ app: this, dataSource: ds || {}, }, ...args);
+            fn({ app: this, dataSource: ds || {} }, ...args);
         };
         // 先清空
         if (this.cache.has(key)) {

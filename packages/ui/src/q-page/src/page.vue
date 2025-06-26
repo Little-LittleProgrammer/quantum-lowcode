@@ -3,7 +3,7 @@
         :id="config.field"
         ref="refRuntimePage"
         class="quantum-ui-page quantum-ui-container"
-        :style="style"
+        :style="getStyle"
     >
         <slot></slot>
         <runtime-component v-for="item in config.children" :key="item.field" :config="item"></runtime-component>
@@ -21,15 +21,22 @@ import {isFunction} from '@quantum-lowcode/utils';
 
 export default defineComponent({
     components: {
-        'runtime-component': Component,
+        'runtime-component': Component
     },
     props: {
         config: {
             type: Object as PropType<ISchemasPage>,
-            default: () => ({}),
-        },
+            default: () => ({})
+        }
     },
     setup(props) {
+        const refresh = () => {
+            window.location.reload();
+        };
+        const {app } = useApp({
+            config: props.config,
+            methods: {refresh}
+        });
         const refRuntimePage = ref();
         const getStyle = computed(() => {
             if (isFunction(props.config.style)) {
@@ -38,17 +45,9 @@ export default defineComponent({
             }
             return app?.transformStyle(props.config.style || {});
         });
-        const refresh = () => {
-            window.location.reload();
-        };
-        const {app, } =useApp({
-            config: props.config,
-            methods: {refresh}
-        })
         return {
-            style: getStyle,
+            getStyle
         };
-    },
+    }
 });
 </script>
-

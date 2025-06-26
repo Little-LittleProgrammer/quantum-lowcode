@@ -15,7 +15,7 @@ export default ({ command, mode, }: ConfigEnv):UserConfig => {
         isComponentsBuild: true,
         target: 'modules',
         rollupOptions: {
-            external: ['vue', '@quantum-lowcode/utils', '@quantum-lowcode/core', '@quantum-lowcode/schemas', '@quantum-design/vue3-antd-pc-ui'],
+            external: ['vue', '@quantum-lowcode/utils', '@quantum-lowcode/core', '@quantum-lowcode/schemas'],
         },
         buildOptions: {
             cssCodeSplit: true,

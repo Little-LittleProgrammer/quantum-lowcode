@@ -202,11 +202,7 @@
 	]);
 
 	const schemas = ref<ISchemasRoot>(defaultSchemas);
-    if(runtimePathType === 'vue3') {
-        schemas.value = testSchemasV1
-    } else {
         schemas.value = testSchemasV2
-    }
 	let preSchemasStr = '';
 	let schemasStr = '';
 	let id: string | null = null;
