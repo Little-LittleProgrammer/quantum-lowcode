@@ -6,39 +6,39 @@ const styleSchemas:FormSchema<any, 'CodeEditor' | 'InputSelect'>[] = [
         label: '布局',
         field: 'type',
         component: 'InputSelect',
-        ifShow: false,
+        ifShow: false
     },
     {
         label: '布局',
         field: 'position',
         component: 'Divider',
-        ifShow: ({values, }) => values['type'] === 'page' || values['type'] === 'container',
+        ifShow: ({values }) => values['type'] === 'page' || values['type'] === 'container'
     },
     {
         field: 'layout',
         label: '容器布局',
         component: 'Select',
-        ifShow: ({values, }) => {
+        ifShow: ({values }) => {
             return values['type'] === 'page' || values['type'] === 'container';
         },
-        componentProps: ({formModel, }) => ({
+        componentProps: ({formModel }) => ({
             options: [
-                { label: '绝对定位', value: 'absolute', },
-                { label: '流式布局', value: 'relative', }
-            ],
-        }),
+                { label: '绝对定位', value: 'absolute' },
+                { label: '流式布局', value: 'relative' }
+            ]
+        })
     },
     {
         label: '样式设置',
         field: 'customStyleSwitch',
         component: 'Select',
         helpMessage: '需熟悉css',
-        componentProps: ({formModel, }) => ({
+        componentProps: ({formModel }) => ({
             options: [
-                { label: '自定义样式', value: 2, },
-                { label: '普通样式', value: 1, }
-            ],
-        }),
+                { label: '自定义样式', value: 2 },
+                { label: '普通样式', value: 1 }
+            ]
+        })
 
     },
     // TODO 优化样式功能
@@ -50,11 +50,11 @@ const styleSchemas:FormSchema<any, 'CodeEditor' | 'InputSelect'>[] = [
         helpMessage: ['1. 对于需要转为rem的属性请直接填写数字', '2. 对于输入框配置的属性无法更改', '3. command+s保存'],
         componentProps: {
             style: {
-                height: '700px' 
+                height: '700px'
             },
             parse: parseSchemas
         },
-        ifShow: ({values, }) => {
+        ifShow: ({values }) => {
             return values['customStyleSwitch'] === 2;
         }
     },
@@ -63,35 +63,35 @@ const styleSchemas:FormSchema<any, 'CodeEditor' | 'InputSelect'>[] = [
         field: 'position',
         component: 'Divider',
         helpMessage: '填写${dataSourceId:fieldId} 可获取全局参数',
-        ifShow: ({values, }) => {
+        ifShow: ({values }) => {
             return values['customStyleSwitch'] === 1;
         }
     }, {
         label: 'top',
         field: 'style.top',
         component: 'InputSelect',
-        ifShow: ({values, }) => {
+        ifShow: ({values }) => {
             return values['customStyleSwitch'] === 1;
         }
     }, {
         label: 'left',
         field: 'style.left',
         component: 'InputSelect',
-        ifShow: ({values, }) => {
+        ifShow: ({values }) => {
             return values['customStyleSwitch'] === 1;
         }
     }, {
         label: 'right',
         field: 'style.right',
         component: 'InputSelect',
-        ifShow: ({values, }) => {
+        ifShow: ({values }) => {
             return values['customStyleSwitch'] === 1;
         }
     }, {
         label: 'bottom',
         field: 'style.bottom',
         component: 'InputSelect',
-        ifShow: ({values, }) => {
+        ifShow: ({values }) => {
             return values['customStyleSwitch'] === 1;
         }
     }, {
@@ -99,21 +99,21 @@ const styleSchemas:FormSchema<any, 'CodeEditor' | 'InputSelect'>[] = [
         field: 'box',
         component: 'Divider',
         helpMessage: '填写${dataSourceId:fieldId} 可获取全局参数',
-        ifShow: ({values, }) => {
+        ifShow: ({values }) => {
             return values['customStyleSwitch'] === 1;
         }
     }, {
         label: '宽度',
         field: 'style.width',
         component: 'InputSelect',
-        ifShow: ({values, }) => {
+        ifShow: ({values }) => {
             return values['customStyleSwitch'] === 1;
         }
     }, {
         label: '高度',
         field: 'style.height',
         component: 'InputSelect',
-        ifShow: ({values, }) => {
+        ifShow: ({values }) => {
             return values['customStyleSwitch'] === 1;
         }
     }, {
@@ -121,21 +121,21 @@ const styleSchemas:FormSchema<any, 'CodeEditor' | 'InputSelect'>[] = [
         field: 'box',
         component: 'Divider',
         helpMessage: '填写${dataSourceId:fieldId} 可获取全局参数',
-        ifShow: ({values, }) => {
+        ifShow: ({values }) => {
             return values['customStyleSwitch'] === 1;
         }
     }, {
         label: '宽度',
         field: 'style.borderWidth',
         component: 'InputSelect',
-        ifShow: ({values, }) => {
+        ifShow: ({values }) => {
             return values['customStyleSwitch'] === 1;
         }
     }, {
         label: '颜色',
         field: 'style.borderColor',
         component: 'InputSelect',
-        ifShow: ({values, }) => {
+        ifShow: ({values }) => {
             return values['customStyleSwitch'] === 1;
         }
     }, {
@@ -144,25 +144,25 @@ const styleSchemas:FormSchema<any, 'CodeEditor' | 'InputSelect'>[] = [
         component: 'Select',
         defaultValue: 'none',
         componentProps: {
-            options: [{ label: 'none', value: 'none', },
-                { label: 'hidden', value: 'hidden', },
-                { label: 'dotted', value: 'dotted', },
-                { label: 'dashed', value: 'dashed', },
-                { label: 'solid', value: 'solid', },
-                { label: 'double', value: 'double', },
-                { label: 'groove', value: 'groove', },
-                { label: 'ridge', value: 'ridge', },
-                { label: 'inset', value: 'inset', },
-                { label: 'outset', value: 'outset', } ],
+            options: [{ label: 'none', value: 'none' },
+                { label: 'hidden', value: 'hidden' },
+                { label: 'dotted', value: 'dotted' },
+                { label: 'dashed', value: 'dashed' },
+                { label: 'solid', value: 'solid' },
+                { label: 'double', value: 'double' },
+                { label: 'groove', value: 'groove' },
+                { label: 'ridge', value: 'ridge' },
+                { label: 'inset', value: 'inset' },
+                { label: 'outset', value: 'outset' } ]
         },
-        ifShow: ({values, }) => {
+        ifShow: ({values }) => {
             return values['customStyleSwitch'] === 1;
         }
     }, {
         label: '圆角',
         field: 'style.borderRadius',
         component: 'InputSelect',
-        ifShow: ({values, }) => {
+        ifShow: ({values }) => {
             return values['customStyleSwitch'] === 1;
         }
     }, {
@@ -170,21 +170,21 @@ const styleSchemas:FormSchema<any, 'CodeEditor' | 'InputSelect'>[] = [
         field: 'background',
         component: 'Divider',
         helpMessage: '填写${dataSourceId:fieldId} 可获取全局参数',
-        ifShow: ({values, }) => {
+        ifShow: ({values }) => {
             return values['customStyleSwitch'] === 1;
         }
     }, {
         label: '链接',
         field: 'style.backgroundImage',
         component: 'InputSelect',
-        ifShow: ({values, }) => {
+        ifShow: ({values }) => {
             return values['customStyleSwitch'] === 1;
         }
     }, {
         label: '颜色',
         field: 'style.backgroundColor',
         component: 'InputSelect',
-        ifShow: ({values, }) => {
+        ifShow: ({values }) => {
             return values['customStyleSwitch'] === 1;
         }
     }, {
@@ -194,14 +194,14 @@ const styleSchemas:FormSchema<any, 'CodeEditor' | 'InputSelect'>[] = [
         defaultValue: 'no-repeat',
         componentProps: {
             options: [
-                { label: 'repeat', value: 'repeat', },
-                { label: 'repeat-x', value: 'repeat-x', },
-                { label: 'repeat-y', value: 'repeat-y', },
-                { label: 'no-repeat', value: 'no-repeat', },
-                { label: 'inherit', value: 'inherit', }
-            ],
+                { label: 'repeat', value: 'repeat' },
+                { label: 'repeat-x', value: 'repeat-x' },
+                { label: 'repeat-y', value: 'repeat-y' },
+                { label: 'no-repeat', value: 'no-repeat' },
+                { label: 'inherit', value: 'inherit' }
+            ]
         },
-        ifShow: ({values, }) => {
+        ifShow: ({values }) => {
             return values['customStyleSwitch'] === 1;
         }
     }, {
@@ -209,7 +209,7 @@ const styleSchemas:FormSchema<any, 'CodeEditor' | 'InputSelect'>[] = [
         field: 'style.backgroundSize',
         component: 'InputSelect',
         defaultValue: '100% 100%',
-        ifShow: ({values, }) => {
+        ifShow: ({values }) => {
             return values['customStyleSwitch'] === 1;
         }
     }, {
@@ -217,35 +217,35 @@ const styleSchemas:FormSchema<any, 'CodeEditor' | 'InputSelect'>[] = [
         field: 'font',
         component: 'Divider',
         helpMessage: '填写${dataSourceId:fieldId} 可获取全局参数',
-        ifShow: ({values, }) => {
+        ifShow: ({values }) => {
             return values['customStyleSwitch'] === 1;
         }
     }, {
         label: '颜色',
         field: 'style.color',
         component: 'InputSelect',
-        ifShow: ({values, }) => {
+        ifShow: ({values }) => {
             return values['customStyleSwitch'] === 1;
         }
     }, {
         label: '大小',
         field: 'style.fontSize',
         component: 'InputSelect',
-        ifShow: ({values, }) => {
+        ifShow: ({values }) => {
             return values['customStyleSwitch'] === 1;
         }
     }, {
         label: '行高',
         field: 'style.lineHeight',
         component: 'InputSelect',
-        ifShow: ({values, }) => {
+        ifShow: ({values }) => {
             return values['customStyleSwitch'] === 1;
         }
     }, {
         label: '粗细',
         field: 'style.fontWidth',
         component: 'InputSelect',
-        ifShow: ({values, }) => {
+        ifShow: ({values }) => {
             return values['customStyleSwitch'] === 1;
         }
     }, {
@@ -255,12 +255,12 @@ const styleSchemas:FormSchema<any, 'CodeEditor' | 'InputSelect'>[] = [
         defaultValue: 'left',
         componentProps: {
             options: [
-                { label: 'center', value: 'center', },
-                { label: 'left', value: 'left', },
-                { label: 'right', value: 'right', }
-            ],
+                { label: 'center', value: 'center' },
+                { label: 'left', value: 'left' },
+                { label: 'right', value: 'right' }
+            ]
         },
-        ifShow: ({values, }) => {
+        ifShow: ({values }) => {
             return values['customStyleSwitch'] === 1;
         }
     }, {
@@ -268,21 +268,21 @@ const styleSchemas:FormSchema<any, 'CodeEditor' | 'InputSelect'>[] = [
         field: 'transform',
         component: 'Divider',
         helpMessage: '填写${dataSourceId:fieldId} 可获取全局参数',
-        ifShow: ({values, }) => {
+        ifShow: ({values }) => {
             return values['customStyleSwitch'] === 1;
         }
     }, {
         label: '旋转角度',
         field: 'style.transform.rotate',
         component: 'InputSelect',
-        ifShow: ({values, }) => {
+        ifShow: ({values }) => {
             return values['customStyleSwitch'] === 1;
         }
     }, {
         label: '缩放',
         field: 'style.transform.scale',
         component: 'InputSelect',
-        ifShow: ({values, }) => {
+        ifShow: ({values }) => {
             return values['customStyleSwitch'] === 1;
         }
     }];
@@ -292,12 +292,12 @@ const lifeHookschemas:FormSchema[] = [
         field: 'created',
         helpMessage: 'created 生命周期',
         component: 'EventChoose'
-    },{
+    }, {
         label: '初始化后',
         field: 'mounted',
         helpMessage: 'mounted 生命周期',
         component: 'EventChoose'
-    },
+    }
 ];
 const ifShowSchemas:FormSchema[] = [
     {
@@ -310,19 +310,19 @@ export const otherConfigMap:Record<string, any> = {
     style: styleSchemas,
     lifeHooks: lifeHookschemas,
     ifShow: ifShowSchemas,
-    methods: {},
+    methods: {}
 };
 
 export function formatConfig(config: FormSchema[]): any {
     const defaultConf:FormSchema[] = [{
         label: '组件id',
         component: 'Text',
-        field: 'field',
+        field: 'field'
     }, {
         label: '组件名称',
         component: 'InputSelect',
         field: 'label',
-        helpMessage: '填写${dataSourceId:fieldId} 可获取全局参数',
+        helpMessage: '填写${dataSourceId:fieldId} 可获取全局参数'
     }];
 
     config = config.map((item) => {
@@ -334,7 +334,7 @@ export function formatConfig(config: FormSchema[]): any {
         }
         return item;
     });
-    console.log('config', config)
+    console.log('config', config);
 
     return [
         ...defaultConf,
@@ -344,12 +344,12 @@ export function formatConfig(config: FormSchema[]): any {
 
 const arrayOptions = [
     { label: '包含', value: 'include' },
-    { label: '不包含', value: 'not_include' },
+    { label: '不包含', value: 'not_include' }
 ];
 
 const eqOptions = [
     { label: '等于', value: '=' },
-    { label: '不等于', value: '!=' },
+    { label: '不等于', value: '!=' }
 ];
 
 const numberOptions = [
@@ -358,7 +358,7 @@ const numberOptions = [
     { label: '小于', value: '<' },
     { label: '小于等于', value: '<=' },
     { label: '在范围内', value: 'between' },
-    { label: '不在范围内', value: 'not_between' },
+    { label: '不在范围内', value: 'not_between' }
 ];
 
 export {arrayOptions, eqOptions, numberOptions}

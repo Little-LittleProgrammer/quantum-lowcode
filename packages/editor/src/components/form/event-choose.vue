@@ -49,7 +49,7 @@
                         <a-form-item v-if="item.field && paramsData.length" label="参数">
                             <div class="q-editor-event-select-content-uni-params" v-for="c in paramsData">
                                 <a-form-item-rest>
-                                    {{ c.value }}: 
+                                    {{ c.value }}:
                                     <a-input class="input" v-model:value="item.params[c.value]"></a-input>
                                     <a-tooltip :title="c.description">
                                         <q-antd-icon type="QuestionCircleOutlined"></q-antd-icon>
@@ -70,7 +70,7 @@ import { IServices } from '../../types';
 import { PropType, computed, inject, ref, watch } from 'vue';
 import { Hooks } from '@quantum-lowcode/schemas';
 defineOptions({
-    name: 'EventSelect',
+    name: 'EventChoose'
 });
 const props = defineProps({
     value: {
@@ -78,19 +78,19 @@ const props = defineProps({
         default: () => ({
             hookType: 'code',
             hookData: []
-        }),
+        })
     }
 });
 const emits = defineEmits(['change', 'update:value', 'blur']);
 
 const eventData = ref<Hooks>({});
-const uniOptions = [{label: '组件', value: 'component', }, {label: '数据源', value: 'dataSource', }];
+const uniOptions = [{label: '组件', value: 'component' }, {label: '数据源', value: 'dataSource' }];
 const service = inject<IServices>('services');
 const page = computed(() => service?.editorService.get('page'));
 
 watch(() => props.value, () => {
     eventData.value = props.value;
-}, {immediate: true, });
+}, {immediate: true });
 
 const getCompSelect = computed(() => {
     return service?.propsService.getMethods(page.value);
@@ -103,11 +103,11 @@ const getDsSelect = computed(() => {
             children: ds.methods.map((method: any) => {
                 return {
                     label: method.title || method.name,
-                    value: `${ds.id}:${method.name}`,
-                }
+                    value: `${ds.id}:${method.name}`
+                };
             })
-        }
-    })
+        };
+    });
 });
 
 function changeHandler(value: any) {
@@ -120,13 +120,13 @@ function addEventUni() {
     eventData.value.hookData?.push({
         field: '',
         type: '',
-        params: {},
+        params: {}
     });
-    changeHandler(eventData.value)
+    changeHandler(eventData.value);
 }
 function removeEventUni(index: number) {
     eventData.value.hookData?.splice(index, 1);
-    changeHandler(eventData.value)
+    changeHandler(eventData.value);
 }
 
 function selectComp(item:any) {
@@ -142,7 +142,7 @@ function getCompEventSelect(item:any) {
 
 function resetEventUni(item: any) {
     item.params = {};
-    item.field = {}
+    item.field = {};
 }
 
 function selectCompEvent(item:any) {
@@ -153,34 +153,33 @@ function selectCompEvent(item:any) {
     item.field = key + ':' + item.event;
 }
 
-const paramsData = ref<any>([])
+const paramsData = ref<any>([]);
 
 function selectDsEvent(item:any) {
     if (!item.field) {
         return;
     }
-    paramsData.value = []
-    const id = item.field.split(':')[0]
+    paramsData.value = [];
+    const id = item.field.split(':')[0];
     if (id === 'http') {
-        return
+        return;
     }
     const name = item.field.split(':')[1];
-    const list = service?.editorService.get('root')?.dataSources || []
-    item.params = {}
-    for (let child of list) {
+    const list = service?.editorService.get('root')?.dataSources || [];
+    item.params = {};
+    for (const child of list) {
         if (child.id === id) {
             if (isArray(child.methods)) {
-                for (let sub of child.methods) {
+                for (const sub of child.methods) {
                     if (sub.name === name) {
-                        for (let tri of (sub.params || [])) {
-                            paramsData.value.push({label: tri.description, value: tri.name})
-                            item.params[tri.name] = ''  
+                        for (const tri of (sub.params || [])) {
+                            paramsData.value.push({label: tri.description, value: tri.name});
+                            item.params[tri.name] = '';
                         }
                         break;
                     }
                 }
             }
-            
         }
     }
 }

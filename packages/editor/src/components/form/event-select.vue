@@ -50,9 +50,9 @@
                                 <a-tree-select v-model:value="item.field" :treeData="getDsEventSelect"  @change="selectDsEvent(item)"></a-tree-select>
                             </a-form-item>
                             <a-form-item v-if="item.field && paramsData.length" label="参数">
-                                <div class="q-editor-event-select-content-uni-params" v-for="c in paramsData">
+                                <div class="q-editor-event-select-content-uni-params" v-for="c in paramsData" :key="c.value">
                                     <a-form-item-rest>
-                                        {{ c.value }}: 
+                                        {{ c.value }}:
                                         <a-input class="input" v-model:value="item.params[c.value]"></a-input>
                                         <a-tooltip :title="c.description">
                                             <q-antd-icon type="QuestionCircleOutlined"></q-antd-icon>
@@ -63,7 +63,11 @@
                         </template>
                     </a-form>
                 </div>
+                <div v-if="showFooter" class="q-editor-event-select-content-footer">
+                    <a-button size="small" type="primary" @click="confirmEvent">确认</a-button>
+                </div>
             </div>
+
         </div>
     </div>
 </template>
@@ -74,29 +78,30 @@ import { IServices } from '../../types';
 import { computed, inject, reactive, ref, watch } from 'vue';
 import { useDsList } from '../../hooks/use-ds-list';
 defineOptions({
-    name: 'EventSelect',
+    name: 'EventSelect'
 });
 const props = defineProps({
     value: {
         type: Object,
-        default: () => ({}),
+        default: () => ({})
     },
     options: {
         type: Array,
-        default: () => [],
-    },
+        default: () => []
+    }
 });
+const showFooter = ref(false);
 const emits = defineEmits(['change', 'update:value', 'blur']);
 
 const eventKey = ref<string[]>([]);
-const uniOptions = [{label: '组件', value: 'component', }, {label: '数据源', value: 'dataSource', }];
+const uniOptions = [{label: '组件', value: 'component' }, {label: '数据源', value: 'dataSource' }];
 const service = inject<IServices>('services');
 const page = computed(() => service?.editorService.get('page'));
-const {getDsEventSelect} = useDsList(service)
+const {getDsEventSelect} = useDsList(service);
 
 watch(() => props.value, () => {
     eventKey.value = Object.keys(props.value || []);
-}, {immediate: true, });
+}, {immediate: true });
 
 const getCompSelect = computed(() => {
     return service?.propsService.getMethods(page.value);
@@ -106,7 +111,7 @@ function addEvent() {
     const defaultEvent = {
         type: '',
         field: '',
-        params: {},
+        params: {}
     };
     const value:any = {};
     for (const eventName of eventKey.value) {
@@ -125,13 +130,19 @@ function changeHandler(value: any) {
     emits('update:value', value);
 }
 
+function confirmEvent() {
+    changeHandler(props.value);
+    showFooter.value = false;
+}
+
 function addEventUni(key: string) {
     // eslint-disable-next-line
     props.value[key]?.push({
         type: '',
         field: '',
-        params: {},
+        params: {}
     });
+    showFooter.value = true;
 }
 function removeEventUni(arr: any[], index: number) {
     arr.splice(index, 1);
@@ -150,7 +161,8 @@ function getCompEventSelect(item:any) {
 
 function resetEventUni(item: any) {
     item.params = {};
-    item.field = {}
+    item.field = {};
+    showFooter.value = true;
 }
 
 function selectCompEvent(item:any) {
@@ -159,38 +171,39 @@ function selectCompEvent(item:any) {
     }
     const key = item.comp.split('&&&')[1] || '';
     item.field = key + ':' + item.event;
+    showFooter.value = true;
 }
 
-const paramsData = ref<any>([])
+const paramsData = ref<any>([]);
 
 function selectDsEvent(item:any) {
     if (!item.field) {
         return;
     }
-    paramsData.value = []
-    const id = item.field.split(':')[0]
+    paramsData.value = [];
+    const id = item.field.split(':')[0];
     if (id === 'http') {
-        return
+        return;
     }
     const name = item.field.split(':')[1];
-    const list = service?.editorService.get('root')?.dataSources || []
-    item.params = {}
-    for (let child of list) {
+    const list = service?.editorService.get('root')?.dataSources || [];
+    item.params = {};
+    for (const child of list) {
         if (child.id === id) {
             if (isArray(child.methods)) {
-                for (let sub of child.methods) {
+                for (const sub of child.methods) {
                     if (sub.name === name) {
-                        for (let tri of (sub.params || [])) {
-                            paramsData.value.push({label: tri.description, value: tri.name})
-                            item.params[tri.name] = ''  
+                        for (const tri of (sub.params || [])) {
+                            paramsData.value.push({label: tri.description, value: tri.name});
+                            item.params[tri.name] = '';
                         }
                         break;
                     }
                 }
             }
-            
         }
     }
+    showFooter.value = true;
 }
 
 </script>
@@ -224,6 +237,10 @@ function selectDsEvent(item:any) {
                     width: 200px;
                 }
             }
+        }
+        &-footer {
+            margin: 4px 0;
+            text-align: right;
         }
     }
 }

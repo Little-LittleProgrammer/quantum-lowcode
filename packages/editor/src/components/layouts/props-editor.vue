@@ -28,7 +28,7 @@ import { computed, inject, nextTick, onBeforeUnmount, onMounted, ref, watch } fr
 import { IFormValue, IServices } from '../../types';
 import { isArray, isNumber } from '@quantum-lowcode/utils';
 defineOptions({
-    name: 'PropsEditor',
+    name: 'PropsEditor'
 });
 
 const services = inject<IServices>('services');
@@ -68,15 +68,15 @@ const init = async(changeNode = false) => {
             props: services?.propsService.getConfig(type),
             style: services?.propsService.getConfig('style'),
             ifShow: services?.propsService.getConfig('ifShow'),
-            lifeHooks: services?.propsService.getConfig('lifeHooks'),
+            lifeHooks: services?.propsService.getConfig('lifeHooks')
         };
     }
     nextTick(async() => {
         formModel.value = {
             ...node.value,
             customStyleSwitch: curStyleSwitch.value,
-            customStyle: node.value?.style,
-        } || {};
+            customStyle: node.value?.style
+        };
     });
 };
 
@@ -99,19 +99,19 @@ function changeValue(value) {
     }
     value.style = {
         ...value.customStyle,
-        ...value.style,
+        ...value.style
     };
     if (value.customStyle) {
         Reflect.deleteProperty(value, 'customStyle');
     }
     const finValue = {
         ...node.value,
-        ...value,
+        ...value
     };
     if (finValue.componentProps?.events) {
         finValue.componentProps = {
             ...finValue.componentProps,
-            ...finValue.componentProps.events,
+            ...finValue.componentProps.events
         };
     }
     console.log('finValue', finValue, value);
@@ -125,7 +125,7 @@ onMounted(() => {
             valuesFn.value.push({
                 setValue: item.setFieldsValue,
                 reset: item.resetFields,
-                getValue: item.getFieldsValue,
+                getValue: item.getFieldsValue
             });
         });
 });
