@@ -91,6 +91,16 @@ function createNav(): DefaultTheme.NavItem[] {
                     link: '/api/schema/',
                 }
             ],
+        },
+        {
+            text: '原理',
+            link: '/theory/introduction.md',
+            items: [
+                {
+                    text: '介绍',
+                    link: '/theory/introduction.md'
+                }
+            ]
         }
     ]
 }
@@ -154,6 +164,25 @@ function createSidebar(): DefaultTheme.Sidebar {
             }, {
                 text: '全局数据',
                 link: '/api/schema/datasource.md'
+            }]
+        }],
+        '/theory/': [{
+            text: '原理',
+            items: [{
+                text: '介绍',
+                link: '/theory/introduction.md'
+            }, {
+                text: '核心',
+                link: '/theory/core.md'
+            }, {
+                text: '编辑器',
+                link: '/theory/editor.md'
+            }, {
+                text: '画布',
+                link: '/theory/sandbox.md'
+            }, {
+                text: '数据',
+                link: '/api/schema/data-source.md'
             }]
         }]
     }
