@@ -1,4 +1,4 @@
-import { isFixedParent, js_utils_get_uuid } from '@quantum-lowcode/utils';
+import { createElement, isFixedParent, js_utils_get_uuid } from '@quantum-lowcode/utils';
 import { Mode, ZIndex } from './const';
 import type { ITargetElement, ITargetShadowConfig, IUpdateDragEl } from './types';
 import { getTargetElStyle } from './utils';
@@ -73,7 +73,9 @@ export class TargetShadow {
         target: ITargetElement,
         src?: ITargetElement
     ): ITargetElement {
-        const el = src || globalThis.document.createElement('div');
+        const el = src || createElement({
+            tag: 'div'
+        });
 
         el.id = `${this.idPrefix}${target.id}`;
 

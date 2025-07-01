@@ -12,12 +12,12 @@ export class Rule extends Subscribe {
         // TODO, 辅助线和移动线 change-guides
         this.emit('change-mask', {
             type: GuidesType.HORIZONTAL,
-            guides: hLines,
+            guides: hLines
         });
 
         this.emit('change-mask', {
             type: GuidesType.VERTICAL,
-            guides: vLines,
+            guides: vLines
         });
     }
 

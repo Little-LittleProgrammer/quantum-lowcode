@@ -18,15 +18,19 @@ export function getParents(el: Element, relative: Element) {
     return parents;
 }
 
-export function createElement({tag, cssText, className, }: { className: string; cssText: string, tag?: string }) {
+export function createElement({tag, cssText, className }: { className?: string; cssText?: string, tag?: string }) {
     const el = globalThis.document.createElement(tag || 'div');
-    el.className = className;
-    el.style.cssText = cssText;
+    if (className) {
+        el.className = className;
+    }
+    if (cssText) {
+        el.style.cssText = cssText;
+    }
     return el;
 }
 
-export function getAbsolutePosition(el: HTMLElement, {top, left, }: Record<string, number>) {
-    const { offsetParent, } = el;
+export function getAbsolutePosition(el: HTMLElement, {top, left }: Record<string, number>) {
+    const { offsetParent } = el;
 
     // 在 Webkit 中，如果元素为隐藏的（该元素或其祖先元素的 style.display 为 "none"），或者该元素的 style.position 被设为 "fixed"，则该属性返回 null。
     // 在 IE 9 中，如果该元素的 style.position 被设置为 "fixed"，则该属性返回 null。（display:none 无影响。）
@@ -35,11 +39,11 @@ export function getAbsolutePosition(el: HTMLElement, {top, left, }: Record<strin
         const parentOffset = js_utils_dom_offset(offsetParent as HTMLElement);
         return {
             left: left - parentOffset.left,
-            top: top - parentOffset.top,
+            top: top - parentOffset.top
         };
     }
 
-    return { left, top, };
+    return { left, top };
 }
 
 export const isAbsolute = (style: CSSStyleDeclaration): boolean => style.position === 'absolute';
@@ -58,7 +62,7 @@ export function isFixedParent(el: Element) {
         if (fixed) {
             break;
         }
-        const {parentElement, } = dom;
+        const {parentElement } = dom;
         if (!parentElement || parentElement.tagName === 'BODY') {
             break;
         }

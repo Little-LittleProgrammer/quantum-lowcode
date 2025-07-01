@@ -46,7 +46,8 @@ export default class Flexible {
     private resizeHandler() {
         clearTimeout(this.tid);
         this.tid = setTimeout(() => {
-            this.calcFontsize();
+            const fn = this.calcFontsize.bind(this);
+            fn();
             this.tid = undefined;
         }, 300);
     }
@@ -61,9 +62,9 @@ export default class Flexible {
         this.setBodyFontSize(this.dpr);
     }
     private calcFontsize() {
-        const { width, } = document.documentElement.getBoundingClientRect();
-        const dpr = 1;
-        // const dpr = globalThis?.devicePixelRatio || 1;
+        const { width } = document.documentElement.getBoundingClientRect();
+        // const dpr = 1;
+        const dpr = globalThis?.devicePixelRatio || 1;
         this.setBodyFontSize(dpr);
         const fontSize = Math.min(DEFAULT_PAGE_MAX_WIDTH, width) / 10;
         document.documentElement.style.fontSize = `${fontSize}px`;
