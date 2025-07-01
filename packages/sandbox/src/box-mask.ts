@@ -67,7 +67,7 @@ export class BoxMask extends Rule {
     public content: HTMLDivElement = createConent();
     /** 遮罩包装器元素，作为遮罩的容器 */
     public wrapper: HTMLDivElement;
-    /** 画布页面元素 */
+    /** 真实画布页面元素 */
     public page: HTMLElement | null = null;
     /** 垂直滚动距离 */
     public scrollTop = 0;
@@ -137,7 +137,6 @@ export class BoxMask extends Rule {
 	 */
     public observe(page: HTMLElement): void {
         if (!page) return;
-
         this.page = page;
         // 初始化交叉观察器，监听元素可视性
         this.initObserverIntersection();
