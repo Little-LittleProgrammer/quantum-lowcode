@@ -10,9 +10,9 @@ interface ISourceManage {
 }
 
 export class IDepEffect implements IDepData {
-    public field: Id; // 节点id
-    public key: string; // 属性路径
-    public rawValue: string; // 原始值
+    public field: Id; // 节点id，例如：Button_YB67
+    public key: string; // 属性路径, 例如 componentProps.text
+    public rawValue: string; // 原始值, 例如 ${dataSourceId.fieldId}
     public type: 'data' | 'cond'; // 依赖类型
     constructor(options: IDepData) {
         this.field = options.field;

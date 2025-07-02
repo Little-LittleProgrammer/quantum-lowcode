@@ -113,7 +113,7 @@ export class LowCodeNode extends Subscribe {
                 if (fieldId) {
                     // 向数据源管理器注册条件依赖
                     // 当对应的数据源字段变化时，会重新计算此节点的显示状态
-                    this.root.dataSourceManager?.track(sourceId, fieldId, {
+                    this.root.dataSourceManager?.track(sourceId!, fieldId, {
                         field: this.data.field, // 当前节点ID
                         rawValue: '', // 条件依赖无需原始值
                         key: '', // 条件依赖无需属性键

@@ -94,9 +94,80 @@ await ds.init();
 
 #### 步骤2：依赖收集阶段
 
-**2.1 节点编译过程**
+**2.1 初始化 LowCodeNode**
+
 ```typescript
-// 在 node.ts 中的 compileNode 方法
+constructor(options: INodeOptions) {
+    super(); // 调用父类构造函数，初始化事件系统
+
+    // 建立节点关系
+    this.page = options.page;
+    this.parent = options.parent;
+    this.root = options.root;
+    this.data = options.config;
+
+    // 如果需要立即初始化，则进行数据编译和事件绑定
+    if (options.init) {
+        this.setData(options.config); // 编译节点数据并收集依赖
+        this.setEvents(this.data); // 绑定事件处理器
+    }
+}
+
+setData(data: ISchemasNode | ISchemasContainer | ISchemasPage) {
+    tthis.data = this.compileNode(data);
+    // 编译条件显示逻辑，收集条件依赖
+    this.compileCond(this.data);
+    // 发出数据更新事件，通知相关组件重新渲染
+    this.emit('update-data');
+}
+
+/**
+ * 设置事件处理器
+ *
+ * 处理节点配置中的事件绑定，支持两种事件绑定方式：
+ * 方式1 - 函数式（适用于代码模式）：
+ * onClick: (app, e) => { app.emit('datasourceId:funcName', e) }
+ *
+ * 方式2 - 配置式（适用于可视化配置）：
+ * onClick: [
+ *   {field: 'nodeId:funcName', params: {}},
+ *   {field: 'datasourceId:funcName', params: {}}
+ * ]
+ * 最终转化为方法，通过 app.emit 触发事件
+ * @param config 节点配置数据
+ */
+public setEvents(config: ISchemasNode | ISchemasContainer) {
+    // 检查组件属性是否存在且为对象
+    if (config.componentProps && isObject(config.componentProps)) {
+        // 遍历所有组件属性
+        for (const [key, val] of Object.entries(config.componentProps)) {
+            // 处理函数式事件绑定
+            if (isFunction(val)) {
+                const fn = (...args: any[]) => {
+                    val(this.root, ...args);
+                };
+                config.componentProps[key] = fn;
+            }
+            // 处理配置式事件绑定
+            else if (isArray(val) && val[0]?.field) {
+                // 创建事件处理函数，支持链式调用多个事件
+                const fn = () => {
+                    for (const item of val) {
+                        const { field, params = {} } = item;
+                        // 通过全局事件总线触发事件
+                        this.root.emit(`${field}`, params);
+                    }
+                };
+                config.componentProps[key] = fn;
+            }
+        }
+    }
+}
+```
+
+**2.2 节点编译过程**
+```typescript
+// 在 node.ts 中的 compileNode 方法 
 public compileNode(data: ISchemasNode | ISchemasContainer | ISchemasPage) {
     return compiledNode(data, (value, key) => {
         if (this.page) {
@@ -119,7 +190,7 @@ public compileNode(data: ISchemasNode | ISchemasContainer | ISchemasPage) {
 }
 ```
 
-**2.2 条件依赖收集**
+**2.3 条件依赖收集**
 ```typescript
 // 收集条件显示依赖
 public compileCond(data: ISchemasNode | ISchemasContainer | ISchemasPage) {
@@ -139,7 +210,7 @@ public compileCond(data: ISchemasNode | ISchemasContainer | ISchemasPage) {
 }
 ```
 
-**2.3 依赖存储结构**
+**2.4 依赖存储结构**
 ```typescript
 // 依赖关系存储在 Map 结构中
 // dataSourceDep: Map<dataSourceId, Map<fieldId, Set<IDepEffect>>>
@@ -176,6 +247,11 @@ public setData(data: Record<string, any>, path?: string) {
 ds.on('change', (cdata: ChangeDataEvent) => {
     this.setData(ds, cdata);
 });
+
+public setData(ds: DataSource, cdata: any) {
+    Object.assign(this.data[ds.id], ds.data);
+    this.emit('change', ds.id, cdata);
+}
 
 // 触发依赖更新
 dataSourceManager.on('change', (sourceId: string, changeData: ChangeDataEvent) => {
