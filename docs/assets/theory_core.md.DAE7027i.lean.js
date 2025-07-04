@@ -1,0 +1,1 @@
+import{_ as e,c as t,o as r}from"./chunks/framework.BrmF0WDH.js";const m=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"theory/core.md","filePath":"theory/core.md","lastUpdated":1751623372000}'),o={name:"theory/core.md"};function a(c,s,n,d,p,_){return r(),t("div")}const f=e(o,[["render",a]]);export{m as __pageData,f as default};
