@@ -227,7 +227,9 @@ export class BoxRender extends Subscribe {
         let y = point.clientY;
 
         // 如果是iframe渲染，需要转换坐标系
+        // 鼠标坐标 - iframe 开始坐标 = 鼠标实际在iframe中的坐标
         if (this.iframe) {
+            // 获取iframe的clientRects,返回矩形的位置以及大小信息
             const rect = this.iframe.getClientRects()[0];
             if (rect) {
                 x = x - rect.left;
@@ -235,7 +237,7 @@ export class BoxRender extends Subscribe {
             }
         }
 
-        // 根据缩放比例调整坐标，然后获取元素
+        // 根据缩放比例调整坐标，然后获取元素, 冒泡获取
         return this.getDocument()?.elementsFromPoint(x / this.zoom, y / this.zoom) as HTMLElement[];
     }
 

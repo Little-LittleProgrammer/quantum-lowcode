@@ -53,8 +53,8 @@ export const defaultEditorProps = {
         children: [{
             'text': '容器',
             'component': 'container',
-            icon: 'FolderOpenOutlined',
-        },{
+            icon: 'FolderOpenOutlined'
+        }, {
             'text': '蒙层',
             'component': 'OverlayContainer',
             icon: 'FolderOpenOutlined',
@@ -65,35 +65,35 @@ export const defaultEditorProps = {
                     height: '100%',
                     top: 0,
                     left: 0,
-                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                }, 
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)'
+                }
             }
-        }],
-		},{
+        }]
+    }, {
         /** 显示文案 */
         text: '基本组件',
         /** 组内列表 */
         children: [{
             'text': '按钮',
             'component': 'Button',
-            icon: 'SelectOutlined',
+            icon: 'SelectOutlined'
         }, {
             'text': '图片',
             'component': 'Img',
-            icon: 'LinkOutlined',
+            icon: 'LinkOutlined'
         }, {
             'text': '视频',
             'component': 'Video',
-            icon: 'PlayCircleOutlined',
+            icon: 'PlayCircleOutlined'
         }, {
             'text': '文本',
             'component': 'Text',
-            icon: 'LineOutlined',
+            icon: 'LineOutlined'
         }, {
             'text': '二维码',
             'component': 'Button',
-            icon: 'SelectOutlined',
-        }],
+            icon: 'SelectOutlined'
+        }]
     }],
     containerHighlightClassName: CONTAINER_HIGHLIGHT_CLASS_NAME,
     containerHighlightDuration: CONTAINER_HIGHLIGHT_DELAY_TIME,
@@ -104,15 +104,15 @@ export const defaultEditorProps = {
             style: {
                 height: '100%',
                 margin: '0 auto'
-            },
+            }
         },
         'container': {
             style: {
-                height: '100',
-            },
-        },
+                height: '100'
+            }
+        }
     }),
     propsConfigs: () => {},
     methodsList: () => {},
-    datasourceList: () => [],
+    datasourceList: () => []
 };

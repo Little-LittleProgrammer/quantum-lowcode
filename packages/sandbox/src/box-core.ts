@@ -209,7 +209,7 @@ export class BoxCore extends Subscribe {
      * @param el 画布父容器DOM元素
      */
     public async mount(el: HTMLDivElement) {
-        this.container = el; // 设置根容器
+        this.container = el; // 设置根容器 q-sandbox-content，iframe画布与 mask 的父元素
         await this.renderer.mount(el); // 挂载iframe画布
         this.mask.mount(el); // 遮罩挂载到画布兄弟元素
 
