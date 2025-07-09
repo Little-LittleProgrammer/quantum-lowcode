@@ -486,7 +486,6 @@ export class ActionManager extends Subscribe {
      * @returns 单选拖拽调整管理器实例
      */
     private createDr(config: IActionManagerConfig) {
-        console.log('createDr', config);
         // 创建拖拽调整辅助器
         const createDrHelper = () =>
             new DragResizeHelper({
@@ -740,7 +739,7 @@ export class ActionManager extends Subscribe {
     private mouseDownHandler = async(event: MouseEvent): Promise<void> => {
         console.log('mouseDownHandler');
         // 清除高亮状态
-        this.clearHighlight();
+        // this.clearHighlight();
         event.stopImmediatePropagation();
         event.stopPropagation();
 

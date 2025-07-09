@@ -1,3 +1,9 @@
 {
-  "extends": "@quantum-design-configs/tsconfig/lib.json"
+  "extends": "@quantum-design-configs/tsconfig/lib.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@quantum-design/utils": ["../utils/index.ts"]
+    }
+  }
 }
