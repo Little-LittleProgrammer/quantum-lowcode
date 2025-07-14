@@ -1,0 +1,1 @@
+import{_ as e,c as a,o as t}from"./chunks/framework.BrmF0WDH.js";const _=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"api/schema/page.md","filePath":"api/schema/page.md","lastUpdated":1752491454000}'),s={name:"api/schema/page.md"};function p(c,r,o,n,i,d){return t(),a("div")}const f=e(s,[["render",p]]);export{_ as __pageData,f as default};
