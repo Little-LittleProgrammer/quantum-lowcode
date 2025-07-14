@@ -476,7 +476,18 @@ export const testSchemasV2: ISchemasRoot = {
                                         event: 'openOverlay'
                                     }
                                 ]
-                            }
+                            },
+                            ifShow: [
+                                {
+                                    field: [
+                                        'ds_2rp3',
+                                        'commonNumber'
+                                    ],
+                                    op: '>',
+                                    value: 1001,
+                                    range: []
+                                }
+                            ]
                         }
                     ]
                 },

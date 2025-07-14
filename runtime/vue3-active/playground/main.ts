@@ -17,7 +17,8 @@ const components:any = {
 };
 
 const app = new LowCodeRoot({
-    ua: `'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1`
+    ua: `'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1`,
+    platform: 'editor'
 });
 Object.keys(components).forEach((type: string) => app.registerComponent(type, components[type]));
 

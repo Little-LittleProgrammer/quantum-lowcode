@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, ref, markRaw } from 'vue';
+import { computed, defineComponent, PropType, ref} from 'vue';
 
 import type {Fn, ISchemasNode} from '@quantum-lowcode/schemas';
 import {useApp} from '../../hooks/use-app';
@@ -30,6 +30,7 @@ export default defineComponent({
             return app && app.resolveComponent(props.config.component || props.config.type);
         });
         const ifShow = computed(() => {
+            if (app?.platform === 'editor') return true;
             if (props.config.showResult === false) return false;
             if (props.config.ifShow) {
                 if (isFunction(props.config.ifShow)) {

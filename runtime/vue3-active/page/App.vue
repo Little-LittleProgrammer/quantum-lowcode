@@ -1,14 +1,15 @@
 <template>
-    <page v-if="pageConfig && pageConfig.field" :config="pageConfig" :key="`${pageConfig.field}-${updateKey}`"></page>
+    <page v-if="pageConfig && pageConfig.field" :config="pageConfig" :key="`${pageConfig.field}`"></page>
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, nextTick, ref} from 'vue';
+import { defineComponent, inject, nextTick, ref } from 'vue';
 
 import type { LowCodeRoot, LowCodePage } from '@quantum-lowcode/core';
 import type { IQuantum } from '@quantum-lowcode/sandbox';
+import { cloneDeep } from 'lodash-es';
 import {Page} from '@quantum-lowcode/ui';
-import { replaceChildNode, addParamToUrl, js_utils_deep_copy } from '@quantum-lowcode/utils';
+import { replaceChildNode, addParamToUrl } from '@quantum-lowcode/utils';
 import type { ISchemasNode, ISchemasPage } from '@quantum-lowcode/schemas';
 
 declare global {
@@ -26,9 +27,7 @@ export default defineComponent({
         const app = inject<LowCodeRoot | undefined>('app');
 
         // 使用 ref 来保存页面配置
-        const pageConfig = ref<ISchemasPage>(app?.page?.data || {} as ISchemasPage);
-        // 添加一个更新键来强制重新渲染
-        const updateKey = ref(0);
+        const pageConfig = ref<ISchemasPage>((app?.page?.data || {}) as ISchemasPage);
 
         app?.on('page-change', (page: LowCodePage | string) => {
             if (typeof page === 'string') {
@@ -37,19 +36,16 @@ export default defineComponent({
             addParamToUrl({ page: page.data.field }, window);
         });
 
+        function changeData(nodes: ISchemasNode[]) {
+            nodes.forEach((node) => {
+                replaceChildNode(node as ISchemasNode, [pageConfig.value as ISchemasNode]);
+            });
+        }
+
         // 数据更新
         app?.dataSourceManager?.on('update-data', (nodes: ISchemasNode[], sourceId: string, data: any) => {
-            // 创建页面配置的深拷贝
-            const newPageConfig = js_utils_deep_copy(pageConfig.value);
-
-            nodes.forEach((node) => {
-                // 在拷贝的数据上进行更新
-                replaceChildNode(node, [newPageConfig]);
-            });
-
-            // 重新赋值整个配置对象来触发响应式更新
-            pageConfig.value = newPageConfig;
-            updateKey.value++;
+            // 直接在原有数据上进行更新，确保响应式系统能正确检测变化
+            changeData(cloneDeep(nodes));
 
             console.log('最终的pageConfig', pageConfig.value);
 
@@ -61,8 +57,7 @@ export default defineComponent({
         });
 
         return {
-            pageConfig,
-            updateKey
+            pageConfig
         };
     }
 });

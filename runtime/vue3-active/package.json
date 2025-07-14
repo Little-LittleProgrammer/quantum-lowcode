@@ -24,7 +24,8 @@
         "@quantum-lowcode/ui": "workspace:*",
         "@quantum-design/http": "catalog:",
         "axios": "catalog:",
-        "vue": "catalog:"
+        "vue": "catalog:",
+        "lodash-es": "catalog:"
     },
     "devDependencies": {
         "postcss-pxtorem": "catalog:",

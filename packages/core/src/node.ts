@@ -3,6 +3,7 @@ import { LowCodeRoot } from './app';
 import { LowCodePage } from './page';
 import { Subscribe, isFunction, isObject, compiledNode, isArray, stringToBoolean } from '@quantum-lowcode/utils';
 import {template} from 'lodash-es';
+import { compliedConditions } from '@quantum-lowcode/data';
 
 /**
  * 节点构造选项接口
@@ -120,6 +121,9 @@ export class LowCodeNode extends Subscribe {
                         type: 'cond' // 标记为条件依赖
                     });
                 }
+            }
+            if (this.root.dataSourceManager?.data) {
+                data.showResult = compliedConditions(data, this.root.dataSourceManager?.data);
             }
         }
     }

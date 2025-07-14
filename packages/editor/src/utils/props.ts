@@ -334,7 +334,6 @@ export function formatConfig(config: FormSchema[]): any {
         }
         return item;
     });
-    console.log('config', config);
 
     return [
         ...defaultConf,
@@ -361,4 +360,4 @@ const numberOptions = [
     { label: '不在范围内', value: 'not_between' }
 ];
 
-export {arrayOptions, eqOptions, numberOptions}
+export {arrayOptions, eqOptions, numberOptions};
