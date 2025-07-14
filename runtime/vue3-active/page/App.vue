@@ -1,5 +1,5 @@
 <template>
-    <page v-if="pageConfig && pageConfig.field" :config="pageConfig" :key="`${pageConfig.field}-${updateKey}`"></page>
+    <page v-if="pageConfig && pageConfig.field" :config="pageConfig" :key="`${pageConfig.field}`"></page>
 </template>
 
 <script lang="ts">
@@ -26,9 +26,7 @@ export default defineComponent({
         const app = inject<LowCodeRoot | undefined>('app');
 
         // 使用 ref 来保存页面配置
-        const pageConfig = ref<ISchemasPage>(app?.page?.data || {} as ISchemasPage);
-        // 添加一个更新键来强制重新渲染
-        const updateKey = ref(0);
+        const pageConfig = ref<ISchemasPage>((app?.page?.data || {}) as ISchemasPage);
 
         app?.on('page-change', (page: LowCodePage | string) => {
             if (typeof page === 'string') {
@@ -49,7 +47,6 @@ export default defineComponent({
 
             // 重新赋值整个配置对象来触发响应式更新
             pageConfig.value = newPageConfig;
-            updateKey.value++;
 
             console.log('最终的pageConfig', pageConfig.value);
 
@@ -61,8 +58,7 @@ export default defineComponent({
         });
 
         return {
-            pageConfig,
-            updateKey
+            pageConfig
         };
     }
 });

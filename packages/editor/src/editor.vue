@@ -62,7 +62,7 @@ import { dataSourceService } from './services/datasource-service';
 import { contentmenuService } from './services/contentmenu-service';
 import { storageService } from './services/storage-serivce';
 defineOptions({
-    name: 'QEditor',
+    name: 'QEditor'
 });
 
 const props = withDefaults(defineProps<IEditorProps>(), defaultEditorProps);
@@ -80,7 +80,7 @@ const services: IServices = {
     componentService,
     dataSourceService,
     contentmenuService,
-    storageService,
+    storageService
 };
 
 const sandboxOptions = reactive<IBoxOptions>({
@@ -97,7 +97,7 @@ const sandboxOptions = reactive<IBoxOptions>({
     autoScrollIntoView: props.autoScrollIntoView
 });
 
-const {initServiceEvents, initServiceState, } = useServicesInit(props, emit, services);
+const {initServiceEvents, initServiceState } = useServicesInit(props, emit, services);
 initServiceState();
 initServiceEvents();
 

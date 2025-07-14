@@ -316,17 +316,12 @@ export function trigger(sourceManage: ISourceManage, dataSourceId: Id, fieldId?:
 ```typescript
 // 在 App.vue 中监听 update-data 事件
 app?.dataSourceManager?.on('update-data', (nodes: ISchemasNode[], sourceId: string, data: any) => {
-    // 创建页面配置的深拷贝
-    const newPageConfig = js_utils_deep_copy(pageConfig.value);
-
+    // 直接在原有数据上进行更新，确保响应式系统能正确检测变化
     nodes.forEach((node) => {
-        // 在拷贝的数据上进行更新
-        replaceChildNode(node, [newPageConfig]);
+        replaceChildNode(reactive(node) as ISchemasNode, [pageConfig.value as ISchemasNode]);
     });
 
-    // 重新赋值整个配置对象来触发响应式更新
-    pageConfig.value = newPageConfig;
-    updateKey.value++;
+    console.log('最终的pageConfig', pageConfig.value);
 
     if (!app) return;
 

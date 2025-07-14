@@ -27,7 +27,7 @@
                     </template>
                 </div>
             </slot>
-            
+
         </div>
         <div class="q-editor-nav-menu-right">
             <slot name=right></slot>
@@ -42,7 +42,7 @@ import { NodeType } from '@quantum-lowcode/schemas';
 import { Divider, Button, Tooltip } from 'ant-design-vue';
 import { isFunction } from '@quantum-lowcode/utils';
 defineOptions({
-    name: 'QEditorNavMenu',
+    name: 'QEditorNavMenu'
 });
 
 const props = withDefaults(
@@ -50,7 +50,7 @@ const props = withDefaults(
         btnList?: IMenuItem[];
     }>(),
     {
-        btnList: () => [],
+        btnList: () => []
     }
 );
 
@@ -63,18 +63,18 @@ const workspaceCenter = computed((): number => uiService?.get('workspaceCenter')
 
 const leftStyle = computed(() => {
     if (workspaceLeft.value === 1) {
-        return {flex: 1}
+        return {flex: 1};
     }
     return {
-        width: workspaceLeft.value + 'px',
-    }
-})
+        width: workspaceLeft.value + 'px'
+    };
+});
 const getCenterStyle = computed(() => {
-		if (workspaceCenter.value === 1) {
-			return { flex: 1 };
-		}
-		return { width: workspaceCenter.value + 'px' };
-	});
+    if (workspaceCenter.value === 1) {
+        return { flex: 1 };
+    }
+    return { width: workspaceCenter.value + 'px' };
+});
 
 const isMac = /mac os x/.test(navigator.userAgent.toLowerCase());
 const ctrl = isMac ? 'Command' : 'Ctrl';
@@ -86,7 +86,7 @@ function get_config(item: IMenuItem) {
     const config:IMenuButton[] = [];
     switch (item) {
         case '/':
-            config.push({type: 'divider', });
+            config.push({type: 'divider' });
             break;
         case 'zoom':
             config.push(
@@ -106,7 +106,7 @@ function get_config(item: IMenuItem) {
                 onClick: () => {
                     const node = services?.editorService.get('node');
                     node && services?.editorService.delete(node);
-                },
+                }
             });
             break;
         case 'undo':
@@ -115,7 +115,7 @@ function get_config(item: IMenuItem) {
                 icon: 'ArrowLeftOutlined',
                 tooltip: `后退(${ctrl}+z)`,
                 disabled: () => !services?.historyService.state.canUndo,
-                onClick: () => services?.editorService.undo(),
+                onClick: () => services?.editorService.undo()
             });
             break;
         case 'redo':
@@ -125,7 +125,7 @@ function get_config(item: IMenuItem) {
                 icon: 'ArrowRightOutlined',
                 tooltip: `前进(${ctrl}+Shift+z)`,
                 disabled: () => !services?.historyService.state.canRedo,
-                onClick: () => services?.editorService.redo(),
+                onClick: () => services?.editorService.redo()
             });
             break;
         case 'zoom-in':
@@ -133,7 +133,7 @@ function get_config(item: IMenuItem) {
                 type: 'button',
                 icon: 'ZoomInOutlined',
                 tooltip: `放大(${ctrl}+=)`,
-                onClick: () => uiService?.zoom(0.1),
+                onClick: () => uiService?.zoom(0.1)
             });
             break;
         case 'zoom-out':
@@ -141,7 +141,7 @@ function get_config(item: IMenuItem) {
                 type: 'button',
                 icon: 'ZoomOutOutlined',
                 tooltip: `縮小(${ctrl}+-)`,
-                onClick: () => uiService?.zoom(-0.1),
+                onClick: () => uiService?.zoom(-0.1)
             });
             break;
         case 'scale-to-fit':
@@ -149,7 +149,7 @@ function get_config(item: IMenuItem) {
                 type: 'button',
                 icon: 'BorderInnerOutlined',
                 tooltip: `缩放以适应(${ctrl}+0)`,
-                onClick: async() => uiService?.set('zoom', await uiService.calcZoom()),
+                onClick: async() => uiService?.set('zoom', await uiService.calcZoom())
             });
             break;
         case 'scale-to-original':
@@ -157,13 +157,13 @@ function get_config(item: IMenuItem) {
                 type: 'button',
                 icon: 'BorderOuterOutlined',
                 tooltip: `缩放到实际大小(${ctrl}+1)`,
-                onClick: () => uiService?.set('zoom', 1),
+                onClick: () => uiService?.set('zoom', 1)
             });
             break;
         default:
             config.push({
                 type: 'text',
-                text: item,
+                text: item
             });
             break;
     }

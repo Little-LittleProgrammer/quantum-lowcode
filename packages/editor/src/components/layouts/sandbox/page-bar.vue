@@ -27,7 +27,7 @@ import {Tabs as ATabs, TabPane} from 'ant-design-vue';
 import { DropMenu } from '@quantum-design/vue3-antd-pc-ui';
 import { ISchemasPage, NodeType } from '@quantum-lowcode/schemas';
 defineOptions({
-    name: 'QEditorPageBar',
+    name: 'QEditorPageBar'
 });
 
 const services = inject<IServices>('services');
@@ -41,18 +41,18 @@ const dropDownList = computed(() => [
     {
         icon: 'CopyOutlined',
         event: 'copy',
-        text: '复制',
+        text: '复制'
     },
     {
         icon: 'CloseOutlined',
         event: 'delete',
         text: '删除',
-        disabled: (root.value?.children?.length || 0) <= 1,
+        disabled: (root.value?.children?.length || 0) <= 1
     }
 ]);
 
 function handleMenuEvent(menu: DropMenu, item: ISchemasPage): void {
-    const { event, } = menu;
+    const { event } = menu;
     if (event === 'copy') {
         item && editorService?.copy(item);
     } else {
@@ -70,8 +70,9 @@ function addPage() {
     if (!root) throw new Error('root 不能为空');
     const pageConfig = {
         type: NodeType.PAGE,
-        children: [],
+        children: []
     };
+    console.log('pageConfig', pageConfig);
     editorService.add(pageConfig);
 }
 
