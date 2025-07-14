@@ -1,6 +1,5 @@
 <template>
     <div
-        v-if="ifShow"
         :id="config.field"
         class="quantum-ui-container"
         ref="refRuntimeContainer"
@@ -28,15 +27,6 @@ const props = defineProps({
 });
 
 const {app } = useApp(props);
-const ifShow = computed(() => {
-    if (props.config.ifShow) {
-        if (isFunction(props.config.ifShow)) {
-            return (props.config.ifShow as Fn)(app);
-        }
-        return props.config.ifShow;
-    }
-    return true;
-});
 const refRuntimeContainer = ref();
 const getStyle = computed(() => {
     if (isFunction(props.config.style)) {

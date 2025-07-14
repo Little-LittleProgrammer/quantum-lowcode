@@ -30,7 +30,7 @@ interface IAppOptionsConfig {
     designWidth?: number; // 设计稿宽度
     ua?: string; // 用户代理字符串
     curPage?: Id; // 当前页面ID
-    platform?: 'mobile' | 'pc'; // 平台类型
+    platform?: 'mobile' | 'pc' | 'editor'; // 平台类型
     disabledFlexible?: boolean; // 是否禁用移动端适配
     transformStyle?: (style: Record<string, any>) => Record<string, any>; // 样式转换函数
     request?: IRequestFunction; // 自定义请求函数

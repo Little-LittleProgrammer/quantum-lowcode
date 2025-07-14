@@ -22,23 +22,24 @@ export default defineComponent({
     props: {
         config: {
             type: Object as PropType<ISchemasNode>,
-            default: () => ({}),
-        },
+            default: () => ({})
+        }
     },
     setup(props) {
-        const {app, } = useApp(props);
+        const {app } = useApp(props);
         const tagName: any = computed(() => {
             return app && app.resolveComponent(props.config.component || props.config.type);
         });
         const ifShow = computed(() => {
-            if (props.config.showResult === false) return false
+            if (app?.platform === 'editor') return true;
+            if (props.config.showResult === false) return false;
             if (props.config.ifShow) {
                 if (isFunction(props.config.ifShow)) {
                     return (props.config.ifShow as Fn)(app);
                 }
                 return props.config.ifShow !== false;
             }
-            
+
             return true;
         });
         const refRuntimeComp = ref();
@@ -77,9 +78,9 @@ export default defineComponent({
             style: getStyle,
             display: ifShow,
             propsBind,
-            propsOn,
+            propsOn
         };
-    },
+    }
 });
 </script>
 

@@ -32,11 +32,9 @@ export default defineComponent({
         const curPageId = ref<Id>();
         const selectedId = ref<Id>();
 
-        const pageConfig = computed(
-            () => {
-                return root.value?.children?.find((item: ISchemasPage) => item.field === curPageId.value) || root.value?.children?.[0];
-            }
-        );
+        const pageConfig = computed(() => {
+            return root.value?.children?.find((item: ISchemasPage) => item.field === curPageId.value) || root.value?.children?.[0];
+        });
 
         watch(pageConfig, async() => {
             await nextTick();

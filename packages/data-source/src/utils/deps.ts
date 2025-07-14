@@ -80,7 +80,7 @@ export function trigger(sourceManage: ISourceManage, dataSourceId: Id, fieldId?:
                     js_utils_edit_attr(key, rawValue, curNode);
                     break;
                 case 'cond':
-                    // 触发条件依赖 TODO123
+                    // 触发条件依赖 TODO
                     curNode.showResult = compliedConditions(curNode, data);
                     break;
                 default:

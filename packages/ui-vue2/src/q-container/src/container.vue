@@ -1,6 +1,5 @@
 <template>
     <div
-        v-if="display"
         :id="config.field"
         class="quantum-ui-container"
         ref="refRuntimeContainer"
@@ -33,12 +32,6 @@ export default defineComponent({
     },
     setup(props) {
         const {app } = useApp(props);
-        const ifShow = computed(() => {
-            if (props.config.ifShow) {
-                return props.config.ifShow;
-            }
-            return true;
-        });
         const refRuntimeContainer = ref();
         const getStyle = computed(() => {
             if (isFunction(props.config.style)) {
@@ -50,8 +43,7 @@ export default defineComponent({
         });
 
         return {
-            style: getStyle,
-            display: ifShow
+            style: getStyle
         };
     }
 });

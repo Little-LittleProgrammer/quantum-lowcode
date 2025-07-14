@@ -66,7 +66,7 @@ import { Divider } from 'ant-design-vue';
 import {js_utils_dom_remove_class, serializeToString} from '@quantum-lowcode/utils';
 
 defineOptions({
-    name: 'ComponentList',
+    name: 'ComponentList'
 });
 import { isString } from '@quantum-lowcode/utils';
 
@@ -89,7 +89,7 @@ const compList = computed(() => {
                 ...group,
                 children: group.children.filter((item) => {
                     return item.text.indexOf(searchText.value) > -1;
-                }),
+                })
             };
         });
 });
@@ -100,26 +100,26 @@ function addComp(item: IComponentItem) {
         services?.editorService.add({
             label: item.text,
             type: item.component,
-            ...item.data,
-        }); 
+            ...item.data
+        });
     } else if (itemType === 'cover') {
         services?.editorService.update({
             type: 'root',
             field: 'root',
             ...item.data
-        })
+        });
     }
 }
 function dragstartComp(item: IComponentItem, e: DragEvent) {
-    const itemType = item.itemType || 'add'
-    if(itemType == 'add') {
+    const itemType = item.itemType || 'add';
+    if (itemType == 'add') {
         e.dataTransfer?.setData('text/json', serializeToString({
             dragType: DragType.COMPONENT_LIST,
             data: {
                 label: item.text,
                 type: item.component,
-                ...item.data,
-            },
+                ...item.data
+            }
         }));
     }
 }

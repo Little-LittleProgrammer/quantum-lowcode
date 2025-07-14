@@ -18,22 +18,22 @@ class PropsService extends Subscribe {
         propsValueMap: {},
         relateIdMap: {},
         otherConfigMap: otherConfigMap, // 样式(style), 生命周期(lifeHooks), 显示条件(ifShow)
-        tabList: ['props', 'style', 'ifShow', 'lifeHooks'],
+        tabList: ['props', 'style', 'ifShow', 'lifeHooks']
     });
 
     public getPropsTabsList() {
         return [{
             label: '属性',
-            value: 'props',
+            value: 'props'
         }, {
             label: '样式',
-            value: 'style',
+            value: 'style'
         }, {
             label: '显示条件',
-            value: 'ifShow',
+            value: 'ifShow'
         }, {
             label: '高级',
-            value: 'lifeHooks',
+            value: 'lifeHooks'
         }];
     }
 
@@ -80,7 +80,7 @@ class PropsService extends Subscribe {
             if (methodsKey.includes((node.component || node.type).toLowerCase())) {
                 list.push({
                     value: (node.component || node.type) + '&&&' + node.field,
-                    label: (node.label || '') + '-' + node.field,
+                    label: (node.label || '') + '-' + node.field
                 });
             }
             if (node.children) {
@@ -129,7 +129,7 @@ class PropsService extends Subscribe {
                 component: !['page', 'container'].includes(type)
                     ? type
                     : undefined,
-                ...defaultValue,
+                ...defaultValue
             } as any)
         );
 
@@ -140,7 +140,7 @@ class PropsService extends Subscribe {
                 defaultPropsValue,
                 cloneDeep(this.state.propsValueMap[type] || {}),
                 data
-            ),
+            )
         };
     }
 
@@ -180,7 +180,7 @@ class PropsService extends Subscribe {
                     height: 100
                 },
                 label: type,
-                children: [],
+                children: []
             }
             : {
                 type: 'node',
@@ -189,7 +189,7 @@ class PropsService extends Subscribe {
                     width: (editorService.get('root')?.designWidth || DEFAULT_DESIGN_WIDTH) / 2,
                     height: 50
                 },
-                label: type,
+                label: type
             };
     }
 
