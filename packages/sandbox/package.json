@@ -16,6 +16,7 @@
     "@quantum-lowcode/utils": "workspace:*",
     "@quantum-lowcode/core": "workspace:*",
     "@quantum-lowcode/schemas": "workspace:*",
+    "@scena/guides": "catalog:",
     "keycon": "catalog:",
     "moveable": "catalog:",
     "moveable-helper": "catalog:"

@@ -143,6 +143,7 @@ export interface IGuidesOptions {
 
 export interface IRuleOptions {
     guidesOptions?: Partial<IGuidesOptions>;
+    disabledRule?: boolean;
 }
 
 export interface ITargetShadowConfig {
