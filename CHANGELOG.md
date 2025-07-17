@@ -7,44 +7,26 @@
 ### Bug Fixes
 
 
-## 1.1.2 (2025-01-15)
+## 1.1.2 (2025-07-14)
 
 ### Features
 
-* 完善显示条件控制功能，支持更灵活的组件显示逻辑 ([031808f](https://github.com/Little-LittleProgrammer/quantum-lowcode/commit/031808fea235930d5122e22c3991e3853cacbb63))
-* 添加 @quantum-lowcode/core 核心包文档，详细描述核心架构、主要组件及其功能 ([ded650e](https://github.com/Little-LittleProgrammer/quantum-lowcode/commit/ded650eea235930d5122e22c3991e3853cacbb63))
-* 更新编辑器菜单路径，将运行时类型更改为 vue3，以支持最新的编辑器功能 ([922c705](https://github.com/Little-LittleProgrammer/quantum-lowcode/commit/922c705ea235930d5122e22c3991e3853cacbb63))
-* 优化编辑器组件，简化模板结构，增强可读性和维护性 ([2819a8e](https://github.com/Little-LittleProgrammer/quantum-lowcode/commit/2819a8eea235930d5122e22c3991e3853cacbb63))
-* 增强 LowCodeNode 类的初始化和事件管理功能，添加数据编译和事件绑定方法 ([fbd6a0c](https://github.com/Little-LittleProgrammer/quantum-lowcode/commit/fbd6a0cea235930d5122e22c3991e3853cacbb63))
-* 增强 Sandbox 模块文档，详细描述事件系统和观察器系统的实现与优化 ([8a7df11](https://github.com/Little-LittleProgrammer/quantum-lowcode/commit/8a7df11ea235930d5122e22c3991e3853cacbb63))
-* 优化低代码应用核心类，增强应用配置选项和事件管理功能 ([da05b43](https://github.com/Little-LittleProgrammer/quantum-lowcode/commit/da05b43ea235930d5122e22c3991e3853cacbb63))
-* 添加原理导航和侧边栏，新增 Sandbox 画布模块文档 ([be04f3e](https://github.com/Little-LittleProgrammer/quantum-lowcode/commit/be04f3eea235930d5122e22c3991e3853cacbb63))
-* 更新事件选择组件，修复参数显示和样式问题，添加确认按钮功能 ([3779c6d](https://github.com/Little-LittleProgrammer/quantum-lowcode/commit/3779c6dea235930d5122e22c3991e3853cacbb63))
-* 更新响应式标题和数据源字段，添加新的数据变更功能 ([f339270](https://github.com/Little-LittleProgrammer/quantum-lowcode/commit/f339270ea235930d5122e22c3991e3853cacbb63))
-* 更新低代码平台文档，添加开发环境搭建、项目管理和二次开发指南 ([0f9efcd](https://github.com/Little-LittleProgrammer/quantum-lowcode/commit/0f9efcdea235930d5122e22c3991e3853cacbb63))
-* 更新应用界面和路由配置，添加新的背景图并调整路径 ([e38af8a](https://github.com/Little-LittleProgrammer/quantum-lowcode/commit/e38af8aea235930d5122e22c3991e3853cacbb63))
-* 添加代码规范工具配置，包括 ESLint、Prettier、Commitlint 等 ([多个提交](https://github.com/Little-LittleProgrammer/quantum-lowcode/pull/1))
-* 优化项目结构，统一依赖版本管理，使用 catalog 模式管理依赖 ([多个提交](https://github.com/Little-LittleProgrammer/quantum-lowcode/pull/1))
+* **文档优化:** README.md 全面重写，新增项目架构图和开发指南 ([031808f](https://github.com/Little-LittleProgrammer/quantum-lowcode/commit/031808f9976c76e67a69e084a017c7d6905ab984))
+* **条件显示:** 新增 `ifShow` 条件显示功能，支持基于数据源的动态组件显示控制
+* **数据源管理:** 改进数据更新机制，确保Vue响应式系统能正确检测数据变化  
+* **编辑器功能:** 沙箱高亮功能完善，优化组件操作流程
+* **平台支持:** 新增 `editor` 平台类型，优化Vue2和Vue3运行时兼容性
+* **条件判断:** 实现 `compliedConditions` 函数，支持多条件组合逻辑
+* **响应式更新:** 数据变化时自动更新组件显示状态
+* **代码质量:** TypeScript 类型完善，统一代码风格规范
 
 ### Bug Fixes
 
-* 移除鼠标事件处理程序中的调试日志，优化开发体验 ([a53b528](https://github.com/Little-LittleProgrammer/quantum-lowcode/commit/a53b528ea235930d5122e22c3991e3853cacbb63))
-* 修复根节点缺少 field 字段的问题，确保节点标识完整性 ([多个提交](https://github.com/Little-LittleProgrammer/quantum-lowcode/pull/2))
-* 修复文档和地址映射相关问题 ([c7fc51b](https://github.com/Little-LittleProgrammer/quantum-lowcode/commit/c7fc51bea235930d5122e22c3991e3853cacbb63))
-* 更新 GitHub Actions 中的依赖版本，修复构建问题 ([f975b59](https://github.com/Little-LittleProgrammer/quantum-lowcode/commit/f975b59ea235930d5122e22c3991e3853cacbb63))
-* 修复代码中的类型定义和绑定问题 ([f949b7e](https://github.com/Little-LittleProgrammer/quantum-lowcode/commit/f949b7eea235930d5122e22c3991e3853cacbb63))
-
-### Chore
-
-* 更新 pnpm 版本至 9.15.7 并添加 volta 配置 ([925d072](https://github.com/Little-LittleProgrammer/quantum-lowcode/commit/925d072ea235930d5122e22c3991e3853cacbb63))
-* 更新 Makefile 清理规则，添加对 public/entry 和 public/runtime 目录的清理 ([75be13f](https://github.com/Little-LittleProgrammer/quantum-lowcode/commit/75be13fea235930d5122e22c3991e3853cacbb63))
-* 更新 logo.png 图标文件 ([76be724](https://github.com/Little-LittleProgrammer/quantum-lowcode/commit/76be724ea235930d5122e22c3991e3853cacbb63))
-* 代码重构，提升代码质量和可维护性 ([1b5ddbe](https://github.com/Little-LittleProgrammer/quantum-lowcode/commit/1b5ddbeea235930d5122e22c3991e3853cacbb63))
-
-### Documentation
-
-* 完善 README.md，添加详细的项目介绍和使用指南 ([031808f](https://github.com/Little-LittleProgrammer/quantum-lowcode/commit/031808fea235930d5122e22c3991e3853cacbb63))
-* 更新项目文档，完善数据源原理与工作流程说明 ([0f9efcd](https://github.com/Little-LittleProgrammer/quantum-lowcode/commit/0f9efcdea235930d5122e22c3991e3853cacbb63))
+* **数据绑定:** 修复数据更新机制，直接在原有数据上更新提升性能
+* **组件渲染:** 改进组件在不同平台下的渲染稳定性
+* **错误处理:** 完善数据验证和错误提示机制
+* **内存管理:** 改进组件销毁时的资源清理
+* **类型定义:** 修复TypeScript类型定义问题，提升代码健壮性
 
 
 ## 1.1.1 (2024-05-24)
