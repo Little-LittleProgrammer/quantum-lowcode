@@ -47,7 +47,7 @@ export default defineConfig({
         }
     },
     vite: {
-        base: '/',
+        base: '/quantum-lowcode/docs/',
         css: {
             preprocessorOptions: {
                 less: {
