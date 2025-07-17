@@ -54,7 +54,7 @@ class EditorService extends Subscribe {
         parent: null,
         disabledMultiSelect: false,
         highlightNode: null,
-        pageLength: 0,
+        pageLength: 0
     });
     private isHistoryStateChange = false;
 
@@ -110,7 +110,7 @@ class EditorService extends Subscribe {
         const info: IEditorNodeInfo = {
             node: null,
             parent: null,
-            page: null,
+            page: null
         };
         if (!root) return info;
         if (field === root.type || field === 'app') {
@@ -139,7 +139,7 @@ class EditorService extends Subscribe {
 	 * @returns 组件节点配置
 	 */
     public getNodeByField(id: Id, raw = true): ISchemasNode | null {
-        const { node, } = this.getNodeInfo(id, raw);
+        const { node } = this.getNodeInfo(id, raw);
         return node;
     }
 
@@ -150,7 +150,7 @@ class EditorService extends Subscribe {
 	 * @returns 指点组件的父节点配置
 	 */
     public getParentByField(id: Id, raw = true): ISchemasContainer | null {
-        const { parent, } = this.getNodeInfo(id, raw);
+        const { parent } = this.getNodeInfo(id, raw);
         return parent;
     }
 
@@ -187,7 +187,7 @@ class EditorService extends Subscribe {
 	 * @returns 当前选中的节点配置
 	 */
     public async select(config: ISchemasNode | Id | ISchemasPage) {
-        const { node, page, parent, } = this.selectedConfigExceptionHandler(config);
+        const { node, page, parent } = this.selectedConfigExceptionHandler(config);
         this.set('nodes', node ? [node] : []);
         this.set('page', page);
         this.set('parent', parent);
@@ -202,7 +202,7 @@ class EditorService extends Subscribe {
             const app = this.get('sandbox')?.renderer?.runtime?.getApp?.();
             app?.page?.emit(
                 'editor:select',
-                { node, page, parent, },
+                { node, page, parent },
                 getNodePath(
                     (node).field,
                     this.get('root')?.children || []
@@ -221,7 +221,7 @@ class EditorService extends Subscribe {
 	 * @returns 当前高亮的节点配置
 	 */
     public highlight(config: ISchemasNode | Id): void {
-        const { node, } = this.selectedConfigExceptionHandler(config);
+        const { node } = this.selectedConfigExceptionHandler(config);
         const currentHighlightNode = this.get('highlightNode');
         if (currentHighlightNode === node) return;
         this.set('highlightNode', node);
@@ -236,7 +236,7 @@ class EditorService extends Subscribe {
         const nodes: ISchemasNode[] = [];
         const idsUnique = uniq(ids);
         idsUnique.forEach((id) => {
-            const { node, } = this.getNodeInfo(id);
+            const { node } = this.getNodeInfo(id);
             if (!node) return;
             nodes.push(node);
         });
@@ -285,14 +285,14 @@ class EditorService extends Subscribe {
             config: cloneDeep(node),
             parent: cloneDeep(parent),
             parentId: parent.field,
-            root: cloneDeep(root),
+            root: cloneDeep(root)
         });
 
-        let newStyle = fixNodePosition(node, parent, sandbox) || {} as Partial<CSSStyleDeclaration>
+        const newStyle = fixNodePosition(node, parent, sandbox) || {} as Partial<CSSStyleDeclaration>;
 
         if (newStyle && (newStyle.top !== node.style?.top || newStyle.left !== node.style?.left)) {
             node.style = newStyle;
-            await sandbox?.update({ config: cloneDeep(node), parentId: parent.field, root: cloneDeep(root), });
+            await sandbox?.update({ config: cloneDeep(node), parentId: parent.field, root: cloneDeep(root) });
         }
 
         this.addModifiedNodeField(node.field);
@@ -314,7 +314,7 @@ class EditorService extends Subscribe {
             const { type, inputEvent: _inputEvent, ...config } = addNode;
             if (!type) throw new Error('组件类型不能为空');
             addNodes.push({
-                ...toRaw(await propsService.getInitPropsValue(type, config)),
+                ...toRaw(await propsService.getInitPropsValue(type, config))
             });
         }
 
@@ -367,7 +367,7 @@ class EditorService extends Subscribe {
 
         const node = cloneDeep(toRaw(info.node));
 
-        config = this.dealText(config)
+        config = this.dealText(config);
 
         let newConfig = await this.toggleFixedPosition(
             toRaw(config),
@@ -396,7 +396,7 @@ class EditorService extends Subscribe {
             return newConfig;
         }
 
-        const { parent, } = info;
+        const { parent } = info;
         if (!parent) throw new Error('获取不到父级节点');
 
         const parentNodeChildren = parent.children;
@@ -427,7 +427,7 @@ class EditorService extends Subscribe {
         this.get('sandbox')?.update({
             config: cloneDeep(newConfig),
             parentId: parent.field,
-            root: cloneDeep(root),
+            root: cloneDeep(root)
         });
 
         if (isPage(newConfig as ISchemasPage)) {
@@ -447,7 +447,7 @@ class EditorService extends Subscribe {
     public async update(
         config: ISchemasNode | ISchemasNode[]
     ): Promise<ISchemasNode | ISchemasNode[]> {
-        console.log('editorService.update')
+        console.log('editorService.update');
         const nodes = isArray(config) ? config : [config];
         const newNodes = await Promise.all(
             nodes.map((node) => this.updateHelper(node))
@@ -466,7 +466,7 @@ class EditorService extends Subscribe {
         const root = this.get('root');
         if (!root) throw new Error('root为空');
 
-        const {parent, node: curNode, } = this.getNodeInfo(node.field, false);
+        const {parent, node: curNode } = this.getNodeInfo(node.field, false);
 
         if (!parent || !curNode) throw new Error('找不要删除的节点');
 
@@ -477,7 +477,7 @@ class EditorService extends Subscribe {
         parent.children?.splice(index, 1);
 
         const sandbox = this.get('sandbox');
-        sandbox?.delete({id: node.field, parentId: parent.field, root: cloneDeep(root), });
+        sandbox?.delete({id: node.field, parentId: parent.field, root: cloneDeep(root) });
 
         const selectDefault = async(pages: ISchemasNode[]) => {
             if (pages[0]) {
@@ -548,7 +548,7 @@ class EditorService extends Subscribe {
         this.get('sandbox')?.update({
             config: cloneDeep(node),
             parentId: parent.field,
-            root: cloneDeep(root),
+            root: cloneDeep(root)
         });
 
         this.addModifiedNodeField(parent.field);
@@ -583,7 +583,7 @@ class EditorService extends Subscribe {
      */
     public copy(config: ISchemasNode | ISchemasNode[]) {
         storageService.setItem(COPY_STORAGE_KEY, isArray(config) ? config : [config], {
-            protocol: Protocol.OBJECT,
+            protocol: Protocol.OBJECT
         });
     }
 
@@ -662,7 +662,7 @@ class EditorService extends Subscribe {
         this.get('sandbox')?.update({
             config: cloneDeep(toRaw(parent)),
             parentId: grandparent?.field,
-            root: cloneDeep(root),
+            root: cloneDeep(root)
         });
 
         this.addModifiedNodeField(parent.field);
@@ -683,18 +683,18 @@ class EditorService extends Subscribe {
         const targetContainer = this.getNodeByField(targetField) as ISchemasNode;
 
         const sandbox = this.get('sandbox');
-        if (root && node && parent &&sandbox) {
+        if (root && node && parent && sandbox) {
             const index = getNodeIndex(node.field, parent);
             parent.children.splice(index, 1);
 
-            await sandbox.delete({id: node.field, parentId: parent.field, root:cloneDeep(root)});
+            await sandbox.delete({id: node.field, parentId: parent.field, root: cloneDeep(root)});
             const layout = this.getLayout(targetContainer);
 
-            const newConfig = mergeWith(cloneDeep(node), config, (o,n) => {
+            const newConfig = mergeWith(cloneDeep(node), config, (o, n) => {
                 if (isArray(n)) {
-                    return n
+                    return n;
                 }
-            })
+            });
 
             newConfig.style = getInitPositionStyle(newConfig.style, layout) as any;
             targetContainer.children?.push(newConfig);
@@ -706,7 +706,7 @@ class EditorService extends Subscribe {
             await sandbox.update({
                 config: cloneDeep(toRaw(targetContainer)),
                 parentId: targetParent?.field,
-                root: cloneDeep(root),
+                root: cloneDeep(root)
             });
 
             await this.select(newConfig);
@@ -715,7 +715,7 @@ class EditorService extends Subscribe {
             this.addModifiedNodeField(targetContainer.field);
             this.addModifiedNodeField(parent.field);
             this.pushHistoryState();
-      
+
             return newConfig;
         }
     }
@@ -742,7 +742,7 @@ class EditorService extends Subscribe {
                 node.style.left = calcValueByDesignWidth(doc, (parentEl.clientWidth - el.clientWidth) / 2, editorService.get('root')?.designWidth);
                 node.style.right = '';
             } else if (parent.style && isNumber(parent.style?.width) && isNumber(node.style?.width)) {
-                node.style.left = (parent.style.width - node.style.width) / 2
+                node.style.left = (parent.style.width - node.style.width) / 2;
                 node.style.right = '';
             }
         }
@@ -774,15 +774,15 @@ class EditorService extends Subscribe {
     }
 
     public dragTo(config: ISchemasNode, newParent: ISchemasContainer, newIndex: number) {
-        if (!newParent ) {
+        if (!newParent) {
             return;
         }
         if (!isArray(newParent.children)) {
-            newParent.children = []
-        };
+            newParent.children = [];
+        }
         const { parent, node: curNode } = this.getNodeInfo(config.field, false);
         if (!parent || !curNode) throw new Error('找不要删除的节点');
-    
+
         const index = getNodeIndex(curNode.field, parent);
 
         if (typeof index !== 'number' || index === -1) throw new Error('找不要删除的节点');
@@ -790,7 +790,7 @@ class EditorService extends Subscribe {
         if (parent.field === newParent.field) {
             if (index === newIndex) return;
             if (index < newIndex) {
-                newIndex -=1;
+                newIndex -= 1;
             }
         }
 
@@ -813,32 +813,31 @@ class EditorService extends Subscribe {
                 config: cloneDeep(page),
                 parentId: root.field,
                 root: cloneDeep(root)
-            })
+            });
         }
 
         this.addModifiedNodeField(config.field);
         this.addModifiedNodeField(parent.field);
         this.pushHistoryState();
-
     }
 
     private dealText(config: ISchemasNode) {
         if (config.component?.toLowerCase() === 'text') {
             if (config.componentProps?.text) {
-                let text = config.componentProps?.text;
+                const text = config.componentProps?.text;
                 const sandbox = this.get('sandbox');
                 const doc = sandbox?.renderer.contentWindow?.document;
                 if (doc) {
                     const baseFontSize = parseFloat(doc.documentElement.style.fontSize);
                     config.componentProps.text = text.replace(/font-size: (\d+)px/g, (_match: any, p1:string) => {
-                        let pxValue = parseFloat(p1); // 将匹配到的字符串数字转换为整数
-                        let remValue = pxValue / baseFontSize; // 假设根元素的字体大小为16px，进行转换
+                        const pxValue = parseFloat(p1); // 将匹配到的字符串数字转换为整数
+                        const remValue = pxValue / baseFontSize; // 假设根元素的字体大小为16px，进行转换
                         return `font-size: ${remValue}rem`; // 返回转换后的字符串
                     });
                 }
             }
         }
-        return config
+        return config;
     }
 
     private async pushHistoryState() {
@@ -848,9 +847,9 @@ class EditorService extends Subscribe {
             historyService.push({
                 data: cloneDeep(toRaw(page)),
                 modifiedNodeFields: this.get('modifiedNodeFields')!,
-                nodeField: curNode.field,
+                nodeField: curNode.field
             });
-            console.log(historyService)
+            console.log(historyService);
         }
         this.isHistoryStateChange = false;
     }
@@ -918,7 +917,7 @@ class EditorService extends Subscribe {
         if (!id) {
             throw new Error('没有ID，无法选中');
         }
-        const { node, parent, page, } = this.getNodeInfo(id);
+        const { node, parent, page } = this.getNodeInfo(id);
         if (!node) throw new Error('获取不到组件信息');
 
         if (node.type === 'root') {
@@ -927,7 +926,7 @@ class EditorService extends Subscribe {
         return {
             node,
             parent,
-            page,
+            page
         };
     }
 
@@ -950,7 +949,7 @@ class EditorService extends Subscribe {
         if (!config[0]?.style) return config;
         const curNode = this.get('node');
         // 将数组中第一个元素的坐标作为参照点
-        const { left: referenceLeft, top: referenceTop, } = config[0].style;
+        const { left: referenceLeft, top: referenceTop } = config[0].style;
         // 校准坐标
         const finConfigs = config.map((item) => {
             const { offsetX = 0, offsetY = 0, ...positionClone } = position;
@@ -970,7 +969,7 @@ class EditorService extends Subscribe {
             const pasteConfig = propsService.setNewField(item, false);
 
             if (pasteConfig.style) {
-                const { left, top, } = pasteConfig.style;
+                const { left, top } = pasteConfig.style;
                 // 判断能转换为数字时，做粘贴偏移量计算
                 if (typeof left === 'number' || (!!left && !isNaN(Number(left)))) {
                     pasteConfig.style.left = Number(left) + offsetX;
@@ -981,7 +980,7 @@ class EditorService extends Subscribe {
 
                 pasteConfig.style = {
                     ...pasteConfig.style,
-                    ...pastePosition,
+                    ...pastePosition
                 };
             }
             return pasteConfig;
@@ -989,15 +988,15 @@ class EditorService extends Subscribe {
         return finConfigs;
     }
     private getPositionInContainer(position: { left?: number | undefined; top?: number | undefined; }, field: string): { left?: number | undefined; top?: number | undefined; } {
-        let { left = 0, top = 0, } = position;
+        let { left = 0, top = 0 } = position;
         const parentEl = this.get('sandbox')?.renderer?.contentWindow?.document.getElementById(`${field}`);
         const parentElRect = parentEl?.getBoundingClientRect();
         const doc = this.get('sandbox')?.renderer.contentWindow?.document;
-        left = left - calcValueByDesignWidth(doc ,(parentElRect?.left || 0), editorService.get('root')?.designWidth);
-        top = top - calcValueByDesignWidth(doc ,(parentElRect?.top || 0), editorService.get('root')?.designWidth);
+        left = left - calcValueByDesignWidth(doc, (parentElRect?.left || 0), editorService.get('root')?.designWidth);
+        top = top - calcValueByDesignWidth(doc, (parentElRect?.top || 0), editorService.get('root')?.designWidth);
         return {
             left,
-            top,
+            top
         };
     }
 

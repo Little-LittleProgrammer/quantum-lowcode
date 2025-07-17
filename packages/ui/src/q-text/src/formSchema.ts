@@ -30,7 +30,10 @@ export default [{
         toolbar: [
             'fontsizeselect formatselect lineheight searchreplace bold italic underline strikethrough alignleft aligncenter alignright outdent indent  blockquote undo redo removeformat subscript superscript code codesample',
             'hr bullist numlist link  preview anchor pagebreak insertdatetime media  forecolor backcolor fullscreen'
-        ]
+        ],
+        options: {
+            fontsize_formats: '12px 14px 16px 18px 24px 36px 48px'
+        }
     },
     colProps: {
         span: 24

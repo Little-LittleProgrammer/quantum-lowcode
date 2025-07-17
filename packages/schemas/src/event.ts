@@ -64,7 +64,7 @@ export interface ICodeBlockContent {
     /** 代码块内容 */
     content: ((...args: any[]) => any) | string;
     /** 参数定义 */
-    params: ICodeParam[] | [];
+    params?: ICodeParam[] | [];
     /** 注释 */
     description?: string;
     timing?: 'beforeInit' | 'afterInit' | 'beforeRequest' | 'afterRequest'
