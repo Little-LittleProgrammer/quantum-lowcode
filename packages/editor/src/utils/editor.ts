@@ -15,7 +15,7 @@ export function getRelativeStyle(style: Record<string, any> = {}){
         ...style,
         position: 'relative',
         top: 0,
-        left: 0,
+        left: 0
     };
 }
 
@@ -44,7 +44,7 @@ export function setLayout(node:ISchemasNode, layout:Layout) {
 
 export function change2Fixed(node:ISchemasNode, root:ISchemasRoot) {
     const path = getNodePath(node.field, root.children);
-    const offset = {left: 0, top: 0, };
+    const offset = {left: 0, top: 0 };
     path.forEach((val) => {
         offset.left = offset.left + globalThis.parseFloat(val.style?.left || 0),
         offset.top = offset.top + globalThis.parseFloat(val.style?.top || 0);
@@ -52,7 +52,7 @@ export function change2Fixed(node:ISchemasNode, root:ISchemasRoot) {
 
     return {
         ...(node.style || {}),
-        ...offset,
+        ...offset
     };
 }
 
@@ -60,7 +60,7 @@ export function getInitPositionStyle(style: Record<string, any> = {}, layout: La
     if (layout === Layout.ABSOLUTE) {
         const newStyle: Record<string, any> = {
             ...style,
-            position: 'absolute',
+            position: 'absolute'
         };
 
         if (typeof newStyle.left === 'undefined' && typeof newStyle.right === 'undefined') {
@@ -79,7 +79,7 @@ export function getInitPositionStyle(style: Record<string, any> = {}, layout: La
 
 export function getMiddleTop(node: ISchemasNode, parentNode: ISchemasContainer, stage: BoxCore | null) {
     let height = node.style?.height || 0;
-    const designWidth = stage?.designWidth
+    const designWidth = stage?.designWidth;
 
     if (!stage || typeof node.style?.top !== 'undefined' || !parentNode.style) return node.style?.top;
 
@@ -93,16 +93,16 @@ export function getMiddleTop(node: ISchemasNode, parentNode: ISchemasContainer, 
     const wrapperHeightDeal = calcValueByDesignWidth(stage.renderer.getDocument()!, wrapperHeight, designWidth);
     const scrollTopDeal = calcValueByDesignWidth(stage.renderer.getDocument()!, scrollTop, designWidth);
     if (isPage(parentNode as any)) {
-      return (wrapperHeightDeal - height) / 2 + scrollTopDeal;
+        return (wrapperHeightDeal - height) / 2 + scrollTopDeal;
     }
-  
+
     // 如果容器的元素高度大于当前视口高度的2倍, 添加的元素居中位置也会看不见, 所以要取最小值计算
     return (Math.min(parentHeight, wrapperHeightDeal) - height) / 2;
 }
 
 export function fixNodeLeft(config: ISchemasNode, parent:ISchemasContainer, stage: BoxCore | null) {
-    let doc = stage?.renderer.getDocument();
-    let designWidth = stage?.designWidth
+    const doc = stage?.renderer.getDocument();
+    const designWidth = stage?.designWidth;
     if (!doc || !config.style || !isNumber(config.style.left)) return config.style?.left;
 
     const el = doc.getElementById(config.field);
@@ -127,7 +127,7 @@ export function fixNodePosition(config: ISchemasNode, parent: ISchemasContainer,
     return {
         ...(config.style || {}),
         top: getMiddleTop(config, parent, sandbox),
-        left: fixNodeLeft(config, parent, sandbox),
+        left: fixNodeLeft(config, parent, sandbox)
     };
 }
 
@@ -138,7 +138,7 @@ export async function fixed2Other(node:ISchemasNode, root:ISchemasRoot, getLayou
         left: cur?.style?.left || 0,
         top: cur?.style?.top || 0,
         right: '',
-        bottom: '',
+        bottom: ''
     };
 
     path.forEach(val => {
@@ -158,9 +158,24 @@ export async function fixed2Other(node:ISchemasNode, root:ISchemasRoot, getLayou
         return {
             ...style,
             ...offset,
-            position: 'absolute',
+            position: 'absolute'
         };
     }
 
     return getRelativeStyle(style);
+}
+
+export function getGuideLineFromCache(key: string): number[] {
+    if (!key) return [];
+
+    const guideLineCacheData = globalThis.localStorage.getItem(key);
+    if (guideLineCacheData) {
+        try {
+            return JSON.parse(guideLineCacheData) || [];
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    return [];
 }

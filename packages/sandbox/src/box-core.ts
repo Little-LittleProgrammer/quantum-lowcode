@@ -383,6 +383,9 @@ export class BoxCore extends Subscribe {
             this.actionManager.setGuidelines(data.type, data.guides);
             this.emit('change-mask', data);
         });
+        this.mask.on('change-guides', (data: IGuidesEventData) => {
+            this.emit('change-guides', data);
+        });
     }
 
     /**

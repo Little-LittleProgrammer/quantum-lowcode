@@ -1,15 +1,19 @@
-import { BoxCore } from '@quantum-lowcode/sandbox';
+import { BoxCore, GuidesType } from '@quantum-lowcode/sandbox';
 import { editorService } from '../services/editor-service';
 import { uiService } from '../services/ui-service';
 import { computed, watch } from 'vue';
 import { UI_SELECT_MODE_EVENT_NAME, IBoxOptions } from '../types';
 import { IRemoveEventData, IUpdateEventData } from '@quantum-lowcode/sandbox/src/types';
 import { ISchemasNode } from '@quantum-lowcode/schemas';
+import { H_GUIDE_LINE_STORAGE_KEY, V_GUIDE_LINE_STORAGE_KEY } from '../utils/const';
+import { getGuideLineFromCache } from '../utils/editor';
 
 const root = computed(() => editorService.get('root'));
 const page = computed(() => editorService.get('page'));
 const zoom = computed(() => uiService.get('zoom') || 1);
 const uiSelectMode = computed(() => uiService.get('uiSelectMode'));
+
+const getGuideLineKey = (key: string) => `${key}_${root.value?.field}_${page.value?.field}`;
 
 export function useBox(boxOptions: IBoxOptions) {
     const sandbox = new BoxCore({
@@ -27,7 +31,7 @@ export function useBox(boxOptions: IBoxOptions) {
             const elCanSelect = boxOptions.canSelect?.(el);
             // 在组件联动过程中不能再往下选择，返回并触发 ui-select
             if (uiSelectMode.value && elCanSelect && event.type === 'mousedown') {
-                document.dispatchEvent(new CustomEvent(UI_SELECT_MODE_EVENT_NAME, { detail: el, }));
+                document.dispatchEvent(new CustomEvent(UI_SELECT_MODE_EVENT_NAME, { detail: el }));
                 return stop();
             }
 
@@ -48,8 +52,8 @@ export function useBox(boxOptions: IBoxOptions) {
     });
 
     sandbox.mask.setGuides([
-        // getGuideLineFromCache(getGuideLineKey(H_GUIDE_LINE_STORAGE_KEY)),
-        // getGuideLineFromCache(getGuideLineKey(V_GUIDE_LINE_STORAGE_KEY)),
+        getGuideLineFromCache(getGuideLineKey(H_GUIDE_LINE_STORAGE_KEY)),
+        getGuideLineFromCache(getGuideLineKey(V_GUIDE_LINE_STORAGE_KEY))
     ]);
 
     sandbox.on('select', (el:HTMLElement) => {
@@ -69,11 +73,11 @@ export function useBox(boxOptions: IBoxOptions) {
         console.log('sandbox emit update', ev);
         if (ev.parentEl) {
             for (const data of ev.data) {
-                editorService.moveToContainer({ field: data.el.id, style: data.style, }, ev.parentEl.id);
+                editorService.moveToContainer({ field: data.el.id, style: data.style }, ev.parentEl.id);
             }
             return;
         }
-        editorService.update(ev.data.map((data) => ({ field: data.el.id, style: data.style, } as ISchemasNode)));
+        editorService.update(ev.data.map((data) => ({ field: data.el.id, style: data.style } as ISchemasNode)));
     });
 
     sandbox.on('sort', (ev) => {
@@ -81,7 +85,7 @@ export function useBox(boxOptions: IBoxOptions) {
     });
 
     sandbox.on('remove', (ev: IRemoveEventData) => {
-        const nodes = ev.data.map(({ el, }) => editorService.getNodeByField(el.id));
+        const nodes = ev.data.map(({ el }) => editorService.getNodeByField(el.id));
         editorService.delete(nodes.filter((node) => Boolean(node)) as ISchemasNode[]);
     });
 
@@ -90,6 +94,22 @@ export function useBox(boxOptions: IBoxOptions) {
         if (!parent) throw new Error('父节点为空');
         editorService.select(parent);
         editorService.get('sandbox')?.select(parent.field);
+    });
+
+    sandbox.on('change-guides', (e) => {
+        console.log('sandbox emit change-guides', e);
+        uiService.set('showGuides', true);
+
+        if (!root.value || !page.value) return;
+
+        const storageKey = getGuideLineKey(
+            e.type === GuidesType.HORIZONTAL ? H_GUIDE_LINE_STORAGE_KEY : V_GUIDE_LINE_STORAGE_KEY
+        );
+        if (e.guides.length) {
+            globalThis.localStorage.setItem(storageKey, JSON.stringify(e.guides));
+        } else {
+            globalThis.localStorage.removeItem(storageKey);
+        }
     });
 
     return sandbox;

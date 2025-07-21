@@ -38,7 +38,7 @@ import { calcValueByDesignWidth } from '@quantum-lowcode/utils';
 import { DropMenu } from '@quantum-design/vue3-antd-pc-ui';
 
 defineOptions({
-    name: 'QEditorSandBox',
+    name: 'QEditorSandBox'
 });
 // const props = defineProps({
 
@@ -60,17 +60,17 @@ const node = computed(() => services?.editorService.get('node'));
 const boxRect = computed(() => services?.uiService.get('sandboxRect'));
 const baseDropMenuList = computed(() => {
     if (node.value) {
-        return services?.contentmenuService.getDropMenuList(node.value)
+        return services?.contentmenuService.getDropMenuList(node.value);
     }
-    return []
-})
+    return [];
+});
 
 // const menu = ref<InstanceType<typeof ViewerMenu>>();
 
 const boxContainer = ref<HTMLDivElement | null>();
 
 function handleMenuEvent(menu: DropMenu) {
-    services?.contentmenuService.handleMenuEvent(menu)
+    services?.contentmenuService.handleMenuEvent(menu);
 }
 
 watchEffect(async() => {
@@ -99,7 +99,7 @@ const getBoxStyle = computed(() => {
     return {
         width: `${boxRect.value?.width || 0}px`,
         height: `${boxRect.value?.height || 0}px`,
-        transform: `scale(${zoom.value})`,
+        transform: `scale(${zoom.value})`
     };
 });
 watch(zoom, (zoom) => {
@@ -124,10 +124,10 @@ watch(page, (page) => {
 });
 
 const resizeObserver = new ResizeObserver((entries) => {
-    for (const { contentRect, } of entries) {
+    for (const { contentRect } of entries) {
         services?.uiService.set('sandboxContainerRect', {
             width: contentRect.width,
-            height: contentRect.height,
+            height: contentRect.height
         });
     }
 });
@@ -153,12 +153,12 @@ async function dropHandler(e: DragEvent) {
 
     if (parent && boxContainer.value && sandbox) {
         const layout = await services?.editorService.getLayout(parent);
-        const designWidth = services?.editorService.get('root')?.designWidth
+        const designWidth = services?.editorService.get('root')?.designWidth;
 
         const containerRect = boxContainer.value.getBoundingClientRect();
-        const {scrollTop, scrollLeft, } = sandbox.mask;
+        const {scrollTop, scrollLeft } = sandbox.mask;
 
-        const {style = {}, } = config.data;
+        const {style = {} } = config.data;
 
         let top = 0;
         let left = 0;
@@ -174,7 +174,7 @@ async function dropHandler(e: DragEvent) {
             left = calcValueByDesignWidth(doc!, e.clientX - containerRect.left + scrollLeft, designWidth);
 
             if (parentEl && doc) {
-                const {left: parentLeft, top: parentTop, } = js_utils_dom_offset(parentEl as HTMLElement);
+                const {left: parentLeft, top: parentTop } = js_utils_dom_offset(parentEl as HTMLElement);
                 // 缩放 不影响 offset
                 left = left - calcValueByDesignWidth(doc, parentLeft, designWidth) * zoom.value;
                 top = top - calcValueByDesignWidth(doc, parentTop, designWidth) * zoom.value;
@@ -185,7 +185,7 @@ async function dropHandler(e: DragEvent) {
             ...style,
             position,
             top: top / zoom.value,
-            left: left / zoom.value,
+            left: left / zoom.value
         };
 
         config.data.inputEvent = e;
@@ -231,6 +231,7 @@ onUnmounted(() => {
             .q-sandbox-content {
                 width: 100%;
                 height: 100%;
+                margin-top: 30px;
             }
 		}
 	}

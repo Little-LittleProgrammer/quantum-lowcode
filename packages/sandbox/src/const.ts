@@ -27,6 +27,9 @@ export const HIGHLIGHT_EL_ID_PREFIX = 'highlight_el_';
 export const CONTAINER_HIGHLIGHT_CLASS_NAME = 'quantum-sandbox-container-highlight';
 export const CONTAINER_HIGHLIGHT_DELAY_TIME = 800;
 
+/** 辅助线容器类名 */
+export const GUIDES_CONTAINER_CLASS_NAME = 'quantum-sandbox-guides-container';
+
 export enum ZIndex {
     /** 蒙层，用于监听用户操作，需要置于顶层 */
     MASK = '99999',

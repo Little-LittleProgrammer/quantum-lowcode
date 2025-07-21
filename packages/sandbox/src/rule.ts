@@ -1,9 +1,7 @@
 import { Subscribe } from '@quantum-lowcode/utils';
 import type { IRuleOptions } from './types';
-import { GuidesType } from './const';
+import { GUIDES_CONTAINER_CLASS_NAME, GuidesType } from './const';
 import Guides, { type GuidesEvents, type GuidesOptions } from '@scena/guides';
-
-const guidesClass = 'quantum-sandbox-guides';
 
 // 辅助线,移动线规则
 export class Rule extends Subscribe {
@@ -38,14 +36,40 @@ export class Rule extends Subscribe {
         this.containerResizeObserver.observe(this.container);
     }
 
+    /**
+   * 是否显示辅助线
+   * @param isShowGuides 是否显示
+   */
+    public showGuides(isShowGuides = true) {
+        this.isShowGuides = isShowGuides;
+
+        this.hGuides?.setState({
+            showGuides: isShowGuides
+        });
+
+        this.vGuides?.setState({
+            showGuides: isShowGuides
+        });
+    }
+
     public setGuides([hLines, vLines]: [number[], number[]]) {
-        // TODO, 辅助线和移动线 change-guides
-        this.emit('change-mask', {
+        this.horizontalGuidelines = hLines;
+        this.verticalGuidelines = vLines;
+
+        this.hGuides?.setState({
+            defaultGuides: hLines
+        });
+
+        this.vGuides?.setState({
+            defaultGuides: vLines
+        });
+
+        this.emit('change-guides', {
             type: GuidesType.HORIZONTAL,
             guides: hLines
         });
 
-        this.emit('change-mask', {
+        this.emit('change-guides', {
             type: GuidesType.VERTICAL,
             guides: vLines
         });
@@ -104,7 +128,7 @@ export class Rule extends Subscribe {
         this.hGuides?.destroy();
         this.vGuides?.destroy();
 
-        this.container?.querySelectorAll(`.${guidesClass}`).forEach((el) => {
+        this.container?.querySelectorAll(`.${GUIDES_CONTAINER_CLASS_NAME}`).forEach((el) => {
             el.remove();
         });
 
@@ -122,7 +146,7 @@ export class Rule extends Subscribe {
             type,
             defaultGuides,
             displayDragPos: true,
-            className: guidesClass,
+            className: GUIDES_CONTAINER_CLASS_NAME,
             backgroundColor: '#fff',
             lineColor: '#000',
             textColor: '#000',
