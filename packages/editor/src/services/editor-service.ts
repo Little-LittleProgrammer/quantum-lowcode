@@ -44,25 +44,39 @@ import {
 import { propsService } from './props-service';
 import { Protocol, storageService } from './storage-serivce';
 
+/**
+ * 编辑器服务类
+ * 负责管理编辑器状态、节点操作、历史记录等功能
+ * 继承自Subscribe类，支持事件订阅机制
+ */
 class EditorService extends Subscribe {
+    /**
+     * 编辑器状态管理
+     * 使用Vue的reactive进行响应式状态管理
+     */
     public state = reactive<IStoreState>({
-        root: null,
-        sandbox: null,
-        page: null,
-        node: null,
-        nodes: [],
-        parent: null,
-        disabledMultiSelect: false,
-        highlightNode: null,
-        pageLength: 0
+        root: null, // 根节点配置
+        sandbox: null, // 沙箱实例
+        page: null, // 当前页面节点
+        node: null, // 当前选中节点
+        nodes: [], // 多选节点列表
+        parent: null, // 当前节点的父节点
+        disabledMultiSelect: false, // 是否禁用多选
+        highlightNode: null, // 高亮节点
+        pageLength: 0 // 页面数量
     });
+
+    /**
+     * 标记是否为历史状态变更
+     * 用于防止历史记录重复添加
+     */
     private isHistoryStateChange = false;
 
     /**
-	 * 设置当前指点节点配置
-	 * @param name 'root' | 'page' | 'parent' | 'node' | 'highlightNode' | 'nodes' | 'sandbox' | 'modifiedNodeFields' | 'pageLength'
-	 * @param value IScheamsNode
-	 */
+     * 设置编辑器状态
+     * @param name 状态键名：'root' | 'page' | 'parent' | 'node' | 'highlightNode' | 'nodes' | 'sandbox' | 'modifiedNodeFields' | 'pageLength'
+     * @param value 状态值
+     */
     public set<K extends IStoreStateKey, V extends IStoreState[K]>(
         key: K,
         value: V
@@ -70,7 +84,7 @@ class EditorService extends Subscribe {
         const preValue = this.state[key];
         this.state[key] = value;
 
-        // set nodes时将node设置为nodes第一个元素
+        // 设置nodes时，将node设置为nodes第一个元素
         if (key === 'nodes' && Array.isArray(value)) {
             this.set('node', value[0]);
         }
@@ -89,18 +103,27 @@ class EditorService extends Subscribe {
             } else {
                 this.state.pageLength = 0;
             }
-            // this.rootChangeHandler(value, preValue);
+            // 触发根节点变更事件
             this.emit('root-change', value, preValue);
         }
     }
+
+    /**
+     * 获取编辑器状态
+     * @param key 状态键名
+     * @returns 状态值
+     */
     public get<K extends IStoreStateKey>(key: K): IStoreState[K] {
         return this.state[key] as IStoreState[K];
     }
+
     /**
-	 * 根据field和type获取组件、组件的父组件以及组件所属的页面节点
-	 * @param {number | string} id 组件id
-	 * @returns {EditorNodeInfo}
-	 */
+     * 根据节点ID获取节点信息
+     * 包括组件、组件的父组件以及组件所属的页面节点
+     * @param field 组件ID
+     * @param raw 是否使用原始数据（不使用Vue响应式代理）
+     * @returns 节点信息对象
+     */
     public getNodeInfo(field: Id, raw = true): IEditorNodeInfo {
         let root = this.get(NodeType.ROOT);
         if (raw) {
@@ -108,9 +131,9 @@ class EditorService extends Subscribe {
         }
 
         const info: IEditorNodeInfo = {
-            node: null,
-            parent: null,
-            page: null
+            node: null, // 目标节点
+            parent: null, // 父节点
+            page: null // 所属页面
         };
         if (!root) return info;
         if (field === root.type || field === 'app') {
@@ -133,30 +156,34 @@ class EditorService extends Subscribe {
     }
 
     /**
-	 * 根据ID获取指点节点配置
-	 * @param id 组件ID
-	 * @param {boolean} raw 是否使用toRaw
-	 * @returns 组件节点配置
-	 */
+     * 根据ID获取指定节点配置
+     * @param id 组件ID
+     * @param raw 是否使用原始数据
+     * @returns 组件节点配置
+     */
     public getNodeByField(id: Id, raw = true): ISchemasNode | null {
         const { node } = this.getNodeInfo(id, raw);
         return node;
     }
 
     /**
-	 * 根据ID获取指点节点的父节点配置
-	 * @param id 组件ID
-	 * @param {boolean} raw 是否使用toRaw
-	 * @returns 指点组件的父节点配置
-	 */
+     * 根据ID获取指定节点的父节点配置
+     * @param id 组件ID
+     * @param raw 是否使用原始数据
+     * @returns 指定组件的父节点配置
+     */
     public getParentByField(id: Id, raw = true): ISchemasContainer | null {
         const { parent } = this.getNodeInfo(id, raw);
         return parent;
     }
 
     /**
-	 * 只有容器拥有布局
-	 */
+     * 获取布局类型
+     * 只有容器拥有布局属性
+     * @param parent 父节点
+     * @param node 子节点（可选）
+     * @returns 布局类型
+     */
     public getLayout(
         parent: ISchemasNode,
         node?: ISchemasNode | null
@@ -182,10 +209,11 @@ class EditorService extends Subscribe {
     }
 
     /**
-	 * 选中指定节点（将指定节点设置成当前选中状态）
-	 * @param config 指定节点配置或者ID
-	 * @returns 当前选中的节点配置
-	 */
+     * 选中指定节点
+     * 将指定节点设置成当前选中状态
+     * @param config 指定节点配置或者ID
+     * @returns 当前选中的节点配置
+     */
     public async select(config: ISchemasNode | Id | ISchemasPage) {
         const { node, page, parent } = this.selectedConfigExceptionHandler(config);
         this.set('nodes', node ? [node] : []);
@@ -216,10 +244,10 @@ class EditorService extends Subscribe {
     }
 
     /**
-	 * 高亮指定节点
-	 * @param config 指定节点配置或者ID
-	 * @returns 当前高亮的节点配置
-	 */
+     * 高亮指定节点
+     * @param config 指定节点配置或者ID
+     * @returns 当前高亮的节点配置
+     */
     public highlight(config: ISchemasNode | Id): void {
         const { node } = this.selectedConfigExceptionHandler(config);
         const currentHighlightNode = this.get('highlightNode');
@@ -228,10 +256,10 @@ class EditorService extends Subscribe {
     }
 
     /**
-	 * 多选
-	 * @param ids 指定节点ID
-	 * @returns 加入多选的节点配置
-	 */
+     * 多选节点
+     * @param ids 指定节点ID数组
+     * @returns 加入多选的节点配置
+     */
     public multiSelect(ids: Id[]): void {
         const nodes: ISchemasNode[] = [];
         const idsUnique = uniq(ids);
@@ -243,6 +271,9 @@ class EditorService extends Subscribe {
         this.set('nodes', nodes);
     }
 
+    /**
+     * 选中根节点
+     */
     public selectRoot() {
         const root = this.get('root');
         if (!root) return;
@@ -254,6 +285,12 @@ class EditorService extends Subscribe {
         this.set('highlightNode', null);
     }
 
+    /**
+     * 添加节点的辅助方法
+     * @param node 要添加的节点
+     * @param parent 父节点
+     * @returns 添加后的节点
+     */
     public async addHelper(
         node: ISchemasNode | ISchemasPage,
         parent: ISchemasContainer
@@ -300,6 +337,12 @@ class EditorService extends Subscribe {
         return node;
     }
 
+    /**
+     * 添加节点
+     * @param addNode 要添加的节点配置或节点数组
+     * @param parent 父节点（可选）
+     * @returns 添加后的节点或节点数组
+     */
     public async add(
         addNode: ISchemasNode[] | IAddNode,
         parent?: ISchemasContainer | null
@@ -337,13 +380,16 @@ class EditorService extends Subscribe {
             sandbox?.multiSelect(newNodeFields);
             await this.multiSelect(newNodeFields);
         } else {
-            await this.select(newNodes[0]);
+            const firstNode = newNodes[0];
+            if (firstNode) {
+                await this.select(firstNode);
 
-            if (isPage(newNodes[0] as ISchemasPage)) {
-                this.state.pageLength += 1;
-            } else {
-                // 新增页面，这个时候页面还有渲染出来，此时select会出错，在runtime-ready的时候回去select
-                sandbox?.select(newNodes[0].field);
+                if (isPage(firstNode as ISchemasPage)) {
+                    this.state.pageLength += 1;
+                } else {
+                    // 新增页面，这个时候页面还有渲染出来，此时select会出错，在runtime-ready的时候回去select
+                    sandbox?.select(firstNode.field);
+                }
             }
         }
 
@@ -356,6 +402,11 @@ class EditorService extends Subscribe {
         return Array.isArray(addNode) ? newNodes : newNodes[0];
     }
 
+    /**
+     * 更新节点的辅助方法
+     * @param config 要更新的节点配置
+     * @returns 更新后的节点配置
+     */
     public async updateHelper(config: ISchemasNode) {
         const root = this.get('root');
         if (!root) throw new Error('root为空');
@@ -440,10 +491,10 @@ class EditorService extends Subscribe {
     }
 
     /**
-	 * 更新节点
-	 * @param config 新的节点配置，配置中需要有 field信息
-	 * @returns 更新后的节点配置
-	 */
+     * 更新节点
+     * @param config 新的节点配置，配置中需要有 field信息
+     * @returns 更新后的节点配置
+     */
     public async update(
         config: ISchemasNode | ISchemasNode[]
     ): Promise<ISchemasNode | ISchemasNode[]> {
@@ -459,9 +510,14 @@ class EditorService extends Subscribe {
 
         // this.updateHandler();
         this.emit('update', newNodes);
-        return isArray(config) ? newNodes : newNodes[0];
+        const result = isArray(config) ? newNodes : newNodes[0];
+        return result as ISchemasNode | ISchemasNode[];
     }
 
+    /**
+     * 删除节点的辅助方法
+     * @param node 要删除的节点
+     */
     public async deleteHelper(node: ISchemasNode) {
         const root = this.get('root');
         if (!root) throw new Error('root为空');
@@ -492,7 +548,7 @@ class EditorService extends Subscribe {
 
         const rootChild = root.children;
 
-        if (isPage(node)) {
+        if (isPage(node as ISchemasPage)) {
             this.set('pageLength', this.get('pageLength') - 1);
 
             await selectDefault(rootChild);
@@ -509,6 +565,11 @@ class EditorService extends Subscribe {
         }
     }
 
+    /**
+     * 删除节点
+     * @param nodeOrNodeList 要删除的节点或节点数组
+     * @returns Promise<void>
+     */
     public async delete(
         nodeOrNodeList: ISchemasNode | ISchemasNode[]
     ): Promise<void> {
@@ -525,6 +586,11 @@ class EditorService extends Subscribe {
         this.emit('remove', nodes);
     }
 
+    /**
+     * 排序节点
+     * @param field1 第一个节点ID
+     * @param field2 第二个节点ID
+     */
     public async sort(field1: Id, field2: Id) {
         const root = this.get('root');
         if (!root) throw new Error('root为空');
@@ -555,6 +621,9 @@ class EditorService extends Subscribe {
         this.pushHistoryState();
     }
 
+    /**
+     * 重置编辑器状态
+     */
     public reset() {
         this.set('node', null);
         this.set('root', null);
@@ -565,12 +634,20 @@ class EditorService extends Subscribe {
         this.set('parent', null);
     }
 
+    /**
+     * 撤销操作
+     * @returns 撤销的历史记录
+     */
     public async undo() {
         const val = historyService.undo();
         await this.changeHistoryState(val);
         return val;
     }
 
+    /**
+     * 重做操作
+     * @returns 重做的历史记录
+     */
     public async redo() {
         const val = historyService.redo();
         await this.changeHistoryState(val);
@@ -578,6 +655,7 @@ class EditorService extends Subscribe {
     }
 
     /**
+     * 复制节点配置到剪贴板
      * 将组件节点配置存储到localStorage中
      * @param config 组件节点配置
      */
@@ -587,6 +665,12 @@ class EditorService extends Subscribe {
         });
     }
 
+    /**
+     * 粘贴节点的辅助方法
+     * @param config 要粘贴的节点配置数组
+     * @param position 粘贴位置
+     * @returns 处理后的节点配置
+     */
     public pasteHelper(config: ISchemasNode[], position: IPastePosition = {}) {
         propsService.clearRelateId();
         const pasteConfigs = this.beforePaste(position, cloneDeep(config));
@@ -594,6 +678,7 @@ class EditorService extends Subscribe {
     }
 
     /**
+     * 粘贴节点
      * 从localStorage中获取节点，然后添加到当前容器中
      * @param position 粘贴的坐标
      * @returns 添加后的组件节点配置
@@ -617,13 +702,16 @@ class EditorService extends Subscribe {
         return this.add(pasteConfigs, parent);
     }
 
+    /**
+     * 重置已修改节点字段记录
+     */
     public resetModifiedNodeFields() {
         this.get('modifiedNodeFields')?.clear();
     }
 
     /**
-     * 移动当前选中节点位置
-     * @param offset 偏移量
+     * 移动当前选中节点层级
+     * @param offset 偏移量或层级偏移枚举
      */
     public moveLayer(offset: number | LayerOffset) {
         const root = this.get('root');
@@ -672,10 +760,10 @@ class EditorService extends Subscribe {
     }
 
     /**
-     * 移到指定容器, sandbox触发
+     * 移动节点到指定容器
      * @param config 节点信息
-     * @param targetField 目标容器
-     * @returns void
+     * @param targetField 目标容器ID
+     * @returns 移动后的节点配置
      */
     public async moveToContainer(config: ISchemasNode, targetField: Id) {
         const root = this.get('root');
@@ -720,6 +808,11 @@ class EditorService extends Subscribe {
         }
     }
 
+    /**
+     * 居中对齐的辅助方法
+     * @param config 节点配置
+     * @returns 对齐后的节点配置
+     */
     public alignCenterHelper(config: ISchemasNode) {
         const parent = this.getNodeByField(config.field);
 
@@ -750,7 +843,7 @@ class EditorService extends Subscribe {
     }
 
     /**
-     * 将指点节点设置居中
+     * 将指定节点设置居中对齐
      * @param config 组件节点配置
      * @returns 当前组件节点配置
      */
@@ -767,12 +860,21 @@ class EditorService extends Subscribe {
         if (newNodes.length > 1) {
             await sandbox?.multiSelect(newNodes.map((node) => node.id));
         } else {
-            await sandbox?.select(newNodes[0].id);
+            const firstNode = newNodes[0];
+            if (firstNode) {
+                await sandbox?.select(firstNode.id);
+            }
         }
 
         return newNode;
     }
 
+    /**
+     * 拖拽节点到新位置
+     * @param config 要拖拽的节点
+     * @param newParent 新的父节点
+     * @param newIndex 新的索引位置
+     */
     public dragTo(config: ISchemasNode, newParent: ISchemasContainer, newIndex: number) {
         if (!newParent) {
             return;
@@ -821,6 +923,11 @@ class EditorService extends Subscribe {
         this.pushHistoryState();
     }
 
+    /**
+     * 处理文本节点的特殊逻辑
+     * @param config 节点配置
+     * @returns 处理后的节点配置
+     */
     private dealText(config: ISchemasNode) {
         if (config.component?.toLowerCase() === 'text') {
             if (config.componentProps?.text) {
@@ -840,6 +947,10 @@ class EditorService extends Subscribe {
         return config;
     }
 
+    /**
+     * 推送历史状态
+     * 将当前状态保存到历史记录中
+     */
     private async pushHistoryState() {
         const curNode = cloneDeep(toRaw(this.get('node')));
         const page = this.get('page');
@@ -854,6 +965,10 @@ class EditorService extends Subscribe {
         this.isHistoryStateChange = false;
     }
 
+    /**
+     * 切换历史状态
+     * @param val 历史记录值
+     */
     private async changeHistoryState(val: StepValue | null): Promise<void> {
         if (!val) return;
 
@@ -871,6 +986,13 @@ class EditorService extends Subscribe {
         this.emit('history-change', val.data);
     }
 
+    /**
+     * 切换固定定位
+     * @param dist 目标配置
+     * @param src 源配置
+     * @param root 根节点
+     * @returns 处理后的配置
+     */
     private async toggleFixedPosition(
         dist: ISchemasNode,
         src: ISchemasNode,
@@ -899,12 +1021,21 @@ class EditorService extends Subscribe {
         return newConfig;
     }
 
+    /**
+     * 添加已修改节点字段
+     * @param field 节点字段ID
+     */
     private addModifiedNodeField(field: Id) {
         if (!this.isHistoryStateChange) {
             this.get('modifiedNodeFields')?.set(field, field);
         }
     }
 
+    /**
+     * 选中配置异常处理
+     * @param config 节点配置或ID
+     * @returns 节点信息
+     */
     private selectedConfigExceptionHandler(
         config: ISchemasNode | Id
     ): IEditorNodeInfo {
@@ -930,6 +1061,11 @@ class EditorService extends Subscribe {
         };
     }
 
+    /**
+     * 获取添加节点的父节点
+     * @param node 要添加的节点
+     * @returns 父节点
+     */
     private getAddParent(node: ISchemasNode | ISchemasPage) {
         const curNode = this.get('node');
         let parentNode;
@@ -945,6 +1081,12 @@ class EditorService extends Subscribe {
         return parentNode;
     }
 
+    /**
+     * 粘贴前的处理
+     * @param position 粘贴位置
+     * @param config 节点配置数组
+     * @returns 处理后的节点配置
+     */
     private beforePaste(position: IPastePosition, config: ISchemasNode[]) {
         if (!config[0]?.style) return config;
         const curNode = this.get('node');
@@ -987,6 +1129,13 @@ class EditorService extends Subscribe {
         });
         return finConfigs;
     }
+
+    /**
+     * 获取在容器内的位置
+     * @param position 位置信息
+     * @param field 容器字段ID
+     * @returns 容器内的位置
+     */
     private getPositionInContainer(position: { left?: number | undefined; top?: number | undefined; }, field: string): { left?: number | undefined; top?: number | undefined; } {
         let { left = 0, top = 0 } = position;
         const parentEl = this.get('sandbox')?.renderer?.contentWindow?.document.getElementById(`${field}`);
@@ -1000,7 +1149,9 @@ class EditorService extends Subscribe {
         };
     }
 
-    /**更新画框 */
+    /**
+     * 更新画框
+     */
     private updateHandler() {
         setTimeout(() => {
             // this.updateMask();
@@ -1009,6 +1160,9 @@ class EditorService extends Subscribe {
         });
     }
 
+    /**
+     * 更新选中状态
+     */
     private updateSelectStatus() {
         const sandbox = this.get('sandbox');
         const nodes = this.get('nodes');
@@ -1016,11 +1170,18 @@ class EditorService extends Subscribe {
             if (nodes.length > 1) {
                 sandbox?.multiSelect(nodes.map((n) => n.field));
             } else {
-                sandbox?.select(nodes[0].field);
+                const firstNode = nodes[0];
+                if (firstNode) {
+                    sandbox?.select(firstNode.field);
+                }
             }
         }
     }
 }
 export type { EditorService };
 
+/**
+ * 编辑器服务实例
+ * 全局单例，用于管理编辑器状态和操作
+ */
 export const editorService = new EditorService();

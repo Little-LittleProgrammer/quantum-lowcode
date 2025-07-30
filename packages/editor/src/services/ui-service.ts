@@ -9,17 +9,17 @@ class UiService {
         showCode: false,
         sandboxRect: {
             width: 375,
-            height: 817,
+            height: 817
         },
         zoom: 1,
         sandboxContainerRect: {
             width: 0,
-            height: 0,
+            height: 0
         },
         showGuides: true,
         workspaceLeft: 340,
         workspaceCenter: 600,
-        workspaceRight: 1,
+        workspaceRight: 1
     });
     public set<K extends keyof IUiState, T extends IUiState[K]>(
         name: K,
@@ -47,8 +47,8 @@ class UiService {
     }
 
     public async calcZoom() {
-        const { sandboxRect, sandboxContainerRect, } = this.state;
-        const { height, width, } = sandboxContainerRect;
+        const { sandboxRect, sandboxContainerRect } = this.state;
+        const { height, width } = sandboxContainerRect;
         if (!width || !height) return 1;
 
         const sWidth = convertToNumber(sandboxRect.width, width);
@@ -71,7 +71,7 @@ class UiService {
         this.set('zoom', 1);
         this.set('sandboxContainerRect', {
             width: 0,
-            height: 0,
+            height: 0
         });
     }
     public destroy() {
@@ -81,9 +81,14 @@ class UiService {
     private async setSandboxRect(value: ISandboxRect) {
         this.state.sandboxRect = {
             ...this.state.sandboxRect,
-            ...value,
+            ...value
         };
         this.state.zoom = await this.calcZoom();
+    }
+
+    // TODO 画布容器变化时，滚动到画布容器可视区域
+    private scrollToMaskView() {
+
     }
 }
 

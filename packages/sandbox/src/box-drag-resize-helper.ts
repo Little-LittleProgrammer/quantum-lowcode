@@ -37,7 +37,7 @@ import { calcValueByDesignWidth, js_utils_dom_offset, getAbsolutePosition } from
 export default class DragResizeHelper {
     /** 目标节点在蒙层上的占位节点，用于跟鼠标交互，避免鼠标事件直接作用到目标节点 */
     private targetShadow: TargetShadow;
-    /** 要操作的原始目标节点 */
+    /** 要操作的原始目标节点, 运行时节点 */
     private target!: HTMLElement;
     /** 多选模式下的目标节点组 */
     private targetList: HTMLElement[] = [];
@@ -219,12 +219,13 @@ export default class DragResizeHelper {
             return;
         }
 
-        // 绝对定位模式委托给 moveableHelper
+        // 绝对定位模式委托给 moveableHelper, 更新 shadowEl 的 transform 属性
         this.moveableHelper.onDrag(e);
 
         // 计算并设置目标元素的新位置
         const { marginLeft, marginTop } = getMarginValue(this.target);
 
+        // 更新runtime目标元素的位置
         this.target.style.left = `${
             this.frameSnapShot.left + e.beforeTranslate[0] - (marginLeft || 0)
         }px`;
@@ -459,9 +460,9 @@ export default class DragResizeHelper {
 
     /**
      * 获取更新后的元素位置和尺寸信息
-     * @param el 目标元素
-     * @param parentEl 父元素
-     * @param doc 文档对象
+     * @param el 目标元素 runtime
+     * @param parentEl 父元素 runtime
+     * @param doc 文档对象 runtime
      * @returns 包含位置和尺寸信息的对象
      */
     public getUpdatedElRect(

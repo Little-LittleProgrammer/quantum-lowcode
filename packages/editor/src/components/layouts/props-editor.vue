@@ -77,7 +77,6 @@ const init = async(changeNode = false) => {
             customStyleSwitch: curStyleSwitch.value,
             customStyle: node.value?.style
         };
-        console.log('formModel', formModel.value);
     });
 };
 

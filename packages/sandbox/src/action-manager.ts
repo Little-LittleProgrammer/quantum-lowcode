@@ -739,7 +739,7 @@ export class ActionManager extends Subscribe {
     private mouseDownHandler = async(event: MouseEvent): Promise<void> => {
         console.log('mouseDownHandler');
         // 清除高亮状态
-        // this.clearHighlight();
+        this.clearHighlight();
         event.stopImmediatePropagation();
         event.stopPropagation();
 

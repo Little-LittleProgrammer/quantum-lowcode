@@ -240,7 +240,7 @@ export class BoxDragResize extends MoveableManager {
                     globalThis.clearTimeout(timeout);
                     timeout = undefined;
                 }
-                // 延迟标记容器
+                // 延迟标记容器，用于父容器
                 timeout = this.delayedMarkContainer(e.inputEvent, [
                     this.target
                 ]);
