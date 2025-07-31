@@ -678,7 +678,6 @@ export class ActionManager extends Subscribe {
      * 初始化鼠标事件监听
      */
     private initMouseEvent(): void {
-        console.log('initMouseEvent', this.container);
         this.container.addEventListener('mousedown', this.mouseDownHandler);
         this.container.addEventListener('mousemove', this.mouseMoveHandler);
         this.container.addEventListener('mouseleave', this.mouseLeaveHandler);

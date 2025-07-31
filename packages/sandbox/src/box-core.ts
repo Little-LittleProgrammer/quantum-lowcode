@@ -353,8 +353,6 @@ export class BoxCore extends Subscribe {
 
     // 初始化渲染器事件监听
     private initRenderEvent() {
-        console.log('initRenderEvent 注册runtime事件');
-
         // 注册渲染器的runtime-ready事件
         // 当iframe中的运行时环境准备就绪时触发
         this.renderer.on('runtime-ready', (runtime: IRuntime) => {

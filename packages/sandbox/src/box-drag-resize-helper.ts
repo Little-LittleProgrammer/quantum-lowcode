@@ -232,6 +232,8 @@ export default class DragResizeHelper {
         this.target.style.top = `${
             this.frameSnapShot.top + e.beforeTranslate[1] - (marginTop || 0)
         }px`;
+
+        console.log('this.frameSnapShot', this.frameSnapShot, e.beforeTranslate);
     }
 
     /**
