@@ -1,30 +1,35 @@
 {
-  "private": true,
-  "scripts": {
-    "build": "turbo run build",
-    "playground": "turbo run playground --concurrency=13",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
-  },
-  "devDependencies": {
-    "@quantum-design-configs/eslint": "catalog:",
-    "@quantum-design-configs/tsconfig": "catalog:",
-    "@types/node": "catalog:",
-    "eslint": "catalog:",
-    "prettier": "catalog:",
-    "tslib": "catalog:",
-    "turbo": "catalog:",
-    "typescript": "catalog:",
-    "vite": "catalog:",
-    "lint-staged": "catalog:",
-    "husky": "catalog:"
-  },
-  "packageManager": "pnpm@9.15.7",
-  "name": "lowcode-engine",
-  "volta": {
-    "node": "18.18.2",
-    "pnpm": "9.15.7"
-  }
+    "name": "lowcode-engine",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "turbo run build",
+        "playground": "turbo run playground --concurrency=13",
+        "dev": "turbo run dev",
+        "lint": "turbo run lint",
+        "commit": "czg",
+        "prepare": "husky",
+        "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+        "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
+    },
+    "devDependencies": {
+        "@quantum-design-configs/commitlint": "catalog:",
+        "@quantum-design-configs/eslint": "catalog:",
+        "@quantum-design-configs/prettier": "catalog:",
+        "@quantum-design-configs/tsconfig": "catalog:",
+        "@types/node": "catalog:",
+        "eslint": "catalog:",
+        "husky": "catalog:",
+        "lint-staged": "catalog:",
+        "prettier": "catalog:",
+        "tslib": "catalog:",
+        "turbo": "catalog:",
+        "typescript": "catalog:",
+        "vite": "catalog:"
+    },
+    "packageManager": "pnpm@9.15.7",
+    "volta": {
+        "node": "18.18.2",
+        "pnpm": "9.15.7"
+    }
 }
