@@ -1,23 +1,9 @@
 // 核心实例对象, 接收配置, 文件以及node信息
-import {
-    Subscribe,
-    webRequest
-} from '@quantum-lowcode/utils';
-import type {
-    Fn,
-    IRequestFunction,
-    ISchemasRoot,
-    Id,
-    IMetaDes,
-    ILowCodeRoot
-} from '@quantum-lowcode/schemas';
+import { Subscribe, webRequest } from '@quantum-lowcode/utils';
+import type { Fn, IRequestFunction, ISchemasRoot, Id, IMetaDes, ILowCodeRoot } from '@quantum-lowcode/schemas';
 import { LowCodePage } from './page';
 import { Env } from './env';
-import {
-    DataSource,
-    DataSourceManager,
-    createDataSourceManager
-} from '@quantum-lowcode/data';
+import { DataSource, DataSourceManager, createDataSourceManager } from '@quantum-lowcode/data';
 import { LowCodeNode } from './node';
 import Flexible from './flexible';
 import { defaultTransformStyle } from './utils';
@@ -117,10 +103,10 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
     }
 
     /**
-	 * 设置DSL配置
-	 * @param config ISchemasRoot DSL根配置对象
-	 * @param curPage 当前页面id
-	 */
+     * 设置DSL配置
+     * @param config ISchemasRoot DSL根配置对象
+     * @param curPage 当前页面id
+     */
     public setConfig(config: ISchemasRoot, curPage?: Id) {
         this.schemasRoot = config;
 
@@ -165,10 +151,8 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
 
             // 设置新的meta标签
             if (config.description) {
-                config.description.keywords &&
-					this.setDescribe(config.description, 'keywords');
-                config.description.description &&
-					this.setDescribe(config.description, 'description');
+                config.description.keywords && this.setDescribe(config.description, 'keywords');
+                config.description.description && this.setDescribe(config.description, 'description');
             }
         }
     }
@@ -192,14 +176,12 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
     }
 
     /**
-	 * 设置当前展示页面
-	 * @param field 页面标识符
-	 */
+     * 设置当前展示页面
+     * @param field 页面标识符
+     */
     public setPage(field?: Id) {
         // 查找指定的页面配置
-        const pageConfig = this.schemasRoot?.children.find(
-            (page) => page.field === field
-        );
+        const pageConfig = this.schemasRoot?.children.find((page) => page.field === field);
 
         // 如果找不到页面配置，清空当前页面
         if (!pageConfig) {
@@ -227,10 +209,10 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
     }
 
     /**
-	 * 查询页面实例
-	 * @param field 页面标识符，不传则返回当前页面
-	 * @returns Page实例或undefined
-	 */
+     * 查询页面实例
+     * @param field 页面标识符，不传则返回当前页面
+     * @returns Page实例或undefined
+     */
     public getPage(field?: Id) {
         if (!field) return this.page;
         if (this.page?.data?.field === field) {
@@ -258,14 +240,7 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
      * @returns boolean
      */
     public isH5() {
-        return (
-            this.env.isAndroid ||
-			this.env.isAndroidPad ||
-			this.env.isIos ||
-			this.env.isIpad ||
-			this.env.isIphone ||
-			this.env.isWechat
-        );
+        return this.env.isAndroid || this.env.isAndroidPad || this.env.isIos || this.env.isIpad || this.env.isIphone || this.env.isWechat;
     }
 
     /**
@@ -291,12 +266,7 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
      * @param ds 数据源实例
      * @param node 节点实例（可选，用于组件事件）
      */
-    public registerEvent(
-        key: string,
-        fn: Fn,
-        ds?: DataSource,
-        node?: LowCodeNode
-    ) {
+    public registerEvent(key: string, fn: Fn, ds?: DataSource, node?: LowCodeNode) {
         // 包装事件处理函数，注入app和dataSource参数
         const eventHanlder = (...args: any[]) => {
             fn({ app: this, dataSource: ds || {} }, ...args);
@@ -318,8 +288,8 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
     }
 
     /**
-	 * 移除所有注册的事件
-	 */
+     * 移除所有注册的事件
+     */
     public removeEvents() {
         // 遍历所有注册的事件并移除
         Array.from(this.eventMap.keys()).forEach((key) => {
@@ -334,18 +304,18 @@ export class LowCodeRoot extends Subscribe implements ILowCodeRoot {
     }
 
     /**
-	 * 注册组件
-	 * @param type 组件类型名称
-	 * @param comp 组件实例或组件类
-	 */
+     * 注册组件
+     * @param type 组件类型名称
+     * @param comp 组件实例或组件类
+     */
     public registerComponent(type: string, comp: any) {
         this.components.set(type, comp);
     }
 
     /**
-	 * 注销组件
-	 * @param type 组件类型名称
-	 */
+     * 注销组件
+     * @param type 组件类型名称
+     */
     public unregisterComponent(type: string) {
         this.components.delete(type);
     }
