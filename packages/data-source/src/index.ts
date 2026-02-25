@@ -17,7 +17,7 @@ export function createDataSourceManager(app: ILowCodeRoot, useMock?:boolean) {
     });
 
     dataSourceManager.on('change', (sourceId: string, changeData: ChangeDataEvent) => {
-        console.log('change', sourceId, changeData);
+        console.log('dataSourceManager change', sourceId, changeData);
         const fieldId = changeData.path?.split('.')?.[0];
         const nodes = dataSourceManager.trigger(sourceId, fieldId);
         dataSourceManager.emit('update-data', nodes, sourceId, changeData);

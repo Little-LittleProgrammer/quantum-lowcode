@@ -143,10 +143,10 @@ export const asyncLoadJs = (() => {
 
 export function calcValueByDesignWidth(doc: Document | undefined, value: number, designWidth = DEFAULT_DESIGN_WIDTH) {
     if (!doc) { return value; }
-
     const maxWidth = globalThis.getComputedStyle(doc.documentElement).width;
     if (maxWidth) {
         const times = Math.min(globalThis.parseFloat(maxWidth), DEFAULT_PAGE_MAX_WIDTH);
+        console.log('doc', times, value, doc, designWidth, globalThis.parseFloat(maxWidth));
         return Number((value * designWidth / times).toFixed(2));
     }
 

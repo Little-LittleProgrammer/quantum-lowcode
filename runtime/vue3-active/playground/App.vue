@@ -30,7 +30,7 @@ export default defineComponent({
         const selectedId = ref<Id>();
 
         const pageConfig = computed(() => {
-            console.log(root.value);
+            console.log('runtime pageConfig', curPageId.value, root.value);
             return root.value?.children?.find((item: ISchemasPage) => item.field === curPageId.value) || root.value?.children?.[0];
         });
 
