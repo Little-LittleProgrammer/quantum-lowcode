@@ -1,0 +1,66 @@
+schema: spec-driven
+
+# Project context (optional)
+# This is shown to AI when creating artifacts.
+context: |
+  Tech Stack:
+    - Language: TypeScript (strict mode)
+    - Frameworks: Vue 3.x (primary), Vue 2.x (secondary support)
+    - Build Tools: Vite, Rollup, Turbo
+    - State Management: Pinia
+    - UI Framework: Ant Design Vue
+    - Code Editor: Monaco Editor
+    - Chart Library: ECharts
+    - Drag & Drop: Moveable
+    - Styling: Sass/Less
+    - Package Manager: pnpm@9.15.7
+    - Node.js: >=18.18.2
+
+  Project Structure:
+    - Monorepo architecture using pnpm workspace
+    - Core packages: @quantum-lowcode/core, editor, sandbox, data-source, ui, ui-vue2, utils, schemas
+    - Applications: playground (demo app), quantum-docs (documentation site)
+    - Runtimes: vue2-active, vue3-active (separate runtime packages)
+
+  Code Standards:
+    - Use TypeScript for all new code
+    - Follow ESLint rules (extends @quantum-design-configs/eslint)
+    - Format code with Prettier
+    - Use conventional commits (feat:, fix:, docs:, etc.)
+    - Prettier config: printWidth 200, tabWidth 4, single quotes, trailing commas, semicolons
+
+  Domain Knowledge:
+    - This is a low-code visual development platform
+    - Schema-driven component system with JSON configuration
+    - Cross-framework runtime support (Vue 2 and Vue 3)
+    - Drag-and-drop editor with sandbox isolation using iframes
+    - Components are organized in a tree structure (Root -> Page -> Container/Component)
+    - Each component has: field (unique ID), component name, props, style, events, children
+    - Supports real-time preview and editing
+    - Data source management with binding capabilities
+
+  Architecture Patterns:
+    - Core layer: Data models (Node, Page, Root), event system, state management
+    - Editor layer: Visual editor, workspace, canvas, services
+    - Sandbox layer: iframe-based isolation for component rendering
+    - Runtime layer: Framework-specific renderers (Vue 2/3)
+    - UI layer: Component libraries for different frameworks
+
+  Naming Conventions:
+    - Package names: @quantum-lowcode/{package-name}
+    - Component names: Q-prefix (e.g., QButton, QContainer, QText)
+    - TypeScript interfaces: I-prefix (e.g., ILowCodeRootOptions)
+    - File naming: kebab-case for files, PascalCase for components
+
+# Per-artifact rules (optional)
+rules:
+  proposal:
+    - Include a "Technical Approach" section explaining how the change fits the monorepo architecture
+    - Consider both Vue 2 and Vue 3 runtime compatibility when proposing component changes
+    - Specify which packages (@quantum-lowcode/*) will be affected
+    - Include migration strategy if breaking the Schema API
+  tasks:
+    - Break down into package-level tasks (core, editor, sandbox, ui, etc.)
+    - Each task should be completable in 1-2 hours
+    - Include testing strategy for visual components
+    - Specify which runtime(s) need testing (Vue 2, Vue 3, or both)
