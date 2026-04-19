@@ -69,6 +69,10 @@ export default defineConfig({
 function createNav(): DefaultTheme.NavItem[] {
     return [
         {
+            text: '新人上手',
+            link: '/onboarding/index.md',
+        },
+        {
             text: '开发手册',
             link: '/help-code/guide/introduction.md',
             items: [
@@ -107,6 +111,37 @@ function createNav(): DefaultTheme.NavItem[] {
 
 function createSidebar(): DefaultTheme.Sidebar {
     return {
+        '/onboarding/': [{
+            text: '新人上手',
+            items: [{
+                text: '阅读地图',
+                link: '/onboarding/index.md'
+            }, {
+                text: '00 - 新人30分钟了解项目精髓',
+                link: '/onboarding/00-新人30分钟了解项目精髓/index.md'
+            }, {
+                text: '01 - 总览',
+                link: '/onboarding/01-总览/index.md'
+            }, {
+                text: '02 - Schema 与核心数据模型',
+                link: '/onboarding/02-Schema与核心数据模型/index.md'
+            }, {
+                text: '03 - Editor 编辑器状态流',
+                link: '/onboarding/03-Editor编辑器状态流/index.md'
+            }, {
+                text: '04 - Sandbox 画布与交互',
+                link: '/onboarding/04-Sandbox画布与交互/index.md'
+            }, {
+                text: '05 - DataSource 数据驱动',
+                link: '/onboarding/05-DataSource数据驱动/index.md'
+            }, {
+                text: '06 - Runtime 渲染与组件机制',
+                link: '/onboarding/06-Runtime渲染与组件机制/index.md'
+            }, {
+                text: '07 - 扩展点与新人落地建议',
+                link: '/onboarding/07-扩展点与新人落地建议/index.md'
+            }]
+        }],
         '/': [{
             text: '指南',
             items: [{
