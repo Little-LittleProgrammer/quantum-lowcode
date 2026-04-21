@@ -54,6 +54,32 @@
 
 编辑器先改自己的 Schema，再通知 runtime 补齐渲染，不是反过来。
 
+### 新增节点时坐标是怎么进来的
+
+`EditorService.add` 不自己算拖入落点，落点在
+`packages/editor/src/components/layouts/sandbox/index.vue` 的 `dropHandler`
+里先算好，再作为初始样式传给新增节点。
+
+完整链路是：
+
+1. 从 `DragEvent.clientX / clientY` 取浏览器视口坐标
+2. 用 `boxContainer.getBoundingClientRect()` 减掉 sandbox 可视区域左上角，得到鼠标落在当前画布中的可视坐标
+3. 如果当前页面是 `absolute` 布局，再把 `sandbox.mask.scrollTop / scrollLeft` 加回去，因为用户现在看到的只是滚动窗口
+4. 调 `calcValueByDesignWidth`，把当前 runtime 像素换成设计稿尺度
+5. 如果命中的是容器父节点，再减掉父容器的 offset，把坐标改成“相对父节点”
+6. 最后除以 `zoom`，抵消编辑器壳层 `scale(zoom)` 带来的视觉缩放，得到真正要写入 Schema 的 `style.top / style.left`
+
+读这段代码时一定要按定位模式分支理解：
+
+- `fixed`
+  - 相对视口，不吃页面滚动
+- `absolute`
+  - 要补滚动，还要在嵌套容器里扣掉父容器偏移
+- `relative`
+  - 不走这套绝对落点计算，新增后主要由文档流决定位置
+
+所以“拖进去的位置不对”时，优先先查这段坐标预处理，而不是直接怀疑 `EditorService.add` 本身。
+
 ### 更新节点
 
 `EditorService.update` 会：

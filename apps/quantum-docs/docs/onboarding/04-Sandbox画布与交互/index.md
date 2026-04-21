@@ -102,6 +102,160 @@
 
 这就是 `packages/editor/src/components/layouts/sandbox/index.vue` 中那段坐标计算代码存在的根本原因。
 
+### 先分清 4 套坐标系
+
+读这层代码时，先不要急着看分支，先把坐标系拆开：
+
+1. 浏览器视口坐标
+   - 来自鼠标事件的 `clientX / clientY`
+2. sandbox 可视坐标
+   - 鼠标点减去 `boxContainer.getBoundingClientRect()` 后的局部坐标
+3. runtime 页面坐标
+   - 把 zoom 影响剥离、把滚动补回去后，落到 iframe 页面里的真实位置
+4. Schema 设计稿坐标
+   - 通过 `designWidth` 换算后，最终写进节点 `style.left / style.top` 的值
+
+只有这 4 层分开了，后面“为什么这里要加 scroll”“为什么那里要除 zoom”才会变得直观。
+
+### 新增组件时的完整公式
+
+`packages/editor/src/components/layouts/sandbox/index.vue` 的 `dropHandler`
+可以拆成下面这条链：
+
+```text
+visibleLeft = e.clientX - containerRect.left
+visibleTop  = e.clientY - containerRect.top
+```
+
+如果当前页面是绝对布局，还要把滚动补回去：
+
+```text
+pageLeft = visibleLeft + scrollLeft
+pageTop  = visibleTop + scrollTop
+```
+
+然后把“当前渲染像素”转成“设计稿坐标”：
+
+```text
+designLeft = pageLeft * designWidth / pageRenderedWidth
+designTop  = pageTop * designWidth / pageRenderedWidth
+```
+
+这里的 `pageRenderedWidth` 不是静态配置，而是 `calcValueByDesignWidth`
+里实时读取的 `doc.documentElement` 计算宽度。
+
+最后还要把编辑器壳层的缩放还原掉：
+
+```text
+schemaLeft = designLeft / zoom
+schemaTop  = designTop / zoom
+```
+
+原因是外层 `q-sandbox-container` 做了 `transform: scale(zoom)`。
+用户肉眼看到的 80px 位移，在 `zoom = 0.8` 时，实际对应的页面位移应该是 100px。
+
+### 为什么绝对布局还要减父容器 offset
+
+当拖入命中了一个容器时，新增节点的坐标不能继续是“相对整页”，而必须变成“相对父容器”。
+
+代码里的处理顺序是：
+
+1. 用 `js_utils_dom_offset(parentEl)` 拿到父容器在页面中的绝对位置
+2. 用 `calcValueByDesignWidth` 把这个 offset 转到设计稿尺度
+3. 因为前面的鼠标坐标仍然处在 zoom 后的可视空间里，所以先乘回 `zoom`
+4. 在最终统一除以 `zoom` 之后，得到相对父容器的 Schema 坐标
+
+少了这一步，就会出现典型问题：
+
+- 组件看起来拖进了容器
+- 但保存的 `left / top` 仍然像是相对整个页面
+- 重新渲染后位置会偏到容器外
+
+### 命中元素为什么也要除 zoom
+
+`packages/sandbox/src/box-render.ts` 的 `getElementsFromPoint` 也在做同类换算。
+
+它的逻辑是：
+
+1. 先拿浏览器里的 `clientX / clientY`
+2. 减去 iframe 自己的 `rect.left / rect.top`
+3. 再把结果除以 `this.zoom`
+4. 最后调用 iframe 文档的 `elementsFromPoint`
+
+公式可以直接记成：
+
+```text
+iframeInnerX = (clientX - iframeRect.left) / zoom
+iframeInnerY = (clientY - iframeRect.top) / zoom
+```
+
+原因是：
+
+- 鼠标事件发生在编辑器外层页面
+- 真实 DOM 命中发生在 iframe 内部文档
+- iframe 被外层整体缩放后，视觉上的 1px 已经不等于内部 DOM 的 1px
+
+如果这里漏掉 `/ zoom`，最常见的现象就是鼠标指到 A，实际命中 B，而且 zoom 越小偏差越大。
+
+### 遮罩层为什么要反向平移
+
+`packages/sandbox/src/box-mask.ts` 不直接逐个改选中框坐标，而是在滚动时统一做：
+
+```text
+transform: translate3d(-scrollLeft, -scrollTop, 0)
+```
+
+原因是 mask 盖在 iframe 上方，它必须和页面滚动保持相反位移，视觉上才能继续盖住同一批元素。
+
+可以把它理解成：
+
+- 页面内容向下滚了 120px
+- mask 要整体向上平移 120px
+- 这样选中框、辅助线、高亮框仍然会对齐真实组件
+
+固定定位模式又是个例外：
+
+- `Mode.FIXED` 下元素本来就相对视口
+- mask 不应该再跟页面滚动一起跑
+- 所以 `BoxMask.scroll()` 里会把 fixed 模式的 `scrollLeft / scrollTop` 归零
+
+### 拖拽结束后为什么回写坐标还要再算一次
+
+新增组件是一次坐标换算，拖拽/缩放结束后的持久化又是另一轮换算。
+
+`packages/sandbox/src/box-drag-resize-helper.ts` 的 `getUpdatedElRect`
+会在操作完成后重新读取真实 DOM：
+
+- 普通模式读 `el.offsetLeft / el.offsetTop`
+- 再用 `calcValueByDesignWidth` 转成设计稿坐标
+- 绝对定位下如果存在 shadow 元素，还要把 `translate` 和父容器 offset 一起算进去
+- margin、border 也会参与最终尺寸和位置修正
+
+所以 sandbox 的坐标逻辑不是“拖入时算一次就结束”，而是：
+
+1. 落点前算一次
+2. 编辑过程中 Moveable 用一套临时视觉坐标
+3. 提交回 Schema 时再从真实 DOM 反推一次标准值
+
+### 排查坐标问题时按变量链路看
+
+遇到坐标错位，不要先猜 Vue 或 Moveable 有问题，先把下面几个量逐个打出来：
+
+1. `e.clientX / e.clientY`
+   - 鼠标原始输入是否正确
+2. `containerRect.left / top`
+   - 当前减掉的是不是正确的 sandbox 容器
+3. `sandbox.mask.scrollLeft / scrollTop`
+   - absolute 页面是否把滚动补回去了
+4. `zoom`
+   - 是否既参与了视觉缩放，又在公式里被正确抵消
+5. `designWidth`
+   - 当前页面设计稿宽度是否和 runtime 基准一致
+6. `parentLeft / parentTop`
+   - 命中容器时是否正确扣掉了父容器偏移
+
+只要这几个量是对的，绝大多数“拖入位置不对”“框选错位”“命中元素偏移”的问题都能快速归类。
+
 ## 为什么选中态有两份
 
 你会看到选中相关状态分散在两边：

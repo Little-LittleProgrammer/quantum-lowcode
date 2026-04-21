@@ -466,6 +466,191 @@ return true
 
 这一步的意义是：编辑器可以只产出配置，不需要真的把用户代码塞进组件模板里。
 
+## 组件方法是如何注册的
+
+项目里的"方法注册"不是单一入口，而是三条路径汇聚到同一个事件总线。核心都在 `App.registerEvent` (`packages/core/src/app.ts`)。
+
+### 注册入口 — `registerEvent`
+
+```ts
+// packages/core/src/app.ts
+public registerEvent(key: string, fn: Fn, ds?: DataSource, node?: LowCodeNode) {
+    const eventHanlder = (...args: any[]) => {
+        fn({ app: this, dataSource: ds || {} }, ...args);
+    };
+    if (this.cache.has(key)) { this.remove(key); }
+    if (node) { key = `${node.data.field}:${key}`; }  // 组件事件加 field 前缀
+    this.eventMap.set(key, eventHanlder);
+    this.on(key, eventHanlder);
+}
+```
+
+所有注册的方法最终存入 `eventMap`（Map）并绑定到事件总线，通过 `root.emit(key, params)` 触发调用。
+
+### 路径 1：数据源方法
+
+Schema 中数据源定义了 `methods` 字段：
+
+```ts
+// packages/schemas/src/event.ts
+interface IDataSourceSchema {
+    id: string;
+    methods: ICodeBlockContent[];  // 方法列表
+}
+
+interface ICodeBlockContent {
+    name: string;                                      // 方法名
+    content: ((...args: any[]) => any) | string;       // 函数体或代码字符串
+    params: ICodeParam[];                               // 参数定义
+    timing?: 'beforeInit' | 'afterInit' | 'beforeRequest' | 'afterRequest'
+}
+```
+
+`DataSourceManager.init` 遍历 `ds.methods`，注册为全局事件：
+
+```ts
+// packages/data-source/src/data-source-manager.ts
+ds.methods.forEach((method) => {
+    if (!isFunction(method.content)) return;
+    this.app.registerEvent(`${ds.id}:${method.name}`, method.content, ds);
+    // timing 方法额外挂到生命周期队列
+});
+```
+
+key 格式为 `dataSourceId:methodName`，例如 `user:getProfile`。
+
+HTTP 数据源还会额外注册一个 `http:${ds.id}` 事件，对应其 `request` 方法：
+
+```ts
+this.app.registerEvent(`http:${ds.id}`, _ds.request.bind(_ds, [_ds.httpOptions]), _ds);
+```
+
+带 `timing` 的方法会按 `beforeInit` / `afterInit` / `beforeRequest` / `afterRequest` 挂到数据源对应的执行队列。
+
+### 路径 2：组件实例方法自动注册
+
+组件挂载时，`LowCodeNode` 自动遍历 Vue 实例上所有属性，注册为全局事件：
+
+```ts
+// packages/core/src/node.ts
+this.once('mounted', async(instance: any) => {
+    this.instance = instance;
+    for (const [key, val] of Object.entries(instance)) {
+        this.root.registerEvent(key, val, undefined, this);
+    }
+    await this.runCode('mounted');
+});
+```
+
+因为 `registerEvent` 内部有 `if (node) { key = ${node.data.field}:${key}` }` 的逻辑，所以组件实例方法的最终 key 变为 `${nodeField}:${methodName}`，例如 `base1:handlerExpose`。
+
+#### UI 组件如何声明要暴露的方法
+
+每个 UI 组件通过 `event.ts` 文件声明对外暴露的方法列表：
+
+```ts
+// packages/ui/src/q-demo/src/event.ts
+export default {
+    methods: [
+        { label: '某个要暴露出去的事件', value: 'handlerExpose' }
+    ]
+};
+```
+
+这些声明只用于编辑器侧展示"可选方法"下拉列表，不直接参与注册。真正注册发生在组件 mounted 时遍历实例属性。
+
+#### 组件如何把自定义方法传入注册流程
+
+组件在 `setup` 中通过 `useApp` hook 将自定义方法传递给节点：
+
+```ts
+// packages/ui/src/hooks/use-app.ts
+export function useApp(props: any) {
+    const app = inject('app');
+    const node = app?.page?.getNode(props.config.field);
+    const emitData = { ...(props.methods || {}) };  // 用户传的 methods
+    node?.emit('created', emitData);
+    onMounted(() => { node?.emit('mounted', emitData); });
+    onUnmounted(() => { node?.emit('destroy', emitData); });
+    return { app };
+}
+```
+
+组件调用方式：
+
+```ts
+// packages/ui/src/q-demo/src/demo.vue
+const { app } = useApp({
+    config: props.config,
+    methods: { handlerExpose }   // 传入要暴露的方法
+});
+```
+
+`emitData`（即 `methods`）会作为 `mounted` 事件的参数传给节点，节点在 `mounted` 回调中遍历 `instance` 注册时，这些方法已经在 Vue 实例上，所以会被自动捕获。
+
+### 路径 3：编辑器侧方法配置
+
+编辑器通过 `PropsService` 管理方法配置的展示和存储：
+
+```ts
+// packages/editor/src/services/props-service.ts
+public setMethodsConfigs(configs: Record<string, any>) {
+    Object.entries(configs).forEach(([key, val]) => {
+        this.state.otherConfigMap.methods[key] = val;
+    });
+}
+```
+
+`otherConfigMap.methods` 初始为空对象，由外部组件库（如 UI 包）通过 `setMethodsConfigs` 填充各组件的 `event.ts` 内容。
+
+编辑器中用户配置的事件-方法映射，最终存储为 Schema 中的 `Hooks` 结构：
+
+```ts
+interface Hooks {
+    hookType?: 'code';
+    hookData?: HookData[];  // [{ field: 'dsId:methodName', type: 'dataSource', params: {...} }]
+}
+```
+
+### 事件触发 — `setEvents`
+
+`LowCodeNode.setEvents` 处理 `componentProps` 中的事件绑定，支持两种格式：
+
+**函数式**（代码模式）：
+
+```ts
+onClick: (app, e) => { app.emit('dsId:funcName', e) }
+```
+
+**配置式**（可视化配置产出）：
+
+```ts
+onClick: [
+    { field: 'nodeId:funcName', params: {} },
+    { field: 'datasourceId:funcName', params: {} }
+]
+```
+
+配置式会被转成函数，触发时遍历数组，逐个 `root.emit(field, params)`。
+
+### 整体流程图
+
+```text
+Schema定义
+  ↓
+IDataSourceSchema.methods  →  DataSourceManager.init  →  registerEvent(dsId:methodName)
+ISchemasNode.componentProps →  LowCodeNode.setEvents  →  包装成 emit 调用
+UI组件 event.ts声明          →  编辑器展示可选方法下拉
+  ↓
+组件 mounted
+  ↓
+遍历 Vue instance 所有属性  →  registerEvent(nodeField:methodName)
+  ↓
+所有方法汇聚到 eventMap + 事件总线
+  ↓
+触发时: root.emit(key, params) → 执行对应 handler
+```
+
 ## 生命周期是怎么接上的
 
 `packages/ui/src/hooks/use-app.ts` 是关键桥：
@@ -502,6 +687,45 @@ ${node.field}:${eventName}
 - 编辑器里的拖拽坐标和 runtime 渲染坐标之间一定有换算
 
 这也是后面 `Sandbox` 里大量坐标换算逻辑存在的原因。
+
+### 设计稿坐标到底怎么落到 Schema
+
+真正的换算入口在 `packages/editor/src/components/layouts/sandbox/index.vue`
+和 `packages/utils/src/dom.ts` 的 `calcValueByDesignWidth`。
+
+先记住 3 件事：
+
+- 鼠标事件给的是浏览器视口坐标 `clientX / clientY`
+- 编辑器外层会对整个画布做 `scale(zoom)`
+- Schema 要存的是“设计稿基准值”，不是当前屏幕上看到的像素值
+
+所以新增组件时，核心不是“记住鼠标点”，而是把鼠标点还原成设计稿坐标。
+
+可以把主公式理解成：
+
+```text
+schemaValue = visibleOffset / zoom * designWidth / pageRenderedWidth
+```
+
+其中：
+
+- `visibleOffset`
+  - 鼠标相对当前 sandbox 可视区域左上角的距离
+- `zoom`
+  - 编辑器壳层对画布做的视觉缩放
+- `designWidth`
+  - 当前页面的设计稿宽度，也是 Schema 的存储基准
+- `pageRenderedWidth`
+  - runtime 页面当前真实渲染宽度，对应 `doc.documentElement` 的计算宽度
+
+`calcValueByDesignWidth` 本质上就是在做：
+
+```text
+designValue = currentRenderedPx * designWidth / pageRenderedWidth
+```
+
+这就是为什么同一个组件在 100% 和 80% 缩放下拖进去，最终写进 Schema 的
+`left / top` 应该一致；变化的只是编辑器壳层的显示倍率，不应该污染持久化数据。
 
 ## 新人阅读这一层时的正确心智
 
