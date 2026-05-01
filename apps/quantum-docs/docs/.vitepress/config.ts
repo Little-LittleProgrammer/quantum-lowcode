@@ -93,6 +93,14 @@ function createNav(): DefaultTheme.NavItem[] {
                 {
                     text: 'schemas协议',
                     link: '/api/schema/',
+                },
+                {
+                    text: 'App 实例',
+                    link: '/api/schema/app.md',
+                },
+                {
+                    text: '数据源',
+                    link: '/api/schema/datasource.md',
                 }
             ],
         },
@@ -103,6 +111,22 @@ function createNav(): DefaultTheme.NavItem[] {
                 {
                     text: '介绍',
                     link: '/theory/introduction.md'
+                },
+                {
+                    text: '核心模型',
+                    link: '/theory/core.md'
+                },
+                {
+                    text: '编辑器',
+                    link: '/theory/editor.md'
+                },
+                {
+                    text: '画布',
+                    link: '/theory/sandbox.md'
+                },
+                {
+                    text: '数据源',
+                    link: '/theory/data-source.md'
                 }
             ]
         }
@@ -197,6 +221,15 @@ function createSidebar(): DefaultTheme.Sidebar {
                 text: 'app实例',
                 link: '/api/schema/app.md'
             }, {
+                text: '页面节点',
+                link: '/api/schema/page.md'
+            }, {
+                text: '容器节点',
+                link: '/api/schema/container.md'
+            }, {
+                text: '普通节点',
+                link: '/api/schema/node.md'
+            }, {
                 text: '全局数据',
                 link: '/api/schema/datasource.md'
             }]
@@ -217,7 +250,7 @@ function createSidebar(): DefaultTheme.Sidebar {
                 link: '/theory/sandbox.md'
             }, {
                 text: '数据',
-                link: '/api/schema/data-source.md'
+                link: '/theory/data-source.md'
             }]
         }]
     }

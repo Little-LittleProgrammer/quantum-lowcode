@@ -1,188 +1,159 @@
-# 低代码schema协议
+# 低代码 Schema 协议
 
-## 协议
-|- 根节点  
-|--|--页面节点  
-|--|--|-- 容器节点|组件节点  
-|--|--|--|-- 容器节点|组件节点  
-            ......
+Schema 是 Quantum 的核心数据结构。编辑器保存 Schema，运行时读取 Schema，Core 将 Schema 转成 `LowCodeRoot`、`LowCodePage`、`LowCodeNode` 实例后完成页面渲染、事件绑定和数据源依赖收集。
 
-## interface
+## 树结构
+
+一份完整 Schema 必须从根节点开始：
+
+```text
+root
+└── page
+    ├── container
+    │   ├── node
+    │   └── container
+    │       └── node
+    └── node
+```
+
+节点类型由 `NodeType` 约定：
+
+| 类型 | 值 | 说明 |
+| --- | --- | --- |
+| 根节点 | `root` | 应用级配置，只能有一个 |
+| 页面节点 | `page` | 一个可切换的页面 |
+| 容器节点 | `container` | 可承载子节点的布局节点 |
+| 普通节点 | `node` | 具体组件节点 |
+
+## 根节点字段
+
+| 字段 | 类型 | 必填 | 说明 |
+| --- | --- | --- | --- |
+| `type` | `'root'` | 是 | 固定为根节点类型 |
+| `field` | `string` | 是 | 根节点唯一标识，通常为 `root` |
+| `name` | `string` | 是 | 应用名称，也会用于运行时页面标题 |
+| `children` | `ISchemasPage[]` | 是 | 页面节点列表 |
+| `description` | `IMetaDes` | 否 | 页面 meta 信息 |
+| `dataSources` | `IDataSourceSchema[]` | 否 | 全局数据源和方法配置 |
+| `designWidth` | `number` | 否 | 移动端设计稿宽度，用于样式转换 |
+
+## 通用节点字段
+
+| 字段 | 类型 | 必填 | 说明 |
+| --- | --- | --- | --- |
+| `type` | `string` | 是 | 节点类型，推荐使用 `root`、`page`、`container`、`node` |
+| `field` | `string` | 是 | 节点唯一标识，也是编辑器、事件和依赖表定位节点的主键 |
+| `component` | `string` | 普通节点必填 | 运行时组件名称，必须能通过 `LowCodeRoot.resolveComponent` 找到 |
+| `componentProps` | `Record<string, any>` | 否 | 透传给组件的属性，可使用 `${dataSource.field}` 绑定数据 |
+| `label` | `string` | 否 | 展示文案或表单标签，具体由组件解释 |
+| `style` | `Partial<CSSStyleDeclaration>` | 否 | 内联样式，支持数字值 |
+| `ifShow` | `boolean \| IfShow[] \| Function` | 否 | 条件显示配置 |
+| `children` | `ISchemasNode[]` | 容器必填 | 子节点 |
+| `created` | `Hooks` | 否 | 创建阶段钩子 |
+| `mounted` | `Hooks` | 否 | 挂载阶段钩子 |
+
+## 条件显示
+
+`ifShow` 可以直接写布尔值，也可以写函数或条件数组。条件数组用于配置化表达式：
+
 ```ts
-export interface IfShow {
-    field: string[];
-    op: 'is' | 'not' | '=' | '!=' | '>' | '>=' | '<' | '<=' | 'in' | 'not in' | 'between' | 'not between';
-    value: any;
-    range?: number[];
-}
-
-export enum HookType {
-    /** 代码块钩子标识 */
-    CODE = 'code',
-}
-
-export interface HookData {
-    field: Id;
-    type?: ActionType;
-    params: any;
-    [key: string]: any
-}
-
-export interface Hooks {
-    hookType?: HookType.CODE;
-    hookData?: HookData[];
-}
-
-export type Method = 'get' | 'GET' | 'delete' | 'DELETE' | 'post' | 'POST' | 'put' | 'PUT';
-export interface IHttpOptions {
-    /** 请求链接 */
-    url: string;
-    /** query参数 */
-    params?: Record<string, string>;
-    /** body数据 */
-    data?: Record<string, any>;
-    /** 请求头 */
-    headers?: Record<string, string>;
-    /** 请求方法 GET/POST */
-    method?: Method;
-    [key: string]: any;
-}
-export type IRequestFunction = (options: IHttpOptions) => Promise<any>;
-
-export interface ILowCodeRoot {
-    schemasRoot?: ISchemasRoot;
-    request?: IRequestFunction;
-    registerEvent?: Fn;
-    dataSourceDep: Map<Id, FieldToDepMap>
-    [key: string]: any;
-}
-
-/**
- * 数据组件 scheams
- */
-export interface ISchemasNode{
-    type: NodeType.NODE | string
-    /**
-     * 组件字段, 也为数据节点唯一值id
-     */
-    field: Id
-    /**
-     * 组件名
-     */
-    component?: string;
-    /**
-     * 组件的属性集合
-     */
-    componentProps?: Record<string, any> ;
-    label?: string;
-    /**
-     * 样式
-     */
-    // style?: Partial<CSSStyleDeclaration> | ((el: HTMLElement) => CSSStyleDeclaration)
-    style?: Partial<CSSStyleDeclaration>
-
-    /**
-     * 是否展示
-     */
-    ifShow?: IfShow[] | boolean | Fn
-    /**
-     * 子节点
-     */
-    children?: (ISchemasNode | ISchemasContainer)[]
-    created?: Hooks;
-    mounted?: Hooks
-    [key: string]: any;
-}
-
-/**
- * 数据容器 scheams
- */
-export interface ISchemasContainer extends ISchemasNode{
-    type: NodeType.CONTAINER | string;
-    children: (ISchemasNode | ISchemasContainer)[]
-}
-
-/**
- * 数据页面 scheams
- */
-export interface ISchemasPage extends ISchemasContainer{
-    type: NodeType.PAGE
-}
-
-export interface IMetaDes {
-    keywords: string[];
-    description: string[];
-}
-
-/**
- * 根节点
- */
-export interface ISchemasRoot extends ISchemasNode {
-    type: NodeType.ROOT;
-    children: ISchemasPage[];
-    name: string;
-    description?: IMetaDes;
-    dataSources?: IDataSourceSchema[]; // 管理数据;
-    designWidth?: number
-}
-```
-
-## 例子
-```
 {
-    type: 'root',
-    name: 'test',
-    dataSources: [{
-        type: 'base',
-        id: 'base1',
-        title: '基础方法1',
-        description: '基础方法1, 快使用',
-        fields: [],
-        methods: [
-            {
-                name: 'test1',
-                description: '方法1',
-                params: [{name: 'a1', type: 'boolean', }],
-                content: (...params) => {
-                    console.log(params);
-                },
-            }
-        ],
-    }],
-    children: [
-        {
-            type: 'page',
-            field: 'page2',
-            children: [
-                {
-                    type: 'container',
-                    field: 'contaainer1',
-                    children: [
-                        {
-                            component: 'img',
-                            field: 'img1',
-                            style: {
-                                width: '100%',
-                            },
-                            componentProps: {
-                                src: 'https://cn.vitejs.dev/logo-with-shadow.png',
-                            },
-                        },
-                        {
-                            component: 'button',
-                            field: 'button2',
-                            componentProps: {
-                                onClick: (app, e) => { alert(e); app.emit('base1:test1', e);},
-                            },
-                        },
-                        {
-                            component: 'button',
-                            field: 'button23333',
-                        }
-                    ],
-                }
-            ],
-        }
-    ],
+  field: ['base1', 'visible'],
+  op: '=',
+  value: true
 }
 ```
+
+常用操作符包括 `=`、`!=`、`>`、`>=`、`<`、`<=`、`in`、`not in`、`between`、`not between`。
+
+## 生命周期钩子
+
+钩子使用数据源方法或代码块能力触发动作：
+
+```ts
+{
+  created: {
+    hookType: 'code',
+    hookData: [
+      {
+        field: 'base1:init',
+        params: { from: 'created' }
+      }
+    ]
+  }
+}
+```
+
+`field` 一般写成 `数据源ID:方法名`。运行时会通过 `app.emit` 找到对应方法。
+
+## 最小示例
+
+```ts
+import { NodeType } from '@quantum-lowcode/schemas';
+
+export const schema = {
+  type: NodeType.ROOT,
+  field: 'root',
+  name: 'demo',
+  dataSources: [
+    {
+      type: 'base',
+      id: 'base1',
+      title: '基础数据',
+      fields: [
+        {
+          name: 'title',
+          type: 'string',
+          defaultValue: 'Hello Quantum'
+        }
+      ],
+      methods: []
+    }
+  ],
+  children: [
+    {
+      type: NodeType.PAGE,
+      field: 'home',
+      style: {
+        width: '100%',
+        height: '100%'
+      },
+      children: [
+        {
+          type: NodeType.CONTAINER,
+          field: 'main',
+          style: {
+            padding: '16px'
+          },
+          children: [
+            {
+              type: NodeType.NODE,
+              field: 'title',
+              component: 'Text',
+              componentProps: {
+                text: '${base1.title}'
+              }
+            },
+            {
+              type: NodeType.NODE,
+              field: 'button',
+              component: 'Button',
+              componentProps: {
+                text: '提交'
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+```
+
+## 继续阅读
+
+- [App 实例](./app.md)：了解 Schema 如何进入 `LowCodeRoot`。
+- [页面节点](./page.md)：了解多页面和页面切换。
+- [容器节点](./container.md)：了解节点嵌套和布局。
+- [普通节点](./node.md)：了解组件节点字段。
+- [全局数据](./datasource.md)：了解数据源、方法和数据绑定。
