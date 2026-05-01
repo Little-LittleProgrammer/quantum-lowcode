@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN" id="JsHtmlRoot">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quantum 低代码平台</title>
+    <script type="module" crossorigin src="/quantum-lowcode/playground/assets/index-B43rZwS_.js"></script>
+    <link rel="modulepreload" crossorigin href="/quantum-lowcode/playground/assets/monaco-editor-C0jT7N_C.js">
+    <link rel="modulepreload" crossorigin href="/quantum-lowcode/playground/assets/vendor-ui-ByodHkje.js">
+    <link rel="modulepreload" crossorigin href="/quantum-lowcode/playground/assets/vendor-crypto-js-BW7lgcgm.js">
+    <link rel="modulepreload" crossorigin href="/quantum-lowcode/playground/assets/vendor-tinymce-CEoa9qQq.js">
+    <link rel="modulepreload" crossorigin href="/quantum-lowcode/playground/assets/vendor-vue-D-vJuhky.js">
+    <link rel="stylesheet" crossorigin href="/quantum-lowcode/playground/assets/monaco-editor-CwVkGfVn.css">
+    <link rel="stylesheet" crossorigin href="/quantum-lowcode/playground/assets/vendor-vue-Ch6IOk_R.css">
+    <link rel="stylesheet" crossorigin href="/quantum-lowcode/playground/assets/index--P4yDcNb.css">
+  </head>
+  <body>
+    <div id="app">
+      <style>
+        @keyframes rotate{
+              0%{
+                  transform: rotate(0deg);
+              }
+              50%{
+                  transform: rotate(180deg);
+              }
+              100%{
+                  transform: rotate(360deg);
+              }
+          }
+          .app-loading {
+              display: flex;
+              width: 100%;
+              height: 100%;
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+              background-color: #f4f7f9;
+          }
+          .app-loading .app-loading-container {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              display: flex;
+              transform: translate3d(-50%, -50%, 0);
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+          }
+          .app-loading .app-loading-content {
+              border-radius: 10px;
+              position: relative;
+              text-align: center;
+              height: 80px;
+              width: 80px;
+              z-index: 888;
+          }
+          .app-loading .app-loading-rotate {
+              height: 100%;
+              width: 100%;
+              border-radius: 10px;
+              font-size: 0;
+              background-image: url('data:image/png;base64,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');
+              background-size: contain;
+              animation: rotate 1.5s infinite ;
+          }
+          .app-loading .app-img-container {
+              position: absolute;
+              bottom: 0;
+              width: 100%;
+              height: 100%;
+              transform-origin: bottom;
+              background-size: 100%;
+              z-index: 999;
+              background-position: bottom;
+          }
+          .app-loading .app-loading-title {
+              display: flex;
+              margin-top: 30px;
+              font-size: 30px;
+              color: rgb(0 0 0 / 85%);
+              justify-content: center;
+              align-items: center;
+          }
+      </style>
+      <div class="app-loading">
+          <div class="app-loading-container">
+              <div class="app-loading-content">
+                  <div class="app-loading-rotate"></div>
+                  <div class="app-img-container"></div>
+              </div>
+              <div class="app-loading-title">Quantum 低代码平台</div>
+          </div>
+      </div>
+    </div>
+  </body>
+</html>
+
